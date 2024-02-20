@@ -1,0 +1,753 @@
+
+-- 주소 테이블
+DROP TABLE ADDRESS CASCADE CONSTRAINTS;
+-- 계좌번호 테이블
+DROP TABLE BANK_ACCOUNT CASCADE CONSTRAINTS;
+-- 회원 테이블
+DROP TABLE MEMBER CASCADE CONSTRAINTS;
+
+-- 회원번호 시퀀스
+DROP SEQUENCE SEQ_MNO;
+-- 계좌번호 시퀀스
+DROP SEQUENCE SEQ_BANO;
+-- 주소 번호 시퀀스
+DROP SEQUENCE SEQ_ANO;
+
+
+-- MEMBER 테이블 생성
+CREATE TABLE MEMBER (
+    MEM_NO VARCHAR2(20) NOT NULL PRIMARY KEY,
+    MID VARCHAR2(15) NOT NULL UNIQUE,
+    MPW VARCHAR2(20) NOT NULL,
+    MNAME VARCHAR2(20) NOT NULL,
+    NICKNAME VARCHAR2(40) NOT NULL,
+    PHONE VARCHAR2(14) NOT NULL,
+    EMAIL VARCHAR2(40) NOT NULL,
+    ENROLLDATE DATE DEFAULT SYSDATE,
+    ONDO NUMBER DEFAULT 36.5,
+    MLEVEL CHAR(1) DEFAULT 'U' CHECK (MLEVEL IN ('U', 'A', 'B', 'C')),
+    MSTATUS CHAR(1) DEFAULT 'Y' CHECK (MSTATUS IN ('N', 'Y')),
+    CAUTION NUMBER NOT NULL
+);
+
+
+-- 컬럼에 대한 설명 추가
+COMMENT ON COLUMN MEMBER.MEM_NO IS '회원번호';
+COMMENT ON COLUMN MEMBER.MID IS '아이디';
+COMMENT ON COLUMN MEMBER.MPW IS '비밀번호';
+COMMENT ON COLUMN MEMBER.MNAME IS '회원명';
+COMMENT ON COLUMN MEMBER.NICKNAME IS '닉네임';
+COMMENT ON COLUMN MEMBER.PHONE IS '전화번호';
+COMMENT ON COLUMN MEMBER.EMAIL IS '이메일';
+COMMENT ON COLUMN MEMBER.ENROLLDATE IS '가입일';
+COMMENT ON COLUMN MEMBER.ONDO IS '온도점수';
+COMMENT ON COLUMN MEMBER.MLEVEL IS '회원등급';
+COMMENT ON COLUMN MEMBER.MSTATUS IS '회원상태';
+COMMENT ON COLUMN MEMBER.CAUTION IS '경고';
+
+
+-- SEQ_UNO 시퀀스를 생성
+CREATE SEQUENCE SEQ_MNO  --  'M'||SEQ_MNO.NEXTVAL
+NOCACHE;
+
+
+-- MEMBER 테이블에 데이터 삽입
+INSERT INTO MEMBER VALUES ('M'||SEQ_MNO.NEXTVAL, 'admin', '1234', '관리자', '쿨거래관리자', '010-1234-5678', 'admin@example.com', SYSDATE, 36.5, 'U', 'N', 0);
+INSERT INTO MEMBER VALUES ('M'||SEQ_MNO.NEXTVAL, 'user01', 'pass1234!', '김철수', '닉넴01', '010-2345-6789', 'user01@example.com', SYSDATE, 36.5, 'U', 'N', 1);
+INSERT INTO MEMBER VALUES ('M'||SEQ_MNO.NEXTVAL, 'user02', 'pass1234!', '이영희', '닉넴02', '010-3456-7890', 'user02@example.com', SYSDATE, 36.5, 'U', 'N', 2);
+INSERT INTO MEMBER VALUES ('M'||SEQ_MNO.NEXTVAL, 'user03', 'pass1234!', '박민수', '닉넴03', '010-4567-8901', 'user03@example.com', SYSDATE, 36.5, 'C', 'N', 0);
+INSERT INTO MEMBER VALUES ('M'||SEQ_MNO.NEXTVAL, 'user04', 'pass1234!', '정수미', '닉넴04', '010-5678-9012', 'user04@example.com', SYSDATE, 36.5, 'B', 'Y', 3);
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-- BANK_ACCOUNT 테이블 -- 
+
+CREATE TABLE BANK_ACCOUNT(
+    BANKACCOUNT_NO VARCHAR2(20) PRIMARY KEY,
+    MEM_NO VARCHAR2(20) NOT NULL REFERENCES MEMBER,
+    BANK VARCHAR2(20), 
+    ACCOUNT VARCHAR2(30) 
+);
+
+-- 컬럼에 대한 설명 추가
+COMMENT ON COLUMN BANK_ACCOUNT.BANKACCOUNT_NO IS '계좌구분번호';
+COMMENT ON COLUMN BANK_ACCOUNT.MEM_NO IS '회원번호';
+COMMENT ON COLUMN BANK_ACCOUNT.BANK IS '은행';
+COMMENT ON COLUMN BANK_ACCOUNT.ACCOUNT IS '계좌번호';
+
+-- SEQ_UNO 시퀀스를 생성
+CREATE SEQUENCE SEQ_BANO -- 'BA'||SEQ_BNO.NEXTVAL
+NOCACHE;
+
+-- BANK_ACCOUNT 테이블에 데이터 삽입
+
+-- SELECT * FROM BANK_ACCOUNT;
+INSERT INTO BANK_ACCOUNT VALUES ('BA'||SEQ_BANO.NEXTVAL, 'M1' , '국민은행','100-123-123451');
+INSERT INTO BANK_ACCOUNT VALUES ('BA'||SEQ_BANO.NEXTVAL, 'M2', 'K뱅크', '111-222-333333');
+INSERT INTO BANK_ACCOUNT VALUES ('BA'||SEQ_BANO.NEXTVAL, 'M3', '신한은행', '333-222-121212');
+INSERT INTO BANK_ACCOUNT VALUES ('BA'||SEQ_BANO.NEXTVAL, 'M4', '하나은행', '222-333-555555');
+INSERT INTO BANK_ACCOUNT VALUES ('BA'||SEQ_BANO.NEXTVAL, 'M5', '카카오뱅크', '135-823-124568');
+
+
+--------------------------------------------------------------------
+-- ADDRESS 테이블 --
+
+CREATE TABLE ADDRESS(
+    MEM_NO VARCHAR(20) PRIMARY KEY NOT NULL REFERENCES MEMBER,
+    ADDRESS_1 VARCHAR2(200),
+    DETAIL_1 VARCHAR2(200),
+    POSTCODE_1 NUMBER,
+    ADDRESS_2 VARCHAR2(200),
+    DETAIL_2 VARCHAR2(200),
+    POSTCODE_2 NUMBER,
+    ADDRESS_3 VARCHAR2(200),
+    DETAIL_3 VARCHAR2(200),
+    POSTCODE_3 NUMBER,
+    ADDRESS_4 VARCHAR2(200),
+    DETAIL_4 VARCHAR2(200),
+    POSTCODE_4 NUMBER,
+    ADDRESS_5 VARCHAR2(200),
+    DETAIL_5 VARCHAR2(200),
+    POSTCODE_5 NUMBER
+);
+
+-- 컬럼에 대한 설명 추가
+COMMENT ON COLUMN ADDRESS.MEM_NO IS '회원번호';
+COMMENT ON COLUMN ADDRESS.ADDRESS_1 IS '주소1기본주소';
+COMMENT ON COLUMN ADDRESS.DETAIL_1 IS '주소1상세주소';
+COMMENT ON COLUMN ADDRESS.POSTCODE_1 IS '주소1우편번호';
+COMMENT ON COLUMN ADDRESS.ADDRESS_2 IS '주소2기본주소';
+COMMENT ON COLUMN ADDRESS.DETAIL_2 IS '주소2상세주소';
+COMMENT ON COLUMN ADDRESS.POSTCODE_2 IS '주소2우편번호';
+COMMENT ON COLUMN ADDRESS.ADDRESS_3 IS '주소3기본주소';
+COMMENT ON COLUMN ADDRESS.DETAIL_3 IS '주소3상세주소';
+COMMENT ON COLUMN ADDRESS.POSTCODE_3 IS '주소3우편번호';
+COMMENT ON COLUMN ADDRESS.ADDRESS_4 IS '주소4기본주소';
+COMMENT ON COLUMN ADDRESS.DETAIL_4 IS '주소4상세주소';
+COMMENT ON COLUMN ADDRESS.POSTCODE_4 IS '주소4우편번호';
+COMMENT ON COLUMN ADDRESS.ADDRESS_5 IS '주소5기본주소';
+COMMENT ON COLUMN ADDRESS.DETAIL_5 IS '주소5상세주소';
+COMMENT ON COLUMN ADDRESS.POSTCODE_5 IS '주소5우편번호';
+
+
+-- SEQ_UNO 시퀀스를 생성
+CREATE SEQUENCE SEQ_ANO -- 'A'||SEQ_BNO.NEXTVAL
+NOCACHE;
+
+
+
+-- ADDRESS 테이블에 데이터를 삽입
+INSERT INTO ADDRESS VALUES ('M5', '서울', '강남', 06234, '서울', '역삼', 12122, '서울', '종로', 12453, '서울', '용산', 33232, '서울', '삼성', 12543);
+INSERT INTO ADDRESS VALUES ('M4', '경기도',' 수원', 12345, '경기도', '화성', 13442, '경기도', '안양', 35787, '경기도', '용인', 32584, '경기도', '광주', 33254);
+INSERT INTO ADDRESS VALUES ('M3', '전라남도','광주', 45467, '전라남도', '순천', 51615, '전라남도', '나주', 36965, '강원도', '강릉', 34562, '경기도', '양평', 52543);
+INSERT INTO ADDRESS VALUES ('M2', '경상북도','경주', 78978, '경상북도', '안동', 12452, '경상북도', '문경', 12542, '경상북도', '청도', 25333, '경상북도', '포항', 33568);
+INSERT INTO ADDRESS VALUES ('M1', '인천','주안', 13131, '충청남도', '천안', 13495, '충청북도', '청주', 12453, '강원도', '철원', 25243, '강원도', '홍천', 32583);
+
+DROP TABLE REVIEW CASCADE CONSTRAINTS;
+DROP TABLE LIKE_JJIM CASCADE CONSTRAINTS;
+DROP TABLE IMAGES CASCADE CONSTRAINTS;
+DROP TABLE PRODUCT CASCADE CONSTRAINTS;
+DROP TABLE PRODUCT_STATUS CASCADE CONSTRAINTS;
+DROP TABLE CATEGORY CASCADE CONSTRAINTS;
+
+DROP SEQUENCE SEQ_PRODUCT;	-- 상품번호 발생시킬 시퀀스
+DROP SEQUENCE SEQ_IMG; 	-- 이미지번호 발생시킬 시퀀스
+DROP SEQUENCE SEQ_REVIEW; 	-- 리뷰번호 발생기킬 시퀀스
+
+--------------------------------------------------------------------------------
+-------------------------------------카테고리-------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE
+       TABLE CATEGORY
+     (
+       CATEGORY_NO VARCHAR2(20) CONSTRAINT PK_CATEGORY PRIMARY KEY
+     , CATEGORY_NAME VARCHAR2(20) NOT NULL
+     );
+     
+COMMENT ON COLUMN CATEGORY.CATEGORY_NO IS '카테고리 번호';
+COMMENT ON COLUMN CATEGORY.CATEGORY_NAME IS '카테고리 이름';
+
+
+INSERT INTO CATEGORY VALUES('C1', '패션의류');
+INSERT INTO CATEGORY VALUES('C2', '패션잡화');
+INSERT INTO CATEGORY VALUES('C3', '뷰티');
+INSERT INTO CATEGORY VALUES('C4', '전자제품');
+INSERT INTO CATEGORY VALUES('C5', '리빙/생활');
+INSERT INTO CATEGORY VALUES('C6', '가구/인테리어');
+INSERT INTO CATEGORY VALUES('C7', '반려동물');
+INSERT INTO CATEGORY VALUES('C8', '도서/음반/문구');
+INSERT INTO CATEGORY VALUES('C9', '상품권');
+INSERT INTO CATEGORY VALUES('C10', '무료나눔');
+
+--------------------------------------------------------------------------------
+-------------------------------------제품상태-------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE
+       TABLE PRODUCT_STATUS
+     (
+       PSTATUS_NO VARCHAR2(20) CONSTRAINT PK_PRODUCT_STATUS PRIMARY KEY
+     , PSTATUS VARCHAR2(20)NOT NULL
+     );
+     
+COMMENT ON COLUMN PRODUCT_STATUS.PSTATUS_NO IS '제품상태 식별번호';
+COMMENT ON COLUMN PRODUCT_STATUS.PSTATUS IS '제품상태';
+
+INSERT INTO PRODUCT_STATUS VALUES('PS1','새상품');
+INSERT INTO PRODUCT_STATUS VALUES('PS2','사용감 없음');
+INSERT INTO PRODUCT_STATUS VALUES('PS3','사용감 적음');
+INSERT INTO PRODUCT_STATUS VALUES('PS4','사용감 많음');
+INSERT INTO PRODUCT_STATUS VALUES('PS5','고장/파손상품');
+
+--------------------------------------------------------------------------------
+------------------------------------상품 관련------------------------------------
+--------------------------------------------------------------------------------
+CREATE 
+       TABLE PRODUCT
+     ( 
+       PNO VARCHAR2(20) CONSTRAINT PK_PRODUCT PRIMARY KEY
+     , SELLER_NO VARCHAR2(20) NOT NULL CONSTRAINT FK_PRODUCT_01 REFERENCES MEMBER
+     , CATEGORY_NO VARCHAR2(20) NOT NULL CONSTRAINT FK_PRODUCT_02 REFERENCES CATEGORY
+     , PNAME VARCHAR2(200) NOT NULL
+     , PRICE NUMBER NOT NULL
+     , PDESC VARCHAR2(4000)
+     , ZONE VARCHAR2(20)
+     , PSTATUS VARCHAR2(20) NOT NULL CONSTRAINT FK_PRODUCT_03 REFERENCES PRODUCT_STATUS
+     , UPLOADDATE DATE DEFAULT SYSDATE
+     , UPLOADTYPE CHAR(1) DEFAULT 'Y' CHECK (UPLOADTYPE IN('Y', 'N'))
+     );
+     
+COMMENT ON COLUMN PRODUCT.PNO IS '상품번호';
+COMMENT ON COLUMN PRODUCT.SELLER_NO IS '판매자';
+COMMENT ON COLUMN PRODUCT.CATEGORY_NO IS '카테고리번호';
+COMMENT ON COLUMN PRODUCT.PNAME IS '상품명';
+COMMENT ON COLUMN PRODUCT.PRICE IS '가격';
+COMMENT ON COLUMN PRODUCT.PDESC IS '상품설명';
+COMMENT ON COLUMN PRODUCT.ZONE IS '거래지역';
+COMMENT ON COLUMN PRODUCT.PSTATUS IS '제품상태번호';
+COMMENT ON COLUMN PRODUCT.UPLOADDATE IS '등록날짜';
+COMMENT ON COLUMN PRODUCT.UPLOADTYPE IS '등록유형';
+
+CREATE SEQUENCE SEQ_PRODUCT -- 'P'||SEQ_PRODUCT.NEXTVAL
+NOCACHE;
+
+INSERT 
+       INTO PRODUCT
+       VALUES
+     (
+       'P'||SEQ_PRODUCT.NEXTVAL
+     , 'M1'
+     , 'C1'
+     , '도깨비팬티'
+     , '750000'
+     , '도깨비 공유가 입던 팬티'
+     , '서울'
+     , 'PS4'
+     , SYSDATE
+     , DEFAULT
+     );
+     
+INSERT 
+       INTO PRODUCT
+       VALUES
+     (
+       'P'||SEQ_PRODUCT.NEXTVAL
+     , 'M2'
+     , 'C2'
+     , '도깨비감투'
+     , '2500000'
+     , '머리에 쓰면 투명해지는 감투'
+     , '경상도'
+     , 'PS2'
+     , SYSDATE
+     , DEFAULT
+     );
+     
+INSERT 
+       INTO PRODUCT
+       VALUES
+     (
+       'P'||SEQ_PRODUCT.NEXTVAL
+     , 'M3'
+     , 'C3'
+     , '도깨비방망이'
+     , '230000'
+     , '휘두르면 금이나오는 방망이'
+     , '경기도'
+     , 'PS1'
+     , SYSDATE
+     , DEFAULT
+     );
+     
+INSERT 
+       INTO PRODUCT
+       VALUES
+     (
+       'P'||SEQ_PRODUCT.NEXTVAL
+     , 'M4'
+     , 'C4'
+     , '도깨비뿔'
+     , '2500'
+     , '뾰족한 도깨비의 뿔'
+     , '인천'
+     , 'PS5'
+     , SYSDATE
+     , DEFAULT
+     );
+     
+INSERT 
+       INTO PRODUCT
+       VALUES
+     (
+       'P'||SEQ_PRODUCT.NEXTVAL
+     , 'M5'
+     , 'C5'
+     , '메밀묵'
+     , '1500'
+     , '도깨비가 좋아하는 메밀묵'
+     , '서울'
+     , 'PS1'
+     , SYSDATE
+     , DEFAULT
+     );
+     
+
+--------------------------------------------------------------------------------
+-------------------------------------이미지--------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE
+       TABLE IMAGES
+     (
+       IMGNO VARCHAR2(20) CONSTRAINT PK_IMAGES PRIMARY KEY
+     , PNO VARCHAR2(20) CONSTRAINT FK_IMAGES REFERENCES PRODUCT
+     , IMGDIV NUMBER NOT NULL CHECK(IMGDIV IN(1,2))
+     , IMGPATH VARCHAR2(4000) NOT NULL
+     );
+     
+COMMENT ON COLUMN IMAGES.IMGNO IS '이미지 구분번호';
+COMMENT ON COLUMN IMAGES.PNO IS '상품번호';
+COMMENT ON COLUMN IMAGES.IMGDIV IS '이미지 구분'; -- 1:대표이미지(썸네일) 2:상세이미지
+COMMENT ON COLUMN IMAGES.IMGPATH IS '이미지 경로';
+
+CREATE SEQUENCE SEQ_IMG  -- 'I'||SEQ_IMG.NEXTVAL
+NOCACHE;
+     
+
+INSERT INTO IMAGES VALUES('I'||SEQ_IMG.NEXTVAL, 'P1', 1, '내 마음속 어딘가');
+INSERT INTO IMAGES VALUES('I'||SEQ_IMG.NEXTVAL, 'P1', 2, '내 마음속 어딘가');
+INSERT INTO IMAGES VALUES('I'||SEQ_IMG.NEXTVAL, 'P1', 2, '내 마음속 어딘가');
+INSERT INTO IMAGES VALUES('I'||SEQ_IMG.NEXTVAL, 'P1', 2, '내 마음속 어딘가');
+INSERT INTO IMAGES VALUES('I'||SEQ_IMG.NEXTVAL, 'P1', 2, '내 마음속 어딘가');
+     
+--------------------------------------------------------------------------------
+-------------------------------------관심상품-------------------------------------
+--------------------------------------------------------------------------------
+CREATE 
+       TABLE LIKE_JJIM
+     ( 
+       MNO VARCHAR2(20) REFERENCES MEMBER
+     , PNO VARCHAR2(20) REFERENCES PRODUCT
+     , LIKEDATE DATE DEFAULT SYSDATE NOT NULL 
+     , CONSTRAINT PK_LIKE PRIMARY KEY(MNO, PNO) 
+     );
+     
+COMMENT ON COLUMN LIKE_JJIM.MNO IS '회원번호';
+COMMENT ON COLUMN LIKE_JJIM.PNO IS '상품번호';
+COMMENT ON COLUMN LIKE_JJIM.LIKEDATE IS '좋아요 일자';
+
+INSERT INTO LIKE_JJIM VALUES( 'M1', 'P1', SYSDATE);
+INSERT INTO LIKE_JJIM VALUES( 'M2', 'P2', SYSDATE);
+INSERT INTO LIKE_JJIM VALUES( 'M3', 'P3', SYSDATE);
+INSERT INTO LIKE_JJIM VALUES( 'M4', 'P4', SYSDATE);
+INSERT INTO LIKE_JJIM VALUES( 'M5', 'P5', SYSDATE);
+
+
+--------------------------------------------------------------------------------
+-------------------------------------제품후기-------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE TABLE REVIEW
+     (
+       REVIEWNO VARCHAR2(20) CONSTRAINT PK_REVIEW PRIMARY KEY
+     , PNO VARCHAR2(20) CONSTRAINT FK_REVIEW_01 NOT NULL REFERENCES PRODUCT
+     , MNO VARCHAR2(20) CONSTRAINT FK_REVIEW_02 NOT NULL REFERENCES MEMBER
+     , IMGNO VARCHAR2(20) CONSTRAINT FK_REVIEW_03 REFERENCES IMAGES
+     , REVIEWDETAIL VARCHAR2(4000)
+     , SCORE NUMBER NOT NULL
+     , REVIEW_DATE DATE DEFAULT SYSDATE NOT NULL 
+     );
+     
+COMMENT ON COLUMN REVIEW.REVIEWNO IS '후기번호';
+COMMENT ON COLUMN REVIEW.PNO IS '상품번호';
+COMMENT ON COLUMN REVIEW.MNO IS '회원번호';
+COMMENT ON COLUMN REVIEW.IMGNO IS '이미지 구분번호';
+COMMENT ON COLUMN REVIEW.REVIEWDETAIL IS '후기내용';
+COMMENT ON COLUMN REVIEW.SCORE IS '평점';
+COMMENT ON COLUMN REVIEW.REVIEW_DATE IS '작성일';
+
+CREATE SEQUENCE SEQ_REVIEW  -- 'RV'||SEQ_REVIEW.NEXTVAL
+NOCACHE;
+
+INSERT INTO REVIEW VALUES( 'RV'||SEQ_REVIEW.NEXTVAL, 'P1', 'M1', NULL, '가방이 맛있어요', 5, DEFAULT);
+INSERT INTO REVIEW VALUES( 'RV'||SEQ_REVIEW.NEXTVAL, 'P2', 'M2', NULL, '감투가 냄새나요', 1, DEFAULT);
+INSERT INTO REVIEW VALUES( 'RV'||SEQ_REVIEW.NEXTVAL, 'P3', 'M3', NULL, '방망이가 무거워요', 4, DEFAULT);
+INSERT INTO REVIEW VALUES( 'RV'||SEQ_REVIEW.NEXTVAL, 'P4', 'M4', NULL, '뿔이 뾰족해요', 2, DEFAULT);
+INSERT INTO REVIEW VALUES( 'RV'||SEQ_REVIEW.NEXTVAL, 'P5', 'M5', NULL, '묵이 뭉개졌어요', 3, DEFAULT);
+
+
+------------------------------- 거래내역 채팅방 ----------------------------------
+
+-- 거래내역 테이블
+DROP TABLE TRADE CASCADE CONSTRAINTS;
+-- 채팅방 테이블
+DROP TABLE CHATROOM CASCADE CONSTRAINTS;
+-- 메세지 테이블
+DROP TABLE MESSAGE CASCADE CONSTRAINTS;
+
+-- 메세지 시퀀스
+DROP SEQUENCE SEQ_MSGNO;
+-- 채팅방 시퀀스
+DROP SEQUENCE SEQ_CRNO;
+-- 거래내역 시퀀스
+DROP SEQUENCE SEQ_SNO;
+
+-- 채팅룸 테이블 생성 --
+CREATE TABLE CHATROOM(
+          CHATROOM_NO VARCHAR2(20) PRIMARY KEY,
+              USER_NO VARCHAR2(20) NOT NULL REFERENCES MEMBER,
+       CHATROOM_TITLE VARCHAR2(90) NOT NULL,
+      CHATROOM_STATUS CHAR(1) NOT NULL 
+);
+
+-- 채팅룸 테이블 시퀀스 생성 --
+CREATE SEQUENCE SEQ_CRNO   -- 'CHATROOM'||SEQ_IMG.NEXTVAL
+NOCACHE;
+
+-- 채팅룸 테이블 코멘트 --
+COMMENT ON COLUMN CHATROOM.CHATROOM_NO IS '채팅방번호';
+COMMENT ON COLUMN CHATROOM.USER_NO IS '채팅참여회원';
+COMMENT ON COLUMN CHATROOM.CHATROOM_TITLE IS '채팅방제목';
+COMMENT ON COLUMN CHATROOM.CHATROOM_STATUS IS '채팅방상태/Y:채팅방참여 N:채팅방미참여';
+
+-- 메세지 테이블 생성 --
+CREATE TABLE MESSAGE(
+          MESSAGE_NO VARCHAR2(20) PRIMARY KEY,
+              SENDER VARCHAR2(20) REFERENCES MEMBER,
+             MESSAGE VARCHAR2(4000) NOT NULL,
+        MESSAGE_DATE DATE NOT NULL,
+             READ_YN CHAR(1) DEFAULT 'N' CHECK(READ_YN IN ('Y','N')),
+         CHATROOM_NO VARCHAR2(20) NOT NULL REFERENCES CHATROOM
+);
+    
+-- 메세지 테이블 시퀀스 생성 --
+CREATE SEQUENCE SEQ_MSGNO   -- 'MSG'||SEQ_IMG.NEXTVAL
+NOCACHE;
+
+-- 메세지 테이블 코멘트 --
+COMMENT ON COLUMN MESSAGE.MESSAGE_NO IS '메세지번호';
+COMMENT ON COLUMN MESSAGE.SENDER IS '발신자';
+COMMENT ON COLUMN MESSAGE.MESSAGE IS '메세지';
+COMMENT ON COLUMN MESSAGE.MESSAGE_DATE IS '발신일';
+COMMENT ON COLUMN MESSAGE.READ_YN IS '읽기여부';
+COMMENT ON COLUMN MESSAGE.CHATROOM_NO IS '채팅방번호';
+
+
+-- 거래내역 테이블 생성 --
+CREATE TABLE TRADE(
+           SELL_NO VARCHAR2(10) PRIMARY KEY,
+        PRODUCT_NO VARCHAR2(20) REFERENCES PRODUCT NOT NULL,
+          BUYER_NO VARCHAR2(20) REFERENCES MEMBER NOT NULL,
+         SELL_DATE DATE NOT NULL
+);
+
+-- 거래내역 테이블 시퀀스 생성 --
+CREATE SEQUENCE SEQ_SNO   -- 'TRADE'||SEQ_IMG.NEXTVAL
+NOCACHE;
+
+-- 거래내역 테이블 코멘트 --
+COMMENT ON COLUMN TRADE.SELL_NO IS '거래번호';
+COMMENT ON COLUMN TRADE.PRODUCT_NO IS '상품번호';
+COMMENT ON COLUMN TRADE.BUYER_NO IS '구매자번호';
+COMMENT ON COLUMN TRADE.SELL_DATE IS '거래일';
+
+------------------------------------- 관리자 테이블 ------------------------------
+
+DROP TABLE REPORT_TYPE CASCADE CONSTRAINTS;
+DROP TABLE REPORT CASCADE CONSTRAINTS;
+DROP TABLE NOTICE CASCADE CONSTRAINTS;
+DROP TABLE ALARM CASCADE CONSTRAINTS;
+
+DROP SEQUENCE SEQ_REPORT;
+DROP SEQUENCE SEQ_NOTICE;
+DROP SEQUENCE SEQ_ALARM;
+
+
+
+------------------------------------신고분류-----------------------------------------
+CREATE TABLE REPORT_TYPE(
+   REPORT_TYPE_NO NUMBER PRIMARY KEY,
+   REPORT_CATE VARCHAR2(400) 
+);
+
+COMMENT ON COLUMN REPORT_TYPE.REPORT_TYPE_NO IS '신고분류번호';
+COMMENT ON COLUMN REPORT_TYPE.REPORT_CATE IS '신고카테고리';
+
+INSERT 
+       INTO REPORT_TYPE
+       VALUES
+     (
+       10
+     , '광고성 콘텐츠'
+     );
+INSERT 
+       INTO REPORT_TYPE
+       VALUES
+     (
+       20
+     , '상품정보 불일치'
+     );
+INSERT 
+       INTO REPORT_TYPE
+       VALUES
+     (
+       30
+     , '사기'
+     );
+INSERT 
+       INTO REPORT_TYPE
+       VALUES
+     (
+       40
+     , '기타'
+     );
+
+------------------------------------신고-----------------------------------------
+CREATE TABLE REPORT(
+    REPORT_NO VARCHAR2(20) PRIMARY KEY,
+    PRODUCT_NO VARCHAR2(20) NOT NULL REFERENCES PRODUCT,
+    REPORTER VARCHAR2(20) NOT NULL REFERENCES MEMBER,
+    REPORT_TYPE_NO NUMBER NOT NULL REFERENCES REPORT_TYPE,
+    REPORT_CONTENT VARCHAR2(4000) NOT NULL,
+    REPORT_DATE DATE NOT NULL
+);
+
+COMMENT ON COLUMN REPORT.REPORT_NO IS '신고번호';
+COMMENT ON COLUMN REPORT.PRODUCT_NO IS '상품번호';
+COMMENT ON COLUMN REPORT.REPORTER IS '신고자';
+COMMENT ON COLUMN REPORT.REPORT_TYPE_NO IS '신고 분류';
+COMMENT ON COLUMN REPORT.REPORT_CONTENT IS '신고 내용';
+COMMENT ON COLUMN REPORT.REPORT_DATE IS '신고 날짜';
+
+CREATE SEQUENCE SEQ_REPORT  -- 'R'||SEQ_REPORT.NEXTVAL
+NOCACHE;
+
+INSERT 
+       INTO REPORT
+       VALUES
+     (
+       'R'||SEQ_REPORT.NEXTVAL
+        , 'P5'
+        , 'M1'
+        , '10'
+        , '이거 광고에요 빠른 삭제 부탁드립니다'
+        , '24/02/15'
+     );
+INSERT 
+       INTO REPORT
+       VALUES
+     (
+       'R'||SEQ_REPORT.NEXTVAL
+        , 'P1'
+        , 'M2'
+        , '30'
+        , '사기치지 마세요'
+        , '24/02/16'
+     );
+INSERT 
+       INTO REPORT
+       VALUES
+     (
+       'R'||SEQ_REPORT.NEXTVAL
+        , 'P2'
+        , 'M3'
+        , '20'
+        , '감투를 샀는데 방망이가왔어요'
+        , '24/02/16'
+     );
+INSERT 
+       INTO REPORT
+       VALUES
+     (
+       'R'||SEQ_REPORT.NEXTVAL
+        , 'P3'
+        , 'M4'
+        , '40'
+        , '상품이 불량인거같아요'
+        , '24/02/15'
+     );
+INSERT 
+       INTO REPORT
+       VALUES
+     (
+       'R'||SEQ_REPORT.NEXTVAL
+        , 'P4'
+        , 'M5'
+        , '10'
+        , '딱봐도 광고에요'
+        , '24/02/15'
+     );
+------------------------------------공지사항-----------------------------------------
+CREATE TABLE NOTICE(
+    NOTICE_NO VARCHAR2(20) PRIMARY KEY,
+    MEM_NO VARCHAR2(20) NOT NULL REFERENCES MEMBER,
+    NOTICE_TITLE VARCHAR2(400) NOT NULL,
+    NOTICE_CONTENT VARCHAR2(4000) NOT NULL,
+    NOTICE_DATE DATE NOT NULL,
+    COUNT NUMBER NOT NULL,
+    NOTICE_STATUS CHAR(1) DEFAULT 'Y' CHECK(NOTICE_STATUS IN ('Y','N'))
+);
+
+COMMENT ON COLUMN NOTICE.NOTICE_NO IS '공지사항 번호';
+COMMENT ON COLUMN NOTICE.MEM_NO IS '작성자';
+COMMENT ON COLUMN NOTICE.NOTICE_TITLE IS '공지사항 제목';
+COMMENT ON COLUMN NOTICE.NOTICE_CONTENT IS '공지사항 내용';
+COMMENT ON COLUMN NOTICE.NOTICE_DATE IS '공지사항 날짜';
+COMMENT ON COLUMN NOTICE.COUNT IS '조회수';
+COMMENT ON COLUMN NOTICE.NOTICE_STATUS IS '게시 유형';
+
+CREATE SEQUENCE SEQ_NOTICE -- 'N'||SEQ_REP.NEXTVAL
+NOCACHE;
+
+INSERT 
+       INTO NOTICE
+       VALUES
+     (
+       'N'||SEQ_NOTICE.NEXTVAL
+        , 'M1'
+        , '쿨거래 버튼 관련 공지사항입니다'
+        , '쿨거래 버튼은 신뢰점수 300점부터입니다'
+        , '24/02/10'
+        , 100
+        , 'Y'
+     );
+INSERT 
+       INTO NOTICE
+       VALUES
+     (
+       'N'||SEQ_NOTICE.NEXTVAL
+        , 'M1'
+        , '신고 관련 공지사항입니다'
+        , '게시글 10회 신고시 작성자 1회 경고입니다'
+        , '24/02/10'
+        , 200
+        , 'Y'
+     );
+INSERT 
+       INTO NOTICE
+       VALUES
+     (
+       'N'||SEQ_NOTICE.NEXTVAL
+        , 'M1'
+        , '경고 관련 공지사항입니다'
+        , '경고 3회시 추방입니다'
+        , '24/02/11'
+        , 300
+        , 'Y'
+     );
+INSERT 
+       INTO NOTICE
+       VALUES
+     (
+       'N'||SEQ_NOTICE.NEXTVAL
+        , 'M1'
+        , '신뢰점수 관련 공지사항입니다'
+        , '신뢰점수는 기본100점부터입니다'
+        , '24/02/12'
+        , 400
+        , 'Y'
+     );
+INSERT 
+       INTO NOTICE
+       VALUES
+     (
+       'N'||SEQ_NOTICE.NEXTVAL
+        , 'M1'
+        , '쿨거래 버튼 관련 공지사항입니다'
+        , '쿨거래 버튼은 신뢰점수 300점부터입니다'
+        , '24/02/13'
+        , 500
+        , 'Y'
+     );
+
+------------------------------------알림-----------------------------------------
+CREATE TABLE ALARM(
+    ALARM_NO VARCHAR2(20) PRIMARY KEY,
+    MEM_NO VARCHAR2(20) REFERENCES MEMBER,
+    ALARM_MSG VARCHAR2(4000) NOT NULL,
+    READ_YN CHAR(1) NOT NULL CHECK(READ_YN IN ('Y','N')),
+    SENT_DATE DATE NOT NULL
+);
+
+COMMENT ON COLUMN ALARM.ALARM_NO IS '알림번호';
+COMMENT ON COLUMN ALARM.MEM_NO IS '발신회원번호';
+COMMENT ON COLUMN ALARM.ALARM_MSG IS '알림메세지';
+COMMENT ON COLUMN ALARM.READ_YN IS '읽기 여부';
+COMMENT ON COLUMN ALARM.SENT_DATE IS '발신 일자';
+
+CREATE SEQUENCE SEQ_ALARM  --  'A'||SEQ_REP.NEXTVAL
+NOCACHE;
+
+INSERT 
+       INTO ALARM
+       VALUES
+     (
+          'A'||SEQ_ALARM.NEXTVAL
+        , 'M1'
+        , '도깨비 팬티 살 수 있을까요'
+        , 'N'
+        , '24/02/14'
+     );
+INSERT 
+       INTO ALARM
+       VALUES
+     (
+       'A'||SEQ_ALARM.NEXTVAL
+        , 'M2'
+        , '도깨비 감투 살 수 있을까요'
+        , 'N'
+        , '24/02/14'
+     );
+INSERT 
+       INTO ALARM
+       VALUES
+     (
+       'A'||SEQ_ALARM.NEXTVAL
+        , 'M3'
+        , '도깨비 방망이 살 수 있을까요'
+        , 'N'
+        , '24/02/15'
+     );
+INSERT 
+       INTO ALARM
+       VALUES
+     (
+       'A'||SEQ_ALARM.NEXTVAL
+        , 'M4'
+        , '도깨비 뿔 살 수 있을까요'
+        , 'N'
+        , '24/02/15'
+     );
+INSERT 
+       INTO ALARM
+       VALUES
+     (
+       'A'||SEQ_ALARM.NEXTVAL
+        , 'M5'
+        , '메밀묵 살 수 있을까요'
+        , 'N'
+        , '24/02/16'
+     );
+
+COMMIT;
