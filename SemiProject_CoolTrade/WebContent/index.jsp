@@ -9,10 +9,11 @@
 <body>
 	<%@ include file="views/common/header.jsp" %>
 	
-	<%@ include file="views/common/main.jsp" %>
+<%-- <%@ include file="views/common/main.jsp" %> --%>	
 	
 <%-- 	<%@ include file="views/search/productDetailView.jsp" %> --%>
 <%-- 	<%@ include file="views/search/searchListView.jsp" %> --%>
+<%@ include file="views/myPage/productSellDetail.jsp" %>
 
 	<%@ include file="views/common/footer.jsp" %>
 </body>
