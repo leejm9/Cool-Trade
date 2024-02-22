@@ -1,11 +1,11 @@
-package com.kh.model.service;
+package com.cooltrade.member.model.service;
 
-import static com.kh.common.JDBCTemplate.*;
+import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
-import com.kh.model.dao.MemberDao;
-import com.kh.model.vo.Member;
+import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.Member;
 
 public class MemberService {
 
@@ -15,6 +15,7 @@ public class MemberService {
 		Member m = new MemberDao().loginMember(conn,userId, userPwd);
 		
 		close(conn);
+		
 		return m;
 		
 	}

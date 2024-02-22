@@ -1,17 +1,15 @@
-package com.kh.model.dao;
+package com.cooltrade.member.model.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static com.kh.common.JDBCTemplate.*;
-import com.kh.model.vo.Member;
+import static com.cooltrade.common.JDBCTemplate.*;
+import com.cooltrade.member.model.vo.Member;
 
 public class MemberDao {
 	private Properties prop = new Properties();

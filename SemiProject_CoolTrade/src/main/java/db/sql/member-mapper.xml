@@ -3,19 +3,19 @@
 <properties>
 
 	<entry key="loginMember">
-		SELECT	
-			   MEM_NO
-			 , MID
-			 , MPW
-			 , MNAME
-			 , NICKNAME
-			 , PHONE
-			 , EMAIL
-			 , ENROLLDATE
-			 , ONDO
-			 , MLEVEL
-			 , MSTATUS
-			 , CAUTION
+		SELECT 
+		       MEM_NO
+		     , MID
+		     , MPW
+		     , MNAME
+		     , NICKNAME
+		     , PHONE
+		     , EMAIL
+		     , ENROLLDATE
+		     , ONDO
+		     , MLEVEL
+		     , MSTATUS
+		     , CAUTION
 		  FROM MEMBER
 		 WHERE MID = ?
 		   AND MPW = ?
