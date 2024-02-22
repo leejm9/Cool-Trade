@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="countSalesRate">
+		SELECT 
+		       SUM(PRICE) salesRate
+		  FROM PRODUCT P
+		  JOIN TRADE T ON(P.PNO = T.PRODUCT_NO);
+	</entry>
+	
+</properties>

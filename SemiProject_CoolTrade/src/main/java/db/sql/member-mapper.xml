@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="loginMember">
+		SELECT	
+			   MEM_NO
+			 , MID
+			 , MPW
+			 , MNAME
+			 , NICKNAME
+			 , PHONE
+			 , EMAIL
+			 , ENROLLDATE
+			 , ONDO
+			 , MLEVEL
+			 , MSTATUS
+			 , CAUTION
+		  FROM MEMBER
+		 WHERE MID = ?
+		   AND MPW = ?
+		   AND MSTATUS = 'Y'
+	</entry>
+	
+	<entry key="insertMember">
+	INSERT
+	  INTO MEMBER
+	VALUES
+		   (?
+		 , ?
+		 , ?
+		 , ?
+		 , ?
+		   )	  
+	</entry>
+	
+	<entry key="countMember">
+		SELECT
+			   COUNT(*) count
+		  FROM MEMBER
+		 WHERE ENROLLDATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		 GROUP
+		 	BY ENROLLDATE
+	</entry>
+	
+</properties>
