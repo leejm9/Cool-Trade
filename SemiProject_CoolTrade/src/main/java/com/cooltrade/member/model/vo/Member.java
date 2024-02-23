@@ -3,16 +3,16 @@ package com.cooltrade.member.model.vo;
 import java.sql.Date;
 
 public class Member {
-	private String memNo;
-	private String mId;
-	private String mPw;
-	private String mName;
+	private String userNo;
+	private String userId;
+	private String userPwd;
+	private String userName;
 	private String nickName;
 	private String phone;
 	private String email;
 	private Date enrollDate;
 	private double ondo;
-	private String mLevel;
+	private String userLevel;
 	private String mStatus;
 	private int caution;
 	

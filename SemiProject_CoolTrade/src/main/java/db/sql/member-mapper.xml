@@ -4,22 +4,22 @@
 
 	<entry key="loginMember">
 		SELECT 
-		       MEM_NO
-		     , MID
-		     , MPW
-		     , MNAME
-		     , NICKNAME
-		     , PHONE
-		     , EMAIL
-		     , ENROLLDATE
-		     , ONDO
-		     , MLEVEL
-		     , MSTATUS
-		     , CAUTION
+		      	USER_NO
+			  , USER_ID
+			  ,	USER_PWD
+			  ,	USER_NAME
+			  ,	NICKNAME
+			  ,	PHONE
+			  ,	EMAIL
+			  ,	ENROLL_DATE
+			  ,	ONDO
+			  ,	USER_LEVEL
+			  ,	USER_STATUS
+			  ,	CAUTION
 		  FROM MEMBER
-		 WHERE MID = ?
-		   AND MPW = ?
-		   AND MSTATUS = 'Y'
+		 WHERE USER_ID = ?
+		   AND USER_PWD = ?
+		   AND USER_STATUS = 'Y'
 	</entry>
 	
 	<entry key="insertMember">
@@ -38,9 +38,9 @@
 		SELECT
 			   COUNT(*) count
 		  FROM MEMBER
-		 WHERE ENROLLDATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		 WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
 		 GROUP
-		 	BY ENROLLDATE
+		 	BY ENROLL_DATE
 	</entry>
 	
 </properties>
