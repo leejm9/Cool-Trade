@@ -77,14 +77,14 @@ body{
 #favoriteBtn:hover{
     color:#04b4fc
 }
-#loginBtn:hover, #headerMyStore:hover, #memberList a:hover,#footer2 a:hover{
+.loginBtn:hover, #headerMyStore:hover, #memberList a:hover,#footer2 a:hover{
     color:#04b4fc
 }
 #headerRight{
     height: 40px;
     width: 250px;
 }
-#loginBtn{
+.loginBtn{
     height: 100%;
     font-size: 13px;
     justify-content: center;
@@ -132,8 +132,6 @@ body{
     flex-direction: column;
     background-color: rgb(249, 249, 249);
 }
-
-/* */
 
 #header2-1{
     width: 1000px;

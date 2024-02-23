@@ -45,7 +45,8 @@
                     <%}else{ %>
 					<!-- case2. 로그인 후 -->
 					<div id="headerLogin">
-                        <button id="loginBtn">알림</button>
+                        <button class="loginBtn" style="border-bottom: 1px solid rgb(238, 238, 238);">알림</button>
+                        <button class="loginBtn" style="border-bottom: 1px solid rgb(238, 238, 238);">로그아웃</button>
                     </div>
                     <%} %>
                     <div id="headerStore" class="flex">
