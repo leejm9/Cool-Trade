@@ -43,7 +43,7 @@ public class MemberLoginController extends HttpServlet {
 		}else {
 			HttpSession session =  request.getSession();
 			session.setAttribute("loginUser", loginUser);
-			session.setAttribute("alertMsg", loginUser.getmName()+"님 로그인 되었습니다.");
+			session.setAttribute("alertMsg", loginUser.getUserName()+"님 로그인 되었습니다.");
 			response.sendRedirect(request.getContextPath());
 		}
 	}

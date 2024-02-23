@@ -13,7 +13,7 @@ public class Member {
 	private Date enrollDate;
 	private double ondo;
 	private String userLevel;
-	private String mStatus;
+	private String userStatus;
 	private int caution;
 	
 	private int count;
@@ -25,82 +25,73 @@ public class Member {
 		super();
 		this.count = count;
 	}
-	
-	
-	public Member(String mId, String mPw, String mName, String phone, String email) {
-		super();
-		this.mId = mId;
-		this.mPw = mPw;
-		this.mName = mName;
-		this.phone = phone;
-		this.email = email;
-	}
 
-	public Member(String memNo, String mId, String mPw, String mName, String nickName, String phone, String email,
-			Date enrollDate, double ondo, String mLevel, String mStatus, int caution) {
+	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
+			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count) {
 		super();
-		this.memNo = memNo;
-		this.mId = mId;
-		this.mPw = mPw;
-		this.mName = mName;
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
 		this.nickName = nickName;
 		this.phone = phone;
 		this.email = email;
 		this.enrollDate = enrollDate;
 		this.ondo = ondo;
-		this.mLevel = mLevel;
-		this.mStatus = mStatus;
-		this.caution = caution;
-	}
-
-	public Member(String memNo, String mId, String mPw, String mName, String nickName, String phone, String email,
-			Date enrollDate, double ondo, String mLevel, String mStatus, int caution, int count) {
-		super();
-		this.memNo = memNo;
-		this.mId = mId;
-		this.mPw = mPw;
-		this.mName = mName;
-		this.nickName = nickName;
-		this.phone = phone;
-		this.email = email;
-		this.enrollDate = enrollDate;
-		this.ondo = ondo;
-		this.mLevel = mLevel;
-		this.mStatus = mStatus;
+		this.userLevel = userLevel;
+		this.userStatus = userStatus;
 		this.caution = caution;
 		this.count = count;
 	}
-
-	public String getMemNo() {
-		return memNo;
-	}
-
-	public void setMemNo(String memNo) {
-		this.memNo = memNo;
-	}
-
-	public String getmId() {
-		return mId;
-	}
-
-	public void setmId(String mId) {
-		this.mId = mId;
-	}
-
-	public String getmPw() {
-		return mPw;
-	}
 	
-	public void setmPw(String mPw) {
-		this.mPw = mPw;
+
+	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
+			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.phone = phone;
+		this.email = email;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.userLevel = userLevel;
+		this.userStatus = userStatus;
+		this.caution = caution;
 	}
 
-	public String getmName() {
-		return mName;
+	public String getUserNo() {
+		return userNo;
 	}
 
-	public void setmName(String mName) {
-		this.mName = mName;
+	public void setUserNo(String userNo) {
+		this.userNo = userNo;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserPwd() {
+		return userPwd;
+	}
+
+	public void setUserPwd(String userPwd) {
+		this.userPwd = userPwd;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getNickName() {
@@ -135,30 +126,28 @@ public class Member {
 		this.enrollDate = enrollDate;
 	}
 
-
 	public double getOndo() {
 		return ondo;
 	}
-
 
 	public void setOndo(double ondo) {
 		this.ondo = ondo;
 	}
 
-	public String getmLevel() {
-		return mLevel;
+	public String getUserLevel() {
+		return userLevel;
 	}
 
-	public void setmLevel(String mLevel) {
-		this.mLevel = mLevel;
+	public void setUserLevel(String userLevel) {
+		this.userLevel = userLevel;
 	}
 
-	public String getmStatus() {
-		return mStatus;
+	public String getUserStatus() {
+		return userStatus;
 	}
 
-	public void setmStatus(String mStatus) {
-		this.mStatus = mStatus;
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	public int getCaution() {
@@ -177,17 +166,16 @@ public class Member {
 		this.count = count;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Member [memNo=" + memNo + ", mId=" + mId + ", mPw=" + mPw + ", mName=" + mName + ", nickName="
-				+ nickName + ", phone=" + phone + ", email=" + email + ", enrollDate=" + enrollDate + ", ondo=" + ondo
-				+ ", mLevel=" + mLevel + ", mStatus=" + mStatus + ", caution=" + caution + ", count=" + count + "]";
+		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
+				+ ", nickName=" + nickName + ", phone=" + phone + ", email=" + email + ", enrollDate=" + enrollDate
+				+ ", ondo=" + ondo + ", userLevel=" + userLevel + ", userStatus=" + userStatus + ", caution=" + caution
+				+ ", count=" + count + "]";
 	}
-
-
-
+	
+	
+	
 	
 	
 }
