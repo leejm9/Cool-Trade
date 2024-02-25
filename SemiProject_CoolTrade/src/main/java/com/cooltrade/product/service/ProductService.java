@@ -1,18 +1,36 @@
-package com.kh.product.service;
+package com.cooltrade.product.service;
 
-import static com.kh.common.JDBCTemplate.*;
+import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
-import com.kh.model.dao.MemberDao;
-import com.kh.product.dao.ProductDao;
-import com.kh.product.vo.Product;
+import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.product.dao.ProductDao;
+import com.cooltrade.product.vo.Product;
 
 public class ProductService {
 	public Product countSalesRate() {
 		Connection conn = getConnection();
 		
 		Product p = new ProductDao().countSalesRate(conn);
+		
+		close(conn);
+		return p;
+	}
+	
+	public Product todayStockGoods() {
+		Connection conn = getConnection();
+		
+		Product p = new ProductDao().todayStockGoods(conn);
+		
+		close(conn);
+		return p;
+	}
+	
+	public Product countReportedProduct() {
+		Connection conn = getConnection();
+		
+		Product p = new ProductDao().countReportedProduct(conn);
 		
 		close(conn);
 		return p;

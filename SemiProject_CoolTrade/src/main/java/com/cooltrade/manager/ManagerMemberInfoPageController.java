@@ -1,4 +1,4 @@
-package com.kh.manager;
+package com.cooltrade.manager;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

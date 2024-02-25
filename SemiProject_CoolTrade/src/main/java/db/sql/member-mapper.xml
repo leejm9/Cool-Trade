@@ -39,8 +39,6 @@
 			   COUNT(*) count
 		  FROM MEMBER
 		 WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
-		 GROUP
-		 	BY ENROLL_DATE
 	</entry>
 	
 </properties>
