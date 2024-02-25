@@ -22,6 +22,35 @@
 		   AND USER_STATUS = 'Y'
 	</entry>
 	
+	<entry key="selectListCount">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE USER_LEVEL IN ('U','C')
+		   AND USER_STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , ENROLL_DATE
+		                     , ONDO 
+		                     , CAUTION
+		                  FROM MEMBER 
+		                 WHERE USER_LEVEL IN ('U','C')
+		                   AND USER_STATUS = 'Y'
+		                 ORDER
+		                    BY USER_NO DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 	<entry key="insertMember">
 	INSERT
 	  INTO MEMBER

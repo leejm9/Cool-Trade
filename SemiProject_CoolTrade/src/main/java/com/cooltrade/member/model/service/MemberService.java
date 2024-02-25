@@ -3,7 +3,9 @@ package com.cooltrade.member.model.service;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
+import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.member.model.vo.Member;
 
@@ -18,6 +20,23 @@ public class MemberService {
 		
 		return m;
 		
+	}
+	public int selectListCount() {
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().selectListCount(conn);
+		
+		close(conn);
+		return listCount;
+		
+	}
+	
+	public ArrayList<Member> selectList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectList(conn, pi);
+		close(conn);
+		return list;
 	}
 	
 //	public int insertMember(Member m) {

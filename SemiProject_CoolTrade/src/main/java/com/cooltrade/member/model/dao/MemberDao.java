@@ -6,9 +6,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
+
+import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.vo.Member;
 
 public class MemberDao {
@@ -63,6 +66,73 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return m;
+	}
+	
+	public int selectListCount(Connection conn) {
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+	}
+	
+	public ArrayList<Member> selectList(Connection conn, PageInfo pi) {
+		
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getString("user_no"),
+									rset.getString("user_id"),
+									rset.getString("user_name"),
+									rset.getDate("enroll_date"),
+									rset.getDouble("ondo"),
+									rset.getInt("caution")
+									));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 	
 //	public int insertMember(Connection conn, Member m) {
