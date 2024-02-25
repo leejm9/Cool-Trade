@@ -54,7 +54,7 @@ public class MemberDao {
 							   rset.getInt("caution"));
 			}
 			
-			System.out.println(m);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
