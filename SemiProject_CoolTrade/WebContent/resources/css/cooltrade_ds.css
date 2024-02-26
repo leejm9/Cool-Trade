@@ -120,7 +120,7 @@ body{
 }
 
 #header2{
-    height: 145px;
+    height: 160px;
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
     padding-top: 35px;
@@ -219,7 +219,7 @@ body{
     width: 1000px;
     height: 70px;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 45px;
 }
 #headerCategory, #notice{
     align-items: center;
@@ -240,7 +240,7 @@ body{
 
 #sidebarWrap {
     position: fixed;
-    top: 175px; 
+    top: 190px; 
     right: calc(50% - 600px);
     z-index: 20;
     flex-direction: column;
@@ -491,6 +491,7 @@ div[id^="banner"]{
 #banner1{
     height: 300px;
     margin-bottom: 15px;
+    margin-top: 30px;
 }
 #banner2{
     height: 200px;

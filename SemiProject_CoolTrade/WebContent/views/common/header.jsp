@@ -49,7 +49,7 @@
                     </div>
                     <%} %>
                     <div id="headerStore" class="flex">
-                        <a href="#" id="headerMyStore" class="flex">마이페이지</a>
+                        <a href="<%= contextPath %>/mypage.me" id="headerMyStore" class="flex">마이페이지</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                             </a>
                         </div>
                         <div id="sellContainer">
-                            <a href="#" id="sell">
+                            <a href="<%= contextPath %>/sellForm.pd" id="sell">
                                 <img src="resources/images/sell.png" alt="판매하기 이미지">
                                 판매하기
                             </a>

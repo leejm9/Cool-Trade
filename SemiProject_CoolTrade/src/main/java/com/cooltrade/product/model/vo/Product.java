@@ -1,4 +1,4 @@
-package com.kh.product.vo;
+package com.cooltrade.product.model.vo;
 
 import java.sql.Date;
 
@@ -128,8 +128,5 @@ public class Product {
 				+ ", price=" + price + ", pDesc=" + pDesc + ", zone=" + zone + ", pStatus=" + pStatus + ", uploadDate="
 				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + "]";
 	}
-	
-	
-	
 	
 }
