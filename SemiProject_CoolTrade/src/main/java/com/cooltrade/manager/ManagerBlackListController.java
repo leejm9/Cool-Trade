@@ -23,14 +23,16 @@ public class ManagerBlackListController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
+	
     public ManagerBlackListController() {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int listCount; 	 
 		int currentPage; 
@@ -60,7 +62,6 @@ public class ManagerBlackListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
 	
 		ArrayList<Member> list = new MemberService().selectBlackList(pi);
 		
@@ -68,7 +69,6 @@ public class ManagerBlackListController extends HttpServlet {
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("views/manager/managerMemberInfoPage.jsp").forward(request, response);
-	
 	}
 
 	/**
