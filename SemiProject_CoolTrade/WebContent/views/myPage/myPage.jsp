@@ -195,7 +195,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">찜 목록</a>
+                                    <a href="">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="">구매 내역</a>
@@ -244,15 +244,21 @@
                         <ul>
                             <li>
                                 <div>쿨거래</div>
-                                <div>0</div>
+                                <div>
+                                    <a href="#">0</a>
+                                </div>
                             </li>
                             <li>
                                 <div>이용후기</div>
-                                <div>127</div>
+                                <div>
+                                    <a href="#">127</a>
+                                </div>
                             </li>
                             <li>
-                                <div>찜목록</div>
-                                <div>3</div>
+                                <div>찜한상품</div>
+                                <div>
+                                    <a href="#">3</a>
+                                </div>
                             </li>
                         </ul>
                     </div>

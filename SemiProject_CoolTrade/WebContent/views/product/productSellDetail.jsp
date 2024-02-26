@@ -31,6 +31,7 @@
 
     #wrap {
         width: 1000px;
+        height: auto;
         margin: auto;
         margin-top: 180px;
         height: 100%; /* 추가: body를 뷰포트의 전체 높이로 설정 */
@@ -446,43 +447,38 @@
         align-items: center;
     }
 
-    
     #footer-content {
         width: 100%;
         height: 88px;
-        background: rgb(246, 246, 246);
-        box-shadow: rgb(229, 229, 229) 0px -1px 0px 0px;
-        /* position: fixed; */
-        left: 0px;
-        bottom: 0px;
-        z-index: 10;
+        background-color: rgb(246, 246, 246);
     }
-    
+
     #footer-content-div {
-        display: flex;
+        width: 1000px;
         height: 100%;
+        display: flex;
         justify-content: flex-end;
         align-items: center;
         gap: 14px;
-        width: 1000px;
         margin: auto;
     }
 
     #save, #enroll {
-        border-radius: 2px;
         border: 1px solid rgb(229, 229, 229);
-        background: rgb(255, 255, 255);
+        background-color: rgb(255, 255, 255);
         color: rgb(102, 102, 102);
         font-size: 20px;
-        font-weight: 500;
         height: 55px;
         width: 160px;
+        border-radius: 4px;
     }
 
     #enroll {
         background-color: rgb(4, 180, 252);
         color: white;
     }
+    
+
 </style>
 </head>
 <body>
@@ -509,7 +505,7 @@
                                     </div>
                                     <div id="fileInput-div">
                                         <input type="file" id="fileInput" accept="image/*">
-                                        <img src="../../resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+                                        <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                     </div>
                                 </div>
 
@@ -772,5 +768,6 @@
         });
 
     </script>
+
 </body>
 </html>
