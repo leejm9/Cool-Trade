@@ -1,4 +1,4 @@
-package com.kh.product.dao;
+package com.cooltrade.product.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-import static com.kh.common.JDBCTemplate.*;
-import com.kh.product.vo.Product;
+import static com.cooltrade.common.JDBCTemplate.*;
+import com.cooltrade.product.vo.Product;
 
 public class ProductDao {
 	Properties prop = new Properties();

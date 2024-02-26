@@ -22,19 +22,19 @@
         </div>
         <div id="detail_pic_price" class="flex">
             <div id="small_thumbnail" >
-                <div id="thumb_container">
+                <div>
                     <img src="resources/images/sell.png" alt="이미지">
                 </div>
-                <div id="thumb_container">
+                <div>
                     <img src="resources/images/sell.png" alt="이미지">
                 </div>
-                <div id="thumb_container">
+                <div>
                     <img src="resources/images/sell.png" alt="이미지">
                 </div>
-                <div id="thumb_container">
+                <div>
                     <img src="resources/images/sell.png" alt="이미지">
                 </div>
-                <div id="thumb_container">
+                <div>
                     <img src="resources/images/sell.png" alt="이미지">
                 </div>
             </div>

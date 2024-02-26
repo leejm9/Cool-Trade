@@ -39,7 +39,7 @@
                 <div id="headerRight" class="flex">
                 	<%if(loginUser==null){ %>
                 	<!--case1. 로그인전-->
-                    <div id="headerLogin">
+                    <div id="headerLogin" class="flex">
                         <button onclick="location.href ='<%=contextPath%>/loginForm.me'" id="loginBtn">로그인/회원가입</button>
                     </div>
                     <%}else{ %>

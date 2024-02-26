@@ -10,9 +10,9 @@
 <%-- 	<%@ include file="../common/header.jsp" %> --%>
 	<div id="content">
 
-		<div id="category_table">
-			<div id="category_header"><h3>카테고리</h3></div>
-			<div id="category_list" class="flex">
+		<div class="category_table">
+			<div class="category_header"><h3>카테고리</h3></div>
+			<div class="category_list" class="flex">
 				<div id="list1">
 					<a href="">
 						<div id="category_name1">패션의류</div>
@@ -148,7 +148,6 @@
 			<li class="page-item"><a class="page-link" href="#">Next</a></li>
 		</ul>
 	</div>
-<%-- 	<%@ include file="../common/footer.jsp" %> --%>
 					<script>
 						$(function(){
 							$(".show_detail").hover(function(){

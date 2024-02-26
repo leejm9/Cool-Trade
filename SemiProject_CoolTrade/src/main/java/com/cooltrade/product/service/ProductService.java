@@ -1,12 +1,11 @@
-package com.kh.product.service;
+package com.cooltrade.product.service;
 
-import static com.kh.common.JDBCTemplate.*;
+import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
-import com.kh.model.dao.MemberDao;
-import com.kh.product.dao.ProductDao;
-import com.kh.product.vo.Product;
+import com.cooltrade.product.dao.ProductDao;
+import com.cooltrade.product.vo.Product;
 
 public class ProductService {
 	public Product countSalesRate() {

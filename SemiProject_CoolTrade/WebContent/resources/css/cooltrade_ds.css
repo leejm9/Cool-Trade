@@ -94,22 +94,19 @@ body{
     border: none;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
-#headerMyStore{
+#headerMyStore, #headerLogin button{
     text-decoration: none;
      color: rgb(33, 33, 33);
      font-size: 13px;
      justify-content: center;
      align-items: center;
      padding: 0 15px;
+     border-bottom: 1px solid rgb(238, 238, 238);
 }
 
 #headerRight {
     display: flex;
     justify-content: flex-end;
-}
-
-#header2 *{
-    /* border: none; */
 }
 
 #header1 {
@@ -441,30 +438,28 @@ a:hover{
 #search_advice{
     padding-top: 40px;
 }
-#category_table{
+.category_table{
     width: 1000px;
     margin-top: 30px;
     background-color: white;
 }
-#category_header{
+.category_header{
     padding: 20px;
     width: 100%;
 }
-#category_list{
+.category_list{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 0px;
     border: 1px solid rgb(204, 204, 204);
 }
-#category_list>div>a{
+.category_list>div>a{
     display: flex;
     justify-content: left;
     align-items: center;
     padding: 20px;
 }
-#category_list>div{
-    
-}
+
 div[id^=searched_items]{
     margin-left: 5px;
     color:  rgb(204, 204, 204);
@@ -576,9 +571,7 @@ div[id^="banner"]{
 #product_category_selected:hover{
     cursor: pointer;   
 }
-#detail_pic_price *{
-    /* border: 1px solid red; */
-}
+
 #small_thumbnail{
     width: 80px;
     flex-direction: column;

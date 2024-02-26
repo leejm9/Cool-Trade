@@ -1,4 +1,4 @@
-package com.kh.product.vo;
+package com.cooltrade.product.vo;
 
 import java.sql.Date;
 
