@@ -30,10 +30,10 @@ body{
     flex-direction: column;
     align-items: center;
 }
-.flex{
+.flex-ds{
     display: flex;
 }
-.wrap{
+.wrap-ds{
     width: 100%;
     min-width: 1250px;
     height: auto;
@@ -42,26 +42,26 @@ body{
     position: relative;
     background-color: white;
 }
-#header1{
+#header1-ds{
     height: 40px;
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
     justify-content: center;
     background-color: rgb(249, 249, 249);
 }
-#header1 *{
+#header1-ds *{
     border: none;
 }
-#header1-1{
+#header1-1-ds{
     width: 1000px;
     height: 40px;
     justify-content: space-between;
 }
-#headerLeft{
+#headerLeft-ds{
     height: 40px;
     width: 110px;
 }
-#favoriteBtn{
+#favoriteBtn-ds{
     height: 40px;
     font-size: 13px;
     justify-content: center;
@@ -74,17 +74,17 @@ body{
     align-items: center;
 }
 
-#favoriteBtn:hover{
+#favoriteBtn-ds:hover{
     color:#04b4fc
 }
-.loginBtn:hover, #headerMyStore:hover, #memberList a:hover,#footer2 a:hover{
+.loginBtn-ds:hover, #headerMyStore-ds:hover, #memberList-ds a:hover,#footer2-ds a:hover{
     color:#04b4fc
 }
-#headerRight{
+#headerRight-ds{
     height: 40px;
     width: 250px;
 }
-.loginBtn{
+.loginBtn-ds{
     height: 100%;
     font-size: 13px;
     justify-content: center;
@@ -94,7 +94,7 @@ body{
     border: none;
     border-bottom: 1px solid rgb(238, 238, 238);
 }
-#headerMyStore, #headerLogin button{
+#headerMyStore-ds, .headerLogin-ds button{
     text-decoration: none;
      color: rgb(33, 33, 33);
      font-size: 13px;
@@ -104,19 +104,19 @@ body{
      border-bottom: 1px solid rgb(238, 238, 238);
 }
 
-#headerRight {
+#headerRight-ds {
     display: flex;
     justify-content: flex-end;
 }
 
-#header1 {
+#header1-ds {
     position: fixed;
     top: 0px;
     left: 0px;
     z-index: 20;
 }
 
-#header2{
+#header2-ds{
     height: 145px;
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
@@ -130,37 +130,37 @@ body{
     background-color: rgb(249, 249, 249);
 }
 
-#header2-1{
+#header2-1-ds{
     width: 1000px;
     height: 40px;
     justify-content: space-between;
     /* border: none; */
 }
 
-#header2-1{
+#header2-1-ds{
     display: flex;
     flex-direction: column;
 }
 
-#headerSearch{
+#headerSearch-ds{
     width: 100%;
     height: 40px;
     justify-content: space-between;
     align-items: center;
 }
-#logo, #logo img{
+#logo-ds, #logo-ds img{
     height: 75px;
 }
-#logo{
+#logo-ds{
     margin-right: 100px;
 }
-#searchBar{
+#searchBar-ds{
     width: 460px;
     height: 40px;
     border: 2px solid #04b4fc;
     border-radius: 25px;
 }
-#searchContainer{
+#searchContainer-ds{
     width: 100%;
     height: 100%;
     align-items: center;
@@ -168,7 +168,7 @@ body{
     vertical-align: baseline;
     border: 0px;
 }
-#search{
+#search-ds{
     width: 410px;
     height: 17px;
     background-color: rgb(249, 249, 249);
@@ -177,63 +177,85 @@ body{
     font-size: 14px;
     
 }
-#searchImgContainer, #searchImg{
+#searchImgContainer-ds, #searchImg-ds{
     height: 16px;
     width: 16px;
 }
-#chatSell{
+#chatSell-ds{
     height: 26px;
     width: 210px;
     /* flex-direction: row-reverse; */
     justify-content: flex-end;
 }
 
-#chatSell img {
+#chatSell-ds img {
     width: 28px;
     height: 28px;
     padding: 5px;
 }
 
-#chat, #sell{
+#chat-ds, #sell-ds{
     text-decoration: none;
     color: rgb(100, 100, 100);
     font-weight: bold;
     display: flex;
     align-items: center;
 }
-#chat:hover, #sell:hover{
+#chat-ds:hover, #sell-ds:hover{
     color: #04b4fc;
 }
-#chat{
+#chat-ds{
     margin-right: 15px;
 }
-#chat::after{
+#chat-ds::after{
     margin-left: 15px;
 }
-#headerCategory{
+#headerCategory-ds{
     width: 1000px;
     height: 70px;
     justify-content: space-between;
     margin-top: 30px;
 }
-#headerCategory, #notice{
-    align-items: center;
+#headerCategory-ds, #notice-ds{
     font-size: 20px;
     font-weight: 900;
 }
+.category_hover-ds{
+    flex-direction: column;
+    display: none;
+}
+.category_hover-ds>a{
+    text-decoration: none;
+    color: rgb(33, 33, 33);
+    background: rgb(249, 249, 249);
+    border: 1px solid rgb(204, 204, 204);
+    padding: 10px;
+}
+#categoryMenu-ds:hover+.category_hover-ds{
+    display: flex;
+}
+.category_hover-ds:hover{
+    display:flex;
+}
+#categoryMenu-ds:hover{
+    text-decoration: none;
+    color: #04b4fc;
+    cursor: pointer;
 
-#categoryMenu:hover , #notice:hover, #search_header a:hover {
+}
+
+#notice-ds:hover, #search_header-ds a:hover, .category_hover-ds>a:hover{
     text-decoration: none;
     color: #04b4fc;
     cursor: pointer;
 }
 
-#categoryMenu {
+#categoryMenu-ds {
     display: flex;
     align-items: flex-end;
 }
 
-#sidebarWrap {
+#sidebarWrap-ds {
     position: fixed;
     top: 175px; 
     right: calc(50% - 600px);
@@ -242,7 +264,7 @@ body{
 }
 
 
-#jjimWrap{
+#jjimWrap-ds{
     padding: 10px;
     width: 90px;
     height: 54px;
@@ -252,7 +274,7 @@ body{
     box-sizing: border-box;
     display: block;
 }
-#jjimText{
+#jjimText-ds{
     width: 68px;
     height: 16px; 
     font-size: 12px;
@@ -260,13 +282,13 @@ body{
     color: rgb(102, 102, 102); 
     justify-content: center;          
 }
-#jjimLink{
+#jjimLink-ds{
     width: 68px;
     height: 16px;
     justify-content: center;
     text-decoration: none;
 }
-#recentProduct{
+#recentProduct-ds{
     padding: 10px;
     width: 90px;
     height: 175px;
@@ -275,7 +297,7 @@ body{
     margin-bottom: 6px;
     display: block;
 }
-#recentTitle{
+#recentTitle-ds{
     width: 68px;
     height: 12px;
     font-size: 12px;
@@ -285,40 +307,40 @@ body{
     margin-bottom: 8px;
     justify-content: center;
 }
-#recentDotContainer{
+#recentDotContainer-ds{
     height: 2px;
     justify-content: center;
 }
-#recentDottedBorder{
+#recentDottedBorder-ds{
     width: 38px;
     height: 2px;
     border-bottom: 2px dotted rgb(136, 136, 136);
 }
-#recentSeenProduct{
+#recentSeenProduct-ds{
     display: block;
     justify-content: center;
     align-items: center;
 }
-#seenEye, #seenText{
+#seenEye-ds, #seenText-ds{
     justify-content: center;
     text-align: center;
 }
-#seenEye{
+#seenEye-ds{
     font-size: 25px;
 }
-#seenText{
+#seenText-ds{
     font-size: 14px;
     color: rgb(204, 204, 204);
     text-align: center;
     margin-top: 30px
 }
-#topContainer{
+#topContainer-ds{
     width: 90px;
     height: 40px;
     border: 1px solid rgb(204, 204, 204);
     justify-content: center;
 }
-#topBtn{
+#topBtn-ds{
     align-items: center;
     background-color: rgb(249, 249, 249);
     width: 100%;
@@ -327,7 +349,7 @@ body{
     font-weight: 600;
     color:  rgb(136, 136, 136);
 }
-#content{
+#content-ds{
     box-sizing: content-box;
     margin-top: 175px;
     width: 1000px;
@@ -337,44 +359,44 @@ body{
     
 /* 푸터 시작 */
 
-#footer{
+#footer-ds{
     width: 100%;
     border-top: 1px solid rgb(204, 204, 204);
     height: 235px;
     justify-content: center;
 }
-#footerWrap{
+#footerWrap-ds{
     display: block;
 }
-#memberList{
+#memberList-ds{
     margin: 0;
 }
-#memberList a{
+#memberList-ds a{
     text-decoration: none;
     font-weight: 600;
     color:rgb(33, 33, 33);
 }
-#ml1::after,#ml2::after,#ml3::after{
+#ml1-ds::after,#ml2-ds::after,#ml3-ds::after{
     margin: 0 20px;
     content: "|";
 }
-#footer2{
+#footer2-ds{
     width: 1000px;
     height: 235px;
     justify-content: space-between;
     padding: 30px;
 }
-#footer2>div{
+#footer2-ds>div{
     display: block;
 }
-#footer2 p{
+#footer2-ds p{
  display: block;
 }
-#footer2 a{
+#footer2-ds a{
     text-decoration: none;
     color: rgb(33, 33, 33);
 }
-#footer2 h3{
+#footer2-ds h3{
     font-weight: 600;
     margin-bottom: 15px;
 }
@@ -382,78 +404,78 @@ a{
     text-decoration: none;
     color: rgb(33, 33, 33);
 }
-#search_header{
+#search_header-ds{
     display: flex;
     justify-content: space-between;
     margin: 50px 0 25px 0;
 }
-.aline::after{
+.aline-ds::after{
     content: "|";
     margin: 0px 5px;
 }
 a:hover{
     text-decoration: none;
 }
-#search_content{
+#search_content-ds{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 10px;
 }
-.product_result{
+.product_result-ds{
     width: 192px;
     height: 310px;
     box-sizing: border-box;
 }
-#search_price::after{
+#search_price-ds::after{
     content: "원";
     font-size: 12px;;
 }
-#img_container, #product_thumbnail{
+#img_container-ds, #product_thumbnail-ds{
     width: 192px;
     height: 192px;
 
 }
-#search_title_price{
+#search_title_price-ds{
     padding: 13px 8px;
     width: 192px;
     height: 78px;
 }
-#no_match_text{
+#no_match_text-ds{
     padding: 200px 0px 300px 0px;
     justify-content: center;
     width:100%;
     flex-direction: column;
 }
-#search_text{
+#search_text-ds{
     width: 500px;
     border-bottom: 1px solid rgb(238, 238, 238);
     margin: auto;
     padding-bottom: 35px;
 }
-#user_search_text{
+#user_search_text-ds{
     font-size: 30px;
     font-weight: 900;
     color: #04b4fc;
 }
-#search_advice{
+#search_advice-ds{
     padding-top: 40px;
 }
-.category_table{
+.category_table-ds{
     width: 1000px;
     margin-top: 30px;
     background-color: white;
 }
-.category_header{
+.category_header-ds{
     padding: 20px;
     width: 100%;
 }
-.category_list{
+.category_list-ds{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 0px;
     border: 1px solid rgb(204, 204, 204);
 }
-.category_list>div>a{
+.category_list-ds>div>a{
     display: flex;
     justify-content: left;
     align-items: center;
@@ -465,14 +487,14 @@ div[id^=searched_items]{
     color:  rgb(204, 204, 204);
     font-size: 12px;
 }
-#list1{
+#list1-ds{
     border-bottom: 1px solid rgb(204, 204, 204);
 }
-#list2, #list3, #list4, #list5{
+#list2-ds, #list3-ds, #list4-ds, #list5-ds{
     border-left: 1px solid rgb(204, 204, 204);
     border-bottom: 1px solid rgb(204, 204, 204);
 }
-#list7, #list8, #list9, #list10{
+#list7-ds, #list8-ds, #list9-ds, #list10-ds{
     border-left: 1px solid rgb(204, 204, 204);
 }
 div[id^="banner"]{
@@ -481,235 +503,235 @@ div[id^="banner"]{
     background-color: #04b4fc; 
     text-align: center;
 }
-#banner1{
+#banner1-ds{
     height: 300px;
     margin-bottom: 15px;
 }
-#banner2{
+#banner2-ds{
     height: 200px;
 }
-#search_content_main{
+#search_content_main-ds{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 10px;
 }
-.product_result_main{
+.product_result_main-ds{
     width: 192px;
     height: 310px;
     box-sizing: border-box;
 }
-#search_price_main::after{
+.search_price_main-ds::after{
     content: "원";
     font-size: 12px;;
 }
-#img_container_main, #product_thumbnail_main{
+#img_container_main-ds, .product_thumbnail_main-ds{
     width: 192px;
     height: 192px;
 
 }
-#search_title_price_main{
+#search_title_price_main-ds{
     padding: 13px 8px;
     width: 192px;
     height: 78px;
 }
-#search_content_main{
+#search_content_main-ds{
     padding-top: 30px;
     padding-bottom: 30px;
 }
-#banner2+h2{
+#banner2-ds+h2{
     margin-top: 60px;
 }
-#search_content_main2{
+.search_content_main2-ds{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 10px;
 }
-.product_result_main2{
+.product_result_main2-ds{
     width: 192px;
     height: 310px;
     box-sizing: border-box;
 }
-#search_price_main2::after{
+.search_price_main2-ds::after{
     content: "원";
     font-size: 12px;;
 }
-#img_container_main2, #product_thumbnail_main2{
+.img_container_main2-ds, .product_thumbnail_main2-ds{
     width: 192px;
     height: 192px;
 
 }
-#search_title_price_main2{
+.search_title_price_main2-ds{
     padding: 13px 8px;
     width: 192px;
     height: 78px;
 }
-#search_content_main2{
+.search_content_main2-ds{
     padding-top: 30px;
     padding-bottom: 30px;
 }
-#home_img>img{
+#home_img-ds>img{
     width: 15px;
     height: 15px;
 }
-#home_img+img{
+#home_img-ds+img{
     width: 12px;
     height: 12px;
     margin: 5px 15px;
     
 }
-#product_category_selected{  
+#product_category_selected-ds{  
     border: 1px solid rgb(204, 204, 204);
     align-items: center;
 }
-#product_category_selected>div{
+#product_category_selected-ds>div{
     padding: 0px 10px 0 10px;
     justify-content: space-between;
 }
-#category_path{
+#category_path-ds{
     margin: 30px 0 50px 0;
 }
-#product_category_selected:hover{
+#product_category_selected-ds:hover{
     cursor: pointer;   
 }
 
-#small_thumbnail{
+#small_thumbnail-ds{
     width: 80px;
     flex-direction: column;
     margin-right: 20px;
 }
-#small_thumbnail>div{
+#small_thumbnail-ds>div{
 width: 100%;
 height: 80px;
 margin: 0 20px 10px 0px;
 
 }
-#small_thumbnail>div>img{
+#small_thumbnail-ds>div>img{
 width: 100%;
 height: 100%;
 }
-#main_img{
+#main_img-ds{
     width: 400px;
     height: 400px;
     margin: 25px 10px 25px 0;
 }
-#main_img>img{
+#main_img-ds>img{
     height: 100%;
     width: 100%;
 }
-#product_info{
+#product_info-ds{
     width: 500px;
 }
-#detail_pic_price{
+#detail_pic_price-ds{
     padding-top: 30px;
     border-top: 1px solid black;
 }
-#detail_price{
+#detail_price-ds{
     padding-top: 8px;
     border-bottom: 1px solid rgb(204, 204, 204);
     justify-content: space-between;
 }
-#detail_price>div{
+#detail_price-ds>div{
     align-items: baseline; 
 }
-.need_line_after::after{
+.need_line_after-ds::after{
     margin: 0 5px 0 5px;
     color:  rgb(204, 204, 204);
     content: "|";
 }
-#like_view_time>*{
+#like_view_time-ds>*{
     color:  rgb(136, 136, 136);
 }
-#like_view_report{
+#like_view_report-ds{
     justify-content: space-between;
     margin-bottom: 20px;
     margin-top: 10px;
 }
-#go_report{
+#go_report-ds{
     color:  rgb(136, 136, 136);
 }
-#go_report:hover{
+#go_report-ds:hover{
     cursor: pointer;
     color: red;
 }
-.dot_before::before{
+.dot_before-ds::before{
     content: "ㆍ";
     color:  rgb(136, 136, 136);
 }
-.dot_before{
+.dot_before-ds{
     width: 90px;
     color:  rgb(136, 136, 136);
 }
-#product_stats>div{
+#product_stats-ds>div{
     margin-bottom: 25px;
 }
-#like_chat_buy{
+#like_chat_buy-ds{
     justify-content: space-between;
     margin-top: 30px;
 }
-#related_products{
+#related_products-ds{
     margin-top: 30px;
 }
-#related_product_pic_title{
+#related_product_pic_title-ds{
     margin-top: 50px;
     margin-bottom: 100px;
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 25px;
 }
-#related_product_pic_title>div{
+#related_product_pic_title-ds>div{
     width: 180px;
 }
-#related_product_pic_title a{
+#related_product_pic_title-ds a{
     width: 100%;
 }
-#related_product_pic_title img{
+#related_product_pic_title-ds img{
     width: 100%;
     height: 160px;
 }
-#store_info, #store_info>img{
+#store_info, #store_info-ds>img{
     width: 50px;
     height: 50px;
 }
-#random_products{
+#random_products-ds{
     margin-top: 30px;
 }
-#random_product_pic_title{
+#random_product_pic_title-ds{
     margin-top: 50px;
     margin-bottom: 100px;
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 25px;
 }
-#random_product_pic_title>div{
+#random_product_pic_title-ds>div{
     width: 180px;
 }
-#random_product_pic_title a{
+#random_product_pic_title-ds a{
     width: 100%;
 }
-#random_product_pic_title img{
+#random_product_pic_title-ds img{
     width: 100%;
     height: 160px;
 }
-#header1, #header2, #header1 button, #header2 input{
+#header1-ds, #header2-ds, #header1-ds button, #header2-ds input{
     background-color: white;
 }
 
-#category_table{
+#category_table-ds{
 width: 1000px;
 margin-top: 30px;
 background-color: white;
 }
-#category_header{
+#category_header-ds{
 padding: 20px;
 width: 100%;
 }
-#category_list{
+#category_list-ds{
 display: grid;
 grid-template-columns: repeat(5,1fr);
 gap: 0px;
 border: 1px solid rgb(204, 204, 204);
 }
-#category_list>div>a{
+#category_list-ds>div>a{
 display: flex;
 justify-content: left;
 align-items: center;
@@ -720,13 +742,13 @@ margin-left: 5px;
 color:  rgb(204, 204, 204);
 font-size: 12px;
 }
-#list1{
+#list1-ds{
 border-bottom: 1px solid rgb(204, 204, 204);
 }
-#list2, #list3, #list4, #list5{
+#list2-ds, #list3-ds, #list4-ds, #list5-ds{
 border-left: 1px solid rgb(204, 204, 204);
 border-bottom: 1px solid rgb(204, 204, 204);
 }
-#list7, #list8, #list9, #list10{
+#list7-ds, #list8-ds, #list9-ds, #list10-ds{
 border-left: 1px solid rgb(204, 204, 204);
 }

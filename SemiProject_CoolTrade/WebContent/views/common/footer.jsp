@@ -5,19 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel="stylesheet" href="resources/css/cooltrade 동석.css">
 </head>
 <body>
-    <div class="wrap">
+    <div class="wrap-ds">
         <!--Footer 시작!-->
-        <div id="footer" class="flex">
-            <div id="footerWrap">
-                <div id="footer2" class="flex">
-                    <div id="footer2-1">
+        <div id="footer-ds" class="flex-ds">
+            <div id="footerWrap-ds">
+                <div id="footer2-ds" class="flex-ds">
+                    <div id="footer2-1-ds">
                         <h3>쿨거래</h3>
                         <p>
                             (주)쿨거래<br>
@@ -27,7 +22,7 @@
                             호스팅제공자: 아마존웹서비스
                         </p>
                     </div>
-                    <div id="footer2-2">
+                    <div id="footer2-2-ds">
                         <h3>Social</h3>
                         <p>
                             <a href="#">페이스북</a><br>
@@ -36,7 +31,7 @@
                             <a href="#">블로그</a><br>
                         </p>
                     </div>
-                    <div id="footer2-3">
+                    <div id="footer2-3-ds">
                         <h3>Contact</h3>
                         <p>
                             메일 : cooltrade@cooltrade.com <br>
