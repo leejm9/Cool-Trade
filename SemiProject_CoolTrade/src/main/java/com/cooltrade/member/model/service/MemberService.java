@@ -2,6 +2,7 @@ package com.cooltrade.member.model.service;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
+import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -62,6 +63,37 @@ public class MemberService {
 		return m;
 	}
 	
+	public int updateUserLevel(int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().updateUserLevel(conn, userNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
 	
+	public int selectBlackListCount() {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().selectBlackListCount(conn);
+		
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Member> selectBlackList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectBlackList(conn, pi);
+		
+		close(conn);
+		return list;
+		
+	}
 	
 }

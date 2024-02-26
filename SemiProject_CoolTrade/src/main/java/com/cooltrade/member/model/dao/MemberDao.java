@@ -120,6 +120,7 @@ public class MemberDao {
 									rset.getString("user_name"),
 									rset.getDate("enroll_date"),
 									rset.getDouble("ondo"),
+									rset.getString("user_level"),
 									rset.getInt("caution")
 									));
 			}
@@ -182,5 +183,90 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return m;
+	}
+	
+	public int updateUserLevel(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateUserLevel");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public int selectBlackListCount(Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectBlackListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+		
+		
+	}
+	
+	public ArrayList<Member> selectBlackList(Connection conn, PageInfo pi){
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectBlackList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getString("user_no"),
+									rset.getString("user_id"),
+									rset.getString("user_name"),
+									rset.getDate("enroll_date"),
+									rset.getDouble("ondo"),
+									rset.getString("user_level"),
+									rset.getInt("caution")
+									));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 }

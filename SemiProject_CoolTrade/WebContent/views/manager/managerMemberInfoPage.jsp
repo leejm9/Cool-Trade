@@ -12,11 +12,14 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,8 +66,9 @@
                                             <th>이름</th>
                                             <th>가입날짜</th>
                                             <th>신뢰점수</th>
+                                            <th>회원등급</th>
                                             <th>경고횟수</th>
-                                            <th>등급 변경</th>
+                                            <th>등급변경</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -74,30 +78,64 @@
 						                </tr>
 										<% }else{ %>
 	                                    	<% for(Member m : list){ %>
-	                                        <tr>
-	                                            <td><%= m.getUserNo() %></td>
-	                                            <td><%= m.getUserId() %></td>
-	                                            <td><%= m.getUserName() %></td>
-	                                            <td><%= m.getEnrollDate() %></td>
-	                                            <td><%= m.getOndo() %></td>
-	                                            <td><%= m.getCaution() %></td>
-	                                            <th><button>버튼</button></th>
-	                                        </tr>
+	                                    		<% if(m.getCaution() < 3){ %>
+		                                        <tr>
+		                                            <td><%= m.getUserNo() %></td>
+		                                            <td><%= m.getUserId() %></td>
+		                                            <td><%= m.getUserName() %></td>
+		                                            <td><%= m.getEnrollDate() %></td>
+		                                            <td><%= m.getOndo() %></td>
+		                                            <td><%= m.getUserLevel() %></td>
+		                                            <td><%= m.getCaution() %></td>
+		                                            <th>
+		                                            <% if(m.getOndo()>= 40.0f) { %>
+		                                            	<% if("C".equals(m.getUserLevel())) {%>
+		                                            		<button class="btn btn-primary" disabled>쿨거래사용자</button>
+		                                            	<% }else{ %>
+		                                            		<button onclick="coolTrade(<%= m.getUserNo() %>,<%= currentPage %> ,this);" class="btn btn-primary">쿨거래</button>
+		                                            	<% } %>
+		                                            <% } %>
+		                                            </th>
+		                                        </tr>
+		                                        <% } %>
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
+                                
+                                <script>
+                                	function coolTrade(userNo,currentPage,button){
+                                		var btn = $(button); 
+                                		$.ajax({
+                                			url:"ctbutton.in",
+                                			data:{uno:userNo},
+                                			success:function(result){
+                                				if(result == 1){
+                                					btn.prop("disabled",true);
+                                       				btn.text("쿨거래사용자");
+                                       				btn.parents('tr').find('td:eq(5)').text('C');
+                                				}
+                                			}, error:function(){
+                                				console.log("ajax 통신 실패");
+                                			}
+                                			
+                                			
+                                		})
+                                	}
+                                </script>
+                                
                                 <div id="btn" align="center">
-                                <% if(currentPage > 1){ %>
-			                    <button>&lt;</button>
-			                    <% } %>
-			                    <% for(int i=1; i<= maxPage;i++){ %>
-					            <button><%= i %></button>
-					            <% } %>
-					            <% if(currentPage == maxPage) { %>
-					            <button>&gt;</button>
-								<% } %>
+	                                <% if(currentPage > 1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
+				                    <% } %>
+				                    <% for(int i=1; i<= maxPage;i++){ %>
+						            <button onclick="location.href='<%= contextPath %>/member.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <% } %>
+						            <% if(currentPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
+									<% } %> 
 								</div>
+
                             </div>
                         </div>
                     </div>
