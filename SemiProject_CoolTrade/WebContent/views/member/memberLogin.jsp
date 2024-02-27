@@ -128,15 +128,6 @@ button:hover {
 
 </div>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 </body>
 </html>
