@@ -5,12 +5,9 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Product;
->>>>>>> ds
 
 import com.cooltrade.product.dao.ProductDao;
 import com.cooltrade.product.vo.Product;
