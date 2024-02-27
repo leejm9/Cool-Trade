@@ -37,7 +37,7 @@ public class MemberLoginController extends HttpServlet {
 		
 		
 		if(loginUser == null) {
-
+			
 			request.setAttribute("errorMsg", "로그인 실패했습니다!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}else {
