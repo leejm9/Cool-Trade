@@ -160,6 +160,7 @@
         padding: 0px 10px;
         border: 1px solid #c2c2c2;
         height: 40px;
+        background: white;
     }
 
     #sell-section-product-name-input-limit {
@@ -282,6 +283,7 @@
         border: 1px solid #c2c2c2;
         height: 40px;
         display: flex;
+        background: white;
     }
 
     #product-price-input>input {
@@ -365,6 +367,7 @@
         height: 40px;
         padding: 0px 10px;
         border: 1px solid #858585;
+        background: white;
     }
 
     #product-tag-input>input {
@@ -397,6 +400,7 @@
         border: 1px solid #c2c2c2;
         height: 40px;
         display: flex;
+        background: white;
     }
 
     #product-count-input>input {

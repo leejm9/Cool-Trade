@@ -109,4 +109,11 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectTradeTypeCount">
+		SELECT COUNT(TRADE_TYPE) "COUNT"
+		  FROM PRODUCT
+		 WHERE SELLER_NO = ?
+		   AND TRADE_TYPE = 2
+	</entry>
+	
 </properties>

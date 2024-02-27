@@ -96,4 +96,13 @@ public class MemberService {
 		
 	}
 	
+	public int selectTradeTypeCount(Member m) {
+		Connection conn = getConnection();
+		int count = new MemberDao().selectTradeTypeCount(conn, m);
+		
+		close(conn);
+		return count;
+		
+	}
+	
 }

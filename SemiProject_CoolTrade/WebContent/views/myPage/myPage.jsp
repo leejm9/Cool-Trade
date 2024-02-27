@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int count = (int)request.getAttribute("count");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -165,11 +168,37 @@
         font-size: 18px;
         font-weight: 500;
     }
+
+    #progress {
+        appearance: none;
+    }
+
+    #progress::-webkit-progress-bar {
+        background: #f0f0f0;
+        border-radius: 0px;
+        /* border: 1px solid #eeeeee; */
+        height: 20px;
+        overflow: hidden;
+    }
+
+    #progress::-webkit-progress-value {
+        background: rgb(4, 180, 252);
+        border-radius: 0px;
+        height: 20px;
+    }
+
 </style>
 </head>
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+
+	<%
+		String userName = loginUser.getUserName();
+		double ondo = loginUser.getOndo();
+	%>
+
+
 
     <div id="mypage-wrap">
         <div id="left-content">
@@ -195,13 +224,13 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -217,7 +246,7 @@
                             <img src="resources/images/free-icon-user-847969.png" alt="회원 프로필 사진 이미지">
                         </div>
                         <div>
-                            <b>김뫄뫄님</b> 환영합니다!
+                            <b><%= userName %>님</b> 환영합니다!
                         </div>
                     </div>
                 </div>
@@ -226,16 +255,22 @@
                     <div id="temperature">
                         <div id="temperature-div">
                             <div>매너온도</div>
-                            <div>27.0℃</div>
+                            <div><%= ondo %> ℃</div>
                         </div>
                         <div id="progress-bar-div">
                             <div class="progress">
-                                <div class="progress-bar" style="width:70%"></div>
+                                <progress class="progress" id="progress" value="<%= ondo %>" min="0" max="42.0"></progress>
                             </div>
                         </div>
                         <div id="temperature-content">
                             <ul>
-                                <li>거래 우수 회원!</li>
+                            	<% if(ondo >= 0 && ondo <= 10) { %>
+                                	<li>매너 최고! 쿨거래 회원</li>
+                                <% } else if(ondo > 10 && ondo < 40) { %>
+                                	<li>거래 우수 회원!</li>
+                                <% } else {%>
+                                	<li>내가 비매너라니..</li>
+                                <% } %>
                                 <li>10℃부터 쿨거래 이용이 가능해요</li>
                             </ul>
                         </div>
@@ -245,7 +280,7 @@
                             <li>
                                 <div>쿨거래</div>
                                 <div>
-                                    <a href="#">0</a>
+                                    <a href="#"><%= count %></a>
                                 </div>
                             </li>
                             <li>
