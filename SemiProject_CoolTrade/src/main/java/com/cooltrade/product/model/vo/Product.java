@@ -1,8 +1,4 @@
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
-package com.cooltrade.product.vo;
-=======
 package com.cooltrade.product.model.vo;
->>>>>>> origin/cr:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
 
 import java.sql.Date;
 
@@ -152,11 +148,5 @@ public class Product {
 				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + ", tstockgoods="
 				+ tstockgoods + ", ReportedProduct=" + ReportedProduct + "]";
 	}
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
-
-	
-	
-=======
->>>>>>> origin/cr:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
 	
 }

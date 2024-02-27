@@ -1,8 +1,4 @@
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/dao/ProductDao.java
-package com.cooltrade.product.dao;
-=======
 package com.cooltrade.product.model.dao;
->>>>>>> origin/cr:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/dao/ProductDao.java
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -12,14 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/dao/ProductDao.java
 import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.product.vo.Product;
-=======
-import com.cooltrade.product.model.vo.Product;
-
-import static com.cooltrade.common.JDBCTemplate.*;
->>>>>>> origin/cr:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/dao/ProductDao.java
 
 public class ProductDao {
 	Properties prop = new Properties();

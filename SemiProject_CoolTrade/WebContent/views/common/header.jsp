@@ -50,27 +50,15 @@
                         <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">알림</button>
                         <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">로그아웃</button>
                     </div>
-<<<<<<< HEAD
-                    <%} %>
-                    <div id="headerStore-ds" class="flex-ds">
-                        <a href="#" id="headerMyStore-ds" class="flex-ds">마이페이지</a>
-=======
                     
-                    <div id="headerStore" class="flex">
+                    <div id="headerStore-ds" class="flex-ds">
                     	<% if(loginUser.getUserName().equals("관리자")) { %>
                         	<a href="<%= contextPath %>/manager.in" id="headerMyStore" class="flex">마이페이지</a>
                         <% }else{ %>
                         	<a href="#" id="headerMyStore" class="flex">마이페이지</a>
                         <% } %>
->>>>>>> jm
                     </div>
                     <%} %>
-<<<<<<< HEAD
-=======
-                    <div id="headerStore" class="flex">
-                        <a href="<%= contextPath %>/mypage.me" id="headerMyStore" class="flex">마이페이지</a>
-                    </div>
->>>>>>> origin/cr
                 </div>
             </div>
         </div>
@@ -95,13 +83,8 @@
                                 채팅하기
                             </a>
                         </div>
-<<<<<<< HEAD
                         <div id="sellContainer-ds">
-                            <a href="#" id="sell-ds">
-=======
-                        <div id="sellContainer">
-                            <a href="<%= contextPath %>/sellForm.pd" id="sell">
->>>>>>> origin/cr
+                            <a href="<%= contextPath %>/sellForm.pd" id="sell-ds">
                                 <img src="resources/images/sell.png" alt="판매하기 이미지">
                                 판매하기
                             </a>

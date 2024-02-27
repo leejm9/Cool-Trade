@@ -116,13 +116,8 @@ body{
     z-index: 20;
 }
 
-<<<<<<< HEAD
 #header2-ds{
     height: 145px;
-=======
-#header2{
-    height: 160px;
->>>>>>> origin/cr
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
     padding-top: 35px;
