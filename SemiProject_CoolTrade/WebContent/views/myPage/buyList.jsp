@@ -29,7 +29,7 @@
             width: 1000px;
             margin: auto;
             display: flex;
-            margin-top: 30px;
+            margin-top: 200px;
         }
 
         /* 왼쪽 컨텐츠 CSS */
@@ -118,6 +118,7 @@
             height: 35px;
             padding: 0px 5px;
             align-items: center;
+            background: white;
         }
 
         table {
@@ -157,6 +158,7 @@
         #thead-tr {
             background-color: #fafafa;
             height: 35px;
+            text-align: center;
         }
 
         tr td:first-child {
@@ -197,13 +199,13 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -282,6 +284,8 @@
             </div>
         </div>
     </div>	
-
+	
+	<%@ include file = "../common/footer.jsp" %>
+	
 </body>
 </html>

@@ -43,7 +43,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("user_no"),
+				m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -115,7 +115,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Member(rset.getString("user_no"),
+				list.add(new Member(rset.getInt("user_no"),
 									rset.getString("user_id"),
 									rset.getString("user_name"),
 									rset.getDate("enroll_date"),
@@ -249,7 +249,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Member(rset.getString("user_no"),
+				list.add(new Member(rset.getInt("user_no"),
 									rset.getString("user_id"),
 									rset.getString("user_name"),
 									rset.getDate("enroll_date"),
@@ -269,4 +269,44 @@ public class MemberDao {
 		
 		return list;
 	}
+	
+	public int selectTradeTypeCount(Connection conn, Member m) {
+		// select문 => ResultSet
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectTradeTypeCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getUserNo());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
+		
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
