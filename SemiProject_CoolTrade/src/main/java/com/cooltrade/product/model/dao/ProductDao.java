@@ -1,4 +1,4 @@
-package com.cooltrade.product.model.dao;
+package com.cooltrade.product.dao;
 
 import java.io.FileInputStream;
 import java.io.IOException;
