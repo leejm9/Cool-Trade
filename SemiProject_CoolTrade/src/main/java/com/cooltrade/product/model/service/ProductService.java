@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
+import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Product;
 
 
@@ -48,10 +49,20 @@ public class ProductService {
 		return result;
 	}
 	
-	public ArrayList<Product> selectProduct(PageInfo pi){
+	public ArrayList<Product> selectRandomProduct(PageInfo pi){
 		Connection conn = getConnection();
 		
-		ArrayList<Product> list = new ProductDao().selectProduct(conn, pi);
+		ArrayList<Product> list = new ProductDao().selectRandomProduct(conn, pi);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Category> selectCategoryList(){
+		Connection conn = getConnection();
+		
+		ArrayList<Category> list = new ProductDao().selectCategoryList(conn);
 		
 		close(conn);
 		

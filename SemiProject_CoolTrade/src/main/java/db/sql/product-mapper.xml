@@ -28,11 +28,42 @@
 		SELECT 
 		       COUNT(*) "count"
 		  FROM PRODUCT
-		 WHERE UPLOAD_TYPE='Y';
+		 WHERE UPLOAD_TYPE='Y'
 	</entry>
 	
 	<entry key="selectProduct">
-		
+		SELECT * 
+  		  FROM (
+		        SELECT 
+		               ROWNUM RNUM, A.*
+		          FROM 
+		               (
+		               SELECT 
+		                      PRODUCT_NO
+		                    , SELLER_NO
+		                    , PRODUCT_NAME
+		                    , PRICE
+		                    , ZONE
+		                    , UPLOAD_DATE
+		                 FROM PRODUCT
+		                WHERE UPLOAD_TYPE = 'Y'
+		                ORDER 
+		                   BY DBMS_RANDOM.VALUE
+		                ) A   
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectCategoryList">
+		SELECT 
+		       CATEGORY_NAME
+		     , CATEGORY_NO
+		     , COUNT(CATEGORY_NO) "count"
+		  FROM PRODUCT 
+		  JOIN CATEGORY 
+		 USING (CATEGORY_NO)
+		 GROUP
+		    BY CATEGORY_NAME
+		     , CATEGORY_NO
+	</entry>
 </properties>

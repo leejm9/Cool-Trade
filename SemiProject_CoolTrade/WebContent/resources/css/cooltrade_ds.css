@@ -427,15 +427,15 @@ a:hover{
     height: 310px;
     box-sizing: border-box;
 }
-#search_price-ds::after{
+.search_price-ds::after{
     content: "원";
     font-size: 12px;;
 }
-#img_container-ds, #product_thumbnail-ds{
+.img_container-ds, .product_thumbnail-ds{
     width: 192px;
     height: 192px;
-
 }
+
 #search_title_price-ds{
     padding: 13px 8px;
     width: 192px;
@@ -474,7 +474,7 @@ a:hover{
     display: grid;
     grid-template-columns: repeat(5,1fr);
     gap: 0px;
-    border: 1px solid rgb(204, 204, 204);
+    padding: 5px;
 }
 .category_list-ds>div>a{
     display: flex;
@@ -482,22 +482,20 @@ a:hover{
     align-items: center;
     padding: 20px;
 }
+.category_list-ds>div>a:hover{
+	background: darkgray;
+}
 
-div[id^=searched_items]{
+div[class^=searched_items]{
     margin-left: 5px;
     color:  rgb(204, 204, 204);
     font-size: 12px;
 }
-#list1-ds{
-    border-bottom: 1px solid rgb(204, 204, 204);
+.cat-list-ds{
+    border: 1px solid rgb(204, 204, 204);
+    border-collapse: collapse;
 }
-#list2-ds, #list3-ds, #list4-ds, #list5-ds{
-    border-left: 1px solid rgb(204, 204, 204);
-    border-bottom: 1px solid rgb(204, 204, 204);
-}
-#list7-ds, #list8-ds, #list9-ds, #list10-ds{
-    border-left: 1px solid rgb(204, 204, 204);
-}
+
 div[id^="banner"]{
     width: 1000px;  
     border: 2px solid blue; 
@@ -753,4 +751,10 @@ border-bottom: 1px solid rgb(204, 204, 204);
 }
 #list7-ds, #list8-ds, #list9-ds, #list10-ds{
 border-left: 1px solid rgb(204, 204, 204);
+}
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+  background-color: #e9ecef;
+  color: darkgray;
 }

@@ -3,14 +3,15 @@ package com.cooltrade.product.model.vo;
 import java.sql.Date;
 
 public class Product {
-	private String pNo;
-	private String sellerNo;
+	
+	private int productNo;
+	private int sellerNo;
 	private String categoryNo;
-	private String pName;
+	private String productName;
 	private int price;
-	private String pDesc;
+	private String productDesc;
 	private String zone;
-	private String pStatus;
+	private String productStatus;
 	private Date uploadDate;
 	private String uploadType;
 	
@@ -20,35 +21,38 @@ public class Product {
 	
 	public Product() {}
 
-	public Product(String pNo, String sellerNo, String categoryNo, String pName, int price, String pDesc, String zone,
-			String pStatus, Date uploadDate, String uploadType, int salesRate) {
+	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price,
+			String productDesc, String zone, String productStatus, Date uploadDate, String uploadType, int salesRate,
+			int tstockgoods, int reportedProduct) {
 		super();
-		this.pNo = pNo;
+		this.productNo = productNo;
 		this.sellerNo = sellerNo;
 		this.categoryNo = categoryNo;
-		this.pName = pName;
+		this.productName = productName;
 		this.price = price;
-		this.pDesc = pDesc;
+		this.productDesc = productDesc;
 		this.zone = zone;
-		this.pStatus = pStatus;
+		this.productStatus = productStatus;
 		this.uploadDate = uploadDate;
 		this.uploadType = uploadType;
 		this.salesRate = salesRate;
+		this.tstockgoods = tstockgoods;
+		ReportedProduct = reportedProduct;
 	}
 
-	public String getpNo() {
-		return pNo;
+	public int getProductNo() {
+		return productNo;
 	}
 
-	public void setpNo(String pNo) {
-		this.pNo = pNo;
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
 	}
 
-	public String getSellerNo() {
+	public int getSellerNo() {
 		return sellerNo;
 	}
 
-	public void setSellerNo(String sellerNo) {
+	public void setSellerNo(int sellerNo) {
 		this.sellerNo = sellerNo;
 	}
 
@@ -60,12 +64,12 @@ public class Product {
 		this.categoryNo = categoryNo;
 	}
 
-	public String getpName() {
-		return pName;
+	public String getProductName() {
+		return productName;
 	}
 
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
 
 	public int getPrice() {
@@ -76,12 +80,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public String getpDesc() {
-		return pDesc;
+	public String getProductDesc() {
+		return productDesc;
 	}
 
-	public void setpDesc(String pDesc) {
-		this.pDesc = pDesc;
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 
 	public String getZone() {
@@ -92,12 +96,12 @@ public class Product {
 		this.zone = zone;
 	}
 
-	public String getpStatus() {
-		return pStatus;
+	public String getProductStatus() {
+		return productStatus;
 	}
 
-	public void setpStatus(String pStatus) {
-		this.pStatus = pStatus;
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
 	}
 
 	public Date getUploadDate() {
@@ -132,7 +136,6 @@ public class Product {
 		this.tstockgoods = tstockgoods;
 	}
 
-	
 	public int getReportedProduct() {
 		return ReportedProduct;
 	}
@@ -143,10 +146,14 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [pNo=" + pNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo + ", pName=" + pName
-				+ ", price=" + price + ", pDesc=" + pDesc + ", zone=" + zone + ", pStatus=" + pStatus + ", uploadDate="
-				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + ", tstockgoods="
-				+ tstockgoods + ", ReportedProduct=" + ReportedProduct + "]";
+		return "Product [productNo=" + productNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo
+				+ ", productName=" + productName + ", price=" + price + ", productDesc=" + productDesc + ", zone="
+				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
+				+ uploadType + ", salesRate=" + salesRate + ", tstockgoods=" + tstockgoods + ", ReportedProduct="
+				+ ReportedProduct + "]";
 	}
+
+	
+	
 	
 }

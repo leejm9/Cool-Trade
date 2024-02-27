@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Product;
 
 /**
  * Servlet implementation class OnloadController
  */
-@WebServlet("/onlode.page")
+@WebServlet("/onload.page")
 public class OnloadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,7 +32,6 @@ public class OnloadController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		// 현재 총 게시글 개수
 		int productCount = new ProductService().selectProductCount();
 		
@@ -59,9 +59,16 @@ public class OnloadController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(productCount, currentPage, pageLimit, productLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Product> list = new ProductService().selectProduct(pi);
+		ArrayList<Product> plist = new ProductService().selectRandomProduct(pi);
 		
-	
+		ArrayList<Category> clist = new ProductService().selectCategoryList();
+		
+		
+		request.setAttribute("pi", pi);
+		request.setAttribute("plist", plist);
+		request.getSession().setAttribute("clist", clist);
+		request.getRequestDispatcher("views/common/main.jsp").forward(request, response);
+		
 	
 	}
 

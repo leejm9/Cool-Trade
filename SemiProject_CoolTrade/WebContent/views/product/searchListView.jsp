@@ -7,72 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%-- 	<%@ include file="../common/header.jsp" %> --%>
+	<%@ include file="../common/header.jsp" %>
 	<div id="content-ds">
 
 		<div class="category_table-ds">
 			<div class="category_header-ds"><h3>카테고리</h3></div>
-			<div class="category_list-ds" class="flex-ds">
-				<div id="list1-ds">
-					<a href="">
-						<div id="category_name1-ds">패션의류</div>
-						<div id="searched_items1-ds">150</div>
+			<div class="category_list-ds flex-ds">
+				<%for(Category c : clist) {%>
+				<div class="cat-list-ds">
+					<a href="#<%=c.getCategoryNo()%>">
+						<div class="category_name-ds"><%=c.getCategoryName()%></div>
+						<div class="searched_items-ds"><%=c.getCategoryCount()%></div>
 					</a>
 				</div>
-				<div id="list2-ds">
-					<a href="">
-						<div id="category_name2-ds">패션잡화</div>
-						<div id="searched_items2-ds">100</div>
-					</a>
-				</div>
-				<div id="list3-ds">
-					<a href="">
-						<div id="category_name3-ds">뷰티</div>
-						<div id="searched_items3-ds">1212</div>
-					</a>
-				</div>
-				<div id="list4-ds">
-					<a href="">
-						<div id="category_name4-ds">전자제품</div>
-						<div id="searched_items4-ds">1212</div>
-					</a>
-				</div>
-				<div id="list5-ds">
-					<a href="">
-						<div id="category_name5-ds">가구/인테리어</div>
-						<div id="searched_items5-ds">1212</div>
-					</a>
-				</div>
-				<div id="list6-ds">
-					<a href="">
-						<div id="category_name6-ds">리빙/생활</div>
-						<div id="searched_items6-ds">1212</div>
-					</a>
-				</div>
-				<div id="list7-ds">
-					<a href="">
-						<div id="category_name7-ds">반려동물</div>
-						<div id="searched_items7-ds">1212</div>
-					</a>
-				</div>
-				<div id="list8-ds">
-					<a href="">
-						<div id="category_name8-ds">상품권</div>
-						<div id="searched_items8-ds">1212</div>
-					</a>
-				</div>
-				<div id="list9-ds">
-					<a href="">
-						<div id="category_name9-ds">무료나눔</div>
-						<div id="searched_items9-ds">1212</div>
-					</a>
-				</div>
-				<div id="list10-ds">
-					<a href="">
-						<div id="category_name10-ds">도서/음반/문구</div>
-						<div id="searched_items10-ds">0</div>
-					</a>
-				</div>
+				<%} %>
 			</div>
 		</div>
 		<div id="search_header-ds">
@@ -93,7 +41,7 @@
 			 <div class="product_result-ds">
 				<a href="#" class="flex-ds show_detail-ds" style="flex-direction: column;" >
 					<div class="img_container-ds">
-						<img src="resources/images/사이트맵.png" alt="" class="product_thumbnail-ds">
+						<img src="resources/images/돋보기.png" alt="" class="product_thumbnail-ds">
 					</div>
 					<div class="search_title_price-ds">
 						<div class="search_ptitle-ds">
@@ -148,6 +96,8 @@
 			<li class="page-item"><a class="page-link" href="#">Next</a></li>
 		</ul>
 	</div>
+	
+	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>
 

@@ -12,6 +12,7 @@ import java.util.Properties;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Product;
 
 public class ProductDao {
@@ -123,11 +124,67 @@ public class ProductDao {
 		return productCount;
 	}
 	
-	public ArrayList<Product> selectProduct(Connection conn, PageInfo pi){
+	public ArrayList<Product> selectRandomProduct(Connection conn, PageInfo pi){
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		ArrayList<Product> list = new ArrayList<Product>();
+		
 		String sql = prop.getProperty("selectProduct");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setSellerNo(rset.getInt("seller_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setZone(rset.getString("zone"));
+				p.setPrice(rset.getInt("price"));
+				p.setUploadDate(rset.getDate("upload_date"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Category> selectCategoryList(Connection conn){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Category> list = new ArrayList<Category>();
 		
+		String sql = prop.getProperty("selectCategoryList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Category(rset.getString("category_no"),
+									  rset.getString("category_name"),
+									  rset.getInt("count"))); 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }

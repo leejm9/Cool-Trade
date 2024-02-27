@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.member.model.vo.Member;
-import com.cooltrade.product.service.ProductService;
-import com.cooltrade.product.vo.Product;
+import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Product;
 
 /**
  * Servlet implementation class ManagerMyPageController
