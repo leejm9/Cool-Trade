@@ -34,7 +34,6 @@
         height: auto;
         margin: auto;
         margin-top: 180px;
-        height: 100%; /* 추가: body를 뷰포트의 전체 높이로 설정 */
         position: relative;
     }
 
@@ -447,7 +446,7 @@
         align-items: center;
     }
 
-    #footer-content {
+    #footer-content-cr {
         width: 100%;
         height: 88px;
         background-color: rgb(246, 246, 246);
@@ -455,7 +454,7 @@
 
     #footer-content-div {
         width: 1000px;
-        height: 100%;
+        height: 88px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -726,14 +725,12 @@
         
     </div>
     <br><br><br>
-    <div id="footer-content">
+    <div id="footer-content-cr">
         <div id="footer-content-div">
             <button type="button" id="save">임시저장</button>
             <button type="button" id="enroll">등록하기</button>
         </div>
     </div>
-    
-    <%@ include file = "../common/footer.jsp" %>
 
     <script>
 

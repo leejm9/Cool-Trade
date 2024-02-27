@@ -55,7 +55,7 @@
                     	<% if(loginUser.getUserName().equals("관리자")) { %>
                         	<a href="<%= contextPath %>/manager.in" id="headerMyStore" class="flex">마이페이지</a>
                         <% }else{ %>
-                        	<a href="#" id="headerMyStore" class="flex">마이페이지</a>
+                        	<a href="<%= contextPath %>/mypage.me" id="headerMyStore" class="flex">마이페이지</a>
                         <% } %>
                     </div>
                     <%} %>

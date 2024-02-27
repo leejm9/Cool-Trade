@@ -37,14 +37,10 @@ public class MemberLoginController extends HttpServlet {
 		
 		
 		if(loginUser == null) {
-<<<<<<< HEAD
-//			request.setAttribute("errorMsg", "로그인 실패했습니다!");
-//			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-=======
-			
+
 			request.setAttribute("errorMsg", "로그인 실패했습니다!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
->>>>>>> jm
+
 		}else {
 			HttpSession session =  request.getSession();
 			session.setAttribute("loginUser", loginUser);
