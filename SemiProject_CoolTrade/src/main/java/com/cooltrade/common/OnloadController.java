@@ -66,8 +66,8 @@ public class OnloadController extends HttpServlet {
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("plist", plist);
-		request.getSession().setAttribute("clist", clist);
-		request.getRequestDispatcher("views/common/main.jsp").forward(request, response);
+		request.setAttribute("clist", clist);
+		request.getRequestDispatcher("views/common/header.jsp").forward(request, response);
 		
 	
 	}

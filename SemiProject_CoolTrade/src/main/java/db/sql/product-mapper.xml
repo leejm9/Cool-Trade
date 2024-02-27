@@ -66,4 +66,32 @@
 		    BY CATEGORY_NAME
 		     , CATEGORY_NO
 	</entry>
+	
+	<entry key="searchProductList">
+		SELECT 
+		       PRODUCT_NO
+		     , SELLER_NO
+		     , PRODUCT_NAME
+		     , PRICE
+		     , ZONE
+		     , UPLOAD_DATE
+		  FROM PRODUCT
+		 WHERE UPLOAD_TYPE = 'Y'
+		   AND PRODUCT_NAME LIKE '%'||?||'%'
+		 ORDER 
+		    BY PRODUCT_NO DESC
+	</entry>
+	
+	<entry key="searchCatList">
+		SELECT 
+		       CATEGORY_NAME
+		     , CATEGORY_NO
+		     , COUNT(PRODUCT_NAME) count
+		  FROM PRODUCT
+		  JOIN CATEGORY
+		 USING (CATEGORY_NO)
+		 WHERE PRODUCT_NAME LIKE '%'||?||'%'
+		 GROUP 
+		    BY CATEGORY_NAME, CATEGORY_NO
+	</entry>
 </properties>

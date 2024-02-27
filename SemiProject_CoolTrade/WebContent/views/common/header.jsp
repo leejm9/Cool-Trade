@@ -11,13 +11,24 @@
     
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String alertMsg = (String)session.getAttribute("alertMsg");
-	ArrayList<Category> clist = (ArrayList<Category>)session.getAttribute("clist");
+	
+	
+	ArrayList<Category> clist = (ArrayList<Category>)request.getAttribute("clist");
+	ArrayList<Product> plist = (ArrayList<Product>)request.getAttribute("plist");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+// 	int currentPage = pi.getCurrentPage();
+// 	int startPage = pi.getStartPage();
+// 	int endPage = pi.getEndPage();
+// 	int maxPage = pi.getMaxPage();
+// 	int pagelimit = pi.getPageLimit();
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쿨거래 중고거래 사이트</title>
+<link rel="icon" sizes="16x16" type="image/png" href="resources/images/logo.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -53,14 +64,14 @@
 					<!-- case2. 로그인 후 -->
 					<div class="headerLogin-ds">
                         <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">알림</button>
-                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">로그아웃</button>
+                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);" onclick="location.href='<%=contextPath%>/logout.me'">로그아웃</button>
                     </div>
                     
                     <div id="headerStore-ds" class="flex-ds">
                     	<% if(loginUser.getUserName().equals("관리자")) { %>
                         	<a href="<%= contextPath %>/manager.in" id="headerMyStore-ds" class="flex-ds">마이페이지</a>
                         <% }else{ %>
-                        	<a href="<%= contextPath %>/mypage.me" id="headerMyStore" class="flex">마이페이지</a>
+                        	<a href="<%= contextPath %>/mypage.me" id="headerMyStore-ds" class="flex-ds">마이페이지</a>
                         <% } %>
                     </div>
                     <%} %>
@@ -71,14 +82,16 @@
             <div id="header2-1-ds">
                 <div id="headerSearch-ds" class="flex-ds">
                     <div id="logo-ds">
-                        <img src="resources/images/쿨거래 logo.png" alt="쿨거래 로고">
+                        <img src="resources/images/logo.png" alt="쿨거래 로고">
                     </div>
                     <div id="searchBar-ds">
                         <div id="searchContainer-ds" class="flex-ds">
+                        <form id="searchForm-ds" class="flex-ds" action="<%=contextPath%>/search.po">
                             <input type="text" id="search-ds" name="search" placeholder="상품명을 입력해주세요" maxlength="40">
-                            <a id="searchImgContainer-ds" href="#" class="flex-ds">
+                            <button type="submit" style="border:none;" id="searchImgContainer-ds" class="flex-ds">
                                 <img id="searchImg-ds" src="resources/images/돋보기.png" alt="돋보기 이미지">
-                            </a>
+                            </button>
+                        </form>
                         </div>
                     </div>
                     <div id="chatSell-ds" class="flex-ds">
@@ -130,7 +143,6 @@
                         <div id="recentDottedBorder-ds"></div>
                     </div>
                     <div id="recentSeenProduct-ds">
-                        <!-- <div id="seenEye"></div> -->
                         <div id="seenText-ds">
                             최근 본<br>
                             상품이<br>
@@ -145,5 +157,7 @@
         </div>
     </div>
     
+        <%@ include file="main.jsp" %>
+        <%@ include file="footer.jsp" %>
 </body>
 </html>

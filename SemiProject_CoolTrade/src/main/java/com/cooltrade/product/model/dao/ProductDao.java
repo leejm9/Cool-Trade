@@ -187,4 +187,67 @@ public class ProductDao {
 		}
 		return list;
 	}
+	
+	public ArrayList<Product> searchProductList(Connection conn, String search){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> plist = new ArrayList<Product>();
+		String sql = prop.getProperty("searchProductList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setSellerNo(rset.getInt("seller_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setUploadDate(rset.getDate("upload_date"));
+				
+				plist.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return plist;
+	}
+	
+	public ArrayList<Category> searchCatList(Connection conn, String search){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Category> catList = new ArrayList<Category>();
+		String sql = prop.getProperty("searchCatList");
+		
+		try {
+			pstmt=conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Category c = new Category();
+				c.setCategoryName(rset.getString("category_name"));
+				c.setCategoryNo(rset.getString("category_no"));
+				c.setCategoryCount(rset.getInt("count"));
+				
+				catList.add(c);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return catList;
+	}
 }
