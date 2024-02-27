@@ -5,8 +5,6 @@
     pageEncoding="UTF-8"%>
     
 <%
-	ArrayList<Product> plist = (ArrayList<Product>)request.getAttribute("plist");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -21,8 +19,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<%@ include file="header.jsp" %>
-
+	
 	<div id="content-ds">
         <div id="banner1-ds"><h1>banner1</h1></div>
         <div id="banner2-ds"><h1>banner2</h1></div>
@@ -316,7 +313,7 @@
         </ul>
     </div>
     
-    <%@ include file="footer.jsp" %>
+
     
 </body>
 </html>

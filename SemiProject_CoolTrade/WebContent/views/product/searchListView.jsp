@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%
+	ArrayList<Product> searchList = (ArrayList<Product>)request.getAttribute("searchList");
+	ArrayList<Category> catList = (ArrayList<Category>)request.getAttribute("catList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +18,7 @@
 		<div class="category_table-ds">
 			<div class="category_header-ds"><h3>카테고리</h3></div>
 			<div class="category_list-ds flex-ds">
-				<%for(Category c : clist) {%>
+				<%for(Category c : catList) {%>
 				<div class="cat-list-ds">
 					<a href="#<%=c.getCategoryNo()%>">
 						<div class="category_name-ds"><%=c.getCategoryName()%></div>

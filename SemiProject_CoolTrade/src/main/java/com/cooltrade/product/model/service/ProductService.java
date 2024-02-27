@@ -68,4 +68,24 @@ public class ProductService {
 		
 		return list;
 	}
+	
+	public ArrayList<Product> searchProductList(String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> plist = new ProductDao().searchProductList(conn, search);
+		
+		close(conn);
+		
+		return plist;
+	}
+	
+	public ArrayList<Category> searchCatList(String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Category> catList = new ProductDao().searchCatList(conn, search);
+		
+		close(conn);
+		
+		return catList;
+	}
 }
