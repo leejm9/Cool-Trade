@@ -7,22 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
-import com.cooltrade.product.service.ProductService;
-import com.cooltrade.product.vo.Product;
 
 /**
- * Servlet implementation class ManagerMyPageController
+ * Servlet implementation class ManagerCooltradeBtnController
  */
-@WebServlet("/manager.in")
-public class ManagerMyPageController extends HttpServlet {
+@WebServlet("/ctbutton.in")
+public class ManagerCooltradeBtnController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerMyPageController() {
+    public ManagerCooltradeBtnController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,15 +29,12 @@ public class ManagerMyPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = new MemberService().countMember();                  // 오늘 가입한 회원수
-		Product salesRate = new ProductService().countSalesRate();     // 누적 판매량
-		Product reportedProduct = new ProductService().countReportedProduct(); // 오늘 신고된 게시물수
-		Product stockGoods = new ProductService().todayStockGoods();   // 오늘 입고된 상품 수
-		request.setAttribute("m", m);
-		request.setAttribute("salesRate", salesRate);
-		request.setAttribute("reportedProduct", reportedProduct);
-		request.setAttribute("stockGoods", stockGoods);
-		request.getRequestDispatcher("views/manager/managerDashBoard.jsp").forward(request, response);
+		int userNo = Integer.parseInt(request.getParameter("uno"));
+		
+		int result = new MemberService().updateUserLevel(userNo);
+		
+		response.getWriter().print(result);
+		
 	}
 
 	/**

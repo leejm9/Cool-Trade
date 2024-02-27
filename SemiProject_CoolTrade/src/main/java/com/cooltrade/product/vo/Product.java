@@ -15,6 +15,8 @@ public class Product {
 	private String uploadType;
 	
 	private int salesRate;
+	private int tstockgoods;
+	private int ReportedProduct;
 	
 	public Product() {}
 
@@ -122,13 +124,31 @@ public class Product {
 		this.salesRate = salesRate;
 	}
 
+	public int getTstockgoods() {
+		return tstockgoods;
+	}
+
+	public void setTstockgoods(int tstockgoods) {
+		this.tstockgoods = tstockgoods;
+	}
+
+	
+	public int getReportedProduct() {
+		return ReportedProduct;
+	}
+
+	public void setReportedProduct(int reportedProduct) {
+		ReportedProduct = reportedProduct;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [pNo=" + pNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo + ", pName=" + pName
 				+ ", price=" + price + ", pDesc=" + pDesc + ", zone=" + zone + ", pStatus=" + pStatus + ", uploadDate="
-				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + "]";
+				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + ", tstockgoods="
+				+ tstockgoods + ", ReportedProduct=" + ReportedProduct + "]";
 	}
-	
+
 	
 	
 	

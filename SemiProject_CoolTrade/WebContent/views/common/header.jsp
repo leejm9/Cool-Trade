@@ -50,10 +50,21 @@
                         <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">알림</button>
                         <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);">로그아웃</button>
                     </div>
+<<<<<<< HEAD
                     <%} %>
                     <div id="headerStore-ds" class="flex-ds">
                         <a href="#" id="headerMyStore-ds" class="flex-ds">마이페이지</a>
+=======
+                    
+                    <div id="headerStore" class="flex">
+                    	<% if(loginUser.getUserName().equals("관리자")) { %>
+                        	<a href="<%= contextPath %>/manager.in" id="headerMyStore" class="flex">마이페이지</a>
+                        <% }else{ %>
+                        	<a href="#" id="headerMyStore" class="flex">마이페이지</a>
+                        <% } %>
+>>>>>>> jm
                     </div>
+                    <%} %>
                 </div>
             </div>
         </div>

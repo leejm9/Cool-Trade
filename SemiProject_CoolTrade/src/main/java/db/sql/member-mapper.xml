@@ -22,6 +22,37 @@
 		   AND USER_STATUS = 'Y'
 	</entry>
 	
+	<entry key="selectListCount">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE USER_LEVEL IN ('U','C')
+		   AND USER_STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , ENROLL_DATE
+		                     , ONDO 
+		                     , USER_LEVEL
+		                     , CAUTION
+		                  FROM MEMBER 
+		                 WHERE USER_LEVEL IN ('U','C')
+		                   AND USER_STATUS = 'Y'
+		                   
+		                 ORDER
+		                    BY USER_NO DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 	<entry key="insertMember">
 	INSERT
 	  INTO MEMBER
@@ -39,8 +70,43 @@
 			   COUNT(*) count
 		  FROM MEMBER
 		 WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
-		 GROUP
-		 	BY ENROLL_DATE
+	</entry>
+	
+	<entry key="updateUserLevel">
+		UPDATE MEMBER
+		   SET USER_LEVEL = 'C'
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="selectBlackListCount">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE CAUTION >= 3
+		   AND USER_STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectBlackList">
+		SELECT *
+		  FROM(
+	        SELECT ROWNUM RNUM, A.*
+	          FROM (
+	                  SELECT 
+	                       USER_NO
+	                     , USER_ID
+	                     , USER_NAME
+	                     , ENROLL_DATE
+	                     , ONDO 
+	                     , USER_LEVEL
+	                     , CAUTION
+	                  FROM MEMBER 
+	                 WHERE USER_LEVEL = 'B'
+	                   AND USER_STATUS = 'Y'
+	                   AND CAUTION > 2
+	                 ORDER
+	                    BY USER_NO DESC
+	                    ) A
+	       		 )
+		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 </properties>

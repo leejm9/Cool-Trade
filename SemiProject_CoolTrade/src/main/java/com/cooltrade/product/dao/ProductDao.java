@@ -47,4 +47,64 @@ public class ProductDao {
 		}
 		return p;
 	}
+	
+	public Product todayStockGoods(Connection conn) {
+		Product p = new Product();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("todayStockGoods");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				p.setTstockgoods(rset.getInt("tstockgoods"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return p;
+	}
+	
+	public Product countReportedProduct(Connection conn) {
+		Product p = new Product();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("countReportedProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				p.setReportedProduct(rset.getInt("reportedproduct"));
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return p;
+		
+		
+		
+		
+	}
+	
+	
+	
 }

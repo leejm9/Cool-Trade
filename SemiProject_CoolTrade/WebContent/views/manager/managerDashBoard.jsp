@@ -1,10 +1,14 @@
-<%@page import="com.kh.product.vo.Product"%>
-<%@page import="com.kh.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
+<%@page import="com.cooltrade.product.vo.Product"%>
+<%@page import="com.cooltrade.member.model.vo.Member"%>
+
+
 <%
 	Member m = (Member)request.getAttribute("m");
-	Product p = (Product)request.getAttribute("p");
+	Product salesRate = (Product)request.getAttribute("salesRate");
+	Product reportedProduct = (Product)request.getAttribute("reportedProduct");
+	Product stockGoods = (Product)request.getAttribute("stockGoods");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,10 +73,10 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 오늘 누적 판매량</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= salesRate.getSalesRate() %>원</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"><%= p.getSalesRate() %></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +90,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 오늘 신고된 게시물 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">10건</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= reportedProduct.getReportedProduct() %>건</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -102,7 +106,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 오늘 입고된 상품수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">55건</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= stockGoods.getTstockgoods() %>건</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>

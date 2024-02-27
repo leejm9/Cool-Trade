@@ -4,6 +4,10 @@ import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 
+<<<<<<< HEAD
+=======
+import com.cooltrade.member.model.dao.MemberDao;
+>>>>>>> jm
 import com.cooltrade.product.dao.ProductDao;
 import com.cooltrade.product.vo.Product;
 
@@ -12,6 +16,24 @@ public class ProductService {
 		Connection conn = getConnection();
 		
 		Product p = new ProductDao().countSalesRate(conn);
+		
+		close(conn);
+		return p;
+	}
+	
+	public Product todayStockGoods() {
+		Connection conn = getConnection();
+		
+		Product p = new ProductDao().todayStockGoods(conn);
+		
+		close(conn);
+		return p;
+	}
+	
+	public Product countReportedProduct() {
+		Connection conn = getConnection();
+		
+		Product p = new ProductDao().countReportedProduct(conn);
 		
 		close(conn);
 		return p;

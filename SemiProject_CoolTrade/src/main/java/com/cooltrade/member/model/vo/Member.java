@@ -25,6 +25,18 @@ public class Member {
 		super();
 		this.count = count;
 	}
+	
+	
+
+	public Member(String userNo, String userId, String userName, Date enrollDate, double ondo, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.caution = caution;
+	}
 
 	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count) {
@@ -44,6 +56,20 @@ public class Member {
 		this.count = count;
 	}
 	
+	
+	
+
+	public Member(String userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
+			int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.userLevel = userLevel;
+		this.caution = caution;
+	}
 
 	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution) {
