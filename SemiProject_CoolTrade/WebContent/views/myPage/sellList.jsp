@@ -212,7 +212,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">찜 목록</a>
+                                    <a href="">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="">구매 내역</a>

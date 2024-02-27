@@ -116,8 +116,13 @@ body{
     z-index: 20;
 }
 
+<<<<<<< HEAD
 #header2-ds{
     height: 145px;
+=======
+#header2{
+    height: 160px;
+>>>>>>> origin/cr
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
     padding-top: 35px;
@@ -214,7 +219,7 @@ body{
     width: 1000px;
     height: 70px;
     justify-content: space-between;
-    margin-top: 30px;
+    margin-top: 45px;
 }
 #headerCategory-ds, #notice-ds{
     font-size: 20px;
@@ -257,7 +262,7 @@ body{
 
 #sidebarWrap-ds {
     position: fixed;
-    top: 175px; 
+    top: 190px; 
     right: calc(50% - 600px);
     z-index: 20;
     flex-direction: column;
@@ -506,6 +511,7 @@ div[id^="banner"]{
 #banner1-ds{
     height: 300px;
     margin-bottom: 15px;
+    margin-top: 30px;
 }
 #banner2-ds{
     height: 200px;

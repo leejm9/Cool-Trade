@@ -5,6 +5,481 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+    @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'GmarketSansMedium';
+        color: #444444;
+    }
+
+    .flex-class {
+        display: flex;
+    }
+
+    div {
+        /* border: 1px solid red; */
+    }
+
+    #wrap {
+        width: 1000px;
+        height: auto;
+        margin: auto;
+        margin-top: 180px;
+        height: 100%; /* 추가: body를 뷰포트의 전체 높이로 설정 */
+        position: relative;
+    }
+
+    /* 왼쪽 컨텐츠 CSS */
+    #left-content {
+        width: 20%;
+    }
+
+    #tit {
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        height: 60px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #444444;
+    }
+
+    a:hover {
+        color: rgb(4, 180, 252);
+    }
+
+    .sub-title-list {
+        padding: 3px 0px;
+        font-size: 15px;
+    }
+
+    .sub-title-h3 {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .sub-title-li {
+        padding-bottom: 20px;
+    }
+
+    /* 오른쪽 컨텐츠 CSS */
+    #right-content {
+        width: 80%;
+    }
+
+    .redColor {
+        color: red;
+    }
+
+    #right-content-main>div {
+        padding: 10px 0px;
+        width: 100%;
+    }
+
+    .right-content-title-btn {
+        border: none;
+        background-color: transparent;
+        padding-right: 50px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .sell-section-title {
+        display: flex;
+        height: 80px;
+        align-items: center;
+        border-bottom: 2px solid;
+    }
+
+    .sell-section-title-h2 {
+        font-size: 18px;
+        font-weight: 700;
+        padding-right: 20px;
+        margin: 0px;
+    }
+
+    .sell-section-title-div {
+        font-size: 12px;
+        color: red;
+    }
+
+    #sell-section-wrap>div {
+        border-bottom: 1px solid #e6e6e6;
+        width: 100%;
+        padding: 30px 0px;
+    }  
+
+    #fileInput {
+        display: none;
+    }
+
+    #fileInput-div>img {
+        width: 160px;
+        height: 160px;
+    }
+
+    #fileInput-div {
+        height: 160px;
+        width: 75%;
+    }
+
+    #fileImg {
+        cursor: pointer;
+        /* border: 1px solid #e6e6e6; */
+    }
+
+    #sell-section-img-title {
+        width: 25%;
+    }
+    #sell-section-product-name-title {
+        width: 25%;
+    }
+
+    #sell-section-product-name-input {
+        width: 75%;
+        display: flex;
+        align-items: center;
+    }
+
+    #sell-section-product-name-input-area {
+        width: 85%;
+        padding: 0px 10px;
+        border: 1px solid #c2c2c2;
+        height: 40px;
+    }
+
+    #sell-section-product-name-input-limit {
+        width: 15%;
+        padding: 0px 20px;
+    }
+
+    #sell-section-product-name-input-area>input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+    }
+
+    ::placeholder {
+        color: #c2c2c2;
+    }
+
+    #sell-section-category-title {
+        width: 25%;
+    }
+
+    #sell-section-category-select {
+        width: 75%;
+        height: 250px;
+    }
+
+    #sell-section-category-select-list {
+        height: 80%;
+        width: 40%;
+        border: 1px solid #c2c2c2;
+        overflow-y: auto;
+        padding: 0.5rem 0px;
+    }
+
+    #sell-section-category-select-list::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #sell-section-category-select-list::-webkit-scrollbar-thumb {
+        background-color: #c2c2c2;
+        border-radius: 10px;
+    }
+
+    li>button {
+        border: none;
+        background-color: transparent;
+        width: 100%;
+        height: 30px;
+        text-align: justify;
+        padding: 0px 15px;
+    }
+
+    li>button:hover {
+        background-color: #e3e3e3;
+    }
+
+    #sell-section-category-select-input {
+        height: 20%;
+        display: flex;
+        align-items: center;
+    }
+
+    #sell-section-category-select-input>div {
+        padding-right: 10px;
+    }
+
+    #sell-section-product-status-select {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #sell-section-product-status {
+        display: flex;
+        width: 100%;
+    }
+
+    #sell-section-product-status-title {
+        width: 25%;
+    }
+
+    #sell-section-product-status-select {
+        width: 75%;
+    }
+
+    label {
+        margin: 0;
+    }
+
+    #sell-section-product-status-select label {
+        padding: 0px 15px 0px 5px;
+    }
+
+    #sell-section-product-status-select>div {
+        display: flex;
+        width: 100%;
+        height: 30px;
+        line-height: 215%;
+        padding-right: 20px;
+    }
+
+    .product-status-select-span {
+        font-size: 13px;
+        line-height: 260%;
+        color: #c2c2c2;
+        font-weight: 10;
+    }
+
+    #sell-section-product-price-title {
+        width: 25%;
+    }
+
+    #sell-section-product-price-input {
+        width: 75%;
+    }
+
+    #product-price-input {
+        width: 300px;
+        padding: 0px 10px;
+        border: 1px solid #c2c2c2;
+        height: 40px;
+        display: flex;
+    }
+
+    #product-price-input>input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+    }
+
+    #product-price-input>span {
+        transform: translateY(20%);
+        color: rgb(153, 153, 153);
+    }
+
+    #product-price-offer {
+        height: 40px;
+        padding-top: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    #product-price-offer>* {
+        height: 100%;
+        line-height: 240%;
+    }
+
+    #product-price-offer>label {
+        padding-left: 5px;
+    }
+
+    #sell-section-delivery-charge-title {
+        width: 25%;
+    }
+
+    #sell-section-delivery-charge-select {
+        width: 75%;
+        display: flex;
+    }
+
+    #delivery-charge-include-area,  #delivery-charge-none-area {
+        width: 20%;
+    }
+
+    #sell-section-content-title {
+        width: 25%;
+    }
+
+    #sell-section-content-input {
+        width: 75%;
+    }
+
+    textarea {
+        width: 100%;
+        padding: 10px 15px;
+        resize: none;
+    }
+
+    #sell-section-content-input>div {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #sell-section-tag {
+        display: flex;
+    }
+
+    #sell-section-tag-title {
+        width: 25%;
+    }
+
+    #sell-section-tag-area {
+        width: 75%;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    #product-tag-input {
+        width: 100%;
+        height: 40px;
+        padding: 0px 10px;
+        border: 1px solid #858585;
+    }
+
+    #product-tag-input>input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+    }
+
+    #product-tag-ul p {
+        font-size: 13px;
+        color: #c2c2c2;
+        font-weight: 10;
+        height: 25px;
+        line-height: 250%;
+    }
+
+    #product-tag-ul {
+        padding-top: 10px;
+        margin: 0;
+    }
+
+    #sell-section-count-title {
+        width: 25%;
+    }
+
+    #product-count-input {
+        width: 300px;
+        padding: 0px 10px;
+        border: 1px solid #c2c2c2;
+        height: 40px;
+        display: flex;
+    }
+
+    #product-count-input>input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+    }
+
+    #product-count-input>span {
+        transform: translateY(20%);
+        color: rgb(153, 153, 153);
+    }
+    
+    #cool-trade-option-title {
+        width: 25%;
+    }
+
+    #cool-trade-option-ex {
+        width: 75%;
+    }
+
+    #cool-trade-option {
+        width: 100%;
+        padding: 30px 0px;
+    }
+
+    #use-agreement {
+        padding-top: 20px;
+    }
+
+    #use-agreement>ul {
+        border: 1px solid #e3e3e3;
+        width: 100%;
+        padding: 10px;
+    }
+
+    #use-agreement li {
+        padding: 5px 0px;
+    }
+
+    #cool-trade-btn-title {
+        padding-left: 7px;
+    }
+
+    #cool-trade-btn input {
+        align-items: center;
+    }
+
+    #footer-content {
+        width: 100%;
+        height: 88px;
+        background-color: rgb(246, 246, 246);
+    }
+
+    #footer-content-div {
+        width: 1000px;
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 14px;
+        margin: auto;
+    }
+
+    #save, #enroll {
+        border: 1px solid rgb(229, 229, 229);
+        background-color: rgb(255, 255, 255);
+        color: rgb(102, 102, 102);
+        font-size: 20px;
+        height: 55px;
+        width: 160px;
+        border-radius: 4px;
+    }
+
+    #enroll {
+        background-color: rgb(4, 180, 252);
+        color: white;
+    }
+    
+
+</style>
 </head>
 <body>
 
@@ -12,54 +487,8 @@
 
     <div id="wrap" style="margin-top: 180px;">
         <div id="main-content" class="flex-class">
-            <div id="left-content">
-                <div id="mypage-tit">
-                    <h2 id="tit">마이페이지</h2>
-                </div>
-                <div>
-                <div>
-                        <ul>
-                            <li class="sub-title-li">
-                                <h3 class="sub-title-h3">내정보</h3>
-                                <ul>
-                                    <li class="sub-title-list">
-                                        <a href="">회원정보 수정</a>
-                                    </li>
-                                    <li class="sub-title-list">
-                                        <a href="">이용 후기</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            
-                            <li class="sub-title-li">
-                                <h3 class="sub-title-h3">마이 쇼핑</h3>
-                                <ul>
-                                    <li class="sub-title-list">
-                                        <a href="">찜 목록</a>
-                                    </li>
-                                    <li class="sub-title-list">
-                                        <a href="">구매 내역</a>
-                                    </li>
-                                    <li class="sub-title-list">
-                                        <a href="">판매 내역</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                </div>
-                </div>
-            </div>
             <div id="right-content">
                 <div id="right-content-main">
-                    <div id="right-content-title" class="flex-class">
-                        <button type="button" class="right-content-title-btn">
-                            판매 등록
-                        </button>
-                        <button type="button" class="right-content-title-btn">
-                            판매 내역
-                        </button>
-                    </div>
-
                     <div class="sell-section-title">
                         <h2 class="sell-section-title-h2">기본정보</h2>
                         <div class="sell-section-title-div">* 필수항목</div>
@@ -76,7 +505,7 @@
                                     </div>
                                     <div id="fileInput-div">
                                         <input type="file" id="fileInput" accept="image/*">
-                                        <img src="resources/bandicam 2024-02-19 20-16-47-061.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+                                        <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                     </div>
                                 </div>
 
@@ -304,10 +733,11 @@
         </div>
     </div>
     
-<%--     <%@ include file = "../common/footer.jsp" %> --%>
-    
+    <%@ include file = "../common/footer.jsp" %>
+
     <script>
-        // 이미지 클릭 시 파일 업로드 창이 뜬다
+
+        // 이미지 클릭 시 업로드창 열린다
         $("#fileImg").click(function() {
             $("#fileInput").click();
         });
@@ -317,24 +747,27 @@
         const previews = document.querySelectorAll('#fileImg');
 
         fileDOM.addEventListener('change', () => {
-        const reader = new FileReader();
-        reader.onload = ({ target }) => {
-            previews[0].src = target.result;
-        };
-        reader.readAsDataURL(fileDOM.files[0]);
+            const reader = new FileReader();
+            reader.onload = ({ target }) => {
+                previews[0].src = target.result;
+            };
+            reader.readAsDataURL(fileDOM.files[0]);
         });
 
         $(window).scroll(function() {
-        // 전체 페이지 높이
-        var totalPageHeight = $(document).height();
+            // 전체 페이지 높이
+            var totalPageHeight = $(document).height();
 
-        // 현재 스크롤 위치 (스크롤 + 뷰포트 높이)
-        var scrollPoint = $(window).scrollTop() + $(window).height();
+            // 현재 스크롤 위치 (스크롤 + 뷰포트 높이)
+            var scrollPoint = $(window).scrollTop() + $(window).height();
 
-        // 페이지 하단에서 200px 이내에 도달했는지 확인
-        if ((totalPageHeight - scrollPoint) <= 200) {
-            console.log("페이지 하단에서 200px 이내에 도달했습니다.");
+            // 페이지 하단에서 200px 이내에 도달했는지 확인
+            if ((totalPageHeight - scrollPoint) <= 200) {
+                console.log("페이지 하단에서 200px 이내에 도달했습니다.");
+            }
+        });
 
     </script>
+
 </body>
 </html>

@@ -65,6 +65,12 @@
 >>>>>>> jm
                     </div>
                     <%} %>
+<<<<<<< HEAD
+=======
+                    <div id="headerStore" class="flex">
+                        <a href="<%= contextPath %>/mypage.me" id="headerMyStore" class="flex">마이페이지</a>
+                    </div>
+>>>>>>> origin/cr
                 </div>
             </div>
         </div>
@@ -89,8 +95,13 @@
                                 채팅하기
                             </a>
                         </div>
+<<<<<<< HEAD
                         <div id="sellContainer-ds">
                             <a href="#" id="sell-ds">
+=======
+                        <div id="sellContainer">
+                            <a href="<%= contextPath %>/sellForm.pd" id="sell">
+>>>>>>> origin/cr
                                 <img src="resources/images/sell.png" alt="판매하기 이미지">
                                 판매하기
                             </a>
