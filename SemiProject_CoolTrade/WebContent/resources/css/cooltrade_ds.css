@@ -41,7 +41,6 @@ body{
     align-items: center;
     position: relative;
     background-color: white;
-    z-index: 20;
 }
 #header1-ds{
     height: 40px;
@@ -118,7 +117,7 @@ body{
 }
 
 #header2-ds{
-    height: 160px;
+    height: 145px;
     border-bottom: 1px solid rgb(238, 238, 238);
     width: 100%;
     padding-top: 35px;
