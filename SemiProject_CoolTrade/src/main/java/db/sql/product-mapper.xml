@@ -24,4 +24,15 @@
 				 WHERE REPORT_DATE = TO_CHAR(SYSDATE,'YY/MM/DD'))
 	</entry>
 	
+	<entry key="selectProductCount">
+		SELECT 
+		       COUNT(*) "count"
+		  FROM PRODUCT
+		 WHERE UPLOAD_TYPE='Y';
+	</entry>
+	
+	<entry key="selectProduct">
+		
+	</entry>
+	
 </properties>

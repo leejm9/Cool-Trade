@@ -6,10 +6,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
-import com.cooltrade.product.vo.Product;
+
+import com.cooltrade.common.PageInfo;
+import com.cooltrade.product.model.vo.Product;
 
 public class ProductDao {
 	Properties prop = new Properties();
@@ -88,23 +91,43 @@ public class ProductDao {
 			if(rset.next()) {
 				p.setReportedProduct(rset.getInt("reportedproduct"));
 			}
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return p;
+	}
+	
+	public int selectProductCount(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int productCount = 0;
+		String sql = prop.getProperty("selectProductCount");
 		
-		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				productCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return productCount;
+	}
+	
+	public ArrayList<Product> selectProduct(Connection conn, PageInfo pi){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectProduct");
 		
 		
 	}
-	
-	
-	
 }
