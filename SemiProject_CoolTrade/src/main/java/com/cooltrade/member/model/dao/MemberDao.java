@@ -43,7 +43,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("user_no"),
+				m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -115,7 +115,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Member(rset.getString("user_no"),
+				list.add(new Member(rset.getInt("user_no"),
 									rset.getString("user_id"),
 									rset.getString("user_name"),
 									rset.getDate("enroll_date"),
@@ -246,15 +246,19 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Member(rset.getString("user_no"),
+				list.add(new Member(rset.getInt("user_no"),
 									rset.getString("user_id"),
 									rset.getString("user_name"),
-									rset.getDate("enroll_date"),
-									rset.getDouble("ondo"),
-									rset.getString("user_level"),
+									rset.getString("user_status"),
 									rset.getInt("caution")
 									));
 			}
@@ -269,4 +273,117 @@ public class MemberDao {
 		
 		return list;
 	}
+	
+	public int countBoardList(Connection conn) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("countBoardList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+		
+		
+	}
+	
+	public ArrayList<Member> selectBoardList(Connection conn, PageInfo pi){
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectBoardList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getInt("user_no"),
+									rset.getString("user_name"),
+									rset.getInt("caution"),
+									rset.getString("product_name"),
+									rset.getDate("upload_date")
+									));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int deleteMember(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int recoveryMember(Connection conn, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("recoveryMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
 }

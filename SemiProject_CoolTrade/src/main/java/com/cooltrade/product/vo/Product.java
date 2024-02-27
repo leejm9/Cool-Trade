@@ -3,14 +3,14 @@ package com.cooltrade.product.vo;
 import java.sql.Date;
 
 public class Product {
-	private String pNo;
+	private int productNo;
 	private String sellerNo;
 	private String categoryNo;
-	private String pName;
+	private String productName;
 	private int price;
-	private String pDesc;
+	private String productDesc;
 	private String zone;
-	private String pStatus;
+	private String productStatus;
 	private Date uploadDate;
 	private String uploadType;
 	
@@ -20,28 +20,28 @@ public class Product {
 	
 	public Product() {}
 
-	public Product(String pNo, String sellerNo, String categoryNo, String pName, int price, String pDesc, String zone,
+	public Product(int pNo, String sellerNo, String categoryNo, String pName, int price, String pDesc, String zone,
 			String pStatus, Date uploadDate, String uploadType, int salesRate) {
 		super();
-		this.pNo = pNo;
+		this.productNo = productNo;
 		this.sellerNo = sellerNo;
 		this.categoryNo = categoryNo;
-		this.pName = pName;
+		this.productName = productName;
 		this.price = price;
-		this.pDesc = pDesc;
+		this.productDesc = productDesc;
 		this.zone = zone;
-		this.pStatus = pStatus;
+		this.productStatus = productStatus;
 		this.uploadDate = uploadDate;
 		this.uploadType = uploadType;
 		this.salesRate = salesRate;
 	}
 
-	public String getpNo() {
-		return pNo;
+	public int getproductNo() {
+		return productNo;
 	}
 
-	public void setpNo(String pNo) {
-		this.pNo = pNo;
+	public void setproductNo(int productNo) {
+		this.productNo = productNo;
 	}
 
 	public String getSellerNo() {
@@ -60,12 +60,12 @@ public class Product {
 		this.categoryNo = categoryNo;
 	}
 
-	public String getpName() {
-		return pName;
+	public String getproductName() {
+		return productName;
 	}
 
-	public void setpName(String pName) {
-		this.pName = pName;
+	public void setproductName(String productName) {
+		this.productName = productName;
 	}
 
 	public int getPrice() {
@@ -76,12 +76,12 @@ public class Product {
 		this.price = price;
 	}
 
-	public String getpDesc() {
-		return pDesc;
+	public String getproductDesc() {
+		return productDesc;
 	}
 
-	public void setpDesc(String pDesc) {
-		this.pDesc = pDesc;
+	public void setproductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 
 	public String getZone() {
@@ -92,12 +92,13 @@ public class Product {
 		this.zone = zone;
 	}
 
-	public String getpStatus() {
-		return pStatus;
+
+	public String getProductStatus() {
+		return productStatus;
 	}
 
-	public void setpStatus(String pStatus) {
-		this.pStatus = pStatus;
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
 	}
 
 	public Date getUploadDate() {
@@ -143,11 +144,14 @@ public class Product {
 
 	@Override
 	public String toString() {
-		return "Product [pNo=" + pNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo + ", pName=" + pName
-				+ ", price=" + price + ", pDesc=" + pDesc + ", zone=" + zone + ", pStatus=" + pStatus + ", uploadDate="
-				+ uploadDate + ", uploadType=" + uploadType + ", salesRate=" + salesRate + ", tstockgoods="
-				+ tstockgoods + ", ReportedProduct=" + ReportedProduct + "]";
+		return "Product [productNo=" + productNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo
+				+ ", productName=" + productName + ", price=" + price + ", productDesc=" + productDesc + ", zone="
+				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
+				+ uploadType + ", salesRate=" + salesRate + ", tstockgoods=" + tstockgoods + ", ReportedProduct="
+				+ ReportedProduct + "]";
 	}
+
+	
 
 	
 	

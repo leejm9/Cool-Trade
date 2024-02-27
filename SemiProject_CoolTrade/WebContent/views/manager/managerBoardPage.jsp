@@ -1,8 +1,19 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.cooltrade.common.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>    
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+%>
 <head>
 
     <meta charset="utf-8">
@@ -48,23 +59,43 @@
                                             <th>제목</th>
                                             <th>회원 번호</th>
                                             <th>판매자 이름</th>
-                                            <th>신고 횟수</th>
-                                            <th>블라인드</th>
-                                            <th>삭제</th>
+                                            <th>판매자 경고횟수</th>
+                                            <th>등록일자</th>
+                                            <th>복구/삭제</th>
                                         </tr>
                                     </thead>
                                    
                                     <tbody>
-                                        <tr>
-                                            <td>신발 팝니다</td>
-                                            <td>23</td>
-                                            <td>길동홍</td>
-                                            <td>5</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                    	<% if(list.isEmpty()){ %>
+						                <tr>
+						                    <td colspan="6">조회된 게시글이 없습니다</td>
+						                </tr>
+										<% }else{ %>
+	                                    	<% for(Member m : list){ %>
+		                                        <tr>
+		                                            <td><%= m.getProductTitle() %></td>
+		                                            <td><%= m.getUserNo() %></td>
+		                                            <td><%= m.getUserName() %></td>
+		                                            <td><%= m.getCaution() %></td>
+		                                            <td><%= m.getUploadDate() %></td>
+		                                            <td><button>삭제</button></td>
+		                                        </tr>
+                                        	<% } %>
+                                    	<% } %>
                                     </tbody>
                                 </table>
+                                
+                                <div id="btn" align="center">
+	                                <% if(currentPage > 1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
+				                    <% } %>
+				                    <% for(int i=1; i<= maxPage;i++){ %>
+						            <button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <% } %>
+						            <% if(currentPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
+									<% } %> 
+								</div>
                             </div>
                         </div>
                     </div>

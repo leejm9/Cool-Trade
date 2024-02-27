@@ -3,7 +3,7 @@ package com.cooltrade.member.model.vo;
 import java.sql.Date;
 
 public class Member {
-	private String userNo;
+	private int userNo;
 	private String userId;
 	private String userPwd;
 	private String userName;
@@ -17,6 +17,8 @@ public class Member {
 	private int caution;
 	
 	private int count;
+	private String productTitle;
+	private Date uploadDate;
 	
 	
 	public Member() {}
@@ -27,8 +29,36 @@ public class Member {
 	}
 	
 	
+	
+	
 
-	public Member(String userNo, String userId, String userName, Date enrollDate, double ondo, int caution) {
+	public Member(int userNo, String userId, String userName, String userStatus, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.userStatus = userStatus;
+		this.caution = caution;
+	}
+
+	public Member(int userNo, String userName, int caution, String productTitle, Date uploadDate) {
+		super();
+		this.userNo = userNo;
+		this.userName = userName;
+		this.caution = caution;
+		this.productTitle = productTitle;
+		this.uploadDate = uploadDate;
+	}
+
+	public Member(int userNo, String userId, String userName, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.caution = caution;
+	}
+
+	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, int caution) {
 		super();
 		this.userNo = userNo;
 		this.userId = userId;
@@ -38,7 +68,7 @@ public class Member {
 		this.caution = caution;
 	}
 
-	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
+	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count) {
 		super();
 		this.userNo = userNo;
@@ -59,7 +89,7 @@ public class Member {
 	
 	
 
-	public Member(String userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
+	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
 			int caution) {
 		super();
 		this.userNo = userNo;
@@ -71,7 +101,7 @@ public class Member {
 		this.caution = caution;
 	}
 
-	public Member(String userNo, String userId, String userPwd, String userName, String nickName, String phone,
+	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution) {
 		super();
 		this.userNo = userNo;
@@ -88,11 +118,11 @@ public class Member {
 		this.caution = caution;
 	}
 
-	public String getUserNo() {
+	public int getUserNo() {
 		return userNo;
 	}
 
-	public void setUserNo(String userNo) {
+	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
 
@@ -190,6 +220,24 @@ public class Member {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+	
+	
+
+	public String getProductTitle() {
+		return productTitle;
+	}
+
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
+	}
+
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 
 	@Override

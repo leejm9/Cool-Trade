@@ -3,11 +3,9 @@ package com.cooltrade.product.service;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
-<<<<<<< HEAD
-=======
-import com.cooltrade.member.model.dao.MemberDao;
->>>>>>> jm
+import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.dao.ProductDao;
 import com.cooltrade.product.vo.Product;
 
@@ -38,4 +36,6 @@ public class ProductService {
 		close(conn);
 		return p;
 	}
+	
+	
 }

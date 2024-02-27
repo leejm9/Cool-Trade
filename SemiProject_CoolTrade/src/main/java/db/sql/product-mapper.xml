@@ -24,4 +24,6 @@
 				 WHERE REPORT_DATE = TO_CHAR(SYSDATE,'YY/MM/DD'))
 	</entry>
 	
+	
+	
 </properties>
