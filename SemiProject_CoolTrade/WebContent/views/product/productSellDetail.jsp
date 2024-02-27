@@ -446,7 +446,7 @@
         align-items: center;
     }
 
-    #footer-content {
+    #footer-content-cr {
         width: 100%;
         background-color: rgb(246, 246, 246);
     }
@@ -724,14 +724,12 @@
         
     </div>
     <br><br><br>
-    <div id="footer-content">
+    <div id="footer-content-cr">
         <div id="footer-content-div">
             <button type="button" id="save">임시저장</button>
             <button type="button" id="enroll">등록하기</button>
         </div>
     </div>
-    
-    <%@ include file = "../common/footer.jsp" %>
 
     <script>
 
