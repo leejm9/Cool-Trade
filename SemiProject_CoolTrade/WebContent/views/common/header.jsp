@@ -118,7 +118,7 @@
                         </div>
                         <div class="category_hover-ds flex-ds">
 						<%for(Category c : clist){ %>
-                            <a href="#<%=c.getCategoryNo()%>"><%=c.getCategoryName()%></a>
+                            <a href="<%=c.getCategoryNo()%>"><%=c.getCategoryName()%></a>
                         <%} %>
                         </div>
                     </div>
