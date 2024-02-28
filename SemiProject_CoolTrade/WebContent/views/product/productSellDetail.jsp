@@ -131,6 +131,17 @@
         width: 160px;
         height: 160px;
     }
+    
+    .hidden-img {
+    	width: 160px;
+    	height: 160px;
+    	display: hidden;
+    }
+
+    #sell-fileInput-div {
+        height: 160px;
+        width: 75px;
+    }
 
     #fileInput-div {
         height: 160px;
@@ -505,9 +516,17 @@
                                         <span class="redColor">*</span>
                                         (0/5)
                                     </div>
-                                    <div id="fileInput-div">
-                                        <input type="file" id="fileInput" accept="image/*">
-                                        <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+                                    <div id="sell-fileInput-div">
+                                        <div id="fileInput-div">
+                                            <input type="file" id="fileInput" accept="image/*">
+                                            <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+                                        </div>
+                                        <!-- <div class="hidden-div">
+                                            <img src="" class="hidden-img">
+                                        </div>
+                                        <div class="hidden-div">
+                                            <img src="" class="hidden-img">
+                                        </div> -->
                                     </div>
                                 </div>
 
@@ -734,6 +753,8 @@
             <button type="button" id="enroll">등록하기</button>
         </div>
     </div>
+    
+    <%@ include file="../common/footer.jsp" %>
 
     <script>
 
@@ -744,7 +765,7 @@
 
         // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
         const fileDOM = document.querySelector('#fileInput');
-        const previews = document.querySelectorAll('#fileImg');
+        const previews = document.querySelectorAll('.hidden-fileImg');
 
         fileDOM.addEventListener('change', () => {
             const reader = new FileReader();
@@ -752,19 +773,6 @@
                 previews[0].src = target.result;
             };
             reader.readAsDataURL(fileDOM.files[0]);
-        });
-
-        $(window).scroll(function() {
-            // 전체 페이지 높이
-            var totalPageHeight = $(document).height();
-
-            // 현재 스크롤 위치 (스크롤 + 뷰포트 높이)
-            var scrollPoint = $(window).scrollTop() + $(window).height();
-
-            // 페이지 하단에서 200px 이내에 도달했는지 확인
-            if ((totalPageHeight - scrollPoint) <= 200) {
-                console.log("페이지 하단에서 200px 이내에 도달했습니다.");
-            }
         });
 
     </script>
