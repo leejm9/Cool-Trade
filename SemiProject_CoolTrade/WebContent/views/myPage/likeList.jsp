@@ -30,6 +30,7 @@
         margin: auto;
         display: flex;
         margin-top: 200px;
+        padding-top: 20px;
     }
 
     /* 왼쪽 컨텐츠 CSS */
@@ -76,7 +77,7 @@
     }
 
     #right-content-wrap>div {
-        padding: 10px;
+        padding: 10px 0px;
     }
 
     #right-content-title {

@@ -33,6 +33,7 @@
         margin: auto;
         display: flex;
         margin-top: 200px;
+        padding-top: 20px;
     }
 
     /* 왼쪽 컨텐츠 CSS */
@@ -194,7 +195,7 @@
 	<%@ include file = "../common/header.jsp" %>
 
 	<%
-		String userName = loginUser.getUserName();
+		String nickname = loginUser.getNickName();
 		double ondo = loginUser.getOndo();
 	%>
 
@@ -248,7 +249,7 @@
                             <img src="resources/images/free-icon-user-847969.png" alt="회원 프로필 사진 이미지">
                         </div>
                         <div>
-                            <b><%= userName %>님</b> 환영합니다!
+                            <b><%= nickname %>님</b> 환영합니다!
                         </div>
                     </div>
                 </div>

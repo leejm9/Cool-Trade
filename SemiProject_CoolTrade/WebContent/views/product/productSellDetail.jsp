@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	ArrayList<Category> list = (ArrayList<Category>)request.getAttribute("list");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +37,7 @@
         height: auto;
         margin: auto;
         margin-top: 180px;
+        padding-top: 20px;
         position: relative;
     }
 
@@ -131,26 +135,59 @@
         width: 160px;
         height: 160px;
     }
+
+    .hidden-div {
+        width: 160px;
+        height: 160px;
+        /* border: 1px solid #cfcfcf; */
+        display: none;
+        position: relative;
+    }
     
     .hidden-img {
     	width: 160px;
     	height: 160px;
-    	display: hidden;
+        border: 1px solid #cfcfcf;
+        /* display: none; */
+    }
+
+    .hidden-btn {
+        width: 20px;
+        height: 20px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 11px 11px;
+        background-image: url("resources/images/closeBtn.png");
+        /* background-color: rgb(25, 25, 25);
+        opacity: 0.1;
+        border-radius: 50%; */
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        top: 10px;
+        right: 10px;
     }
 
     #sell-fileInput-div {
-        height: 160px;
-        width: 75px;
+        height: auto;
+        width: 75%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap: 10px;
     }
 
     #fileInput-div {
         height: 160px;
-        width: 75%;
+        width: 100%;
     }
 
     #fileImg {
         cursor: pointer;
         /* border: 1px solid #e6e6e6; */
+    }
+
+    #sell-section-img {
+        width: 100%;
     }
 
     #sell-section-img-title {
@@ -425,6 +462,17 @@
         transform: translateY(20%);
         color: rgb(153, 153, 153);
     }
+
+    #sell-section-zone-title {
+        width: 25%;
+    }
+
+    #trade-zone {
+        width: 100px;
+        padding: 0px 10px;
+        border: 1px solid #c2c2c2;
+        height: 40px;
+    }
     
     #cool-trade-option-title {
         width: 25%;
@@ -498,16 +546,16 @@
 
 	<%@ include file = "../common/header.jsp" %>
 
-    <div id="wrap" style="margin-top: 180px;">
-        <div id="main-content" class="flex-class">
-            <div id="right-content">
-                <div id="right-content-main">
-                    <div class="sell-section-title">
-                        <h2 class="sell-section-title-h2">기본정보</h2>
-                        <div class="sell-section-title-div">* 필수항목</div>
-                    </div>
-                    <div>
-                        <form action="#" method="">
+    <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
+        <div id="wrap" style="margin-top: 180px;">
+            <div id="main-content" class="flex-class">
+                <div id="right-content">
+                    <div id="right-content-main">
+                        <div class="sell-section-title">
+                            <h2 class="sell-section-title-h2">기본정보</h2>
+                            <div class="sell-section-title-div">* 필수항목</div>
+                        </div>
+                        <div>
                             <div id="sell-section-wrap">
 
                                 <div id="sell-section-img" class="flex-class">
@@ -521,14 +569,61 @@
                                             <input type="file" id="fileInput" accept="image/*">
                                             <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                         </div>
-                                        <!-- <div class="hidden-div">
-                                            <img src="" class="hidden-img">
+                                        <div class="hidden-div">
+                                            <img src="" class="hidden-img" name="img1">
+                                            <button type="button" class="hidden-btn" onclick="deleteBtn(1);"></button>
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img">
-                                        </div> -->
+                                            <img src="" class="hidden-img" name="img2">
+                                            <button type="button" class="hidden-btn" onclick="deleteBtn(2);"></button>
+                                        </div>
+                                        <div class="hidden-div">
+                                            <img src="" class="hidden-img" name="img3">
+                                            <button type="button" class="hidden-btn" onclick="deleteBtn(3);"></button>
+                                        </div>
+                                        <div class="hidden-div">
+                                            <img src="" class="hidden-img" name="img4">
+                                            <button type="button" class="hidden-btn" onclick="deleteBtn(4);"></button>
+                                        </div>
+                                        <div class="hidden-div">
+                                            <img src="" class="hidden-img" name="img5">
+                                            <button type="button" class="hidden-btn" onclick="deleteBtn(5);"></button>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    
+                                    let count = 0;
+
+                                    // 이미지 클릭 시 업로드창 열린다     
+                                    $("#fileImg").click(function() {
+                                        $("#fileInput").click();
+                                    });
+                            
+                                    // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
+                                    const fileDOM = document.querySelector('#fileInput');
+                                    const previews = document.querySelectorAll('.hidden-img');
+                                    const $previewsDiv = $(".hidden-div");
+                            
+                                    fileDOM.addEventListener('change', () => {
+                                        const reader = new FileReader();
+                                        reader.onload = ({ target }) => {
+                                            previews[count].src = target.result;
+                                            $($previewsDiv[count]).css('display', 'block');
+                                            count++;
+                                        };
+                                        reader.readAsDataURL(fileDOM.files[0]);
+                                    });
+
+                                    function deleteBtn(index){
+                                        
+
+                                        
+                                    }
+
+                            
+                                </script>
 
                                 <div id="sell-section-product-name" class="flex-class">
                                     <div id="sell-section-product-name-title">
@@ -537,13 +632,24 @@
                                     </div>
                                     <div id="sell-section-product-name-input">
                                         <div id="sell-section-product-name-input-area">
-                                            <input type="text" maxlength="40" placeholder="상품명을 입력해주세요.">
+                                            <input id="titleInput" type="text" maxlength="40" placeholder="상품명을 입력해주세요." name="title">
                                         </div>
                                         <div id="sell-section-product-name-input-limit">
                                             0/40
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                	
+	                                $(function(){
+	                                    $("#titleInput").on("input", function() {
+	                                        var length = $(this).val().length;
+	                                        $("#sell-section-product-name-input-limit").text(length + "/40");
+	                                    });
+	                                });
+                                
+                                </script>
 
                                 <div id="sell-section-category" class="flex-class">
                                     <div id="sell-section-category-title">
@@ -553,44 +659,33 @@
                                     <div id="sell-section-category-select">
                                         <div id="sell-section-category-select-list">
                                             <ul>
-                                                <li>
-                                                    <button>패션의류</button>
-                                                </li>
-                                                <li>
-                                                    <button>패션잡화</button>
-                                                </li>
-                                                <li>
-                                                    <button>뷰티</button>
-                                                </li>
-                                                <li>
-                                                    <button>전자제품</button>
-                                                </li>
-                                                <li>
-                                                    <button>리빙/생활</button>
-                                                </li>
-                                                <li>
-                                                    <button>가구/인테리어</button>
-                                                </li>
-                                                <li>
-                                                    <button>반려동물</button>
-                                                </li>
-                                                <li>
-                                                    <button>도서/음반/문구</button>
-                                                </li>
-                                                <li>
-                                                    <button>상품권</button>
-                                                </li>
-                                                <li>
-                                                    <button>무료나눔</button>
-                                                </li>
+                                                <% for(Category c : list) { %>
+                                                    <li>
+                                                        <button name="category" type="button" id="select-category" value="<%= c.getCategoryNo() %>"><%= c.getCategoryName() %></button>
+                                                    </li>
+                                                <% } %>
                                             </ul>
                                         </div>
                                         <div id="sell-section-category-select-input">
                                             <div>선택한 카테고리 :</div>
-                                            <div>무료나눔</div>
+                                            <div id="select-category-name"></div>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>  
+        
+                                    // 카테고리 선택 시 해당 div에 카테고리 이름 출력
+                                    document.querySelectorAll('#select-category').forEach(item => {
+                                        // 각 카테고리 버튼에 클릭 이벤트 추가
+                                        item.addEventListener('click', event => {
+                                            // 선택한 카테고리의 이름을 가져와서 표시
+                                            var categoryName = event.target.textContent;
+                                            document.getElementById('select-category-name').textContent = categoryName;
+                                        });
+                                    });
+                                    
+                                </script>
 
                                 <div id="sell-section-product-status">
                                     <div id="sell-section-product-status-title">
@@ -599,27 +694,27 @@
                                     </div>
                                     <div id="sell-section-product-status-select">
                                         <div>
-                                            <input id="new-product" type="radio" vlaue="new-product" name="product-status">
+                                            <input id="new-product" type="radio" vlaue="new-product" name="status">
                                             <label for="new-product" class="product-status-label">새 상품(미사용)</label>
                                             <span class="product-status-select-span">사용하지 않은 새 상품</span>                              
                                         </div>                                 
                                         <div>
-                                            <input id="no-use" type="radio" vlaue="no-use" name="product-status">
+                                            <input id="no-use" type="radio" vlaue="no-use" name="status">
                                             <label for="no-use" class="product-status-label">사용감 없음</label>
                                             <span class="product-status-select-span">사용은 했지만 눈에 띄는 흔적이나 얼룩이 없음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="less-use" type="radio" vlaue="less-use" name="product-status">
+                                            <input id="less-use" type="radio" vlaue="less-use" name="status">
                                             <label for="less-use" class="product-status-label">사용감 적음</label>
                                             <span class="product-status-select-span">눈에 띄는 흔적이나 얼룩이 약간 있음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="useful" type="radio" vlaue="useful" name="product-status">
+                                            <input id="useful" type="radio" vlaue="useful" name="status">
                                             <label for="useful" class="product-status-label">사용감 많음</label>
                                             <span class="product-status-select-span">눈에 띄는 흔적이나 얼룩이 많이 있음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="broken-product" type="radio" vlaue="broken-product" name="product-status">
+                                            <input id="broken-product" type="radio" vlaue="broken-product" name="status">
                                             <label for="broken-product" class="product-status-label">고장/파손 상품</label>
                                             <span class="product-status-select-span">기능 이상이나 외관 손상 등으로 수리/수선 필요</span>                              
                                         </div>                        
@@ -633,15 +728,22 @@
                                     </div>
                                     <div id="sell-section-product-price-input">
                                         <div id="product-price-input">
-                                            <input type="text" placeholder="가격을 입력해 주세요." maxlength="15">
+                                            <input id="numberInput" type="text" placeholder="가격을 입력해 주세요." maxlength="15" name="price">
                                             <span>원</span>
-                                        </div>
-                                        <div id="product-price-offer">
-                                            <input type="checkbox" id="price-offer">
-                                            <label for="price-offer" class="custom-checkbox">가격 제안 받기</label>
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+									document.getElementById('numberInput').addEventListener('input', function() {
+									    // 입력된 값을 가져옴
+									    var value = this.value.replace(/,/g, ''); // 기존에 입력된 쉼표 제거
+									    // 천 단위마다 쉼표 추가
+									    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									    // 입력된 값을 다시 입력 상자에 설정
+									    this.value = value;
+									});
+								</script>
 
                                 <div id="sell-section-delivery-charge" class="flex-class">
                                     <div id="sell-section-delivery-charge-title">
@@ -650,11 +752,11 @@
                                     </div>
                                     <div id="sell-section-delivery-charge-select">
                                         <div id="delivery-charge-include-area">
-                                            <input type="radio" id="delivery-charge-include">
+                                            <input type="radio" id="delivery-charge-include" name="deliveryCharge">
                                             <label for="delivery-charge-include">배송비포함</label>
                                         </div>
                                         <div id="delivery-charge-none-area">
-                                            <input type="radio" id="delivery-charge-none">
+                                            <input type="radio" id="delivery-charge-none" name="deliveryCharge">
                                             <label for="delivery-charge-none">배송비별도</label>
                                         </div>
                                     </div>
@@ -666,37 +768,22 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="sell-section-content-input">
-                                        <textarea rows="6"></textarea>
-                                        <div>0/2000</div>
+                                        <textarea id="contentInput" rows="6" name="content" style="resize:none;" maxlength="2000"></textarea>
+                                        <div id="cotentInput-div">0/2000</div>
                                     </div>
                                 </div>
-
-                                <div id="sell-section-tag" class="flex-class">
-                                    <div id="sell-section-tag-title">
-                                        태그
-                                    </div>
-                                    <div id="sell-section-tag-area">
-                                        <div id="product-tag-input-area">
-                                            <div id="product-tag-input">
-                                                <input type="text">
-                                            </div>
-                                        </div>
-                                        <ul id="product-tag-ul">
-                                            <li>
-                                                <p>- 태그는 띄어쓰기로 구분되며 최대 9자까지 입력할 수 있어요.</p>
-                                            </li>
-                                            <li>
-                                                <p>- 내 상품을 다양한 태그로 표현해 보세요.</p>
-                                            </li>
-                                            <li>
-                                                <p>- 사람들이 내 상품을 더 잘 찾을 수 있어요.</p>
-                                            </li>
-                                            <li>
-                                                <p>- 상품과 관련 없는 태그를 입력할 경우, 판매에 제재를 받을 수 있어요.</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+                                
+                                <script>
+                                	
+	                                $(function(){
+	                                    $("#contentInput").on("input", function() {
+	                                        var contentLength = $(this).val().length;
+	                                        console.log(contentLength);
+	                                        $("#cotentInput-div").text(contentLength + "/2000");
+	                                    });
+	                                });
+                                
+                                </script>
 
                                 <div class="flex-class">
                                     <div id="sell-section-count-title">
@@ -704,78 +791,86 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="product-count-input">
-                                        <input type="text" placeholder="1" maxlength="10">
+                                        <input type="text" placeholder="1" maxlength="10" name="count">
                                         <span>개</span>
                                     </div>
                                 </div>
 
+                                <div class="flex-class">
+                                    <div id="sell-section-zone-title">
+                                        거래지역
+                                        <span class="redColor">*</span>
+                                    </div>
+                                    <div id="trade-zone-div">
+                                        <select name="zone" id="trade-zone">
+                                            <option value="">서울</option>
+                                            <option value="">경기도</option>
+                                            <option value="">인천</option>
+                                            <option value="">강원도</option>
+                                            <option value="">충청도</option>
+                                            <option value="">세종</option>
+                                            <option value="">대전</option>
+                                            <option value="">충청도</option>
+                                            <option value="">경상도</option>
+                                            <option value="">전라도</option>
+                                            <option value="">광주</option>
+                                            <option value="">대구</option>
+                                            <option value="">울산</option>
+                                            <option value="">부산</option>
+                                            <option value="">제주</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
-
-                <div id="right-content-footer">
-                    <div  class="sell-section-title">
-                        <h2 class="sell-section-title-h2">빠른 판매</h2>
-                        <div class="sell-section-title-div">내 상품에 쿨거래 배지가 표시돼요</div>
-                    </div>
-                    <div id="cool-trade-option" class="flex-class">
-                        <div id="cool-trade-option-title">옵션</div>
-                        <div id="cool-trade-option-ex">
-                            <div class="flex-class" id="cool-trade-btn">
-                                <div>
-                                    <input type="checkbox">
+                    
+                    <div id="right-content-footer">
+                        <div  class="sell-section-title">
+                            <h2 class="sell-section-title-h2">빠른 판매</h2>
+                            <div class="sell-section-title-div">내 상품에 쿨거래 배지가 표시돼요</div>
+                        </div>
+                        <div id="cool-trade-option" class="flex-class">
+                            <div id="cool-trade-option-title">옵션</div>
+                            <div id="cool-trade-option-ex">
+                                <div class="flex-class" id="cool-trade-btn">
+                                    <div>
+                                        <input type="checkbox" name="coolTrade">
+                                    </div>
+                                    <div id="cool-trade-btn-title">쿨거래</div>
                                 </div>
-                                <div id="cool-trade-btn-title">쿨거래</div>
-                            </div>
-                            <div id="use-agreement">
-                                <ul>
-                                    <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
-                                    <li>내 상품을 먼저 보여주는 전용 필터로 더 빠르게 판매할 수 있어요.</li>
-                                    <li>쿨거래 배지로 더 많은 관심을 받을 수 있어요.</li>
-                                    <li>
-                                        <small>개인 정보 이용 약관에 동의 시 이용이 가능합니다.</small>
-                                    </li>
-                                </ul>
+                                <div id="use-agreement">
+                                    <ul>
+                                        <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
+                                        <li>내 상품을 먼저 보여주는 전용 필터로 더 빠르게 판매할 수 있어요.</li>
+                                        <li>쿨거래 배지로 더 많은 관심을 받을 수 있어요.</li>
+                                        <li>
+                                            <small>개인 정보 이용 약관에 동의 시 이용이 가능합니다.</small>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </div>
-        
-    </div>
-    <br><br><br>
-    <div id="footer-content-cr">
-        <div id="footer-content-div">
-            <button type="button" id="save">임시저장</button>
-            <button type="button" id="enroll">등록하기</button>
+        <br><br><br>
+        <div id="footer-content-cr">
+            <div id="footer-content-div">
+                <button type="button" id="save">임시저장</button>
+                <button type="submit" id="enroll">등록하기</button>
+            </div>
         </div>
-    </div>
+    </form>
     
     <%@ include file="../common/footer.jsp" %>
 
-    <script>
 
-        // 이미지 클릭 시 업로드창 열린다
-        $("#fileImg").click(function() {
-            $("#fileInput").click();
-        });
 
-        // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
-        const fileDOM = document.querySelector('#fileInput');
-        const previews = document.querySelectorAll('.hidden-fileImg');
 
-        fileDOM.addEventListener('change', () => {
-            const reader = new FileReader();
-            reader.onload = ({ target }) => {
-                previews[0].src = target.result;
-            };
-            reader.readAsDataURL(fileDOM.files[0]);
-        });
-
-    </script>
 
 </body>
 </html>
