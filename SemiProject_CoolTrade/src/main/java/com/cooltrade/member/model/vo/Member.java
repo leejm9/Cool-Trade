@@ -18,6 +18,7 @@ public class Member {
 	
 	private int count;
 	private String productTitle;
+	private String monthEnroll;
 	private Date uploadDate;
 	
 	
@@ -28,9 +29,12 @@ public class Member {
 		this.count = count;
 	}
 	
-	
-	
-	
+
+	public Member(int count, String monthEnroll) {
+		super();
+		this.count = count;
+		this.monthEnroll = monthEnroll;
+	}
 
 	public Member(int userNo, String userId, String userName, String userStatus, int caution) {
 		super();
@@ -238,6 +242,16 @@ public class Member {
 
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
+	}
+	
+	
+
+	public String getMonthEnroll() {
+		return monthEnroll;
+	}
+
+	public void setMonthEnroll(String monthEnroll) {
+		this.monthEnroll = monthEnroll;
 	}
 
 	@Override

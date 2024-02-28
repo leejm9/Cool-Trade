@@ -195,7 +195,7 @@
             <div id="mypage-tit">
                 <h2 id="tit">마이페이지</h2>
             </div>
-            <div id>
+            <div>
                <div>
                     <ul>
                         <li class="sub-title-li">
