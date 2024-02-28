@@ -32,6 +32,7 @@ public class OnloadController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println();
 		// 현재 총 게시글 개수
 		int productCount = new ProductService().selectProductCount();
 		
