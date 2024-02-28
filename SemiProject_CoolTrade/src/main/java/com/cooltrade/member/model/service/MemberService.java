@@ -2,7 +2,6 @@ package com.cooltrade.member.model.service;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -102,7 +101,8 @@ public class MemberService {
 		
 		close(conn);
 		return count;
-		
+	}
+	
 	public int countBoardList() {
 		Connection conn = getConnection();
 		

@@ -4,7 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>쿨거래 중고 거래 사이트</title>
+<link rel="icon" sizes="16x16" type="image/png" href="resources/images/logo.png">
 </head>
 <body>
 

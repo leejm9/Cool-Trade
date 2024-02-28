@@ -1,29 +1,29 @@
 package com.cooltrade.product.model.vo;
 
-import java.sql.Date;
-
 public class Product {
 	
 	private int productNo;
-	private int sellerNo;
+	private String sellerNo;
 	private String categoryNo;
 	private String productName;
 	private int price;
 	private String productDesc;
 	private String zone;
 	private String productStatus;
-	private Date uploadDate;
+	private String uploadDate;
 	private String uploadType;
-	
+	private double ondo;
+	private String timeDiff;
 	private int salesRate;
 	private int tstockgoods;
 	private int ReportedProduct;
+	private int tradeType;
 	
 	public Product() {}
 
-	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price, String productDesc,
-			String zone, String productStatus, Date uploadDate, String uploadType, int salesRate, int tstockgoods,
-			int reportedProduct) {
+	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, String uploadDate, String uploadType, double ondo, String timeDiff,
+			int salesRate, int tstockgoods, int reportedProduct, int tradeType) {
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -35,9 +35,12 @@ public class Product {
 		this.productStatus = productStatus;
 		this.uploadDate = uploadDate;
 		this.uploadType = uploadType;
+		this.ondo = ondo;
+		this.timeDiff = timeDiff;
 		this.salesRate = salesRate;
 		this.tstockgoods = tstockgoods;
 		ReportedProduct = reportedProduct;
+		this.tradeType = tradeType;
 	}
 
 	public int getProductNo() {
@@ -48,11 +51,11 @@ public class Product {
 		this.productNo = productNo;
 	}
 
-	public int getSellerNo() {
+	public String getSellerNo() {
 		return sellerNo;
 	}
 
-	public void setSellerNo(int sellerNo) {
+	public void setSellerNo(String sellerNo) {
 		this.sellerNo = sellerNo;
 	}
 
@@ -104,11 +107,11 @@ public class Product {
 		this.productStatus = productStatus;
 	}
 
-	public Date getUploadDate() {
+	public String getUploadDate() {
 		return uploadDate;
 	}
 
-	public void setUploadDate(Date uploadDate) {
+	public void setUploadDate(String uploadDate) {
 		this.uploadDate = uploadDate;
 	}
 
@@ -118,6 +121,22 @@ public class Product {
 
 	public void setUploadType(String uploadType) {
 		this.uploadType = uploadType;
+	}
+
+	public double getOndo() {
+		return ondo;
+	}
+
+	public void setOndo(double d) {
+		this.ondo = d;
+	}
+
+	public String getTimeDiff() {
+		return timeDiff;
+	}
+
+	public void setTimeDiff(String timeDiff) {
+		this.timeDiff = timeDiff;
 	}
 
 	public int getSalesRate() {
@@ -144,15 +163,23 @@ public class Product {
 		ReportedProduct = reportedProduct;
 	}
 
+	public int getTradeType() {
+		return tradeType;
+	}
+
+	public void setTradeType(int tradeType) {
+		this.tradeType = tradeType;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo
 				+ ", productName=" + productName + ", price=" + price + ", productDesc=" + productDesc + ", zone="
 				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
-				+ uploadType + ", salesRate=" + salesRate + ", tstockgoods=" + tstockgoods + ", ReportedProduct="
-				+ ReportedProduct + "]";
+				+ uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate=" + salesRate
+				+ ", tstockgoods=" + tstockgoods + ", ReportedProduct=" + ReportedProduct + ", tradeType=" + tradeType
+				+ "]";
 	}
-
 
 	
 }
