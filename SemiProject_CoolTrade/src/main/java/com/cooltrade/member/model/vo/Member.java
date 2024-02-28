@@ -17,6 +17,8 @@ public class Member {
 	private int caution;
 	
 	private int count;
+	private String productTitle;
+	private Date uploadDate;
 	
 	
 	public Member() {}
@@ -27,6 +29,34 @@ public class Member {
 	}
 	
 	
+	
+	
+
+	public Member(int userNo, String userId, String userName, String userStatus, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.userStatus = userStatus;
+		this.caution = caution;
+	}
+
+	public Member(int userNo, String userName, int caution, String productTitle, Date uploadDate) {
+		super();
+		this.userNo = userNo;
+		this.userName = userName;
+		this.caution = caution;
+		this.productTitle = productTitle;
+		this.uploadDate = uploadDate;
+	}
+
+	public Member(int userNo, String userId, String userName, int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.caution = caution;
+	}
 
 	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, int caution) {
 		super();
@@ -190,6 +220,24 @@ public class Member {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+	
+	
+
+	public String getProductTitle() {
+		return productTitle;
+	}
+
+	public void setProductTitle(String productTitle) {
+		this.productTitle = productTitle;
+	}
+
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
 	}
 
 	@Override

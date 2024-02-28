@@ -86,7 +86,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= contextPath %>/blacklist.in" data-toggle="collapse" data-target="#collapseUtilities"
+                <a class="nav-link collapsed" href="<%= contextPath %>/blacklist.in?cpage=1" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>블랙리스트 조회</span>
@@ -146,12 +146,12 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                게시판 관리
+                게시글 관리
             </div>
 
             <!-- Nav Item - 게시판 조회 -->
             <li class="nav-item">
-                <a class="nav-link" href="<%= contextPath %>/board.in">
+                <a class="nav-link" href="<%= contextPath %>/board.in?cpage=1">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>게시판 조회</span></a>
             </li>

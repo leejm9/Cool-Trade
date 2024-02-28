@@ -103,6 +103,48 @@ public class MemberService {
 		close(conn);
 		return count;
 		
+	public int countBoardList() {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countBoardList(conn);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Member> selectBoardList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectBoardList(conn,pi);
+		close(conn);
+		return list;
+	}
+	
+	public int deleteMember(int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().deleteMember(conn,userNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
+	}
+	
+	public int recoveryMember(int userNo) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().recoveryMember(conn,userNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		return result;
 	}
 	
 }

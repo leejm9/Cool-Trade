@@ -82,7 +82,6 @@
 		SELECT COUNT(*) count
 		  FROM MEMBER
 		 WHERE CAUTION >= 3
-		   AND USER_STATUS = 'Y'
 	</entry>
 	
 	<entry key="selectBlackList">
@@ -94,14 +93,10 @@
 	                       USER_NO
 	                     , USER_ID
 	                     , USER_NAME
-	                     , ENROLL_DATE
-	                     , ONDO 
-	                     , USER_LEVEL
 	                     , CAUTION
+	                     , USER_STATUS
 	                  FROM MEMBER 
 	                 WHERE USER_LEVEL = 'B'
-	                   AND USER_STATUS = 'Y'
-	                   AND CAUTION > 2
 	                 ORDER
 	                    BY USER_NO DESC
 	                    ) A
@@ -114,6 +109,44 @@
 		  FROM PRODUCT
 		 WHERE SELLER_NO = ?
 		   AND TRADE_TYPE = 2
+	</entry> 
+	  
+	<entry key="countBoardList">
+		SELECT
+			   COUNT(*) count
+		  FROM PRODUCT
+	</entry>
+	
+	<entry key="selectBoardList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       PRODUCT_NAME
+		                     , USER_NO
+		                     , USER_NAME
+		                     , CAUTION
+		                     , UPLOAD_DATE
+		                  FROM PRODUCT P
+		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+		                 ORDER
+		                    BY UPLOAD_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="deleteMember">
+		UPDATE MEMBER
+		   SET USER_STATUS = 'Y'
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="recoveryMember">
+		UPDATE MEMBER
+		   SET USER_STATUS = 'N'
+		 WHERE USER_NO = ?
 	</entry>
 	
 </properties>

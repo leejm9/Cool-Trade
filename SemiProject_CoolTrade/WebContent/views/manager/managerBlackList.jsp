@@ -1,8 +1,20 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.cooltrade.common.PageInfo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+	
+%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <head>
 
     <meta charset="utf-8">
@@ -46,26 +58,83 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>번호</th>
+                                            <th>회원번호</th>
+                                            <th>아이디</th>
                                             <th>이름</th>
                                             <th>경고횟수</th>
-                                            <th>신고날짜</th>
-                                            <th>복구</th>
-                                            <th>추방</th>
+                                            <th>복구/추방</th>
+                                            
                                         </tr>
                                     </thead>
                                     
                                     <tbody>
-                                        <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr>
+                                    	<% if(list.isEmpty()){ %>
+						                <tr>
+						                    <td colspan="6">조회된 게시글이 없습니다</td>
+						                </tr>
+										<% }else{ %>
+	                                    	<% for(Member m : list){ %>
+		                                        <tr>
+		                                            <td><%= m.getUserNo() %></td>
+		                                            <td><%= m.getUserId() %></td>
+		                                            <td><%= m.getUserName() %></td>
+		                                            <td><%= m.getCaution() %></td>
+		                                            <% if(m.getUserStatus().equals("N")){ %>
+		                                            <td><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22);">추방</button></td>
+		                                       		<% }else if(m.getUserStatus().equals("Y")) { %>
+		                                       		<td><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234);">복구</button></td>
+		                                       		<% } %>
+		                                        </tr>
+                                        	<% } %>
+                                    	<% } %>
                                     </tbody>
                                 </table>
+                                <script>
+							        function btn1(userNo){
+							                $.ajax({
+							                	url:"delete.me",
+							                	data:{uno:userNo},
+							                	success:function(result){
+							                		$(this).css("backgroundColor","rgb(86, 190, 234)");
+									                $(this).html("복구");
+									                $(this).attr("onclick","btn2(" +userNo + ");");
+									                location.reload();
+							                	},error:function(){
+							                		console.log("ajax 통신 실패");
+							                	}
+							                })
+							        }
+							        function btn2(userNo){
+							            	$.ajax({
+							                	url:"recovery.me",
+							                	data:{uno:userNo},
+							                	success:function(result){
+							                		$(this).css("backgroundColor","rgb(203, 22, 22)");
+							                		$(this).html("추방") ;
+							                		$(this).attr("onclick","btn1(" +userNo + ");");
+							                		location.reload();
+							                	},error:function(){
+							                		console.log("ajax 통신 실패");
+							                	}
+							                })
+							            	
+							        }        
+							            
+							       
+							    </script>
+                                
+                                
+                                <div id="btn" align="center">
+	                                <% if(currentPage > 1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/blacklist.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
+				                    <% } %>
+				                    <% for(int i=1; i<= maxPage;i++){ %>
+						            <button onclick="location.href='<%= contextPath %>/blacklist.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <% } %>
+						            <% if(currentPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/blacklist.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
+									<% } %> 
+								</div>
                             </div>
                         </div>
                     </div>
