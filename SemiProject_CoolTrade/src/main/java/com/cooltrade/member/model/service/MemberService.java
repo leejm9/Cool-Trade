@@ -103,6 +103,8 @@ public class MemberService {
 		close(conn);
 		return count;
 		
+	}
+		
 	public int countBoardList() {
 		Connection conn = getConnection();
 		

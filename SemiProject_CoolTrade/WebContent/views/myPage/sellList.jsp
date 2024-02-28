@@ -30,6 +30,7 @@
         margin: auto;
         display: flex;
         margin-top: 200px;
+        padding-top: 20px;
     }
 
     /* 왼쪽 컨텐츠 CSS */
