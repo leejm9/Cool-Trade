@@ -13,15 +13,10 @@
 	String alertMsg = (String)session.getAttribute("alertMsg");
 	
 	
-	ArrayList<Category> clist = (ArrayList<Category>)request.getAttribute("clist");
+	ArrayList<Category> clist = (ArrayList<Category>)session.getAttribute("clist");
 	ArrayList<Product> plist = (ArrayList<Product>)request.getAttribute("plist");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
-// 	int currentPage = pi.getCurrentPage();
-// 	int startPage = pi.getStartPage();
-// 	int endPage = pi.getEndPage();
-// 	int maxPage = pi.getMaxPage();
-// 	int pagelimit = pi.getPageLimit();
+
 %>
 <!DOCTYPE html>
 <html>
@@ -156,8 +151,5 @@
             </div>
         </div>
     </div>
-    
-        <%@ include file="main.jsp" %>
-        <%@ include file="footer.jsp" %>
 </body>
 </html>

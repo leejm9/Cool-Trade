@@ -5,12 +5,14 @@
     pageEncoding="UTF-8"%>
     
 <%
-	
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
 	int pagelimit = pi.getPageLimit();
+
 %>
 <!DOCTYPE html>
 <html>
