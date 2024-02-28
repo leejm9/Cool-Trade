@@ -152,17 +152,17 @@
     }
 
     .hidden-btn {
-        width: 25px;
-        height: 25px;
+        width: 20px;
+        height: 20px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: 11px 11px;
         background-image: url("resources/images/closeBtn.png");
-        background-color: rgb(25, 25, 25);
-        opacity: 3;
-        border-radius: 50%;
-        /* border: none; */
-        /* background-color: transparent; */
+        /* background-color: rgb(25, 25, 25);
+        opacity: 0.1;
+        border-radius: 50%; */
+        border: none;
+        background-color: transparent;
         position: absolute;
         top: 10px;
         right: 10px;
@@ -565,7 +565,7 @@
                                     <div id="sell-section-img-title">
                                         상품이미지
                                         <span class="redColor">*</span>
-                                        <div id="imgCount" style="display:inline"></div>
+                                        (0/5)
                                     </div>
                                     <div id="sell-fileInput-div">
                                         <div id="fileInput-div">
@@ -608,17 +608,13 @@
                                     const fileDOM = document.querySelector('#fileInput');
                                     const previews = document.querySelectorAll('.hidden-img');
                                     const $previewsDiv = $(".hidden-div");
-                                    
+                            
                                     fileDOM.addEventListener('change', () => {
                                         const reader = new FileReader();
                                         reader.onload = ({ target }) => {
                                             previews[count].src = target.result;
                                             $($previewsDiv[count]).css('display', 'block');
-                                            
                                             count++;
-
-                                                $("#imgCount").text("(" + count + "/5)");
-
                                         };
                                         reader.readAsDataURL(fileDOM.files[0]);
                                     });
@@ -627,8 +623,6 @@
                                         const closeBtn = btn;                                        
                                         $(closeBtn).parent().css('display', 'none');                                       
                                         count--;
-
-                                        $("#imgCount").text("(" + count + "/5)");
                                     };
 
                                 </script>

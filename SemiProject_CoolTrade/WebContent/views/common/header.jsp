@@ -94,7 +94,7 @@
                             </a>
                         </div>
                         <div id="sellContainer-ds">
-                            <a href="<%= contextPath %>/sellForm.pd" id="sell-ds">
+                            <a href="<%= contextPath %>/sellForm.po" id="sell-ds">
                                 <img src="resources/images/sell.png" alt="판매하기 이미지">
                                 판매하기
                             </a>

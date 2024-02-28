@@ -15,7 +15,7 @@ import com.cooltrade.product.model.vo.Category;
 /**
  * Servlet implementation class ProductSellFormController
  */
-@WebServlet("/sellForm.pd")
+@WebServlet("/sellForm.po")
 public class ProductSellFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +35,7 @@ public class ProductSellFormController extends HttpServlet {
 		ArrayList<Category> list = new ProductService().selectCategoryList();
 		
 		request.setAttribute("list", list);
-		request.getRequestDispatcher("views/product/productSellDetail.jsp").forward(request, response);
+		request.getRequestDispatcher("views/product/productSellForm.jsp").forward(request, response);
 	
 	}
 
