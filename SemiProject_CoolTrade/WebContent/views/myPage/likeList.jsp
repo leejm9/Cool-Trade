@@ -161,7 +161,9 @@
     <div id="mypage-wrap">
         <div id="left-content">
             <div id="mypage-tit">
-                <h2 id="tit">마이페이지</h2>
+                <h2 id="tit">
+                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                </h2>
             </div>
             <div>
                <div>

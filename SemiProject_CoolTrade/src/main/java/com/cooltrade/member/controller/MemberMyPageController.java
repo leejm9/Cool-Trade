@@ -36,8 +36,6 @@ public class MemberMyPageController extends HttpServlet {
 		
 		int count = new MemberService().selectTradeTypeCount(m);
 		
-		System.out.println(count);
-		
 		request.setAttribute("count", count);
 
 		request.getRequestDispatcher("views/myPage/myPage.jsp").forward(request, response);
