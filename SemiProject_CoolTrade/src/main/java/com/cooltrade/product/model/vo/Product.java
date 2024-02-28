@@ -18,12 +18,34 @@ public class Product {
 	private int tstockgoods;
 	private int ReportedProduct;
 	private int tradeType;
+	private String monthSales;
+	private int count;
 	
 	public Product() {}
+	
+	
 
-	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
-			String zone, String productStatus, String uploadDate, String uploadType, double ondo, String timeDiff,
-			int salesRate, int tstockgoods, int reportedProduct, int tradeType) {
+	
+	public Product(int price, String monthSales) {
+		super();
+		this.price = price;
+		this.monthSales = monthSales;
+	}
+	
+	
+
+
+	public Product(String categoryNo, int count) {
+		super();
+		this.categoryNo = categoryNo;
+		this.count = count;
+	}
+
+
+
+	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, Date uploadDate, String uploadType, int salesRate, int tstockgoods,
+			int reportedProduct) {
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -170,6 +192,25 @@ public class Product {
 	public void setTradeType(int tradeType) {
 		this.tradeType = tradeType;
 	}
+
+	
+	public String getMonthSales() {
+		return monthSales;
+	}
+
+	public void setMonthSales(String monthSales) {
+		this.monthSales = monthSales;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+
 
 	@Override
 	public String toString() {

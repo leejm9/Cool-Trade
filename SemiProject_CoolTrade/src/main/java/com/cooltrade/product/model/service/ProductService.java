@@ -117,4 +117,21 @@ public class ProductService {
 		
 		return p;
 	}
+	
+	public ArrayList<Product> selectMonthSales(){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().selectMonthSales(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> selectCategorySales(){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().selectCategorySales(conn);
+		close(conn);
+		return list;
+	}
+	
 }

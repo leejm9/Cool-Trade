@@ -146,5 +146,12 @@ public class MemberService {
 		
 		return result;
 	}
+	public ArrayList<Member> selectEnrollMonth(){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectEnrollMonth(conn);
+		close(conn);
+		return list;
+	}
 	
 }

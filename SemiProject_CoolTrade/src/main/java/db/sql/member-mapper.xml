@@ -149,4 +149,15 @@
 		 WHERE USER_NO = ?
 	</entry>
 	
+	<entry key="selectEnrollMonth">
+		SELECT
+		       TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
+		     , COUNT(*) count
+		  FROM MEMBER
+		 GROUP
+		    BY TO_CHAR(ENROLL_DATE,'YY-MM')
+		 ORDER
+		    BY 1
+	</entry>
+	
 </properties>

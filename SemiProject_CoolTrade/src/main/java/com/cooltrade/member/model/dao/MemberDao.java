@@ -278,25 +278,26 @@ public class MemberDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectTradeTypeCount");
 		
-
-			try {
-				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, m.getUserNo());
-				rset = pstmt.executeQuery();
-				if(rset.next()) {
-					count = rset.getInt("count");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}finally {
-				close(rset);
-				close(pstmt);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, m.getUserNo());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
 			}
-			return count;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return count;
 	}
-					
-					
-		public int countBoardList(Connection conn) {
+			
+	public int countBoardList(Connection conn) {
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -406,6 +407,35 @@ public class MemberDao {
 		}
 		
 		return result;
+	}
+	
+	public ArrayList<Member> selectEnrollMonth(Connection conn){
+		ArrayList<Member> list = new ArrayList<Member>();
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectEnrollMonth");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Member(rset.getInt("count"),
+									rset.getString("enrolldate")
+									));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 	
 }

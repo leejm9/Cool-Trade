@@ -173,5 +173,27 @@
 		  JOIN CATEGORY USING (CATEGORY_NO)
 		 WHERE UPLOAD_TYPE = 'Y'
 		   AND PRODUCT_NO = ?
+	<entry key="selectMonthSales">
+		SELECT
+		       TO_CHAR(SELL_DATE,'YY/MM') sell_date
+		     , SUM(PRICE) price
+		  FROM PRODUCT
+		  JOIN TRADE USING(PRODUCT_NO)
+		 WHERE TO_CHAR(SELL_DATE,'YY') = TO_CHAR(SYSDATE,'YY') <!-- 년도가 25년되면 넘어가도록 설정 -->
+		 GROUP
+		    BY TO_CHAR(SELL_DATE,'YY/MM')
+		 ORDER
+            BY 1
+	</entry>
+	
+	<entry key="selectCategorySales">
+		SELECT
+		       CATEGORY_NAME categoryname
+		     , COUNT(PRODUCT_NO) count
+		  FROM PRODUCT
+		  JOIN CATEGORY USING(CATEGORY_NO)
+		  JOIN TRADE USING(PRODUCT_NO)
+		 GROUP
+		    BY CATEGORY_NAME
 	</entry>
 </properties>

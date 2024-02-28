@@ -64,7 +64,7 @@
 		
         <ul class="pagination" class="flex-ds" style="justify-content: center; margin-bottom: 50px;">
      		<%if(startPage != 1){ %>
-            <li class="page-item"><a class="page-link" href="#"><<</a></li>
+            <li class="page-item"><a class="page-link" href="#"></a></li>
             <%}%>
             <%for(int i = startPage; i<=endPage;i++){ %>
             	<%if(i == currentPage){ %>

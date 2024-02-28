@@ -197,7 +197,7 @@
                 	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
                 </h2>
             </div>
-            <div id>
+            <div>
                <div>
                     <ul>
                         <li class="sub-title-li">
