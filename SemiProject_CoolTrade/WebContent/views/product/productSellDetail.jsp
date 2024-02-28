@@ -616,8 +616,8 @@
                                             $($previewsDiv[count]).css('display', 'block');
                                             
                                             count++;
-
-                                                $("#imgCount").text("(" + count + "/5)");
+                                            console.log(count);
+                                            $("#imgCount").text("(" + count + "/5)");
 
                                         };
                                         reader.readAsDataURL(fileDOM.files[0]);
