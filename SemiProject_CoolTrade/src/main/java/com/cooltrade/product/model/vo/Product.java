@@ -21,14 +21,9 @@ public class Product {
 	
 	public Product() {}
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
-	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price,
-			String productDesc, String zone, String productStatus, Date uploadDate, String uploadType, int salesRate,
-			int tstockgoods, int reportedProduct) {
-=======
-	public Product(int pNo, String sellerNo, String categoryNo, String pName, int price, String pDesc, String zone,
-			String pStatus, Date uploadDate, String uploadType, int salesRate) {
->>>>>>> jm:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
+	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, Date uploadDate, String uploadType, int salesRate, int tstockgoods,
+			int reportedProduct) {
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -45,19 +40,11 @@ public class Product {
 		ReportedProduct = reportedProduct;
 	}
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
 	public int getProductNo() {
 		return productNo;
 	}
 
 	public void setProductNo(int productNo) {
-=======
-	public int getproductNo() {
-		return productNo;
-	}
-
-	public void setproductNo(int productNo) {
->>>>>>> jm:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
 		this.productNo = productNo;
 	}
 
@@ -77,19 +64,11 @@ public class Product {
 		this.categoryNo = categoryNo;
 	}
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
 	public String getProductName() {
 		return productName;
 	}
 
 	public void setProductName(String productName) {
-=======
-	public String getproductName() {
-		return productName;
-	}
-
-	public void setproductName(String productName) {
->>>>>>> jm:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
 		this.productName = productName;
 	}
 
@@ -101,19 +80,11 @@ public class Product {
 		this.price = price;
 	}
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
 	public String getProductDesc() {
 		return productDesc;
 	}
 
 	public void setProductDesc(String productDesc) {
-=======
-	public String getproductDesc() {
-		return productDesc;
-	}
-
-	public void setproductDesc(String productDesc) {
->>>>>>> jm:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
 		this.productDesc = productDesc;
 	}
 
@@ -125,10 +96,6 @@ public class Product {
 		this.zone = zone;
 	}
 
-<<<<<<< HEAD:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/model/vo/Product.java
-=======
-
->>>>>>> jm:SemiProject_CoolTrade/src/main/java/com/cooltrade/product/vo/Product.java
 	public String getProductStatus() {
 		return productStatus;
 	}
@@ -186,9 +153,6 @@ public class Product {
 				+ ReportedProduct + "]";
 	}
 
-	
 
-	
-	
 	
 }

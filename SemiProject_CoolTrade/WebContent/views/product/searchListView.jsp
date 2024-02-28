@@ -14,7 +14,6 @@
 <body>
 	<%@ include file="../common/header.jsp" %>
 	<div id="content-ds">
-
 		<div class="category_table-ds">
 			<div class="category_header-ds"><h3>카테고리</h3></div>
 			<div class="category_list-ds flex-ds">
@@ -40,7 +39,7 @@
 			</div>
 		</div>
 
-
+		<%if(searchList != null) {%>
 		<!-- 검색결과가 있는 경우-->
 		<div id="search_content-ds">
 			 <div class="product_result-ds">
@@ -67,41 +66,32 @@
 			</div>
 			 
 		</div>
-
+		<%}else{ %>
 		<!-- 검색결과가 없는 경우 -->
-<!-- 		<div id="no_match_container-ds"> -->
-<!-- 			<div id="no_match_text-ds" class="flex-ds"> -->
-<!-- 				<div id="search_text-ds"> -->
-<!-- 					<div id="user_search_text-ds" align="center"> -->
-<!-- 						검색한 텍스트 -->
-<!-- 					</div> -->
-<!-- 					에 대한 검색결과가 없습니다. -->
-<!-- 				</div> -->
-<!-- 				<div id="search_advice-ds"> -->
-<!-- 					- 단어의 철자가 정확한지 확인해 보세요<br> -->
-<!-- 					- 보다 일반적인 검색어로 다시 검색해 보세요<br> -->
-<!-- 					- 검색어의 띄어쓰기를 다르게 해보세요<br> -->
-<!-- 					- 유해/금지어가 아닌지 확인해주세요<br> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class="recommend_products-ds"> -->
-<!-- 			<div class="simple_product_wrap-ds"> -->
-<!-- 				<div class="simple_img-ds"></div> -->
-<!-- 				<div class="simple_title-ds"></div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-		<ul class="pagination" class="flex-ds" style="justify-content: center; margin-bottom: 50px;">
-			<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-			<li class="page-item"><a class="page-link" href="#">1</a></li>
-			<li class="page-item"><a class="page-link" href="#">2</a></li>
-			<li class="page-item"><a class="page-link" href="#">3</a></li>
-			<li class="page-item"><a class="page-link" href="#">4</a></li>
-			<li class="page-item"><a class="page-link" href="#">5</a></li>
-			<li class="page-item"><a class="page-link" href="#">Next</a></li>
-		</ul>
+		<div id="no_match_container-ds">
+			<div id="no_match_text-ds" class="flex-ds">
+				<div id="search_text-ds">
+					<div id="user_search_text-ds" align="center">
+						검색한 텍스트
+					</div>
+					에 대한 검색결과가 없습니다.
+				</div>
+				<div id="search_advice-ds">
+					- 단어의 철자가 정확한지 확인해 보세요<br>
+					- 보다 일반적인 검색어로 다시 검색해 보세요<br>
+					- 검색어의 띄어쓰기를 다르게 해보세요<br>
+					- 유해/금지어가 아닌지 확인해주세요<br>
+				</div>
+			</div>
+		</div>
+		<div class="recommend_products-ds">
+			<div class="simple_product_wrap-ds">
+				<div class="simple_img-ds"></div>
+				<div class="simple_title-ds"></div>
+			</div>
+		</div>
+		<%}%>
 	</div>
-	
 	<%@ include file="../common/footer.jsp" %>
 </body>
 </html>

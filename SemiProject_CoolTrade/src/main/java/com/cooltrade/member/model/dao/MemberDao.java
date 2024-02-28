@@ -173,9 +173,6 @@ public class MemberDao {
 			if(rset.next()) {
 				m = new Member(rset.getInt("count"));
 			}
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
