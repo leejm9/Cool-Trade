@@ -32,26 +32,35 @@
 	</entry>
 	
 	<entry key="selectProduct">
-		SELECT * 
-  		  FROM (
-		        SELECT 
-		               ROWNUM RNUM, A.*
-		          FROM 
-		               (
-		               SELECT 
-		                      PRODUCT_NO
-		                    , SELLER_NO
-		                    , PRODUCT_NAME
-		                    , PRICE
-		                    , ZONE
-		                    , UPLOAD_DATE
-		                 FROM PRODUCT
-		                WHERE UPLOAD_TYPE = 'Y'
-		                ORDER 
-		                   BY DBMS_RANDOM.VALUE
-		                ) A   
-		       )
-		 WHERE RNUM BETWEEN ? AND ?
+		SELECT 
+			   * 
+		  FROM 
+		     ( 
+		       SELECT 
+		       	      ROWNUM RNUM
+		       	    , A.*
+		       	    , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(A.UPLOAD_DATE)) &gt;= 7 
+		       	    		    THEN TO_CHAR(A.UPLOAD_DATE, 'YYYY-MM-DD') 
+		       	    	   WHEN TRUNC(SYSDATE) = TRUNC(A.UPLOAD_DATE) 
+		       	    	   	    THEN 
+		       	    	   	    CASE WHEN (SYSDATE - A.UPLOAD_DATE) * 24 &lt; 1 
+		       	    	   	    	 THEN TO_CHAR(FLOOR((SYSDATE - A.UPLOAD_DATE) * 1440)) || '분 전' 
+		       	    	   	    ELSE TO_CHAR(FLOOR((SYSDATE - A.UPLOAD_DATE) * 24)) || '시간 전' END 
+		       	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(A.UPLOAD_DATE)) || '일 전' END AS TIME_DIFF 
+		       	 FROM 
+		       	    ( SELECT PRODUCT_NO
+		       	    	   , SELLER_NO
+		       	    	   , PRODUCT_NAME
+		       	    	   , PRICE
+		       	    	   , ZONE
+		       	    	   , UPLOAD_DATE
+		       	        FROM PRODUCT 
+		       	       WHERE UPLOAD_TYPE = 'Y' 
+		       	       ORDER 
+		       	          BY DBMS_RANDOM.VALUE 
+		       	           ) A 
+		       	     ) 
+		       	 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="selectCategoryList">
@@ -68,30 +77,101 @@
 	</entry>
 	
 	<entry key="searchProductList">
-		SELECT 
-		       PRODUCT_NO
-		     , SELLER_NO
-		     , PRODUCT_NAME
-		     , PRICE
-		     , ZONE
-		     , UPLOAD_DATE
-		  FROM PRODUCT
-		 WHERE UPLOAD_TYPE = 'Y'
-		   AND PRODUCT_NAME LIKE '%'||?||'%'
-		 ORDER 
-		    BY PRODUCT_NO DESC
-	</entry>
+	  SELECT PRODUCT_NO
+     	    	   , SELLER_NO
+     	    	   , PRODUCT_NAME
+     	    	   , CATEGORY_NO
+     	    	   , PRICE
+     	    	   , ZONE
+     	    	   , UPLOAD_DATE
+     	    	   , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
+     	    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
+	       	     WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
+	       	     THEN 
+	       	    	  CASE WHEN (SYSDATE - UPLOAD_DATE) * 24 &lt; 1 
+	       	    	   	   THEN TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 1440)) || '분 전' 
+	       	    			    ELSE TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 24)) || '시간 전' END 
+	       	     ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
+     	         FROM PRODUCT 
+     	        WHERE UPLOAD_TYPE = 'Y'
+     	          AND PRODUCT_NAME LIKE '%' || ? || '%'
+     	           OR PRODUCT_DESC LIKE '%' || ? || '%'
+     	        ORDER 
+     	           BY PRODUCT_NO DESC
+	</entry> 
 	
 	<entry key="searchCatList">
 		SELECT 
 		       CATEGORY_NAME
 		     , CATEGORY_NO
-		     , COUNT(PRODUCT_NAME) count
-		  FROM PRODUCT
-		  JOIN CATEGORY
-		 USING (CATEGORY_NO)
-		 WHERE PRODUCT_NAME LIKE '%'||?||'%'
+		     , COUNT(CASE WHEN (PRODUCT_NAME LIKE '%' || ? || '%' OR PRODUCT_DESC LIKE '%' || ? || '%') THEN 1 END) AS count
+		  FROM CATEGORY 
+		  LEFT 
+		  JOIN PRODUCT USING (CATEGORY_NO)
 		 GROUP 
 		    BY CATEGORY_NAME, CATEGORY_NO
+	</entry>
+	
+	<entry key="countProduct">
+		SELECT 
+		       COUNT(*) count
+		  FROM PRODUCT 
+		 WHERE 
+		 	 ( 
+		 	   PRODUCT_NAME LIKE '%' || ? || '%'
+		 	   OR PRODUCT_DESC LIKE '%' || ? || '%'
+		 	 )  
+	</entry>
+
+	<entry key="selectRecentList">
+		SELECT 
+			   * 
+		  FROM 
+		     ( 
+		       SELECT 
+		       	      ROWNUM RNUM
+		       	    , A.*
+		       	    , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(A.UPLOAD_DATE)) &gt;= 7 
+		       	    		    THEN TO_CHAR(A.UPLOAD_DATE, 'YYYY-MM-DD') 
+		       	    	   WHEN TRUNC(SYSDATE) = TRUNC(A.UPLOAD_DATE) 
+		       	    	   	    THEN 
+		       	    	   	    CASE WHEN (SYSDATE - A.UPLOAD_DATE) * 24 &lt; 1 
+		       	    	   	    	 THEN TO_CHAR(FLOOR((SYSDATE - A.UPLOAD_DATE) * 1440)) || '분 전' 
+		       	    	   	    ELSE TO_CHAR(FLOOR((SYSDATE - A.UPLOAD_DATE) * 24)) || '시간 전' END 
+		       	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(A.UPLOAD_DATE)) || '일 전' END AS TIME_DIFF 
+		       	 FROM 
+		       	    ( SELECT PRODUCT_NO
+		       	    	   , SELLER_NO
+		       	    	   , PRODUCT_NAME
+		       	    	   , PRICE
+		       	    	   , ZONE
+		       	    	   , UPLOAD_DATE
+		       	        FROM PRODUCT 
+		       	       WHERE UPLOAD_TYPE = 'Y' 
+		       	       ORDER 
+		       	          BY PRODUCT_NO DESC 
+		       	           ) A 
+		       	     ) 
+		       	 WHERE RNUM BETWEEN 1 AND 40
+	</entry>
+	
+	<entry key="selectProductDetail">
+		SELECT 
+		       USER_ID
+		     , CATEGORY_NAME
+		     , PRODUCT_NAME
+		     , PRICE
+		     , PRODUCT_DESC
+		     , ZONE
+		     , ONDO
+		     , PSTATUS
+		     , TRADE_TYPE
+		     , TO_CHAR(UPLOAD_DATE, 'RR"-"MM"-"DD') UPLOAD_DATE
+		  FROM PRODUCT
+		  JOIN MEMBER ON (USER_NO = SELLER_NO)
+		  JOIN PRODUCT_STATUS ON (PRODUCT_STATUS = PSTATUS_NO)
+		  JOIN CATEGORY USING (CATEGORY_NO)
+		 WHERE UPLOAD_TYPE = 'Y'
+		   AND PRODUCT_NO = ?
 	</entry>
 </properties>

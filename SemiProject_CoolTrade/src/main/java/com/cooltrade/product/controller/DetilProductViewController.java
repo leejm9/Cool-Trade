@@ -1,4 +1,4 @@
-package com.cooltrade.manager;
+package com.cooltrade.product.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.member.model.service.MemberService;
+import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Product;
 
 /**
- * Servlet implementation class ManagerDeleteMemberController
+ * Servlet implementation class DetilProductViewController
  */
-@WebServlet("/delete.me")
-public class ManagerDeleteMemberController extends HttpServlet {
+@WebServlet("/detail.po")
+public class DetilProductViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerDeleteMemberController() {
+    public DetilProductViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,11 +30,14 @@ public class ManagerDeleteMemberController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int userNo = Integer.parseInt(request.getParameter("uno"));
+		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		int result = new MemberService().deleteMember(userNo);
+		Product p = new ProductService().selectProductDetail(pno); 
 		
-		response.getWriter().print(result);
+		request.setAttribute("p", p);
+		
+		request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
+	
 	}
 
 	/**

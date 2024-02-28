@@ -62,15 +62,16 @@ public class OnloadController extends HttpServlet {
 		
 		ArrayList<Product> plist = new ProductService().selectRandomProduct(pi);
 		
+		ArrayList<Product> recentList = new ProductService().selectRecentList();
+		
 		ArrayList<Category> clist = new ProductService().selectCategoryList();
 		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("plist", plist);
 		request.getSession().setAttribute("clist", clist);
+		request.setAttribute("recentList", recentList);
 		request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
-		
-	
 	}
 
 	/**

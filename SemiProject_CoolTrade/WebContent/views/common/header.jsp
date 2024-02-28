@@ -14,9 +14,6 @@
 	
 	
 	ArrayList<Category> clist = (ArrayList<Category>)session.getAttribute("clist");
-	ArrayList<Product> plist = (ArrayList<Product>)request.getAttribute("plist");
-	
-
 %>
 <!DOCTYPE html>
 <html>
@@ -77,7 +74,7 @@
             <div id="header2-1-ds">
                 <div id="headerSearch-ds" class="flex-ds">
                     <div id="logo-ds">
-                        <img src="resources/images/logo.png" alt="쿨거래 로고">
+                        <img src="resources/images/logo.png" alt="쿨거래 로고" onclick="location.href='<%=contextPath%>/onload.page'">
                     </div>
                     <div id="searchBar-ds">
                         <div id="searchContainer-ds" class="flex-ds">

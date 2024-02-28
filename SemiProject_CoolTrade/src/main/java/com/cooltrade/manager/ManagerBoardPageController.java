@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.member.model.vo.Member;
-import com.cooltrade.product.service.ProductService;
-import com.cooltrade.product.vo.Product;
 
 /**
  * Servlet implementation class ManagerBoardPageController
