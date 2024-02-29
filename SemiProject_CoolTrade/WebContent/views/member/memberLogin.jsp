@@ -10,9 +10,20 @@
 <title>Insert title here</title>
 <style>
 
+@font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+* {
+
+    font-family: 'GmarketSansMedium'; 
+  }
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,6 +31,7 @@ body {
     height: 100vh;
     margin: 0;
 }
+
 
 .login-container {
     background-color: #fff;
@@ -31,7 +43,6 @@ body {
     width: 300px;
     margin-bottom: 20px; /* 로그인 폼과 링크 사이 간격 */
 }
-
 .input-group {
     margin-bottom: 10px; /* 인풋 필드 사이 간격 */
 }
@@ -63,7 +74,7 @@ body {
 button {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color:#04b4fc;
     color: white;
     border: none;
     border-radius: 4px;
@@ -85,6 +96,7 @@ button:hover {
     color: rgba(151, 145, 145, 0.811); /* 연회색으로 설정 */
     text-decoration: none;
     margin: 0 3px;
+    font-size: 14px
 }
 
 .links a:hover {
@@ -121,9 +133,9 @@ button:hover {
     </form>
 
     <div class="links">
-      <a href="#">아이디 찾기</a><span class="separator">|</span>
-      <a href="#">비밀번호 찾기</a><span class="separator">|</span>
-      <a href="#">회원가입</a>
+      <a href="/cooltrade/searchid.me">아이디 찾기</a><span class="separator">|</span>
+      <a href="/cooltrade/searchpwd.me">비밀번호 찾기</a><span class="separator"> |</span>
+      <a href="/cooltrade/signupForm.me">회원가입</a>
     </div>
 
 </div>

@@ -40,6 +40,18 @@ public class MemberService {
 		return list;
 	}
 	
+	public Member idMember(String userId) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().idMember(conn, userId);
+		
+		close(conn);
+		
+		return m;
+		
+	}
+	
+	
 //	public int insertMember(Member m) {
 //		Connection conn = getConnection();
 //		
@@ -54,6 +66,23 @@ public class MemberService {
 //		close(conn);
 //		return result;
 //	}
+	
+	
+	public int insertMember(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().insertMember(conn, m);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	
 	public Member countMember() {
 		Connection conn = getConnection();
@@ -94,6 +123,29 @@ public class MemberService {
 		close(conn);
 		return list;
 		
+	}
+	
+	public Member searchPwd(String id, String name, String email) {
+		Connection conn = getConnection();
+		
+		Member resultMember = new MemberDao().searchPwd(conn, id, name, email);
+		close(conn);
+		return resultMember;
+	}
+	
+	public int changePwd(String id, String password) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().changePwd(conn, id, password);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
 	}
 	
 }

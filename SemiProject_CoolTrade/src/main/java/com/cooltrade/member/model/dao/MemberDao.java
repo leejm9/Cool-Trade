@@ -68,6 +68,8 @@ public class MemberDao {
 		return m;
 	}
 	
+	
+	
 	public int selectListCount(Connection conn) {
 		int listCount = 0;
 		
@@ -136,6 +138,46 @@ public class MemberDao {
 		return list;
 	}
 	
+	public Member idMember(Connection conn, String userId) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("idMember");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getString("user_no"),
+							   rset.getString("user_id"),
+							   rset.getString("user_pwd"),
+							   rset.getString("user_name"),
+							   rset.getString("nickname"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getDate("enroll_date"),
+							   rset.getDouble("ondo"),
+							   rset.getString("user_level"),
+							   rset.getString("user_status"),
+							   rset.getInt("caution"));
+			}
+			
+			System.out.println(m);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);		
+			close(pstmt);
+		}
+		return m;
+	}
 //	public int insertMember(Connection conn, Member m) {
 //		int result = 0;
 //		PreparedStatement pstmt = null;
@@ -160,6 +202,33 @@ public class MemberDao {
 //		
 //		return result;
 //	}
+	
+	
+	
+	public int insertMember(Connection conn, Member m) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertMember");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getUserId());		// USER_ID
+			pstmt.setString(2, m.getUserPwd());		// USER_PWD
+			pstmt.setString(3, m.getUserName());	// USER_NAME
+			pstmt.setString(4, m.getPhone());		// PHONE
+			pstmt.setString(5, m.getNickName());	// NICKNAME
+			pstmt.setString(6, m.getEmail());		// EMAIL
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	public Member countMember(Connection conn) {
 		Member m = null; 
@@ -268,5 +337,69 @@ public class MemberDao {
 		}
 		
 		return list;
+	}
+	
+	public Member searchPwd(Connection conn, String userId, String name, String email) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchPwd");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getString("user_no"),
+							   rset.getString("user_id"),
+							   rset.getString("user_pwd"),
+							   rset.getString("user_name"),
+							   rset.getString("nickname"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getDate("enroll_date"),
+							   rset.getDouble("ondo"),
+							   rset.getString("user_level"),
+							   rset.getString("user_status"),
+							   rset.getInt("caution"));
+			}
+			
+			System.out.println(m);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);		
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public int changePwd(Connection conn, String id, String password) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("changePwd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, password);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 }
