@@ -173,6 +173,8 @@
 		  JOIN CATEGORY USING (CATEGORY_NO)
 		 WHERE UPLOAD_TYPE = 'Y'
 		   AND PRODUCT_NO = ?
+		   
+	</entry>
 	<entry key="selectMonthSales">
 		SELECT
 		       TO_CHAR(SELL_DATE,'YY/MM') sell_date

@@ -80,6 +80,10 @@
         width: 80%;
     }
 
+    #right-content-wrap {
+        position: relative;
+    }
+
     #right-content-wrap>div {
         padding: 10px 0px;
     }
@@ -132,6 +136,12 @@
         display: flex;
         justify-content: space-around;
         cursor: pointer;
+        background: linear-gradient(to top, rgb(249, 249, 249), rgb(249, 249, 249) 74%, transparent);
+        width: 100%;
+        height: 50px;
+        position: absolute;
+        bottom: 280px;
+        align-items: flex-end;
     }
 
 </style>

@@ -152,17 +152,19 @@
     }
 
     .hidden-btn {
-        width: 20px;
-        height: 20px;
+        width: 25px;
+        height: 25px;
         background-position: center;
         background-repeat: no-repeat;
         background-size: 11px 11px;
         background-image: url("resources/images/closeBtn.png");
-        /* background-color: rgb(25, 25, 25);
-        opacity: 0.1;
-        border-radius: 50%; */
+        background-color: rgb(25, 25, 25);
+        opacity: 0.3;
+        border-radius: 50%;
+        /*
         border: none;
         background-color: transparent;
+        */
         position: absolute;
         top: 10px;
         right: 10px;
@@ -565,7 +567,7 @@
                                     <div id="sell-section-img-title">
                                         상품이미지
                                         <span class="redColor">*</span>
-                                        (0/5)
+                                        <div id="imgCount">(0/5)</div>
                                     </div>
                                     <div id="sell-fileInput-div">
                                         <div id="fileInput-div">
@@ -615,6 +617,9 @@
                                             previews[count].src = target.result;
                                             $($previewsDiv[count]).css('display', 'block');
                                             count++;
+                                            
+                                            $("#imgCount").html("(" + count + "/5)");
+                                            
                                         };
                                         reader.readAsDataURL(fileDOM.files[0]);
                                     });
@@ -623,6 +628,8 @@
                                         const closeBtn = btn;                                        
                                         $(closeBtn).parent().css('display', 'none');                                       
                                         count--;
+                                        
+                                        $("#imgCount").html("(" + count + "/5)");
                                     };
 
                                 </script>
