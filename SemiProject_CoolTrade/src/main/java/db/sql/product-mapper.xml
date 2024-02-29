@@ -156,8 +156,9 @@
 	</entry>
 	
 	<entry key="selectProductDetail">
-		SELECT 
-		       USER_ID
+		SELECT
+			   PRODUCT_NO 
+		     , USER_ID
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
 		     , PRICE
@@ -225,5 +226,18 @@
 		  FROM IMAGES
 		 WHERE REF_PNO = ?
 		   AND IMG_STATUS ='Y'
+	</entry>
+	
+	<entry key="getTitleImg">
+		SELECT 
+		       IMG_NO
+		     , REF_PNO  
+		     , ORIGIN_NAME  
+		     , CHANGE_NAME
+		     , IMG_PATH
+		  FROM IMAGES
+		 WHERE REF_PNO = ?
+		   AND IMG_STATUS ='Y'
+           AND IMG_LEVEL = 1
 	</entry>
 </properties>

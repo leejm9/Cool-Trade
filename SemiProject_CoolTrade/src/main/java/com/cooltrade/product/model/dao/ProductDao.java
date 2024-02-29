@@ -327,6 +327,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
+				p.setProductNo(rset.getInt("product_no"));
 				p.setSellerNo(rset.getString("user_id"));
 				p.setCategoryNo(rset.getString("category_name"));
 				p.setProductName(rset.getString("product_name"));
@@ -446,6 +447,80 @@ public class ProductDao {
 				img.setImgPath(rset.getString("img_path"));
 				
 				imglist.add(img);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return imglist;
+	}
+	
+	public ArrayList<Product> searchKeywords(Connection conn, ArrayList<String> extractedKeywords, String cpCategory){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> plist = new ArrayList<Product>();
+		
+		StringBuilder sql = new StringBuilder("SELECT * FROM (");
+		sql.append("SELECT PRODUCT_NO, PRODUCT_NAME, ROWNUM RNUM FROM PRODUCT JOIN CATEGORY USING (CATEGORY_NO) WHERE ");
+		for(int i = 0; i < extractedKeywords.size(); i++) {
+		    sql.append("PRODUCT_NAME LIKE '%'|| ? || '%' OR PRODUCT_DESC LIKE '%'|| ? || '%'");
+		    if(i < extractedKeywords.size() - 1) {
+		        sql.append(" OR ");
+		    }
+		}
+		sql.append(" AND CATEGORY_NAME = '").append(cpCategory).append("' ");
+		sql.append("ORDER BY DBMS_RANDOM.VALUE");
+		sql.append(") WHERE RNUM <= 20");
+		
+		try {
+			pstmt = conn.prepareStatement(sql.toString());
+			
+			for(int i = 0, j = 1; i < extractedKeywords.size(); i++) {
+				pstmt.setString(j++, extractedKeywords.get(i));
+                pstmt.setString(j++, extractedKeywords.get(i));
+			}
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				plist.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return plist;
+	}
+	
+	public ArrayList<Images> getTitleImg(Connection conn, ArrayList<Product> plist){
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTitleImg");
+		ArrayList<Images> imglist = new ArrayList<Images>();
+		try {
+			for(Product p : plist) {
+				pstmt = conn.prepareStatement(sql);
+			
+				pstmt.setInt(1, p.getProductNo());
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					Images img = new Images();
+					img.setImgNo(rset.getInt("img_no"));
+					img.setRefPno(rset.getInt("ref_pno"));
+					img.setOriginName(rset.getString("origin_name"));
+					img.setChangeName(rset.getString("change_name"));
+					img.setImgPath(rset.getString("img_path"));
+					
+					imglist.add(img);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

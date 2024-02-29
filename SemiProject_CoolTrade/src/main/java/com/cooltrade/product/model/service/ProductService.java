@@ -161,4 +161,23 @@ public class ProductService {
 		return imglist;
 	}
 	
+	public ArrayList<Product> searchKeywords(ArrayList<String> extractedKeywords, String cpCategory){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> plist = new ProductDao().searchKeywords(conn, extractedKeywords, cpCategory);
+		
+		close(conn);
+		
+		return plist;
+	}
+	
+	public ArrayList<Images> getTitleImg(ArrayList<Product> plist){
+		Connection conn = getConnection();
+		
+		ArrayList<Images> imglist = new ProductDao().getTitleImg(conn, plist);
+		
+		close(conn);
+		
+		return imglist;
+	}
 }

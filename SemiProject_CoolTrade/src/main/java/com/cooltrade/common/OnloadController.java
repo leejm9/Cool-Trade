@@ -32,7 +32,6 @@ public class OnloadController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println();
 		// 현재 총 게시글 개수
 		int productCount = new ProductService().selectProductCount();
 		
@@ -64,12 +63,10 @@ public class OnloadController extends HttpServlet {
 		
 		ArrayList<Product> recentList = new ProductService().selectRecentList();
 		
-		ArrayList<Category> clist = new ProductService().selectCategoryList();
 		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("plist", plist);
-		request.getSession().setAttribute("clist", clist);
 		request.setAttribute("recentList", recentList);
 		request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
 	}
