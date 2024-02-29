@@ -13,7 +13,6 @@
 	String alertMsg = (String)session.getAttribute("alertMsg");
 	
 	
-	ArrayList<Category> clist = (ArrayList<Category>)session.getAttribute("clist");
 %>
 <!DOCTYPE html>
 <html>
@@ -109,9 +108,16 @@
                             <br>
                         </div>
                         <div class="category_hover-ds flex-ds">
-						<%for(Category c : clist){ %>
-                            <a href="<%=c.getCategoryNo()%>"><%=c.getCategoryName()%></a>
-                        <%} %>
+                            <a href="#">패션의류</a>
+                            <a href="#">패션잡화</a>
+                            <a href="#">뷰티</a>
+                            <a href="#">전자제품</a>
+                            <a href="#">리빙/생활</a>
+                            <a href="#">가구/인테리어</a>
+                            <a href="#">반려동물</a>
+                            <a href="#">도서/음반/문구</a>
+                            <a href="#">상품권</a>
+                            <a href="#">무료나눔</a>
                         </div>
                     </div>
                     <div id="notice-ds">

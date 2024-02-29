@@ -65,14 +65,6 @@
                                 <%=p.getProductStatus()%>
                             </div>
                         </div>
-                        <div id="change_yn-ds" class="flex-ds">
-                            <div class="dot_before-ds">
-                                교환여부
-                            </div>
-                            <div id="yn_change_letter-ds">
-                                교환불가
-                            </div>
-                        </div>
                         <div id="delivery_fee-ds" class="flex-ds">
                             <div class="dot_before-ds">
                                 배송비
@@ -98,43 +90,97 @@
                 </div>
             </div>
         </div>
+        <button id="prev"> &lt; </button>
         <div id="related_products-ds">
             <div>
                 <h5>관련상품</h5>
             </div>
             <div id="related_product_pic_title-ds">
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
             </div>
-        </div>
+        </div> 
+        <button id="next"> &gt; </button>
+            
+            <script>
+            $(document).ready(function(){
+                let currentPno = <%= p.getProductNo() %>;
+                let currentPage = 0; // 현재 페이지 인덱스
+                const itemsPerPage = 5; // 페이지 당 아이템 수
+                let maxPage;
+                let allData = []; // 서버로부터 받아온 모든 데이터를 저장할 배열
+                let imgData = [];
+                // 슬라이더에 데이터를 렌더링하는 함수
+                function renderSlider(data) {
+				    const slider = $("#related_product_pic_title-ds");
+				    slider.empty(); // 기존 내용을 비움
+				
+				    // 현재 페이지에 해당하는 아이템들만 표시
+				    const startIndex = currentPage * itemsPerPage;
+				    const endIndex = startIndex + itemsPerPage;
+				 // data 객체에서 plist와 imglist를 추출합니다.
+				    let plist = data.plist;
+				    let imglist = data.imglist;
+
+				    // 현재 페이지에 해당하는 아이템들만 표시
+				    let slicedData = plist.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+				    slicedData.forEach(function(item){
+				        let img = imglist.find(i => i.refPno == item.productNo);
+				        let imagePath = img ? img.imgPath + img.changeName : "resources/images/noImage.png";
+				        let itemHTML = '<div class="item">' +
+				                        '<a href="detail.po?pno=' + item.productNo + '">' +
+				                        '<img src="' + imagePath + '" alt="' + item.productName + '">' +
+				                        '<p>' + item.productName + '</p>' +
+				                        '</a>' +
+				                        '</div>';
+				        slider.append(itemHTML);
+				    });
+				}
+
+                // 서버로부터 데이터를 불러오는 함수
+                function fetchSliderData() {
+                    if(allData.length == 0) { // 데이터가 아직 로드되지 않았다면 서버에서 불러온다
+                        $.ajax({
+                            url: "ajax.related",
+                            data: { pno: currentPno },
+                            dataType: "json", // 명시적으로 json 타입임을 선언
+                            success: function(response) {
+                            	allData = response;
+								console.log(allData);
+                                renderSlider(allData); // 슬라이더 렌더링 함수 호출
+                            },
+                            error: function() {
+                                console.error("데이터를 불러오는 데 실패했습니다.");
+                            }
+                        });
+                    } else {
+                        renderSlider(allData); // 이미 데이터가 있으므로 바로 렌더링
+                    }
+                }
+
+             	// 이전 페이지 보기
+                $("#prev").click(function() {
+                    if (currentPage > 0) {
+                        currentPage = (currentPage - 1 + allData.plist.length) % allData.plist.length; // 이전 페이지로 이동
+                    }else{
+                    	currentPage = 3;
+                    }   
+                        renderSlider(allData); // 슬라이더 다시 렌더링
+                
+                });
+				
+                // 다음 페이지 보기
+                $("#next").click(function() {
+                    maxPage = Math.ceil(allData.plist.length / itemsPerPage) - 1; // 최대 페이지 인덱스 계산
+                    if (currentPage < maxPage) {
+                        currentPage += 1; // 다음 페이지로 이동
+                    }else if(currentPage = maxPage){
+                    	currentPage = 0
+                    }
+                        renderSlider(allData); // 슬라이더 다시 렌더링
+                });
+                
+                fetchSliderData(); // 최초 데이터 로드 및 슬라이더 초기화
+            });
+			</script>
         <div id="detail_seller-ds" class="flex-ds" style="border-top: 1px solid black; margin-bottom: 100px; border-bottom: 1px solid rgb(204, 204, 204);">
             <div id="detail_info-ds" style="padding-right: 30px; width: 650px;">
                 <div style="border-bottom: 1px solid rgb(204, 204, 204); padding: 50px 0 20px 0;">상품정보</div>

@@ -17,13 +17,13 @@ import com.cooltrade.product.model.vo.Product;
  * Servlet implementation class DetilProductViewController
  */
 @WebServlet("/detail.po")
-public class DetilProductViewController extends HttpServlet {
+public class DetailProductViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetilProductViewController() {
+    public DetailProductViewController() {
         super();
         // TODO Auto-generated constructor stub
     }
