@@ -550,6 +550,11 @@
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+	
+	<% int userNo = loginUser.getUserNo();
+	
+	%>
+	
 
     <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
         <div id="wrap" style="margin-top: 180px;">
@@ -744,6 +749,7 @@
                                 </div>
                                 
                                 <script>
+                                	/*
 									document.getElementById('numberInput').addEventListener('input', function() {
 									    // 입력된 값을 가져옴
 									    var value = this.value.replace(/,/g, ''); // 기존에 입력된 쉼표 제거
@@ -752,6 +758,7 @@
 									    // 입력된 값을 다시 입력 상자에 설정
 									    this.value = value;
 									});
+                                	*/
 								</script>
 
                                 <div id="sell-section-delivery-charge" class="flex-class">
@@ -761,11 +768,11 @@
                                     </div>
                                     <div id="sell-section-delivery-charge-select">
                                         <div id="delivery-charge-include-area">
-                                            <input type="radio" id="delivery-charge-include" name="deliveryCharge">
+                                            <input type="radio" id="delivery-charge-include" name="deliveryCharge" value="1">
                                             <label for="delivery-charge-include">배송비포함</label>
                                         </div>
                                         <div id="delivery-charge-none-area">
-                                            <input type="radio" id="delivery-charge-none" name="deliveryCharge">
+                                            <input type="radio" id="delivery-charge-none" name="deliveryCharge" value="2">
                                             <label for="delivery-charge-none">배송비별도</label>
                                         </div>
                                     </div>
@@ -800,7 +807,7 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="product-count-input">
-                                        <input type="text" placeholder="1" maxlength="10" name="count">
+                                        <input type="text" placeholder="1" maxlength="10" name="pieces">
                                         <span>개</span>
                                     </div>
                                 </div>
@@ -845,7 +852,7 @@
                             <div id="cool-trade-option-ex">
                                 <div class="flex-class" id="cool-trade-btn">
                                     <div>
-                                        <input type="checkbox" name="coolTrade">
+                                        <input type="checkbox" name="coolTrade" value="1">
                                     </div>
                                     <div id="cool-trade-btn-title">쿨거래</div>
                                 </div>

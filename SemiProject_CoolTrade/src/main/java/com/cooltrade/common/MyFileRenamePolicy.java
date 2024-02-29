@@ -4,7 +4,9 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class FileRenamePolicy {
+import com.oreilly.servlet.multipart.FileRenamePolicy;
+
+public class MyFileRenamePolicy implements FileRenamePolicy{
 
 	// 원본 파일 전달 받아서 파일명 수정 작업 후 수정된 파일 변환시켜주는 메소드
 	public File rename(File originFile) {

@@ -13,6 +13,8 @@ import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Trade;
 
 public class MemberDao {
 	private Properties prop = new Properties();
@@ -436,6 +438,77 @@ public class MemberDao {
 		}
 		
 		return list;
+	}
+	
+	public ArrayList<Product> selectSellList(Connection conn, int userNo) {
+		// select문 => ResultSet => 여러행 ArrayList
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSellList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setTradeType(rset.getInt("trade_type"));
+				p.setSellStatus(rset.getString("sell_status"));
+				p.setUploadDate(rset.getString("upload_date"));
+				
+				list.add(p);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+	
+	public ArrayList<Trade> selectBuyList(Connection conn, int userNo) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBuyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Trade t = new Trade();
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setProductNo(rset.getString("product_name"));
+				t.setPrice(rset.getInt("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				
+				list.add(t);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
 	}
 	
 }

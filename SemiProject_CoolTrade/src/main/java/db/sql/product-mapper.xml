@@ -198,4 +198,63 @@
 		 GROUP
 		    BY CATEGORY_NAME
 	</entry>
+	
+	<entry key="insertProductSell">
+		INSERT
+		  INTO PRODUCT
+		  (
+		    PRODUCT_NO
+		  , SELLER_NO
+		  , CATEGORY_NO
+		  , PRODUCT_NAME
+		  , PRICE
+		  , PRODUCT_DESC
+		  , PIECES
+		  , ZONE
+		  , PRODUCT_STATUS
+		  , DELIVERY_CHARGE
+		  , TRADE_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_PRODUCT.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertImagesList">
+		INSERT
+		  INTO IMAGES
+		  (
+		    IMG_NO
+		  , REF_PNO
+		  , REF_UNO
+		  , IMG_LEVEL
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , IMG_PATH
+		  )
+		  VALUES
+		  (
+		    SEQ_IMAGES.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	
+	
 </properties>

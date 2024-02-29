@@ -16,24 +16,21 @@ public class Product {
 	private String timeDiff;
 	private int salesRate;
 	private int tstockgoods;
-	private int ReportedProduct;
+	private int reportedProduct;
 	private int tradeType;
 	private String monthSales;
 	private int count;
+	private int deliveryCharge;
+	private int pieces;
+	private String sellStatus;
 	
 	public Product() {}
-	
-	
-
 	
 	public Product(int price, String monthSales) {
 		super();
 		this.price = price;
 		this.monthSales = monthSales;
 	}
-	
-	
-
 
 	public Product(String categoryNo, int count) {
 		super();
@@ -41,11 +38,10 @@ public class Product {
 		this.count = count;
 	}
 
-
-
-	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price, String productDesc,
-			String zone, String productStatus, Date uploadDate, String uploadType, int salesRate, int tstockgoods,
-			int reportedProduct) {
+	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, String uploadDate, String uploadType, double ondo, String timeDiff,
+			int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales, int count,
+			int deliveryCharge, int pieces, String sellStatus) {
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -61,8 +57,32 @@ public class Product {
 		this.timeDiff = timeDiff;
 		this.salesRate = salesRate;
 		this.tstockgoods = tstockgoods;
-		ReportedProduct = reportedProduct;
+		this.reportedProduct = reportedProduct;
 		this.tradeType = tradeType;
+		this.monthSales = monthSales;
+		this.count = count;
+		this.deliveryCharge = deliveryCharge;
+		this.pieces = pieces;
+		this.sellStatus = sellStatus;
+	}
+
+	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, String uploadDate, String uploadType, int salesRate, int tstockgoods,
+			int reportedProduct) {
+		super();
+		this.productNo = productNo;
+		this.sellerNo = sellerNo;
+		this.categoryNo = categoryNo;
+		this.productName = productName;
+		this.price = price;
+		this.productDesc = productDesc;
+		this.zone = zone;
+		this.productStatus = productStatus;
+		this.uploadDate = uploadDate;
+		this.uploadType = uploadType;
+		this.salesRate = salesRate;
+		this.tstockgoods = tstockgoods;
+		this.reportedProduct = reportedProduct;
 	}
 
 	public int getProductNo() {
@@ -177,12 +197,12 @@ public class Product {
 		this.tstockgoods = tstockgoods;
 	}
 
-	public int getReportedProduct() {
-		return ReportedProduct;
+	public int getreportedProduct() {
+		return reportedProduct;
 	}
 
-	public void setReportedProduct(int reportedProduct) {
-		ReportedProduct = reportedProduct;
+	public void setreportedProduct(int reportedProduct) {
+		reportedProduct = reportedProduct;
 	}
 
 	public int getTradeType() {
@@ -210,7 +230,37 @@ public class Product {
 		this.count = count;
 	}
 
+	public int getDeliveryCharge() {
+		return deliveryCharge;
+	}
 
+	public void setDeliveryCharge(int deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
+	}
+
+	public int getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(int pieces) {
+		this.pieces = pieces;
+	}
+
+	public int getReportedProduct() {
+		return reportedProduct;
+	}
+
+	public void setReportedProduct(int reportedProduct) {
+		this.reportedProduct = reportedProduct;
+	}
+
+	public String getSellStatus() {
+		return sellStatus;
+	}
+
+	public void setSellStatus(String sellStatus) {
+		this.sellStatus = sellStatus;
+	}
 
 	@Override
 	public String toString() {
@@ -218,7 +268,7 @@ public class Product {
 				+ ", productName=" + productName + ", price=" + price + ", productDesc=" + productDesc + ", zone="
 				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
 				+ uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate=" + salesRate
-				+ ", tstockgoods=" + tstockgoods + ", ReportedProduct=" + ReportedProduct + ", tradeType=" + tradeType
+				+ ", tstockgoods=" + tstockgoods + ", reportedProduct=" + reportedProduct + ", tradeType=" + tradeType
 				+ "]";
 	}
 

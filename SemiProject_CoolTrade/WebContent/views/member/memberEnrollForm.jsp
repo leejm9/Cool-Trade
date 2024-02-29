@@ -162,114 +162,117 @@ background-color: #0056b3;
 </head>
 <body>
 
-<div class="container">
-  
-    <div class="form-group">
-      <input type="text" id="userId" name="userId" placeholder="아이디" required>
-    </div>
-    
-    <div class="form-group">
-      <input type="password" id="password" name="password" placeholder="비밀번호"required>
-    </div>
 
-    <div class="form-group">
-      <input type="password" id="password" name="password" placeholder="비밀번호확인"required>
-    </div>
-    
-    <div class="form-group">
-      <input type="text" id="name" name="name" placeholder="이름"required>
-    </div>
-    
-    <div class="form-group">
-      <input type="text" id="birthday" name="birthday" placeholder="휴대폰번호" required>
-    </div>
-    
-    <div class="form-group">
-      
-        <div class="input-group">
-            <input type="text" id="email" name="email" placeholder="이메일 주소" required>
-            <button type="button" id="getVerifyCode">인증번호받기</button>
-        </div>
-        
-        
-      
-        <div class="checkbox-group">
-            <input type="checkbox" id="agreeAll" name="terms_all">
-            <label for="agreeAll">[필수] 인증 약관 전체 동의</label>
-        </div>
+	<%@ include file = "../common/header.jsp" %>
 
-      <div class="terms-container">
-              
-        <!-- 개인정보이용 체크박스 그룹 -->
-          <div class="checkbox-group">
-              <div class="checkbox-area">
-                  <input type="checkbox" id="personalInfo1" name="personalInfo" class="sub-agree">
-                  <label for="personalInfo1">개인정보이용</label>
-              </div>
-                  <button type="button" class="view-content-button" onclick="toggleDetail('personalInfoDetails1')">내용보기 ⅴ</button>
-          </div>
-              <details id="personalInfoDetails1">
-                  <summary></summary>
-                  <p style="font-size: 12px;">개인정보 이용약관 내용...
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
-                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
-                    Ab eos sint nostrum ullam libero odit reiciendis.
-                  </p>
-              </details>
-                
-                
-        <!-- 통신사 이용약관 체크박스 그룹 -->
-          <div class="checkbox-group">
-              <div class="checkbox-area">
-                  <input type="checkbox" id="personalInfo2" name="telecomInfo" class="sub-agree">
-                  <label for="personalInfo2">통신사 이용약관</label>
-              </div>
-                  <button type="button" class="view-content-button" onclick="toggleDetail('telecomInfoDetails')">내용보기 ⅴ</button>
-          </div>
-              <details id="telecomInfoDetails">
-                  <summary></summary>
-                  <p style="font-size: 12px;">통신사 이용약관 내용... 
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
-                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
-                    Ab eos sint nostrum ullam libero odit reiciendis.</p>
-              </details>
-                
-        <!-- 쿨거래 개인정보수집 체크박스 그룹 -->
-          <div class="checkbox-group">
-              <div class="checkbox-area">
-                  <input type="checkbox" id="personalInfo3" name="tradeInfo" class="sub-agree">
-                  <label for="personalInfo3">쿨거래 개인정보수집</label>
-              </div>
-                  <button type="button" class="view-content-button" onclick="toggleDetail('tradeInfoDetails')">내용보기 ⅴ</button>
-          </div>
-              <details id="tradeInfoDetails">
-                  <summary></summary>
-                  <p style="font-size: 12px;">쿨거래 개인정보수집 내용...
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
-                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
-                    Ab eos sint nostrum ullam libero odit reiciendis.
-                  </p>
-              </details>
-
-        
-        <a href="#" class="btn" align="center">회원가입</a>
-      </div>
-         
-      <script>
-          function toggleDetail(id) {
-            var detail = document.getElementById(id);
-            detail.open = !detail.open;
-          }
-        
-          window.onload = function() {
-            document.getElementById('agreeAll').addEventListener('click', function(event) {
-              var subAgrees = document.querySelectorAll('.sub-agree');
-              subAgrees.forEach((checkbox) => {
-                checkbox.checked = event.target.checked;
-              });
-            });
-          };
-        </script>
-</div>
+	<div class="container">
+	  
+	    <div class="form-group">
+	      <input type="text" id="userId" name="userId" placeholder="아이디" required>
+	    </div>
+	    
+	    <div class="form-group">
+	      <input type="password" id="password" name="password" placeholder="비밀번호"required>
+	    </div>
+	
+	    <div class="form-group">
+	      <input type="password" id="password" name="password" placeholder="비밀번호확인"required>
+	    </div>
+	    
+	    <div class="form-group">
+	      <input type="text" id="name" name="name" placeholder="이름"required>
+	    </div>
+	    
+	    <div class="form-group">
+	      <input type="text" id="birthday" name="birthday" placeholder="휴대폰번호" required>
+	    </div>
+	    
+	    <div class="form-group">
+	      
+	        <div class="input-group">
+	            <input type="text" id="email" name="email" placeholder="이메일 주소" required>
+	            <button type="button" id="getVerifyCode">인증번호받기</button>
+	        </div>
+	        
+	        
+	      
+	        <div class="checkbox-group">
+	            <input type="checkbox" id="agreeAll" name="terms_all">
+	            <label for="agreeAll">[필수] 인증 약관 전체 동의</label>
+	        </div>
+	
+	      <div class="terms-container">
+	              
+	        <!-- 개인정보이용 체크박스 그룹 -->
+	          <div class="checkbox-group">
+	              <div class="checkbox-area">
+	                  <input type="checkbox" id="personalInfo1" name="personalInfo" class="sub-agree">
+	                  <label for="personalInfo1">개인정보이용</label>
+	              </div>
+	                  <button type="button" class="view-content-button" onclick="toggleDetail('personalInfoDetails1')">내용보기 ⅴ</button>
+	          </div>
+	              <details id="personalInfoDetails1">
+	                  <summary></summary>
+	                  <p style="font-size: 12px;">개인정보 이용약관 내용...
+	                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
+	                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
+	                    Ab eos sint nostrum ullam libero odit reiciendis.
+	                  </p>
+	              </details>
+	                
+	                
+	        <!-- 통신사 이용약관 체크박스 그룹 -->
+	          <div class="checkbox-group">
+	              <div class="checkbox-area">
+	                  <input type="checkbox" id="personalInfo2" name="telecomInfo" class="sub-agree">
+	                  <label for="personalInfo2">통신사 이용약관</label>
+	              </div>
+	                  <button type="button" class="view-content-button" onclick="toggleDetail('telecomInfoDetails')">내용보기 ⅴ</button>
+	          </div>
+	              <details id="telecomInfoDetails">
+	                  <summary></summary>
+	                  <p style="font-size: 12px;">통신사 이용약관 내용... 
+	                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
+	                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
+	                    Ab eos sint nostrum ullam libero odit reiciendis.</p>
+	              </details>
+	                
+	        <!-- 쿨거래 개인정보수집 체크박스 그룹 -->
+	          <div class="checkbox-group">
+	              <div class="checkbox-area">
+	                  <input type="checkbox" id="personalInfo3" name="tradeInfo" class="sub-agree">
+	                  <label for="personalInfo3">쿨거래 개인정보수집</label>
+	              </div>
+	                  <button type="button" class="view-content-button" onclick="toggleDetail('tradeInfoDetails')">내용보기 ⅴ</button>
+	          </div>
+	              <details id="tradeInfoDetails">
+	                  <summary></summary>
+	                  <p style="font-size: 12px;">쿨거래 개인정보수집 내용...
+	                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae reprehenderit veritatis quas,
+	                    in nihil culpa eligendi ratione assumenda fugiat omnis ab deleniti.
+	                    Ab eos sint nostrum ullam libero odit reiciendis.
+	                  </p>
+	              </details>
+	
+	        
+	        <a href="#" class="btn" align="center">회원가입</a>
+	      </div>
+	         
+	      <script>
+	          function toggleDetail(id) {
+	            var detail = document.getElementById(id);
+	            detail.open = !detail.open;
+	          }
+	        
+	          window.onload = function() {
+	            document.getElementById('agreeAll').addEventListener('click', function(event) {
+	              var subAgrees = document.querySelectorAll('.sub-agree');
+	              subAgrees.forEach((checkbox) => {
+	                checkbox.checked = event.target.checked;
+	              });
+	            });
+	          };
+	        </script>
+	</div>
 </body>
 </html>

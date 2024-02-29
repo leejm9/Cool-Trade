@@ -160,4 +160,31 @@
 		    BY 1
 	</entry>
 	
+	<entry key="selectSellList">
+		SELECT
+		       PRODUCT_NO
+		     , PRODUCT_NAME
+		     , PRICE
+		     , TRADE_TYPE
+		     , SELL_STATUS
+		     , TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+		  FROM PRODUCT
+		 WHERE SELLER_NO = ?
+	</entry>
+	
+	<entry key="selectBuyList">
+		SELECT
+	       TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+	     , PRODUCT_NAME
+	     , PRICE
+	     , DELIVERY_STATUS
+	  FROM TRADE
+	  JOIN PRODUCT USING (PRODUCT_NO)
+	 WHERE BUYER_NO = ? 
+		</entry>
+	
+
+	
+
+	
 </properties>

@@ -5,7 +5,9 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Product;
@@ -133,5 +135,24 @@ public class ProductService {
 		close(conn);
 		return list;
 	}
+	
+	public int insertProductSell(Product p, ArrayList<Images> list) {
+		Connection conn = getConnection();
+		
+		int result1 = new ProductDao().insertProductSell(conn, p);
+		int result2 = new ProductDao().insertImagesList(conn, list);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1 * result2;
+		
+	}
+	
+
 	
 }

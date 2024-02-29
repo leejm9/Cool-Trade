@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
+import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -91,7 +92,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				p.setReportedProduct(rset.getInt("reportedproduct"));
+				p.setreportedProduct(rset.getInt("reportedproduct"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -403,5 +404,69 @@ public class ProductDao {
 		return list;
 			
 	}
+	
+	public int insertProductSell(Connection conn, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProductSell");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getSellerNo());
+			pstmt.setString(2, p.getCategoryNo());
+			pstmt.setString(3, p.getProductName());
+			pstmt.setInt(4, p.getPrice());
+			pstmt.setString(5, p.getProductDesc());
+			pstmt.setInt(5, p.getPieces());
+			pstmt.setString(6, p.getZone());
+			pstmt.setString(7, p.getProductStatus());
+			pstmt.setInt(8, p.getDeliveryCharge());
+			pstmt.setInt(9, p.getTradeType());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+
+	}
+	
+	public int insertImagesList(Connection conn, ArrayList<Images> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertImagesList");
+		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, img.getRefPno());
+				pstmt.setInt(2, img.getRefUno());
+				pstmt.setInt(3, img.getImgLevel());
+				pstmt.setString(4, img.getOriginName());
+				pstmt.setString(5, img.getChangeName());
+				pstmt.setString(6, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+
 	
 }

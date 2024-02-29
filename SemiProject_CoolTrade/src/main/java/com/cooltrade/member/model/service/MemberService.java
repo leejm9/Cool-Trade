@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Trade;
 
 public class MemberService {
 
@@ -150,6 +152,23 @@ public class MemberService {
 		Connection conn = getConnection();
 		
 		ArrayList<Member> list = new MemberDao().selectEnrollMonth(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> selectSellList(int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Product> list = new MemberDao().selectSellList(conn, userNo);
+		
+		close(conn);
+		return list;
+		
+	}
+	
+	public ArrayList<Trade> selectBuyList(int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().selectBuyList(conn, userNo);
+		
 		close(conn);
 		return list;
 	}

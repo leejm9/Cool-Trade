@@ -1,5 +1,7 @@
+<%@page import="com.cooltrade.product.model.vo.Trade"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -176,6 +178,8 @@
 
 	<%@ include file = "../common/header.jsp" %>
 	
+	<% int userNo = loginUser.getUserNo(); %>
+	
 	<div id="wrap">
         <div id="left-content">
             <div id="mypage-tit">
@@ -205,10 +209,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>?cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -246,41 +250,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2024.02.18</td>
-                                <td>
-                                    <div>
-                                        <a href="">여기는 상품 섬네일</a>
-                                        <a href="">여기는 상품명</a>
-                                    </div>
-                                </td>
-                                <td>13,000원</td>
-                                <td>
-                                    <div class="deliver-status">배송완료</div>
-                                    <button type="button" class="list-select-btn">배송조회</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="list-select-btn">후기남기기</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>2024.02.18</td>
-                                <td>
-                                    <div>
-                                        <a href="">여기는 상품 섬네일</a>
-                                        <a href="">여기는 상품명</a>
-                                    </div>
-                                </td>
-                                <td>13,000원</td>
-                                <td>
-                                    <div class="deliver-status">배송완료</div>
-                                    <button type="button" class="list-select-btn">배송조회</button>
-                                </td>
-                                <td>
-                                    <button type="button" class="list-select-btn">후기남기기</button>
-                                </td>
-                            </tr>
+                        	<% for(Trade t : list) { %>
+	                            <tr>
+	                                <td><%= t.getTradeDate() %></td>
+	                                <td>
+	                                    <div>
+	                                        <a href="">여기는 상품 섬네일</a>
+	                                        <a href=""><%= t.getProductNo() %></a>
+	                                    </div>
+	                                </td>
+	                                <td><%= t.getPrice() %>원</td>
+	                                <td>
+	                                    <div class="deliver-status">배송완료</div>
+	                                    <button type="button" class="list-select-btn">배송조회</button>
+	                                </td>
+	                                <td>
+	                                    <button type="button" class="list-select-btn">후기남기기</button>
+	                                </td>
+	                            </tr>
+							<% } %>
                         </tbody>
                     </table>
                 </div>
