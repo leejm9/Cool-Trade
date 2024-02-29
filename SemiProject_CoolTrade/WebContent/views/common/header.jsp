@@ -149,8 +149,13 @@
                     </div>
                 </div>
                 <div id="topContainer-ds">
-                    <button id="topBtn-ds">TOP</button>
+                    <button type="button" id="topBtn-ds">TOP</button>
                 </div>
+                <script>
+                	$("#topBtn-ds").click(function(){
+                		$('html, body').animate({scrollTop:0}, "fast");
+                	})
+                </script>
             </div>
         </div>
     </div>
