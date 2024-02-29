@@ -22,6 +22,25 @@
 		   AND USER_STATUS = 'Y'
 	</entry>
 	
+	<entry key="idMember">
+		SELECT 
+		      	USER_NO
+			  , USER_ID
+			  ,	USER_PWD
+			  ,	USER_NAME
+			  ,	NICKNAME
+			  ,	PHONE
+			  ,	EMAIL
+			  ,	ENROLL_DATE
+			  ,	ONDO
+			  ,	USER_LEVEL
+			  ,	USER_STATUS
+			  ,	CAUTION
+		  FROM MEMBER
+		 WHERE USER_ID = ?
+		   AND USER_STATUS = 'Y'
+	</entry>
+	
 	<entry key="selectListCount">
 		SELECT COUNT(*) count
 		  FROM MEMBER
@@ -53,16 +72,71 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+
 	<entry key="insertMember">
 	INSERT
-	  INTO MEMBER
+	INTO MEMBER (
+	USER_NO, USER_ID, USER_PWD, USER_NAME, NICKNAME, PHONE, EMAIL,CAUTION) 
+	VALUES 
+			(
+			SEQ_MEM.NEXTVAL
+			, ?
+			, ?
+			, ?
+			, ?
+			, ?
+			, ? 
+			, 0
+			)
+		  
+	</entry>
+	
+	 
+	
+	<!--  
+	<entry key="insertMember">
+	INSERT
+	  INTO MEMBER (
+	  USER_NO, USER_ID, USER_PWD, USER_NAME, 
+	  PHONE, NICKNAME, EMAIL, CAUTION)
 	VALUES
-		   (?
+		   (
+		   'M'||SEQ_MEM.NEXTVAL
 		 , ?
 		 , ?
 		 , ?
 		 , ?
+		 , ?
+		 , ?
+		 , 0
 		   )	  
+	</entry>
+	
+	-->
+	
+	<entry key="searchPwd">
+		SELECT 
+		      	USER_NO
+			  , USER_ID
+			  ,	USER_PWD
+			  ,	USER_NAME
+			  ,	NICKNAME
+			  ,	PHONE
+			  ,	EMAIL
+			  ,	ENROLL_DATE
+			  ,	ONDO
+			  ,	USER_LEVEL
+			  ,	USER_STATUS
+			  ,	CAUTION
+		  FROM MEMBER
+		 WHERE USER_ID = ?
+		   AND USER_NAME = ?
+		   AND EMAIL = ?
+		   AND USER_STATUS = 'Y'
+	</entry>
+	
+	<entry key="changePwd">
+		UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?
 	</entry>
 	
 	<entry key="countMember">

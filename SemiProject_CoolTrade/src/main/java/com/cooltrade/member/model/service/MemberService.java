@@ -39,6 +39,18 @@ public class MemberService {
 		return list;
 	}
 	
+	public Member idMember(String userId) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().idMember(conn, userId);
+		
+		close(conn);
+		
+		return m;
+		
+	}
+	
+	
 //	public int insertMember(Member m) {
 //		Connection conn = getConnection();
 //		
@@ -53,6 +65,23 @@ public class MemberService {
 //		close(conn);
 //		return result;
 //	}
+	
+	
+	public int insertMember(Member m) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().insertMember(conn, m);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	
 	public Member countMember() {
 		Connection conn = getConnection();
