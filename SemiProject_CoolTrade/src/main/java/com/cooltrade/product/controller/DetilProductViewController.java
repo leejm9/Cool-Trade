@@ -1,6 +1,8 @@
 package com.cooltrade.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 /**
@@ -32,12 +35,17 @@ public class DetilProductViewController extends HttpServlet {
 		
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		Product p = new ProductService().selectProductDetail(pno); 
+		// 1. 조회수 증가
+		int result = new ProductService().increaseCount(pno);
 		
-		request.setAttribute("p", p);
-		
-		request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
-	
+		// 2. 조회수 증가하면 성공
+		if(result>0) {
+			Product p = new ProductService().selectProductDetail(pno); 
+			ArrayList<Images> imglist = new ProductService().selectImages(pno);
+			request.setAttribute("p", p);
+			request.setAttribute("imglist",	imglist);
+			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
+		}
 	}
 
 	/**

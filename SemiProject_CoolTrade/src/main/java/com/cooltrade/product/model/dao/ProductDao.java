@@ -14,6 +14,7 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 public class ProductDao {
@@ -336,6 +337,8 @@ public class ProductDao {
 				p.setProductStatus(rset.getString("pstatus"));
 				p.setTradeType(rset.getInt("trade_type"));
 				p.setUploadDate(rset.getString("upload_date"));
+				p.setCount(rset.getInt("count"));
+				p.setTimeDiff(rset.getString("time_diff"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -401,7 +404,55 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return list;
-			
 	}
 	
+	public int increaseCount(Connection conn, int pno) {
+		PreparedStatement pstmt = null; 
+		int result = 0;
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<Images> selectImages(Connection conn, int pno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Images> imglist = new ArrayList<Images>();
+		String sql = prop.getProperty("selectImages");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Images img = new Images();
+				img.setImgNo(rset.getInt("img_no"));
+				img.setOriginName(rset.getString("origin_name"));
+				img.setChangeName(rset.getString("change_name"));
+				img.setImgPath(rset.getString("img_path"));
+				
+				imglist.add(img);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return imglist;
+	}
 }

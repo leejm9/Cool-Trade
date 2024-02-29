@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 public class ProductService {
@@ -132,6 +133,32 @@ public class ProductService {
 		ArrayList<Product> list = new ProductDao().selectCategorySales(conn);
 		close(conn);
 		return list;
+	}
+	
+	public int increaseCount(int pno) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().increaseCount(conn, pno);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public ArrayList<Images> selectImages(int pno) {
+		Connection conn = getConnection();
+		
+		ArrayList<Images> imglist = new ProductDao().selectImages(conn, pno);
+		
+		close(conn);
+		
+		return imglist;
 	}
 	
 }

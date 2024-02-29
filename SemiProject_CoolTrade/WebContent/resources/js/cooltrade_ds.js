@@ -20,3 +20,13 @@ $(function(){
         });
     });
 });
+$(document).ready(function(){
+	let detailImgSrc = $("#small_thumbnail-ds").children().children().eq(0).attr("src")
+	let mainImg = '<img src="' + detailImgSrc + '" alt="이미지가 없습니다.">';
+	if(detailImgSrc != null){
+		$("#main_img-ds").html(mainImg);
+	}else{
+		$("#main_img-ds").html('<img src="resources/images/noImage.png">')
+	}
+	
+})

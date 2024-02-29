@@ -627,6 +627,9 @@ cursor:pointer;
 #product_info-ds{
     width: 500px;
 }
+#product_info-ds>div{
+    padding: 10px;
+}
 #detail_pic_price-ds{
     padding-top: 30px;
     border-top: 1px solid black;

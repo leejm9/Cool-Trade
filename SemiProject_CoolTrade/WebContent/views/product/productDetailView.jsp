@@ -1,15 +1,17 @@
+<%@page import="com.cooltrade.product.model.vo.Images"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
  <%
  	Product p = (Product)request.getAttribute("p");
+ 	ArrayList<Images> imglist = (ArrayList<Images>)request.getAttribute("imglist");
  	double ondo = p.getOndo();
  %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title><%=p.getProductName()%> | 쿨거래</title>
 </head>
 <body>
 	
@@ -29,24 +31,13 @@
         </div>
         <div id="detail_pic_price-ds" class="flex-ds">
             <div id="small_thumbnail-ds" >
+                <%for(Images img : imglist) {%>
                 <div>
-                    <img src="resources/images/sell.png" alt="이미지">
+                    <img src="<%=img.getImgPath()+img.getChangeName()%>" alt="이미지">
                 </div>
-                <div>
-                    <img src="resources/images/forest1.PNG" alt="이미지">
-                </div>
-                <div>
-                    <img src="resources/images/undraw_profile_1.svg" alt="이미지">
-                </div>
-                <div>
-                    <img src="resources/images/말풍선.png" alt="이미지">
-                </div>
-                <div>
-                    <img src="resources/images/돋보기.png" alt="이미지">
-                </div>
+                <%} %>
             </div>
             <div id="main_img-ds">
-                <img src="resources/images/home.png" alt="메인이미지">
             </div>
             <div id="product_info-ds">
                 <div id="title_price-ds">
@@ -59,9 +50,9 @@
                     </div>
                     <div id="like_view_report-ds" class="flex-ds">
                         <div id="like_view_time-ds" class="flex-ds">
-                            <div class="need_line_after-ds">❤️1238</div>
-                            <div class="need_line_after-ds">👁️‍🗨️36480</div>
-                            <div >🕗 <%=p.getUploadDate()%></div>
+                            <div class="need_line_after-ds">❤️198237</div>
+                            <div class="need_line_after-ds">👁️‍🗨️<%=p.getCount() %></div>
+                            <div >🕗 <%=p.getTimeDiff()%></div>
                         </div>
                         <div id="go_report-ds">🚨신고하기</div>
                     </div>
