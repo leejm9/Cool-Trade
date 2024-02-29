@@ -173,6 +173,8 @@
 		  JOIN CATEGORY USING (CATEGORY_NO)
 		 WHERE UPLOAD_TYPE = 'Y'
 		   AND PRODUCT_NO = ?
+	</entry>
+	
 	<entry key="selectMonthSales">
 		SELECT
 		       TO_CHAR(SELL_DATE,'YY/MM') sell_date
@@ -195,5 +197,35 @@
 		  JOIN TRADE USING(PRODUCT_NO)
 		 GROUP
 		    BY CATEGORY_NAME
+	</entry>
+	
+	<entry key="insertPopularWord">
+		INSERT
+		  INTO t_popular_word
+		VALUES
+		      (
+		      ?
+		      ,SYSDATE
+		      )
+	</entry>
+		
+	<entry key="selectPopularWord">
+		SELECT * 
+	      FROM (
+			    SELECT popw_word, COUNT(popw_word) as wordcnt
+			    FROM t_popular_word
+			    GROUP BY popw_word
+			    ORDER BY wordcnt DESC
+				) 
+		 WHERE ROWNUM &lt;= 100
+	</entry>
+	
+	<entry key="countPopularWord">
+		SELECT COUNT(*) count
+		  FROM (
+			    SELECT popw_word
+			    FROM t_popular_word
+			    GROUP BY popw_word
+			   ) 
 	</entry>
 </properties>

@@ -43,8 +43,8 @@ public class Product {
 
 
 
-	public Product(int productNo, int sellerNo, String categoryNo, String productName, int price, String productDesc,
-			String zone, String productStatus, Date uploadDate, String uploadType, int salesRate, int tstockgoods,
+	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, String productStatus, String uploadDate, String uploadType, int salesRate, int tstockgoods,
 			int reportedProduct) {
 		super();
 		this.productNo = productNo;

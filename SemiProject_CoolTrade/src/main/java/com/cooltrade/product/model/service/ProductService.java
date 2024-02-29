@@ -9,6 +9,7 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Search;
 
 public class ProductService {
 	public Product countSalesRate() {
@@ -132,6 +133,56 @@ public class ProductService {
 		ArrayList<Product> list = new ProductDao().selectCategorySales(conn);
 		close(conn);
 		return list;
+	}
+	
+	public int insertPopularWord(String search) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularWord(conn, search);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Search> selectPopularWord() {
+		Connection conn = getConnection();
+		
+		ArrayList<Search> list = new ProductDao().selectPopularWord(conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public int countPopularWord() {
+		Connection conn = getConnection();
+		
+		int endValue = new ProductDao().countPopularWord(conn);
+		
+		close(conn);
+		return endValue;
+		
+	}
+	
+	public int insertPopularSearch() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularSearch(conn);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
 	}
 	
 }

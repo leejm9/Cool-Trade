@@ -40,15 +40,20 @@ public class SearchProductListController extends HttpServlet {
 		ArrayList<Product> searchList = new ProductService().searchProductList(search);
 
 		ArrayList<Category> catList = new ProductService().searchCatList(search);
-
+		
+		int result = new ProductService().insertPopularWord(search);
+		
+		
 		int pCount = new ProductService().countProduct(search);
-
+		
+		if(result >0) {
 		request.setAttribute("search", search);
 		request.setAttribute("pCount", pCount);
 		request.setAttribute("searchList", searchList);
 		request.setAttribute("catList", catList);
-
+		
 		request.getRequestDispatcher("views/product/searchListView.jsp").forward(request, response);
+		}
 	}
 
 	/**
