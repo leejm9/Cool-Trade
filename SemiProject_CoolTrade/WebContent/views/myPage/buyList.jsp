@@ -1,7 +1,16 @@
 <%@page import="com.cooltrade.product.model.vo.Trade"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list"); %>
+<%  
+	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
+	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -171,6 +180,23 @@
         tr td:last-child {
             border-right: none; /* 마지막 td의 오른쪽 보더를 없애기 */
         }
+        
+        .paging-area {
+	        height: 80px;
+	        display: flex;
+	        align-items: center;
+	        justify-content: space-around;
+	    }
+	
+	    .paging-area button {
+	        border: none;
+	        background-color: transparent;
+	        margin: 0px 5px;
+	    }
+	
+	    .active-page {
+	        color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
+	    }
 
 </style>
 </head>
@@ -209,10 +235,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>?cpage=1">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -272,6 +298,34 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <div class="paging-area" align="center">
+                    <div>
+                        <% if(currentPage != 1) { %>
+                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+                        <% } %>
+                        
+                        <% for(int p=startPage; p<=endPage; p++) { %>
+                            <% if(p == currentPage) { %>
+                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+                            <% } else { %>
+                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+                            <% } %>
+                        <% } %>
+                        
+                        <% if(currentPage != maxPage) { %>
+                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+                        <% } %>
+					</div>
+		        </div>
+
+                <script>
+                    $(document).ready(function() {
+                        // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
+                        $('#pageBtn_<%= currentPage %>').addClass('active-page');
+                    });
+                </script>
+                
             </div>
         </div>
     </div>	

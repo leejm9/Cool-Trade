@@ -190,10 +190,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>?cpage=1">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>

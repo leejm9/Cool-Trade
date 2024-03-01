@@ -440,16 +440,49 @@ public class MemberDao {
 		return list;
 	}
 	
-	public ArrayList<Product> selectSellList(Connection conn, int userNo) {
-		// select문 => ResultSet => 여러행 ArrayList
-		ArrayList<Product> list = new ArrayList<Product>();
+	public int sellListCountPo(Connection conn, int userNo) {
+		int listCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectSellList");
+		String sql = prop.getProperty("sellListCountPo");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Product> sellListPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -463,6 +496,7 @@ public class MemberDao {
 				p.setUploadDate(rset.getString("upload_date"));
 				
 				list.add(p);
+				
 			}
 			
 		} catch (SQLException e) {
@@ -477,11 +511,11 @@ public class MemberDao {
 		
 	}
 	
-	public ArrayList<Trade> selectBuyList(Connection conn, int userNo) {
-		ArrayList<Trade> list = new ArrayList<Trade>();
+	public int buyListCountPo(Connection conn, int userNo) {
+		int listCount = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectBuyList");
+		String sql = prop.getProperty("buyListCountPo");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -489,14 +523,50 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Trade> buyListPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
 			while(rset.next()) {
 				Trade t = new Trade();
-				t.setTradeDate(rset.getString("trade_date"));
+				t.setTradeNo(rset.getInt("trade_no"));
 				t.setProductNo(rset.getString("product_name"));
 				t.setPrice(rset.getInt("price"));
-				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setDeliveryStatus(rset.getString("deliver_status"));
 				
 				list.add(t);
+				
 			}
 			
 		} catch (SQLException e) {
@@ -510,6 +580,7 @@ public class MemberDao {
 		return list;
 		
 	}
+	
 	
 }
 

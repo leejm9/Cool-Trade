@@ -139,8 +139,8 @@ public class ProductService {
 	public int insertProductSell(Product p, ArrayList<Images> list) {
 		Connection conn = getConnection();
 		
-		int result1 = new ProductDao().insertProductSell(conn, p);
-		int result2 = new ProductDao().insertImagesList(conn, list);
+		int result1 = new ProductDao().insertProductSell(conn, p); // 상품테이블 저장
+		int result2 = new ProductDao().insertImagesList(conn, list); // 이미지테이블에 저장
 		
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
@@ -152,7 +152,5 @@ public class ProductService {
 		return result1 * result2;
 		
 	}
-	
-
 	
 }

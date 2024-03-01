@@ -85,6 +85,21 @@ public class Product {
 		this.reportedProduct = reportedProduct;
 	}
 
+	public Product(String categoryNo,String sellerNo, String productName, int price, String productDesc, String zone,
+			String productStatus, int tradeType, int deliveryCharge, int pieces) {
+		super();
+		this.categoryNo = categoryNo;
+		this.sellerNo = sellerNo;
+		this.productName = productName;
+		this.price = price;
+		this.productDesc = productDesc;
+		this.zone = zone;
+		this.productStatus = productStatus;
+		this.tradeType = tradeType;
+		this.deliveryCharge = deliveryCharge;
+		this.pieces = pieces;
+	}
+
 	public int getProductNo() {
 		return productNo;
 	}
@@ -269,8 +284,8 @@ public class Product {
 				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
 				+ uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate=" + salesRate
 				+ ", tstockgoods=" + tstockgoods + ", reportedProduct=" + reportedProduct + ", tradeType=" + tradeType
-				+ "]";
+				+ ", monthSales=" + monthSales + ", count=" + count + ", deliveryCharge=" + deliveryCharge + ", pieces="
+				+ pieces + ", sellStatus=" + sellStatus + "]";
 	}
 
-	
 }

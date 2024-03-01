@@ -190,7 +190,7 @@
 	
 	<entry key="selectCategorySales">
 		SELECT
-		       CATEGORY_NAME categoryname
+		       CATEGORY_NAME
 		     , COUNT(PRODUCT_NO) count
 		  FROM PRODUCT
 		  JOIN CATEGORY USING(CATEGORY_NO)
@@ -237,7 +237,6 @@
 		  (
 		    IMG_NO
 		  , REF_PNO
-		  , REF_UNO
 		  , IMG_LEVEL
 		  , ORIGIN_NAME
 		  , CHANGE_NAME
@@ -245,9 +244,8 @@
 		  )
 		  VALUES
 		  (
-		    SEQ_IMAGES.NEXTVAL
-		  , ?
-		  , ?
+		    SEQ_IMG.NEXTVAL
+		  , SEQ_PRODUCT.CURRVAL
 		  , ?
 		  , ?
 		  , ?

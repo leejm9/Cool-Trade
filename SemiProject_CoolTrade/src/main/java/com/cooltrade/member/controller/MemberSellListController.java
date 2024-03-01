@@ -37,13 +37,37 @@ public class MemberSellListController extends HttpServlet {
 
 		int userNo = Integer.parseInt(request.getParameter("uno"));
 		
-		ArrayList<Product> list = new MemberService().selectSellList(userNo);
+		int listCount;
+		int currentPage;
+		int pageLimit;
+		int boardLimit;
+		
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		listCount = new MemberService().sellListCountPo(userNo); // 회원이 등록한 판매 상품 개수
+		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		pageLimit = 5;
+		boardLimit = 5;
+		maxPage = (int)Math.ceil((double)listCount / boardLimit);
+		startPage = (currentPage - 1) / pageLimit * pageLimit + 1;
+		endPage = startPage + pageLimit - 1;
+		
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+
+		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+		
+		ArrayList<Product> list = new MemberService().sellListPo(pi, userNo);
+		
+		System.out.println(pi);
+		
+		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
-		
-
-		
 		
 	}
 

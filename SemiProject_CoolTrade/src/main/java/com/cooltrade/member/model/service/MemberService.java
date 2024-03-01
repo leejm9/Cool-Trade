@@ -156,21 +156,39 @@ public class MemberService {
 		return list;
 	}
 	
-	public ArrayList<Product> selectSellList(int userNo) {
+	public int sellListCountPo(int userNo) {
 		Connection conn = getConnection();
-		ArrayList<Product> list = new MemberDao().selectSellList(conn, userNo);
+		int listCount = new MemberDao().sellListCountPo(conn, userNo);
 		
 		close(conn);
-		return list;
+		return listCount;
 		
 	}
 	
-	public ArrayList<Trade> selectBuyList(int userNo) {
+	public ArrayList<Product> sellListPo(PageInfo pi, int userNo) {
 		Connection conn = getConnection();
-		ArrayList<Trade> list = new MemberDao().selectBuyList(conn, userNo);
+		ArrayList<Product> list = new MemberDao().sellListPo(conn, pi, userNo);
 		
 		close(conn);
 		return list;
+				
+	}
+	
+	public int buyListCountPo(int userNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().buyListCountPo(conn, userNo);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Trade> buyListPo(PageInfo pi, int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().buyListPo(conn, pi, userNo);
+		
+		close(conn);
+		return list;
+				
 	}
 	
 }
