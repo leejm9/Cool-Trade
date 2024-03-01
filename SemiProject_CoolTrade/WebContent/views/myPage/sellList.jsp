@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<Product> list = (ArrayList<Product>)request.getAttribute("list");
+	// 상품번호, 상품제목, 가격, 쿨거래여부, 판매상태, 판매일자
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +46,7 @@
     /* 왼쪽 컨텐츠 CSS */
     #left-content {
         width: 20%;
+        
     }
 
     #tit {
@@ -185,11 +196,30 @@
         border-right: none; /* 마지막 td의 오른쪽 보더를 없애기 */
     }
 
+    .paging-area {
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .paging-area button {
+        border: none;
+        background-color: transparent;
+        margin: 0px 5px;
+    }
+
+    .active-page {
+        color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
+    }
+
 </style>
 </head>
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+	
+	<% int userNo = loginUser.getUserNo(); %>
 
 	<div id="wrap">
         <div id="left-content">
@@ -220,10 +250,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -267,38 +297,73 @@
                         </thead>
                         
                         <tbody>
-                            <tr>
-                                <td>2024.02.18</td>
-                                <td>
-                                    <div>
-                                        <a href="#">여기는 상품 섬네일</a><a href="#">여기는 상품명</a>
-                                    </div>
-                                </td>
-                                <td>13,000원</td>
-                                <td>3</td>
-                                <td>X</td>
-                                <td>
-                                    <select name="sell-status">
-                                        <option value="">판매중</option>
-                                        <option value="">예약중</option>
-                                        <option value="">판매완료</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <div>
-                                        <button type="button" class="func-btn">UP</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="func-btn">수정</button>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="func-btn">삭제</button>
-                                    </div>                                   
-                                </td>
-                            </tr>
+                           	<% for(Product p : list) { %>
+                            	<tr>
+	                                <td><%= p.getUploadDate() %></td>
+	                                <td>
+	                                    <div>
+	                                        <a href="#">여기는 상품 섬네일</a><a href="#"><%= p.getProductName() %></a>
+	                                    </div>
+	                                </td>
+	                                <td><%= p.getPrice() %></td>
+	                                <td>3</td>
+	                                	<% if(p.getTradeType() == 1) { %>
+	                                		<td>X</td>
+	                                	<% } else { %>
+	                                		<td>O</td>
+	                                	<% } %>
+	                                
+	                                <td>
+	                                    <select name="sell-status" onchange="changeStatus();" id="selectBox">
+	                                        <option value="판매중">판매중</option>
+	                                        <option value="예약중">예약중</option>
+	                                        <option value="판매완료">판매완료</option>
+	                                    </select>
+	                                </td>
+	                                <td>
+	                                    <div>
+	                                        <button type="button" class="func-btn">UP</button>
+	                                    </div>
+	                                    <div>
+	                                        <button type="button" class="func-btn">수정</button>
+	                                    </div>
+	                                    <div>
+	                                        <button type="button" class="func-btn">삭제</button>
+	                                    </div>                                   
+	                                </td>
+                            	</tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
+                
+                <div class="paging-area" align="center">
+                    <div>
+                        <% if(currentPage != 1) { %>
+                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+                        <% } %>
+                        
+                        <% for(int p=startPage; p<=endPage; p++) { %>
+                            <% if(p == currentPage) { %>
+                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+                            <% } else { %>
+                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+                            <% } %>
+                        <% } %>
+                        
+                        <% if(currentPage != maxPage) { %>
+                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+                        <% } %>
+					</div>
+		        </div>
+
+                <script>
+                    $(document).ready(function() {
+                        // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
+                        $('#pageBtn_<%= currentPage %>').addClass('active-page');
+                    });
+                </script>
+		        
             </div>
         </div>
     </div>

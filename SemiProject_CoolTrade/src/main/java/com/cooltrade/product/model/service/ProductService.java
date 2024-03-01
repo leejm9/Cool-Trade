@@ -5,7 +5,9 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
@@ -143,10 +145,20 @@ public class ProductService {
 		if(result>0) {
 			commit(conn);
 		}else {
+	public int insertProductSell(Product p, ArrayList<Images> list) {
+		Connection conn = getConnection();
+		
+		int result1 = new ProductDao().insertProductSell(conn, p); // 상품테이블 저장
+		int result2 = new ProductDao().insertImagesList(conn, list); // 이미지테이블에 저장
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
 			rollback(conn);
 		}
 		
 		close(conn);
+<<<<<<< HEAD
 		
 		return result;
 	}
@@ -180,4 +192,10 @@ public class ProductService {
 		
 		return imglist;
 	}
+=======
+		return result1 * result2;
+		
+	}
+	
+>>>>>>> cr
 }

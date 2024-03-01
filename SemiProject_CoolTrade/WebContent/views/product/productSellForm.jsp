@@ -255,7 +255,7 @@
         border-radius: 10px;
     }
 
-    li>button {
+    li>input {
         border: none;
         background-color: transparent;
         width: 100%;
@@ -264,7 +264,7 @@
         padding: 0px 15px;
     }
 
-    li>button:hover {
+    li>input:hover {
         background-color: #e3e3e3;
     }
 
@@ -545,13 +545,26 @@
         width: 100%;
     }
     
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
+	
+	.hidden-file-input {
+		display: none;
+	}
+
 </style>
 </head>
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+	
+	<% int userNo = loginUser.getUserNo();%>
+	
 
     <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
+    <input type="hidden" name="seller" value=<%= userNo %>>
         <div id="wrap" style="margin-top: 180px;">
             <div id="main-content" class="flex-class">
                 <div id="right-content">
@@ -571,27 +584,32 @@
                                     </div>
                                     <div id="sell-fileInput-div">
                                         <div id="fileInput-div">
-                                            <input type="file" id="fileInput" accept="image/*">
+                                            <!-- <input type="file" id="fileInput" accept="image/*" name="files[]" multiple> -->
                                             <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img" name="img1">
+                                        	<input type="file" class="hidden-file-input" id="fileInput1" name="image1">
+                                            <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img" name="img2">
+                                        	<input type="file" class="hidden-file-input" id="fileInput2" name="image2">
+                                            <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img" name="img3">
+                                        	<input type="file" class="hidden-file-input" id="fileInput3" name="image3">
+                                            <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img" name="img4">
+                                        	<input type="file" class="hidden-file-input" id="fileInput4" name="image4">
+                                            <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>
                                         <div class="hidden-div">
-                                            <img src="" class="hidden-img" name="img5">
+                                        	<input type="file" class="hidden-file-input" id="fileInput5" name="image5">
+                                            <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>
                                     </div>
@@ -600,28 +618,33 @@
                                 <script>
                                     
                                     let count = 0;
+                                    let index = 1;
 
                                     // 이미지 클릭 시 업로드창 열린다     
+                                    
                                     $("#fileImg").click(function() {
-                                        $("#fileInput").click();
+                                    	$("#fileInput" + index).click();
+                                    	index++;
                                     });
-                            
+                                    
                                     // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
-                                    const fileDOM = document.querySelector('#fileInput');
+                                    const fileDOMs = document.querySelectorAll(".hidden-file-input");
                                     const previews = document.querySelectorAll('.hidden-img');
                                     const $previewsDiv = $(".hidden-div");
                             
-                                    fileDOM.addEventListener('change', () => {
-                                        const reader = new FileReader();
-                                        reader.onload = ({ target }) => {
-                                            previews[count].src = target.result;
-                                            $($previewsDiv[count]).css('display', 'block');
-                                            count++;
-                                            
-                                            $("#imgCount").html("(" + count + "/5)");
-                                            
-                                        };
-                                        reader.readAsDataURL(fileDOM.files[0]);
+                                    fileDOMs.forEach((fileDOM, i) => {
+	                                    fileDOM.addEventListener('change', () => {
+	                                        const reader = new FileReader();
+	                                        reader.onload = ({ target }) => {
+	                                            previews[i].src = target.result;
+	                                            $($previewsDiv[i]).css('display', 'block');
+	                                            count++;
+	                                            
+	                                            $("#imgCount").html("(" + count + "/5)");
+	                                            
+	                                        };
+	                                        reader.readAsDataURL(fileDOM.files[0]);
+	                                    });
                                     });
 
                                     function deleteBtn(btn){
@@ -631,7 +654,7 @@
                                         
                                         $("#imgCount").html("(" + count + "/5)");
                                     };
-
+                                    
                                 </script>
 
                                 <div id="sell-section-product-name" class="flex-class">
@@ -641,7 +664,7 @@
                                     </div>
                                     <div id="sell-section-product-name-input">
                                         <div id="sell-section-product-name-input-area">
-                                            <input id="titleInput" type="text" maxlength="40" placeholder="상품명을 입력해주세요." name="title">
+                                            <input id="titleInput" type="text" maxlength="40" placeholder="상품명을 입력해주세요." name="title" required>
                                         </div>
                                         <div id="sell-section-product-name-input-limit">
                                             0/40
@@ -670,7 +693,8 @@
                                             <ul>
                                                 <% for(Category c : list) { %>
                                                     <li>
-                                                        <button name="category" type="button" id="select-category" value="<%= c.getCategoryNo() %>"><%= c.getCategoryName() %></button>
+                                                        <input type="button" id="select-category" value="<%= c.getCategoryName() %>" required>
+                                                        <input type="hidden" name="category" value="<%= c.getCategoryNo() %>">
                                                     </li>
                                                 <% } %>
                                             </ul>
@@ -683,14 +707,17 @@
                                 </div>
 
                                 <script>  
-        
-                                    // 카테고리 선택 시 해당 div에 카테고리 이름 출력
-                                    document.querySelectorAll('#select-category').forEach(item => {
-                                        // 각 카테고리 버튼에 클릭 이벤트 추가
+                                    
+                                    // 카테고리 선택 input 요소에 대한 클릭 이벤트 처리
+                                    document.querySelectorAll('#sell-section-category-select-list input[type="button"]').forEach(item => {
                                         item.addEventListener('click', event => {
                                             // 선택한 카테고리의 이름을 가져와서 표시
-                                            var categoryName = event.target.textContent;
+                                            var categoryName = event.target.value;
                                             document.getElementById('select-category-name').textContent = categoryName;
+                                            
+                                            // 선택한 카테고리의 카테고리 번호를 hidden input에 설정 (선택한 카테고리를 서버로 제출할 때 사용할 수 있음)
+                                            var categoryNo = event.target.nextElementSibling.value;
+                                            document.querySelector('#sell-section-category input[name="category"]').value = categoryNo;
                                         });
                                     });
                                     
@@ -703,33 +730,33 @@
                                     </div>
                                     <div id="sell-section-product-status-select">
                                         <div>
-                                            <input id="new-product" type="radio" vlaue="new-product" name="status">
+                                            <input id="new-product" type="radio" value="PS1" name="status" required>
                                             <label for="new-product" class="product-status-label">새 상품(미사용)</label>
                                             <span class="product-status-select-span">사용하지 않은 새 상품</span>                              
                                         </div>                                 
                                         <div>
-                                            <input id="no-use" type="radio" vlaue="no-use" name="status">
+                                            <input id="no-use" type="radio" value="PS2" name="status" required>
                                             <label for="no-use" class="product-status-label">사용감 없음</label>
                                             <span class="product-status-select-span">사용은 했지만 눈에 띄는 흔적이나 얼룩이 없음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="less-use" type="radio" vlaue="less-use" name="status">
+                                            <input id="less-use" type="radio" value="PS3" name="status" required>
                                             <label for="less-use" class="product-status-label">사용감 적음</label>
                                             <span class="product-status-select-span">눈에 띄는 흔적이나 얼룩이 약간 있음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="useful" type="radio" vlaue="useful" name="status">
+                                            <input id="useful" type="radio" value="PS4" name="status" required>
                                             <label for="useful" class="product-status-label">사용감 많음</label>
                                             <span class="product-status-select-span">눈에 띄는 흔적이나 얼룩이 많이 있음</span>                              
                                         </div> 
                                         <div>
-                                            <input id="broken-product" type="radio" vlaue="broken-product" name="status">
+                                            <input id="broken-product" type="radio" value="PS5" name="status" required>
                                             <label for="broken-product" class="product-status-label">고장/파손 상품</label>
                                             <span class="product-status-select-span">기능 이상이나 외관 손상 등으로 수리/수선 필요</span>                              
                                         </div>                        
                                     </div>
                                 </div>
-
+                                
                                 <div id="sell-section-product-price" class="flex-class">
                                     <div id="sell-section-product-price-title">
                                         가격
@@ -737,13 +764,25 @@
                                     </div>
                                     <div id="sell-section-product-price-input">
                                         <div id="product-price-input">
-                                            <input id="numberInput" type="text" placeholder="가격을 입력해 주세요." maxlength="15" name="price">
+                                            <input id="numberInput" type="text" placeholder="가격을 입력해 주세요." maxlength="15" name="price" required>
                                             <span>원</span>
                                         </div>
                                     </div>
                                 </div>
                                 
                                 <script>
+                                
+	                                document.getElementById('numberInput').addEventListener('input', function(event) {
+	                                    // 입력된 값
+	                                    let inputValue = this.value;
+	
+	                                    // 입력된 값이 숫자가 아닌 경우
+	                                    if (!(/^\d*$/).test(inputValue)) {
+	                                        // 숫자가 아닌 입력을 제거
+	                                        this.value = inputValue.replace(/[^\d]/g, '');
+	                                    }
+	                                });
+                                	
 									document.getElementById('numberInput').addEventListener('input', function() {
 									    // 입력된 값을 가져옴
 									    var value = this.value.replace(/,/g, ''); // 기존에 입력된 쉼표 제거
@@ -752,6 +791,7 @@
 									    // 입력된 값을 다시 입력 상자에 설정
 									    this.value = value;
 									});
+									
 								</script>
 
                                 <div id="sell-section-delivery-charge" class="flex-class">
@@ -761,11 +801,11 @@
                                     </div>
                                     <div id="sell-section-delivery-charge-select">
                                         <div id="delivery-charge-include-area">
-                                            <input type="radio" id="delivery-charge-include" name="deliveryCharge">
+                                            <input type="radio" id="delivery-charge-include" name="deliveryCharge" value=1 required>
                                             <label for="delivery-charge-include">배송비포함</label>
                                         </div>
                                         <div id="delivery-charge-none-area">
-                                            <input type="radio" id="delivery-charge-none" name="deliveryCharge">
+                                            <input type="radio" id="delivery-charge-none" name="deliveryCharge" value=2 required>
                                             <label for="delivery-charge-none">배송비별도</label>
                                         </div>
                                     </div>
@@ -777,7 +817,7 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="sell-section-content-input">
-                                        <textarea id="contentInput" rows="6" name="content" style="resize:none;" maxlength="2000"></textarea>
+                                        <textarea id="contentInput" rows="6" name="content" style="resize:none;" maxlength="2000" required></textarea>
                                         <div id="cotentInput-div">0/2000</div>
                                     </div>
                                 </div>
@@ -787,7 +827,7 @@
 	                                $(function(){
 	                                    $("#contentInput").on("input", function() {
 	                                        var contentLength = $(this).val().length;
-	                                        console.log(contentLength);
+	                                        
 	                                        $("#cotentInput-div").text(contentLength + "/2000");
 	                                    });
 	                                });
@@ -800,10 +840,34 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="product-count-input">
-                                        <input type="text" placeholder="1" maxlength="10" name="count">
+                                        <input id="numberInput2" type="text" placeholder="1" maxlength="10" name="pieces" required>
                                         <span>개</span>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                
+	                                document.getElementById('numberInput2').addEventListener('input', function(event) {
+	                                    // 입력된 값
+	                                    let inputValue2 = this.value;
+	
+	                                    // 입력된 값이 숫자가 아닌 경우
+	                                    if (!(/^\d*$/).test(inputValue2)) {
+	                                        // 숫자가 아닌 입력을 제거
+	                                        this.value = inputValue2.replace(/[^\d]/g, '');
+	                                    }
+	                                });
+	                            	
+									document.getElementById('numberInput2').addEventListener('input', function() {
+									    // 입력된 값을 가져옴
+									    var value2 = this.value.replace(/,/g, ''); // 기존에 입력된 쉼표 제거
+									    // 천 단위마다 쉼표 추가
+									    value2 = value2.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+									    // 입력된 값을 다시 입력 상자에 설정
+									    this.value = value2;
+									});
+                                
+                                </script>
 
                                 <div class="flex-class">
                                     <div id="sell-section-zone-title">
@@ -811,25 +875,35 @@
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="trade-zone-div">
-                                        <select name="zone" id="trade-zone">
-                                            <option value="">서울</option>
-                                            <option value="">경기도</option>
-                                            <option value="">인천</option>
-                                            <option value="">강원도</option>
-                                            <option value="">충청도</option>
-                                            <option value="">세종</option>
-                                            <option value="">대전</option>
-                                            <option value="">충청도</option>
-                                            <option value="">경상도</option>
-                                            <option value="">전라도</option>
-                                            <option value="">광주</option>
-                                            <option value="">대구</option>
-                                            <option value="">울산</option>
-                                            <option value="">부산</option>
-                                            <option value="">제주</option>
+                                        <select name="zone" id="trade-zone" required>
+                                            <option value="서울">서울</option>
+                                            <option value="경기도">경기도</option>
+                                            <option value="인천">인천</option>
+                                            <option value="강원도">강원도</option>
+                                            <option value="충청도">충청도</option>
+                                            <option value="세종">세종</option>
+                                            <option value="대전">대전</option>
+                                            <option value="충청도">충청도</option>
+                                            <option value="경상도">경상도</option>
+                                            <option value="전라도">전라도</option>
+                                            <option value="광주">광주</option>
+                                            <option value="대구">대구</option>
+                                            <option value="울산">울산</option>
+                                            <option value="부산">부산</option>
+                                            <option value="제주">제주</option>
                                         </select>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                
+                                    document.getElementById('enroll').addEventListener('click', function() {
+                                        // 선택된 옵션의 값을 가져옴
+                                        var selectedZone = document.getElementById('trade-zone').value;
+                                    });
+                                </script>
+                                
+                                </script>
                                 
                             </div>
                         </div>
@@ -845,10 +919,32 @@
                             <div id="cool-trade-option-ex">
                                 <div class="flex-class" id="cool-trade-btn">
                                     <div>
-                                        <input type="checkbox" name="coolTrade">
+                                        <input type="checkbox" name="coolTrade" value="2">
                                     </div>
                                     <div id="cool-trade-btn-title">쿨거래</div>
                                 </div>
+                                
+                                <script>
+                                	
+	                             	// 체크박스 요소를 가져옵니다.
+	                                const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
+	
+	                                // 체크박스의 변경 이벤트를 감지하고 처리합니다.
+	                                coolTradeCheckbox.addEventListener('change', function() {
+	                                    // 체크박스가 체크되었는지 확인합니다.
+	                                    if (this.checked) {
+	                                        // 체크되었을 때 value 값을 2로 설정합니다.
+	                                        this.value = "2";
+	                                    } else {
+	                                        // 체크되지 않았을 때 value 값을 1로 설정합니다.
+	                                        this.value = "1";
+	                                    }
+	                                    
+	                                    console.log(coolTradeCheckbox.value);
+	                                });
+                                	
+                                </script>
+                                
                                 <div id="use-agreement">
                                     <ul>
                                         <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
@@ -866,7 +962,7 @@
             </div>
             
         </div>
-        <br><br><br>
+
         <div id="footer-content-cr">
             <div id="footer-content-div">
                 <button type="button" id="save">임시저장</button>

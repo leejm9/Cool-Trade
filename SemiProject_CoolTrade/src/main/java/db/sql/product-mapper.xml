@@ -200,7 +200,7 @@
 	
 	<entry key="selectCategorySales">
 		SELECT
-		       CATEGORY_NAME categoryname
+		       CATEGORY_NAME
 		     , COUNT(PRODUCT_NO) count
 		  FROM PRODUCT
 		  JOIN CATEGORY USING(CATEGORY_NO)
@@ -240,4 +240,60 @@
 		   AND IMG_STATUS ='Y'
            AND IMG_LEVEL = 1
 	</entry>
+	<entry key="insertProductSell">
+		INSERT
+		  INTO PRODUCT
+		  (
+		    PRODUCT_NO
+		  , SELLER_NO
+		  , CATEGORY_NO
+		  , PRODUCT_NAME
+		  , PRICE
+		  , PRODUCT_DESC
+		  , PIECES
+		  , ZONE
+		  , PRODUCT_STATUS
+		  , DELIVERY_CHARGE
+		  , TRADE_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_PRODUCT.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertImagesList">
+		INSERT
+		  INTO IMAGES
+		  (
+		    IMG_NO
+		  , REF_PNO
+		  , IMG_LEVEL
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , IMG_PATH
+		  )
+		  VALUES
+		  (
+		    SEQ_IMG.NEXTVAL
+		  , SEQ_PRODUCT.CURRVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	
+	
 </properties>

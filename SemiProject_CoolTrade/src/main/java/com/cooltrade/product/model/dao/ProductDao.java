@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
+import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -92,7 +93,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				p.setReportedProduct(rset.getInt("reportedproduct"));
+				p.setreportedProduct(rset.getInt("reportedproduct"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -530,4 +531,66 @@ public class ProductDao {
 		}
 		return imglist;
 	}
+	public int insertProductSell(Connection conn, Product p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertProductSell");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(p.getSellerNo()));
+			pstmt.setString(2, p.getCategoryNo());
+			pstmt.setString(3, p.getProductName());
+			pstmt.setInt(4, p.getPrice());
+			pstmt.setString(5, p.getProductDesc());
+			pstmt.setInt(6, p.getPieces());
+			pstmt.setString(7, p.getZone());
+			pstmt.setString(8, p.getProductStatus());
+			pstmt.setInt(9, p.getDeliveryCharge());
+			pstmt.setInt(10, p.getTradeType());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+
+	}
+	
+	public int insertImagesList(Connection conn, ArrayList<Images> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertImagesList");
+		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, img.getImgLevel());
+				pstmt.setString(2, img.getOriginName());
+				pstmt.setString(3, img.getChangeName());
+				pstmt.setString(4, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
+
+	
 }

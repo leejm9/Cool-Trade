@@ -197,6 +197,7 @@
 	<%
 		String nickname = loginUser.getNickName();
 		double ondo = loginUser.getOndo();
+		int userNo = loginUser.getUserNo();
 	%>
 
 
@@ -230,10 +231,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -246,7 +247,7 @@
                 <div id="right-content-top">
                     <div id="profile-div">
                         <div>
-                            <img src="resources/images/free-icon-user-847969.png" alt="회원 프로필 사진 이미지">
+                            <img src="resources/images/user-icon.png" alt="회원 프로필 사진 이미지">
                         </div>
                         <div>
                             <b><%= nickname %>님</b> 환영합니다!
@@ -287,7 +288,7 @@
                                 </div>
                             </li>
                             <li>
-                                <div>이용후기</div>
+                                <div>받은후기</div>
                                 <div>
                                     <a href="#">127</a>
                                 </div>

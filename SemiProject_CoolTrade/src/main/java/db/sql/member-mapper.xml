@@ -234,4 +234,66 @@
 		    BY 1
 	</entry>
 	
+	<entry key="sellListCountPo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE SELLER_NO = ?
+		   AND UPLOAD_TYPE = 'Y'
+	</entry>
+	
+	<entry key="sellListPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+		                     PRODUCT_NO
+		                   , PRODUCT_NAME
+		                   , PRICE
+		                   , TRADE_TYPE
+		                   , SELL_STATUS
+		                   , IMG_PATH || CHANGE_NAME "TITLEIMG"
+		                   , TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+		                FROM PRODUCT
+		                JOIN IMAGES ON (REF_PNO = PRODUCT_NO)
+		               WHERE SELLER_NO = ?
+		                 AND IMG_LEVEL = '1'
+		               ORDER
+		                  BY UPLOAD_DATE DESC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="buyListCountPo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TRADE
+		 WHERE BUYER_NO = ?
+	</entry>
+		
+	<entry key="BuyListPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+		                     TRADE_NO
+		                   , PRODUCT_NAME
+		                   , PRICE
+		                   , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+		                   , DELIVERY_STATUS
+		                FROM TRADE
+		                JOIN PRODUCT USING (PRODUCT_NO)
+		               WHERE SELLER_NO = ?
+		               ORDER
+		                  BY TRADE_DATE DESC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+
+	
 </properties>

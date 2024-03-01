@@ -80,10 +80,6 @@
         width: 80%;
     }
 
-    #right-content-wrap {
-        position: relative;
-    }
-
     #right-content-wrap>div {
         padding: 10px 0px;
     }
@@ -119,7 +115,7 @@
 
     #review-select-section-top>div, #review-select-section-bottom>div {
         align-items: center;
-        background-color: #ebebeb;
+        background-color: #f0f0f0;
         margin: 10px 0px;
         padding: 0px 15px;
         height: 35px;
@@ -135,13 +131,64 @@
     #arrow-img {
         display: flex;
         justify-content: space-around;
-        cursor: pointer;
-        background: linear-gradient(to top, rgb(249, 249, 249), rgb(249, 249, 249) 74%, transparent);
-        width: 100%;
-        height: 50px;
-        position: absolute;
-        bottom: 280px;
-        align-items: flex-end;
+        cursor: pointer;        
+        padding-bottom: 20px;
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    #review-list-area {
+        border-bottom: 1px solid #e6e6e6;
+    }
+
+    #review-list-area>div {
+        padding: 10px 20px;
+    }
+
+    #buyer-profile-img {
+        width: 10%;
+    }
+
+    #review-content {
+        width: 90%;
+        font-size: 14px;
+        /* display: flex; */
+    }
+
+    #review-content>div {
+        height: 30px;
+        align-items: center;
+    }
+
+    #review-content-buyer-name {
+        justify-content: space-between;
+    }
+
+    #moreBtn-area {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 70px;
+    }
+
+    #moreBtn>div {
+        padding: 0px 5px;
+    }
+
+    #product-title-btn {
+        border: 1px solid #e6e6e6;
+        height: 30px;
+        width: auto;
+        padding: 5px 10px;
+        background-color: white;
+    }
+
+    #product-title-btn>img {
+        margin-left: 5px;
+    }
+
+    #review-report-btn {
+        border: none;
+        background-color: transparent;
     }
 
 </style>
@@ -149,6 +196,8 @@
 <body>
 
 	<%@ include file = "../common/header.jsp" %>
+	
+	<% int userNo = loginUser.getUserNo(); %>
 
     <div id="mypage-wrap">
         <div id="left-content">
@@ -179,10 +228,10 @@
                                     <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -287,22 +336,52 @@
 
                 </script>
 
-                <div>
-                    <div>구매자 프로필 사진 자리</div>
-                    <div>
-                        <div>
+                <div id="review-list-area" class="flex-class">
+                    <div id="buyer-profile-img">
+                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
+                    </div>
+                    <div id="review-content">
+                        <div class="flex-class" id="review-content-buyer-name">
                             <div>구매자 닉네임</div>
                             <div>1개월 전</div>
                         </div>
-                        <div>⭐⭐⭐⭐⭐</div>
-                        <div>판매상품 제목</div>
-                        <div>리뷰 사진</div>
-                        <div>리뷰 내용</div>
-                        <div>
+                        <div class="flex-class">
+                            <div>⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="flex-class">
+                            <div>
+                                <button type="button" id="product-title-btn">
+                                    판매상품 제목
+                                    <img src="resources/images/greater than.png" alt="" width="7" height="10">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex-class">
+                            <div>
+                                <img src="" alt="리뷰 사진">
+                            </div>    
+                        </div>
+                        <div class="flex-class">
+                            <div>리뷰 내용</div>
+                        </div>
+                        <div class="flex-class">
                             <div>상품 설명과 실제 상품이 동일해요.</div>
                             <div>배송이 빨라요.</div>
                         </div>
-                        <div>신고하기</div>
+                        <div class="flex-class">
+                            <div>
+                                <button type="button" id="review-report-btn">신고하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="moreBtn-area">
+                    <div id="moreBtn" class="flex-class">
+                        <div>
+                            <img src="resources/images/moreBtn.png" alt="더보기 아이콘" width="20" height="20" style="opacity: 0.3;">
+                        </div>
+                        <div>받은 후기 더보기</div>
                     </div>
                 </div>
 
