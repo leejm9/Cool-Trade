@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
-import com.cooltrade.common.Images;
 import com.cooltrade.common.MyFileRenamePolicy;
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.oreilly.servlet.MultipartRequest;
 

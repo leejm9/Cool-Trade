@@ -11,7 +11,6 @@ import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
-import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -94,7 +93,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				p.setreportedProduct(rset.getInt("reportedproduct"));
+				p.setReportedProduct(rset.getInt("reportedproduct"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -413,6 +412,21 @@ public class ProductDao {
 		PreparedStatement pstmt = null; 
 		int result = 0;
 		String sql = prop.getProperty("increaseCount");
+		
+		try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         pstmt.setInt(1, pno);
+	         
+	         result = pstmt.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(pstmt);
+	      }
+	      return result;
+	   
+	}	
 	public int insertPopularWord(Connection conn, String search) {
 		int result = 0;
 		
@@ -423,7 +437,7 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, pno);
+			pstmt.setString(1, search);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -440,6 +454,29 @@ public class ProductDao {
 		ArrayList<Images> imglist = new ArrayList<Images>();
 		String sql = prop.getProperty("selectImages");
 		
+		try {
+	         pstmt = conn.prepareStatement(sql);
+	         
+	         pstmt.setInt(1, pno);
+	         
+	         rset = pstmt.executeQuery();
+	         
+	         while(rset.next()) {
+	            Images img = new Images();
+	            img.setImgNo(rset.getInt("img_no"));
+	            img.setOriginName(rset.getString("origin_name"));
+	            img.setChangeName(rset.getString("change_name"));
+	            img.setImgPath(rset.getString("img_path"));
+	            
+	            imglist.add(img);
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         close(rset);
+	         close(pstmt);
+	      }
+	      return imglist;
 	}
 	
 	public ArrayList<Search> selectPopularWord(Connection conn) {
@@ -453,9 +490,6 @@ public class ProductDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, pno);
-			
 			
 			rset = pstmt.executeQuery();
 			
@@ -474,7 +508,7 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		return imglist;
+		return list;
 	}
 	
 	public ArrayList<Product> searchKeywords(Connection conn, ArrayList<String> extractedKeywords, String cpCategory){
@@ -509,7 +543,13 @@ public class ProductDao {
 				p.setProductName(rset.getString("product_name"));
 				plist.add(p);
 			}
-		return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}	
+		return plist;
 	}
 	
 	public int countPopularWord(Connection conn) {
@@ -535,7 +575,7 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		return plist;
+		return endValue;
 	}
 	
 	public ArrayList<Images> getTitleImg(Connection conn, ArrayList<Product> plist){
@@ -632,11 +672,6 @@ public class ProductDao {
 	
 
 	
-			close(pstmt); 
-		}
-		return endValue;
-		
-	}
 	
 	public int deletePopularSearch(Connection conn) {
 		int result = 0;

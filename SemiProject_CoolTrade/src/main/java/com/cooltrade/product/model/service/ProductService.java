@@ -5,7 +5,6 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
@@ -139,13 +138,20 @@ public class ProductService {
 	}
 	
 	public int increaseCount(int pno) {
-		Connection conn = getConnection();
-		
-		int result = new ProductDao().increaseCount(conn, pno);
-		
-		if(result>0) {
-			commit(conn);
-		}else {
+	      Connection conn = getConnection();
+	      
+	      int result = new ProductDao().increaseCount(conn, pno);
+	      
+	      if(result>0) {
+	         commit(conn);
+	      }else {
+	         rollback(conn);
+	      }
+	      
+	      close(conn);
+	      
+	      return result;
+	}
 	public int insertProductSell(Product p, ArrayList<Images> list) {
 		Connection conn = getConnection();
 		
@@ -155,6 +161,10 @@ public class ProductService {
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
+			
+			
+		}
+	}
 	public int insertPopularWord(String search) {
 		Connection conn = getConnection();
 		
@@ -215,15 +225,10 @@ public class ProductService {
 		}
 		
 		close(conn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> jm
 		
 		return result;
 	}
 	
-<<<<<<< HEAD
 	public ArrayList<Images> selectImages(int pno) {
 		Connection conn = getConnection();
 		
@@ -253,12 +258,5 @@ public class ProductService {
 		
 		return imglist;
 	}
-=======
-		return result1 * result2;
 		
-	}
-	
->>>>>>> cr
-=======
->>>>>>> jm
 }
