@@ -225,7 +225,7 @@
 	
 	<entry key="selectEnrollMonth">
 		SELECT
-		       TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
+		       TO_CHAR(ENROLL_DATE,'YY-MM') ENROLL_DATE
 		     , COUNT(*) count
 		  FROM MEMBER
 		 GROUP
@@ -253,10 +253,10 @@
 		                   , PRICE
 		                   , TRADE_TYPE
 		                   , SELL_STATUS
-		                   , IMG_PATH || CHANGE_NAME "TITLEIMG"
-		                   , TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
-		                FROM PRODUCT
-		                JOIN IMAGES ON (REF_PNO = PRODUCT_NO)
+		                   , COALESCE(IMG_PATH || CHANGE_NAME) "TITLEIMG"
+		                   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+		                FROM PRODUCT P
+		                JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
 		               WHERE SELLER_NO = ?
 		                 AND IMG_LEVEL = '1'
 		               ORDER

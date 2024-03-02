@@ -14,7 +14,6 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
-import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 

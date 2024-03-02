@@ -9,7 +9,6 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
-import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -225,8 +224,8 @@ public class ProductService {
 		}
 		
 		close(conn);
+		return result1 * result2;
 		
-		return result;
 	}
 	
 	public ArrayList<Images> selectImages(int pno) {
@@ -255,8 +254,8 @@ public class ProductService {
 		ArrayList<Images> imglist = new ProductDao().getTitleImg(conn, plist);
 		
 		close(conn);
-		
 		return imglist;
-	}
 		
+	}
+	
 }

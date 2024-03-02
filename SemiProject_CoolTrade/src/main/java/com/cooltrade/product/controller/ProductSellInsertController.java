@@ -103,13 +103,12 @@ public class ProductSellInsertController extends HttpServlet {
 			
 			int result = new ProductService().insertProductSell(p, list);
 			
-			int userNo = Integer.parseInt(multiRequest.getParameter("seller"));
-			ArrayList<Product> prList = new MemberService().selectSellList(userNo);
-			request.setAttribute("list", prList);
+			int pno = p.getProductNo();
+			request.setAttribute("pno", pno);
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "상품이 성공적으로 등록 되었습니다.");
-				request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
+				request.getRequestDispatcher("views/product/productSellSuccess.jsp").forward(request, response);
 			} else {
 				System.out.println("실패");
 			}

@@ -20,10 +20,10 @@ public class Product {
 	private int reportedProduct;
 	private int tradeType;
 	private String monthSales;
-
 	private int deliveryCharge;
 	private int pieces;
 	private String sellStatus;
+	private String titleImg;
 	
 	public Product() {}
 	
@@ -39,13 +39,10 @@ public class Product {
 		this.count = count;
 	}
 
-
-
 	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
 			String zone, String productStatus, String uploadDate, String uploadType, double ondo, String timeDiff,
 			int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales, int count,
 			int deliveryCharge, int pieces, String sellStatus) {
-
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -273,6 +270,14 @@ public class Product {
 		this.sellStatus = sellStatus;
 	}
 
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo
@@ -281,10 +286,7 @@ public class Product {
 				+ ", uploadType=" + uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate="
 				+ salesRate + ", tstockgoods=" + tstockgoods + ", reportedProduct=" + reportedProduct + ", tradeType="
 				+ tradeType + ", monthSales=" + monthSales + ", deliveryCharge=" + deliveryCharge + ", pieces=" + pieces
-				+ ", sellStatus=" + sellStatus + "]";
+				+ ", sellStatus=" + sellStatus + ", titleImg=" + titleImg + "]";
 	}
-
-
-
 
 }

@@ -212,6 +212,35 @@
     .active-page {
         color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
     }
+    
+    .titleImg {
+    	width: 140px;
+    	height: 140px;
+    }
+    
+    #th-date {
+     	width: 100px;
+    }
+    
+    #th-price {
+    	width: 60px;
+    }
+    
+    #th-po {
+    	width: 200px;
+    }
+    
+    #th-status {
+    	width: 90px;
+    }
+    
+    #th-func {
+    	width: 70px;
+    }
+    
+    .th-oth {
+    	width: 60px;
+    }
 
 </style>
 </head>
@@ -286,13 +315,13 @@
                     <table>
                         <thead>
                             <tr id="thead-tr"> 
-                                <th>등록일자</th>
-                                <th>상품</th>
-                                <th>가격</th>
-                                <th>찜</th>
-                                <th>쿨거래</th>
-                                <th>판매상태</th>
-                                <th>기능</th>
+                                <th id="th-date">등록일자</th>
+                                <th id="th-po">상품</th>
+                                <th id="th-price">가격</th>
+                                <th class="th-oth">찜</th>
+                                <th class="th-oth">쿨거래</th>
+                                <th id="th-status">판매상태</th>
+                                <th id="th-func">기능</th>
                             </tr>
                         </thead>
                         
@@ -302,7 +331,15 @@
 	                                <td><%= p.getUploadDate() %></td>
 	                                <td>
 	                                    <div>
-	                                        <a href="#">여기는 상품 섬네일</a><a href="#"><%= p.getProductName() %></a>
+	                                    	<div>
+	                                    		<% if(p.getTitleImg == null) { %>
+	                                    			<a href="#"><img class="titleImg" src="resources/images/user-icon.png"></a>
+	                                    		<% } else { %>
+	                                    			<a href="#"><img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>"></a>
+	                                    	</div>
+	                                    	<div>
+	                                    		<a href="#"><%= p.getProductName() %></a>
+	                                    	</div>
 	                                    </div>
 	                                </td>
 	                                <td><%= p.getPrice() %></td>
