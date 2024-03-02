@@ -90,15 +90,17 @@
                 </div>
             </div>
         </div>
-        <button id="prev"> &lt; </button>
+        
         <div id="related_products-ds">
-            <div>
-                <h5>관련상품</h5>
-            </div>
-            <div id="related_product_pic_title-ds">
-            </div>
+	        <button class="prev-ds"> &lt; </button>
+	            <div class="flex-ds" style="justify-content: space-between;">
+	                <h5>관련상품</h5> <span id="related_cpage" style="color: gray;"></span>
+	            </div>
+	            <div id="related_product_pic_title-ds">
+	            	<!-- Ajax를 통한 관련 서치 리스트 -->
+	            </div>
+	        <button class="next-ds"> &gt; </button>
         </div> 
-        <button id="next"> &gt; </button>
             
             <script>
             $(document).ready(function(){
@@ -125,14 +127,19 @@
 				    slicedData.forEach(function(item){
 				        let img = imglist.find(i => i.refPno == item.productNo);
 				        let imagePath = img ? img.imgPath + img.changeName : "resources/images/noImage.png";
-				        let itemHTML = '<div class="item">' +
-				                        '<a href="detail.po?pno=' + item.productNo + '">' +
-				                        '<img src="' + imagePath + '" alt="' + item.productName + '">' +
-				                        '<p>' + item.productName + '</p>' +
-				                        '</a>' +
-				                        '</div>';
+				        let itemHTML = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' 
+				        			 + '<a href="detail.po?pno=' + item.productNo + '">'
+				        			 + '<img src="' + imagePath + '" alt="' + item.productName + '">' 
+				        			 + '<p>' + item.productName + '</p>' 
+				        			 + '</a>' 
+				        			 + '</div>';
 				        slider.append(itemHTML);
 				    });
+				    maxPage = Math.ceil(data.plist.length / itemsPerPage) - 1;
+				    if(maxPage == -1){
+						currentPage = -1;				   
+				    }
+				    $("#related_cpage").text((currentPage + 1) + "/" + (maxPage + 1));
 				}
 
                 // 서버로부터 데이터를 불러오는 함수
@@ -144,7 +151,6 @@
                             dataType: "json", // 명시적으로 json 타입임을 선언
                             success: function(response) {
                             	allData = response;
-								console.log(allData);
                                 renderSlider(allData); // 슬라이더 렌더링 함수 호출
                             },
                             error: function() {
@@ -157,24 +163,25 @@
                 }
 
              	// 이전 페이지 보기
-                $("#prev").click(function() {
+                $(".prev-ds").click(function() {
                     if (currentPage > 0) {
                         currentPage = (currentPage - 1 + allData.plist.length) % allData.plist.length; // 이전 페이지로 이동
-                    }else{
-                    	currentPage = 3;
+                    }else if(currentPage == 0){
+                    	maxPage = Math.ceil(allData.plist.length / itemsPerPage) - 1; 
+                    	currentPage = maxPage;
                     }   
-                        renderSlider(allData); // 슬라이더 다시 렌더링
-                
+                    renderSlider(allData); // 슬라이더 다시 렌더링
                 });
 				
                 // 다음 페이지 보기
-                $("#next").click(function() {
+                $(".next-ds").click(function() {
                     maxPage = Math.ceil(allData.plist.length / itemsPerPage) - 1; // 최대 페이지 인덱스 계산
                     if (currentPage < maxPage) {
                         currentPage += 1; // 다음 페이지로 이동
                     }else if(currentPage = maxPage){
                     	currentPage = 0
                     }
+                    	
                         renderSlider(allData); // 슬라이더 다시 렌더링
                 });
                 
@@ -222,42 +229,103 @@
             </div>
         </div>
         <div id="random_products-ds">
-            <div>
-                <h5>추천상품</h5>
-            </div>
-            <div id="random_product_pic_title-ds">
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-                <div>
-                    <a href="#" style="text-align: center;">
-                        <img src="https://blog.kakaocdn.net/dn/qkaQd/btqUEzBgXQV/6ko3nLW5aglhGt1UCiHtnk/img.jpg" alt="몰라">
-                        <p>치킨팝니다</p>
-                    </a>
-                </div>
-            </div>
+	        <button class="prev2-ds"> &lt; </button>
+	            <div class="flex-ds" style="justify-content: space-between;">
+	                <h5>추천상품</h5> <span id="recommend_cpage" style="color: gray;">123</span>
+	            </div>
+	            <div id="random_product_pic_title-ds">
+	          		<!-- 추천상품 들어오는 장소 -->
+	            </div>
+            <button class="next2-ds"> &gt; </button>
         </div>
+        
+        <script>
+            $(document).ready(function(){
+                let currentPno2 = <%= p.getProductNo() %>;
+                let currentPage2 = 0; // 현재 페이지 인덱스
+                const itemsPerPage2 = 5; // 페이지 당 아이템 수
+                let maxPage2;
+                let allData2 = []; // 서버로부터 받아온 모든 데이터를 저장할 배열
+                let imgData2 = [];
+                // 슬라이더에 데이터를 렌더링하는 함수
+                function renderSlider2(data) {
+				    const slider2 = $("#random_product_pic_title-ds");
+				    slider2.empty(); // 기존 내용을 비움
+				
+				    // 현재 페이지에 해당하는 아이템들만 표시
+				    const startIndex2 = currentPage2 * itemsPerPage2;
+				    const endIndex2 = startIndex2 + itemsPerPage2;
+				 // data 객체에서 plist와 imglist를 추출합니다.
+				    let plist2 = data.plist;
+				    let imglist2 = data.imglist;
+
+				    // 현재 페이지에 해당하는 아이템들만 표시
+				    let slicedData2 = plist2.slice(currentPage2 * itemsPerPage2, (currentPage2 + 1) * itemsPerPage2);
+				    slicedData2.forEach(function(item){
+				        let img2 = imglist2.find(i => i.refPno == item.productNo);
+				        let imagePath2 = img2 ? img2.imgPath + img2.changeName : "resources/images/noImage.png";
+				        let itemHTML2 = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
+				                        '<a href="detail.po?pno=' + item.productNo + '">' +
+				                        '<img src="' + imagePath2 + '" alt="' + item.productName + '">' +
+				                        '<p>' + item.productName + '</p>' +
+				                        '</a>' +
+				                        '</div>';
+				        slider2.append(itemHTML2);
+				    });
+				    maxPage2 = Math.ceil(data.plist.length / itemsPerPage2) - 1;
+				    if(maxPage2 == -1){
+						currentPage2 = -1;				   
+				    }
+				    $("#recommend_cpage").text((currentPage2 + 1) + "/" + (maxPage2 + 1));
+				}
+
+                // 서버로부터 데이터를 불러오는 함수
+                function fetchSliderData2() {
+                    if(allData2.length == 0) { // 데이터가 아직 로드되지 않았다면 서버에서 불러온다
+                        $.ajax({
+                            url: "ajax.randomize",
+                            data:{pno : currentPno2},
+                            dataType: "json", // 명시적으로 json 타입임을 선언
+                            success: function(response) {
+                            	allData2 = response;
+                            	console.log(allData2);
+                                renderSlider2(allData2); // 슬라이더 렌더링 함수 호출
+                            },
+                            error: function() {
+                                console.error("데이터를 불러오는 데 실패했습니다.");
+                            }
+                        });
+                    } else {
+                        renderSlider2(allData2); // 이미 데이터가 있으므로 바로 렌더링
+                    }
+                }
+
+             	// 이전 페이지 보기
+                $(".prev2-ds").click(function() {
+                    if (currentPage2 > 0) {
+                        currentPage2 = (currentPage2 - 1 + allData2.plist.length) % allData2.plist.length; // 이전 페이지로 이동
+                    }else if(currentPage2 == 0){
+                    	maxPage2 = Math.ceil(allData2.plist.length / itemsPerPage2) - 1; 
+                    	currentPage2 = maxPage2;
+                    }   
+                    renderSlider2(allData2); // 슬라이더 다시 렌더링
+                });
+				
+                // 다음 페이지 보기
+                $(".next2-ds").click(function() {
+                    maxPage2 = Math.ceil(allData2.plist.length / itemsPerPage2) - 1; // 최대 페이지 인덱스 계산
+                    if (currentPage2 < maxPage2) {
+                        currentPage2 += 1; // 다음 페이지로 이동
+                    }else if(currentPage2 == maxPage2){
+                    	currentPage2 = 0
+                    }
+                        renderSlider2(allData2); // 슬라이더 다시 렌더링
+                });
+                
+                fetchSliderData2(); // 최초 데이터 로드 및 슬라이더 초기화
+            });
+			</script>
+        
     </div>
     <%@ include file="../common/footer.jsp" %>
 </body>

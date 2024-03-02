@@ -14,6 +14,7 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -126,21 +127,15 @@ public class ProductDao {
 		return productCount;
 	}
 
-	public ArrayList<Product> selectRandomProduct(Connection conn, PageInfo pi) {
+	public ArrayList<Product> selectRandomProduct(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> list = new ArrayList<Product>();
 
-		String sql = prop.getProperty("selectProduct");
+		String sql = prop.getProperty("selectRandomProduct");
 
 		try {
 			pstmt = conn.prepareStatement(sql);
-
-			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
-			int endRow = startRow + pi.getBoardLimit() - 1;
-
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
 
 			rset = pstmt.executeQuery();
 
@@ -510,30 +505,34 @@ public class ProductDao {
 		return list;
 	}
 	
-	public ArrayList<Product> searchKeywords(Connection conn, ArrayList<String> extractedKeywords, String cpCategory){
+	public ArrayList<Product> searchKeywords(Connection conn, ArrayList<String> extractedKeywords, String cpCategory, int pno){
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Product> plist = new ArrayList<Product>();
 		
 		StringBuilder sql = new StringBuilder("SELECT * FROM (");
-		sql.append("SELECT PRODUCT_NO, PRODUCT_NAME, ROWNUM RNUM FROM PRODUCT JOIN CATEGORY USING (CATEGORY_NO) WHERE ");
+		sql.append("SELECT PRODUCT_NO, PRODUCT_NAME, ROWNUM RNUM FROM PRODUCT JOIN CATEGORY USING (CATEGORY_NO) WHERE (");
 		for(int i = 0; i < extractedKeywords.size(); i++) {
 		    sql.append("PRODUCT_NAME LIKE '%'|| ? || '%' OR PRODUCT_DESC LIKE '%'|| ? || '%'");
 		    if(i < extractedKeywords.size() - 1) {
 		        sql.append(" OR ");
 		    }
 		}
-		sql.append(" AND CATEGORY_NAME = '").append(cpCategory).append("' ");
+		sql.append(") AND CATEGORY_NAME = '").append(cpCategory).append("' ");
+		sql.append("AND PRODUCT_NO != ? ");
 		sql.append("ORDER BY DBMS_RANDOM.VALUE");
 		sql.append(") WHERE RNUM <= 20");
 		
 		try {
 			pstmt = conn.prepareStatement(sql.toString());
 			
+			int last = extractedKeywords.size() * 2 + 1;
 			for(int i = 0, j = 1; i < extractedKeywords.size(); i++) {
 				pstmt.setString(j++, extractedKeywords.get(i));
                 pstmt.setString(j++, extractedKeywords.get(i));
 			}
+			pstmt.setInt(last, pno);
+
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -705,19 +704,42 @@ public class ProductDao {
 				pstmt.setString(1, s );
 				result = pstmt.executeUpdate();
 			}
-			
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}
 		return result;
-		
-		
-		
 	}
 	
+	public ArrayList<Product> selectRecommendProduct(Connection conn, int pno){
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Product> plist = new ArrayList<Product>();
+		String sql = prop.getProperty("selectRecommendProduct");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				
+				plist.add(p);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return plist;
+	}
 }

@@ -16,16 +16,16 @@ import com.cooltrade.product.model.vo.Product;
 import com.google.gson.Gson;
 
 /**
- * Servlet implementation class AjaxRelatedListController
+ * Servlet implementation class AjaxMainPageLoadController
  */
-@WebServlet("/ajax.related")
-public class AjaxRelatedListController extends HttpServlet {
+@WebServlet("/ajax.main")
+public class AjaxMainPageLoadController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxRelatedListController() {
+    public AjaxMainPageLoadController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,28 +35,18 @@ public class AjaxRelatedListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int pno = Integer.parseInt(request.getParameter("pno"));
+		ArrayList<Product> plist = new ProductService().selectRandomProduct();
 		
-		Product p = new ProductService().selectProductDetail(pno);
-		String cpCategory = p.getCategoryNo();
-		String productName = p.getProductName();
-		String[] keywords = productName.split(" ");
-		ArrayList<String> extractedKeywords = new ArrayList<String>();
-		for(String s : keywords) {
-			if(s.length() > 2) {
-				extractedKeywords.add(s);
-			}
-		}
-		ArrayList<Product> plist = new ProductService().searchKeywords(extractedKeywords, cpCategory, pno);
-		
-		ArrayList<Images> imglist = new ProductService().getTitleImg(plist);
+		ArrayList<Images> imgList = new ProductService().getTitleImg(plist);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("plist", plist);
-		map.put("imglist", imglist);
+		map.put("imgList", imgList);
+		
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(map, response.getWriter());
-	}
+		new Gson().toJson(map,response.getWriter());
+		
+		}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

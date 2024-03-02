@@ -31,7 +31,7 @@
 		 WHERE UPLOAD_TYPE='Y'
 	</entry>
 	
-	<entry key="selectProduct">
+	<entry key="selectRandomProduct">
 		SELECT 
 			   * 
 		  FROM 
@@ -60,7 +60,7 @@
 		       	          BY DBMS_RANDOM.VALUE 
 		       	           ) A 
 		       	     ) 
-		       	 WHERE RNUM BETWEEN ? AND ?
+		       	 WHERE RNUM BETWEEN 1 AND 40
 	</entry>
 	
 	<entry key="selectCategoryList">
@@ -345,5 +345,23 @@
 			, SYSDATE
 			, (SELECT NVL(MAX(a.user_popw_order) + 1, 1) FROM t_user_popular_word a)
 			)
+	</entry>
+	
+	<entry key="selectRecommendProduct">
+		SELECT * 
+		  FROM
+		       ( 
+		       SELECT
+		              PRODUCT_NO
+		            , PRODUCT_NAME
+		            , ROWNUM RNUM 
+		         FROM PRODUCT
+		        WHERE PRODUCT_NO != ? 
+		        ORDER
+		           BY 
+		              DBMS_RANDOM.VALUE
+		       ) 
+		 WHERE 
+		       RNUM &lt;= 20
 	</entry>
 </properties>

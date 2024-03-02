@@ -16,16 +16,16 @@ import com.cooltrade.product.model.vo.Product;
 import com.google.gson.Gson;
 
 /**
- * Servlet implementation class AjaxRelatedListController
+ * Servlet implementation class AjaxRandomizedListController
  */
-@WebServlet("/ajax.related")
-public class AjaxRelatedListController extends HttpServlet {
+@WebServlet("/ajax.randomize")
+public class AjaxRandomizedListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxRelatedListController() {
+    public AjaxRandomizedListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,28 +34,21 @@ public class AjaxRelatedListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		Product p = new ProductService().selectProductDetail(pno);
-		String cpCategory = p.getCategoryNo();
-		String productName = p.getProductName();
-		String[] keywords = productName.split(" ");
-		ArrayList<String> extractedKeywords = new ArrayList<String>();
-		for(String s : keywords) {
-			if(s.length() > 2) {
-				extractedKeywords.add(s);
-			}
-		}
-		ArrayList<Product> plist = new ProductService().searchKeywords(extractedKeywords, cpCategory, pno);
+		ArrayList<Product> plist = new ProductService().selectRecommendProduct(pno);
 		
 		ArrayList<Images> imglist = new ProductService().getTitleImg(plist);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("plist", plist);
+		
+		map.put("plist",plist);
 		map.put("imglist", imglist);
+		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(map, response.getWriter());
+		
 	}
 
 	/**

@@ -6,9 +6,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
-import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -50,10 +50,10 @@ public class ProductService {
 		return result;
 	}
 
-	public ArrayList<Product> selectRandomProduct(PageInfo pi) {
+	public ArrayList<Product> selectRandomProduct() {
 		Connection conn = getConnection();
 
-		ArrayList<Product> list = new ProductDao().selectRandomProduct(conn, pi);
+		ArrayList<Product> list = new ProductDao().selectRandomProduct(conn);
 
 		close(conn);
 
@@ -160,9 +160,10 @@ public class ProductService {
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
-			
-			
+			rollback(conn);			
 		}
+		close(conn);
+		return result1 * result2;
 	}
 	public int insertPopularWord(String search) {
 		Connection conn = getConnection();
@@ -224,7 +225,8 @@ public class ProductService {
 		}
 		
 		close(conn);
-		return result1 * result2;
+		
+		return result;
 		
 	}
 	
@@ -238,10 +240,10 @@ public class ProductService {
 		return imglist;
 	}
 	
-	public ArrayList<Product> searchKeywords(ArrayList<String> extractedKeywords, String cpCategory){
+	public ArrayList<Product> searchKeywords(ArrayList<String> extractedKeywords, String cpCategory, int pno){
 		Connection conn = getConnection();
 		
-		ArrayList<Product> plist = new ProductDao().searchKeywords(conn, extractedKeywords, cpCategory);
+		ArrayList<Product> plist = new ProductDao().searchKeywords(conn, extractedKeywords, cpCategory, pno);
 		
 		close(conn);
 		
@@ -256,6 +258,16 @@ public class ProductService {
 		close(conn);
 		return imglist;
 		
+	}
+	
+	public ArrayList<Product> selectRecommendProduct(int pno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> plist = new ProductDao().selectRecommendProduct(conn, pno);
+		
+		close(conn);
+		
+		return plist;
 	}
 	
 }
