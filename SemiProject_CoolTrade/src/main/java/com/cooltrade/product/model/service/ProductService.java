@@ -12,6 +12,7 @@ import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Search;
 
 public class ProductService {
 	public Product countSalesRate() {
@@ -154,15 +155,75 @@ public class ProductService {
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
+	public int insertPopularWord(String search) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularWord(conn, search);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Search> selectPopularWord() {
+		Connection conn = getConnection();
+		
+		ArrayList<Search> list = new ProductDao().selectPopularWord(conn);
+		
+		close(conn);
+		return list;
+	}
+	
+	public int countPopularWord() {
+		Connection conn = getConnection();
+		
+		int endValue = new ProductDao().countPopularWord(conn);
+		
+		close(conn);
+		return endValue;
+		
+	}
+	
+	public int deletePopularSearch() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().deletePopularSearch(conn);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int insertPopularSearch(String[] s) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularSearch(conn, s);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
 			rollback(conn);
 		}
 		
 		close(conn);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> jm
 		
 		return result;
 	}
 	
+<<<<<<< HEAD
 	public ArrayList<Images> selectImages(int pno) {
 		Connection conn = getConnection();
 		
@@ -198,4 +259,6 @@ public class ProductService {
 	}
 	
 >>>>>>> cr
+=======
+>>>>>>> jm
 }

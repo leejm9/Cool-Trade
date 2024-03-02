@@ -15,6 +15,10 @@ DROP TABLE REPORT CASCADE CONSTRAINTS;
 DROP TABLE REPORT_TYPE CASCADE CONSTRAINTS;
 DROP TABLE REVIEW CASCADE CONSTRAINTS;
 DROP TABLE TRADE CASCADE CONSTRAINTS;
+DROP TABLE t_popular_word CASCADE CONSTRAINTS;
+DROP TABLE t_user_popular_word CASCADE CONSTRAINTS;
+
+
 
 -- 시퀀스
 DROP SEQUENCE SEQ_ALARM;
@@ -3413,6 +3417,17 @@ INSERT
   , TO_DATE('2024-03-20', 'RRRR-MM-DD')
   , 'Y'
   );
+
+CREATE TABLE t_popular_word(
+    popw_word VARCHAR2(200),
+    popw_date DATE
+);
+
+CREATE TABLE t_user_popular_word(
+    user_popw_word VARCHAR2(200),
+    user_popw_date DATE,
+    user_popw_order NUMBER 
+);
 
 
 

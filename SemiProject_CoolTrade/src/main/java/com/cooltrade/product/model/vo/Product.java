@@ -20,13 +20,10 @@ public class Product {
 	private int reportedProduct;
 	private int tradeType;
 	private String monthSales;
-<<<<<<< HEAD
-=======
 	private int count;
 	private int deliveryCharge;
 	private int pieces;
 	private String sellStatus;
->>>>>>> cr
 	
 	public Product() {}
 	
@@ -45,6 +42,7 @@ public class Product {
 <<<<<<< HEAD
 
 
+<<<<<<< HEAD
 
 	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
 			String zone, int count, String productStatus, String uploadDate, String uploadType, double ondo,
@@ -82,6 +80,8 @@ public class Product {
 		this.sellStatus = sellStatus;
 	}
 
+=======
+>>>>>>> jm
 	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
 			String zone, String productStatus, String uploadDate, String uploadType, int salesRate, int tstockgoods,
 			int reportedProduct) {

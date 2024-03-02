@@ -73,7 +73,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 오늘 누적 판매량</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= salesRate.getSalesRate() %>원</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="numberInput"><%= salesRate.getSalesRate() %>원</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -82,6 +82,17 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <script>
+                           document.getElementById('numberInput').addEventListener('change', function() {
+                               // 입력된 값을 가져옴
+                               var value = this.textContent.replace(/,/g, ''); // 기존에 입력된 쉼표 제거
+                               // 천 단위마다 쉼표 추가
+                               value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                               // 입력된 값을 다시 입력 상자에 설정
+                               this.textContent = value;
+                           });
+                        </script>
 
                         <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
@@ -153,6 +164,121 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+							
+							<script>
+							
+								// Area Chart Example
+									$.ajax({
+									    url: 'salesgraph.me',
+									    method: 'GET',
+									    success: function(data) {
+									        console.log(data);
+									        
+									        var value = [];
+									        for(var i = 0; i < data.length; i++){
+									            value.push(data[i].price);
+									        }
+									        
+									        console.log(value);
+									        
+									        var ctx = document.getElementById("myAreaChart");
+									        var myLineChart = new Chart(ctx, {
+									            type: 'line',
+									            data: {
+									                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+									                datasets: [{
+									                    label: "Earnings",
+									                    lineTension: 0.3,
+									                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+									                    borderColor: "rgba(78, 115, 223, 1)",
+									                    pointRadius: 3,
+									                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+									                    pointBorderColor: "rgba(78, 115, 223, 1)",
+									                    pointHoverRadius: 3,
+									                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+									                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+									                    pointHitRadius: 10,
+									                    pointBorderWidth: 2,
+									                    data: value,
+									                }],
+									            },
+									            options: {
+									                maintainAspectRatio: false,
+									                layout: {
+									                    padding: {
+									                        left: 10,
+									                        right: 25,
+									                        top: 25,
+									                        bottom: 0
+									                    }
+									                },
+									                scales: {
+									                    xAxes: [{
+									                        time: {
+									                            unit: 'date'
+									                        },
+									                        gridLines: {
+									                            display: false,
+									                            drawBorder: false
+									                        },
+									                        ticks: {
+									                            maxTicksLimit: 7
+									                        }
+									                    }],
+									                    yAxes: [{
+									                        ticks: {
+									                            maxTicksLimit: 5,
+									                            padding: 10,
+									                            callback: function(value, index, values) {
+									                                return '$' + number_format(value);
+									                            }
+									                        },
+									                        gridLines: {
+									                            color: "rgb(234, 236, 244)",
+									                            zeroLineColor: "rgb(234, 236, 244)",
+									                            drawBorder: false,
+									                            borderDash: [2],
+									                            zeroLineBorderDash: [2]
+									                        }
+									                    }],
+									                },
+									                legend: {
+									                    display: false
+									                },
+									                tooltips: {
+									                    backgroundColor: "rgb(255,255,255)",
+									                    bodyFontColor: "#858796",
+									                    titleMarginBottom: 10,
+									                    titleFontColor: '#6e707e',
+									                    titleFontSize: 14,
+									                    borderColor: '#dddfeb',
+									                    borderWidth: 1,
+									                    xPadding: 15,
+									                    yPadding: 15,
+									                    displayColors: false,
+									                    intersect: false,
+									                    mode: 'index',
+									                    caretPadding: 10,
+									                    callbacks: {
+									                        label: function(tooltipItem, chart) {
+									                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+									                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+									                        }
+									                    }
+									                }
+									            }
+									        });
+									    },
+									    error: function(xhr, status, error) {
+									        console.error(error);
+									    }
+									});
+								
+							</script>
+                        
+                        
 
                         <!-- Pie Chart -->
                         <div class="col-xl-4 col-lg-5">

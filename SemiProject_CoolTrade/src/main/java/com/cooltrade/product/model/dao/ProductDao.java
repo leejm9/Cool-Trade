@@ -17,6 +17,7 @@ import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Search;
 
 public class ProductDao {
 	Properties prop = new Properties();
@@ -412,6 +413,12 @@ public class ProductDao {
 		PreparedStatement pstmt = null; 
 		int result = 0;
 		String sql = prop.getProperty("increaseCount");
+	public int insertPopularWord(Connection conn, String search) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertPopularWord");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -433,22 +440,34 @@ public class ProductDao {
 		ArrayList<Images> imglist = new ArrayList<Images>();
 		String sql = prop.getProperty("selectImages");
 		
+	}
+	
+	public ArrayList<Search> selectPopularWord(Connection conn) {
+		ArrayList<Search> list = new ArrayList<Search>();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectPopularWord");
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, pno);
 			
+			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Images img = new Images();
-				img.setImgNo(rset.getInt("img_no"));
-				img.setOriginName(rset.getString("origin_name"));
-				img.setChangeName(rset.getString("change_name"));
-				img.setImgPath(rset.getString("img_path"));
 				
-				imglist.add(img);
+				list.add(new Search(rset.getString("popw_word"),
+									rset.getInt("wordcnt")
+									));				
+				
 			}
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -490,6 +509,26 @@ public class ProductDao {
 				p.setProductName(rset.getString("product_name"));
 				plist.add(p);
 			}
+		return list;
+	}
+	
+	public int countPopularWord(Connection conn) {
+		int endValue = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("countPopularWord");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				endValue = rset.getInt("count");
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -592,5 +631,59 @@ public class ProductDao {
 	}
 	
 
+	
+			close(pstmt); 
+		}
+		return endValue;
+		
+	}
+	
+	public int deletePopularSearch(Connection conn) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deletePopularSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public int insertPopularSearch(Connection conn, String[] list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertPopularSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String s : list) {
+				pstmt.setString(1, s );
+				result = pstmt.executeUpdate();
+			}
+			
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
+		
+	}
 	
 }
