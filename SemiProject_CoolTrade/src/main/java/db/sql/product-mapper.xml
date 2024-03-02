@@ -346,4 +346,24 @@
 			, (SELECT NVL(MAX(a.user_popw_order) + 1, 1) FROM t_user_popular_word a)
 			)
 	</entry>
+	
+	<entry key="countUserPopwList">
+			    SELECT COUNT(user_popw_word) count
+			    FROM t_user_popular_word
+	</entry>
+	
+	<entry key="selectUserPopwList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM(
+		            SELECT USER_POPW_ORDER, USER_POPW_WORD
+		              FROM t_user_popular_word 
+		             ORDER
+		                BY user_popw_order
+		                ) A
+		    )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 </properties>

@@ -161,9 +161,10 @@ public class ProductService {
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
-			
+			rollback(conn);
 			
 		}
+		return result1 *result2;
 	}
 	public int insertPopularWord(String search) {
 		Connection conn = getConnection();
@@ -259,4 +260,24 @@ public class ProductService {
 		return imglist;
 	}
 		
+	public int countUserPopwList() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().countUserPopwList(conn);
+		
+		close(conn);
+		
+		return result;
+			
+	}
+	
+	public ArrayList<Search> selectUserPopwList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Search> list = new ProductDao().selectUserPopwList(conn,pi);
+		
+		close(conn);
+		return list;
+	}
+	
 }

@@ -1,3 +1,4 @@
+<%@page import="com.cooltrade.product.model.vo.Search"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
 <%@page import="com.cooltrade.product.model.vo.Product"%>
 <%@page import="com.cooltrade.product.model.vo.Category"%>
@@ -27,6 +28,26 @@
 <script src="resources/js/cooltrade_ds.js"></script>
 <link rel="stylesheet" href="resources/css/cooltrade_ds.css">
 <link rel="stylesheet" href="resources/css/cooltrade_cr.css">
+
+<style>
+ 		#div1{
+            display: flex;
+            margin-top: 5px;
+            white-space: nowrap;
+            
+        }
+        #div1 button{
+        	width:15px;
+        	height:20px;
+        	border: 0px;
+        }
+        #div1 tr>*{
+        	line-height:25px;
+        	font-size:10px;
+        }
+        
+</style>
+
 </head>
 <body>
 	<%if (alertMsg!=null){ %>
@@ -84,6 +105,68 @@
                             </button>
                         </form>
                         </div>
+                        <div id="div1">
+		                <div>
+		                <button id="popbtn1" onclick="popbtn(1);">&lt;</button>
+		                <button id="popbtn2" onclick="popbtn(2)">&gt;</button>
+		                </div>
+			                <div>
+			                    <table>
+			                        <tr>
+			                            <td>&nbsp;1.고기&nbsp;</td>
+			                            <td>2.햄버거&nbsp;</td>
+			                            <td>3.피자&nbsp;</td>
+			                            <td>4.핸드폰&nbsp;</td>
+			                            <td>5.전자레인지</td>
+			                        </tr>
+			                    </table>
+			                </div>
+           				</div>
+			            <script>
+			            $(function(){
+			                $.ajax({
+			                    url: "popw.page",
+			                    data:{cbtn:1},
+			                    success: function(result) {
+	           						$("#div1 td").remove();
+			                    	let value = "";
+		           					for(let i =0; i<result.length; i++){
+		           						if((result[i].count)%5 == 1) {
+		           		                    value += "<td>&nbsp;" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                } else {
+		           		                    value += "<td>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                }
+		           						 		
+		           					}
+		           					$("#div1 tr").html(value);
+		           					
+			                    },
+			                    error: function() {
+			                        console.log("ajax 통신 실패");
+			                    }
+			                });
+			            });
+			            
+		               	function popbtn(cbtn){
+		               		$.ajax({
+		           				url:"popw.page",
+		           				data:{cbtn:cbtn},
+		           				success:function(result){ 
+	           						let value = "";
+		           					for(let i =0; i<result.length; i++){
+		           						if((result[i].count)%5 == 1) {
+		           		                    value += "<td>&nbsp;" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                } else {
+		           		                    value += "<td>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                }
+		           					}
+		           					$("#div1 tr").html(value);
+		           				}, error:function(){
+		           					console.log("ajax 통신 실패");
+		           				}
+		           			});
+		               	}
+		               </script>
                     </div>
                     <div id="chatSell-ds" class="flex-ds">
                         <div id="chatContainer-ds">
