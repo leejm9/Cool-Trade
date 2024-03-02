@@ -156,7 +156,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("user_no"),
+				m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -562,6 +562,7 @@ public class MemberDao {
 				p.setPrice(rset.getInt("price"));
 				p.setTradeType(rset.getInt("trade_type"));
 				p.setSellStatus(rset.getString("sell_status"));
+				p.setTitleImg(rset.getString("titleimg"));
 				p.setUploadDate(rset.getString("upload_date"));
 				
 				list.add(p);
@@ -649,7 +650,6 @@ public class MemberDao {
 		return list;
 		
 	}
-	
 	
 }
 

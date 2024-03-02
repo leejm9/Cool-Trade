@@ -560,7 +560,7 @@
 
 	<%@ include file = "../common/header.jsp" %>
 	
-	<% int userNo = loginUser.getUserNo();%>
+	<% int userNo = loginUser.getUserNo(); %>
 	
 
     <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">

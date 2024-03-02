@@ -15,7 +15,6 @@ import com.cooltrade.common.Images;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
-import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 public class ProductDao {
@@ -93,7 +92,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 
 			if (rset.next()) {
-				p.setreportedProduct(rset.getInt("reportedproduct"));
+				p.setReportedProduct(rset.getInt("reportdproduct"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

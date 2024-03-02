@@ -10,7 +10,6 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
-import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 public class ProductService {
@@ -145,6 +144,13 @@ public class ProductService {
 		if(result>0) {
 			commit(conn);
 		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result;
+		
+	}	
 	public int insertProductSell(Product p, ArrayList<Images> list) {
 		Connection conn = getConnection();
 		
@@ -158,9 +164,8 @@ public class ProductService {
 		}
 		
 		close(conn);
-<<<<<<< HEAD
+		return result1 * result2;
 		
-		return result;
 	}
 	
 	public ArrayList<Images> selectImages(int pno) {
@@ -189,13 +194,8 @@ public class ProductService {
 		ArrayList<Images> imglist = new ProductDao().getTitleImg(conn, plist);
 		
 		close(conn);
-		
 		return imglist;
-	}
-=======
-		return result1 * result2;
 		
 	}
 	
->>>>>>> cr
 }

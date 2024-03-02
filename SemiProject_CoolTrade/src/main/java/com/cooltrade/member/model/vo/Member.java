@@ -28,7 +28,6 @@ public class Member {
 		super();
 		this.count = count;
 	}
-	
 
 	public Member(int count, String monthEnroll) {
 		super();
@@ -89,9 +88,6 @@ public class Member {
 		this.caution = caution;
 		this.count = count;
 	}
-	
-	
-	
 
 	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
 			int caution) {
@@ -261,9 +257,5 @@ public class Member {
 				+ ", ondo=" + ondo + ", userLevel=" + userLevel + ", userStatus=" + userStatus + ", caution=" + caution
 				+ ", count=" + count + "]";
 	}
-	
-	
-	
-	
 	
 }

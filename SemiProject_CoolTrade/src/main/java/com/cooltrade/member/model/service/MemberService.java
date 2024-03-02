@@ -183,7 +183,7 @@ public class MemberService {
 		ArrayList<Member> list = new MemberDao().selectEnrollMonth(conn);
 		close(conn);
 		return list;
-	}
+	}	
 	
 	public int sellListCountPo(int userNo) {
 		Connection conn = getConnection();

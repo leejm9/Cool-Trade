@@ -20,13 +20,10 @@ public class Product {
 	private int reportedProduct;
 	private int tradeType;
 	private String monthSales;
-<<<<<<< HEAD
-=======
-	private int count;
 	private int deliveryCharge;
 	private int pieces;
 	private String sellStatus;
->>>>>>> cr
+	private String titleImg;
 	
 	public Product() {}
 	
@@ -42,19 +39,10 @@ public class Product {
 		this.count = count;
 	}
 
-<<<<<<< HEAD
-
-
-
-	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
-			String zone, int count, String productStatus, String uploadDate, String uploadType, double ondo,
-			String timeDiff, int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales) {
-=======
 	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
 			String zone, String productStatus, String uploadDate, String uploadType, double ondo, String timeDiff,
 			int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales, int count,
 			int deliveryCharge, int pieces, String sellStatus) {
->>>>>>> cr
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -74,8 +62,6 @@ public class Product {
 		this.reportedProduct = reportedProduct;
 		this.tradeType = tradeType;
 		this.monthSales = monthSales;
-<<<<<<< HEAD
-=======
 		this.count = count;
 		this.deliveryCharge = deliveryCharge;
 		this.pieces = pieces;
@@ -114,111 +100,80 @@ public class Product {
 		this.tradeType = tradeType;
 		this.deliveryCharge = deliveryCharge;
 		this.pieces = pieces;
->>>>>>> cr
 	}
-
-
-
 
 	public int getProductNo() {
 		return productNo;
 	}
 
-
-
-
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
 	}
-
-
-
 
 	public String getSellerNo() {
 		return sellerNo;
 	}
 
-
-
-
 	public void setSellerNo(String sellerNo) {
 		this.sellerNo = sellerNo;
 	}
-
-
-
 
 	public String getCategoryNo() {
 		return categoryNo;
 	}
 
-
-
-
 	public void setCategoryNo(String categoryNo) {
 		this.categoryNo = categoryNo;
 	}
-
-
-
 
 	public String getProductName() {
 		return productName;
 	}
 
-
-
-
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-
-
-
 
 	public int getPrice() {
 		return price;
 	}
 
-
-
-
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
-
-
 
 	public String getProductDesc() {
 		return productDesc;
 	}
 
-
-
-
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
 	}
-
-
-
 
 	public String getZone() {
 		return zone;
 	}
 
-
-
-
 	public void setZone(String zone) {
 		this.zone = zone;
 	}
 
+	public int getCount() {
+		return count;
+	}
 
+	public void setCount(int count) {
+		this.count = count;
+	}
 
-<<<<<<< HEAD
-=======
+	public String getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
+	}
+
 	public String getUploadDate() {
 		return uploadDate;
 	}
@@ -239,8 +194,8 @@ public class Product {
 		return ondo;
 	}
 
-	public void setOndo(double d) {
-		this.ondo = d;
+	public void setOndo(double ondo) {
+		this.ondo = ondo;
 	}
 
 	public String getTimeDiff() {
@@ -267,12 +222,12 @@ public class Product {
 		this.tstockgoods = tstockgoods;
 	}
 
-	public int getreportedProduct() {
+	public int getReportedProduct() {
 		return reportedProduct;
 	}
 
-	public void setreportedProduct(int reportedProduct) {
-		reportedProduct = reportedProduct;
+	public void setReportedProduct(int reportedProduct) {
+		this.reportedProduct = reportedProduct;
 	}
 
 	public int getTradeType() {
@@ -283,25 +238,12 @@ public class Product {
 		this.tradeType = tradeType;
 	}
 
-	
 	public String getMonthSales() {
 		return monthSales;
 	}
 
 	public void setMonthSales(String monthSales) {
 		this.monthSales = monthSales;
-	}
->>>>>>> cr
-
-	public int getCount() {
-		return count;
-	}
-
-
-
-
-	public void setCount(int count) {
-		this.count = count;
 	}
 
 	public int getDeliveryCharge() {
@@ -320,14 +262,6 @@ public class Product {
 		this.pieces = pieces;
 	}
 
-	public int getReportedProduct() {
-		return reportedProduct;
-	}
-
-	public void setReportedProduct(int reportedProduct) {
-		this.reportedProduct = reportedProduct;
-	}
-
 	public String getSellStatus() {
 		return sellStatus;
 	}
@@ -336,169 +270,23 @@ public class Product {
 		this.sellStatus = sellStatus;
 	}
 
-
-	public String getProductStatus() {
-		return productStatus;
+	public String getTitleImg() {
+		return titleImg;
 	}
 
-
-
-
-	public void setProductStatus(String productStatus) {
-		this.productStatus = productStatus;
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
 	}
-
-
-
-
-	public String getUploadDate() {
-		return uploadDate;
-	}
-
-
-
-
-	public void setUploadDate(String uploadDate) {
-		this.uploadDate = uploadDate;
-	}
-
-
-
-
-	public String getUploadType() {
-		return uploadType;
-	}
-
-
-
-
-	public void setUploadType(String uploadType) {
-		this.uploadType = uploadType;
-	}
-
-
-
-
-	public double getOndo() {
-		return ondo;
-	}
-
-
-
-
-	public void setOndo(double ondo) {
-		this.ondo = ondo;
-	}
-
-
-
-
-	public String getTimeDiff() {
-		return timeDiff;
-	}
-
-
-
-
-	public void setTimeDiff(String timeDiff) {
-		this.timeDiff = timeDiff;
-	}
-
-
-
-
-	public int getSalesRate() {
-		return salesRate;
-	}
-
-
-
-
-	public void setSalesRate(int salesRate) {
-		this.salesRate = salesRate;
-	}
-
-
-
-
-	public int getTstockgoods() {
-		return tstockgoods;
-	}
-
-
-
-
-	public void setTstockgoods(int tstockgoods) {
-		this.tstockgoods = tstockgoods;
-	}
-
-
-
-
-	public int getReportedProduct() {
-		return ReportedProduct;
-	}
-
-
-
-
-	public void setReportedProduct(int reportedProduct) {
-		ReportedProduct = reportedProduct;
-	}
-
-
-
-
-	public int getTradeType() {
-		return tradeType;
-	}
-
-
-
-
-	public void setTradeType(int tradeType) {
-		this.tradeType = tradeType;
-	}
-
-
-
-
-	public String getMonthSales() {
-		return monthSales;
-	}
-
-
-
-
-	public void setMonthSales(String monthSales) {
-		this.monthSales = monthSales;
-	}
-
-
-
 
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", sellerNo=" + sellerNo + ", categoryNo=" + categoryNo
 				+ ", productName=" + productName + ", price=" + price + ", productDesc=" + productDesc + ", zone="
-<<<<<<< HEAD
 				+ zone + ", count=" + count + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate
 				+ ", uploadType=" + uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate="
-				+ salesRate + ", tstockgoods=" + tstockgoods + ", ReportedProduct=" + ReportedProduct + ", tradeType="
-				+ tradeType + ", monthSales=" + monthSales + "]";
+				+ salesRate + ", tstockgoods=" + tstockgoods + ", reportedProduct=" + reportedProduct + ", tradeType="
+				+ tradeType + ", monthSales=" + monthSales + ", deliveryCharge=" + deliveryCharge + ", pieces=" + pieces
+				+ ", sellStatus=" + sellStatus + ", titleImg=" + titleImg + "]";
 	}
 
-
-
-
-	
-=======
-				+ zone + ", productStatus=" + productStatus + ", uploadDate=" + uploadDate + ", uploadType="
-				+ uploadType + ", ondo=" + ondo + ", timeDiff=" + timeDiff + ", salesRate=" + salesRate
-				+ ", tstockgoods=" + tstockgoods + ", reportedProduct=" + reportedProduct + ", tradeType=" + tradeType
-				+ ", monthSales=" + monthSales + ", count=" + count + ", deliveryCharge=" + deliveryCharge + ", pieces="
-				+ pieces + ", sellStatus=" + sellStatus + "]";
-	}
-
->>>>>>> cr
 }
