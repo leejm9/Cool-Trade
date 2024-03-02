@@ -125,7 +125,7 @@
 				<tr>
 					<th scope="col"><input type="checkbox" name="chkAlltwo"
 						id="chkAlltwo" value="Y" title="전체선택/해제"
-						onclick="ItgJs.fn_checkAll(this, 'chkIdtwo');" /></th>
+						onclick="fn_displayBlockCheckAll2(this)" /></th>
 					<th scope="col">순위</th>
 					<th scope="col">사용자화면</th>
 					<th scope="col">위치</th>
@@ -172,6 +172,37 @@
 	
 		var list = "${fn:length(popularWordList)}";
 		    
+		function fn_displayBlockCheckAll(checkbox){
+			
+			var checkbox = $(checkbox);
+			
+			$("#chkAllone").change(function(){
+				if(checkbox.is(':checked')){
+					$("#popularWordList input").prop("checked",true);
+				}else{
+					$("#popularWordList input").prop("checked",false);
+				}
+			})
+			
+			
+		}
+		
+		function fn_displayBlockCheckAll2(checkbox){
+			
+			var checkbox = $(checkbox);
+			
+			$("#chkAlltwo").change(function(){
+				if(checkbox.is(':checked')){
+					$("#usrPopTable input").prop("checked",true);
+				}else{
+					$("#usrPopTable input").prop("checked",false);
+				}
+			})
+			
+			
+		}
+		
+		
 		
 		$(document).ready(function() {
 		    for (var a = 1; a <= list; a++) {
@@ -188,7 +219,6 @@
 		
 		function goPage(page)
 		{
-			console.log(page);
 			var firstIndex = (page*10)+1;
 			var lastIndex = (page+1)*10;
 			var pageButton = $(".paginate_button");
@@ -238,7 +268,7 @@
 						var idIndex = getidIndex();
 						var html = '';
 						html += '<tr class="tac" id="usrWordForm'+idIndex+'" name="usrWordForm">';
-						html += '<td class="text-c"><input type="checkbox" name="chkIdtwo" id="usrWord'+idIndex+'"></td>';
+						html += '<td class="text-c"><input type="checkbox" name="chkIdtwo" value="${YourValue}" id="usrWord'+idIndex+'"></td>';
 						html += '<td class="countNum" style="text-align:center;">'+(userWord+1)+'</td>';
 						html += '<td style="text-align:center;"><div class="form-inline">';
 						html += '<input type="text" name="usrPopWord" id="usrPopWord'+idIndex+'" maxlength="40" value="'+chkarr[a-1]+'" class="required form-control input-sm f-wd-300px" >';
@@ -345,15 +375,37 @@
 		    }
 		}
 		
-		function dsave(){
-			$(function(){
-				$("#usrPopTable>tr").remove();
-			
-			location.href ='<%= contextPath %>/show.popw';
-			});
-			
-			
-			return false;
+		function dsave() {
+		    var list = [];
+		    $("#usrPopTable input").each(function() {
+		        var value = $(this).val(); // 값의 양쪽 공백을 제거하여 빈 문자열인지 확인
+		        if (value != "") { // 빈 문자열이 아닐 경우에만 배열에 추가
+		            list.push(value);
+		        }
+		    });
+		    console.log(list);
+
+		    $.ajax({
+		        type: "POST",
+		        url: "show.popw",
+		        contentType: "application/json",
+		        data: JSON.stringify(list),
+		        success: function(response) {
+		        	console.log(1)
+		        	$("#usrPopTable tr").remove();
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("데이터 전송 실패");
+		            console.error(xhr, status, error);
+		        }
+		    });
+		
+		    
+		    
+		    
+		    
+
+		    return false;
 		}
 		
 	</script>

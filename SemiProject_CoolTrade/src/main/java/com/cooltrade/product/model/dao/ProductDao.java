@@ -486,7 +486,27 @@ public class ProductDao {
 		
 	}
 	
-	public int insertPopularSearch(Connection conn) {
+	public int deletePopularSearch(Connection conn) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deletePopularSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public int insertPopularSearch(Connection conn, String[] list) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -495,12 +515,20 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			for(String s : list) {
+				pstmt.setString(1, s );
+				result = pstmt.executeUpdate();
+			}
+			
+			
 			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
-		
+		return result;
 		
 		
 		

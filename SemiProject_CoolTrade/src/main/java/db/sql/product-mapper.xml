@@ -228,4 +228,25 @@
 			    GROUP BY popw_word
 			   ) 
 	</entry>
+	
+	<entry key="deletePopularSearch">
+		DELETE
+		  FROM t_user_popular_word
+	</entry>
+	
+	<entry key="insertPopularSearch">
+		INSERT 
+		  INTO t_user_popular_word
+			(
+			  user_popw_word
+			, user_popw_date
+			, user_popw_order
+			)
+	    VALUES
+			(
+			  ?
+			, SYSDATE
+			, (SELECT NVL(MAX(a.user_popw_order) + 1, 1) FROM t_user_popular_word a)
+			)
+	</entry>
 </properties>

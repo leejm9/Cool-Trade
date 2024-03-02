@@ -169,10 +169,24 @@ public class ProductService {
 		
 	}
 	
-	public int insertPopularSearch() {
+	public int deletePopularSearch() {
 		Connection conn = getConnection();
 		
-		int result = new ProductDao().insertPopularSearch(conn);
+		int result = new ProductDao().deletePopularSearch(conn);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int insertPopularSearch(String[] s) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularSearch(conn, s);
 		
 		if(result > 0) {
 			commit(conn);
