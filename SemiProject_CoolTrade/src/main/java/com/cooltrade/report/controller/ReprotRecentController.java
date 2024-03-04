@@ -1,30 +1,23 @@
-package com.cooltrade.manager;
+package com.cooltrade.report.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.dao.ProductDao;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
-import com.google.gson.Gson;
-
 /**
- * Servlet implementation class ManagerSalesGraphController
+ * Servlet implementation class ReprotRecentController
  */
-@WebServlet("/salesgraph.me")
-public class ManagerSalesGraphController extends HttpServlet {
+@WebServlet("/ReprotRecentController")
+public class ReprotRecentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerSalesGraphController() {
+    public ReprotRecentController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +26,8 @@ public class ManagerSalesGraphController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int chart = Integer.parseInt(request.getParameter("chart"));
-		ArrayList<Product> list = new ArrayList<Product>();
-		if(chart == 2) {
-			 list = new ProductService().selectMonthSales();
-		}else {
-			 list = new ProductService().selectDaySales();
-		}
-		
-		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

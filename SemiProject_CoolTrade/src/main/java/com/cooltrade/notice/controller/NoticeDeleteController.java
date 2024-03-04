@@ -1,30 +1,26 @@
-package com.cooltrade.manager;
+package com.cooltrade.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.cooltrade.product.model.dao.ProductDao;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
-import com.google.gson.Gson;
+import com.cooltrade.notice.model.service.NoticeService;
 
 /**
- * Servlet implementation class ManagerSalesGraphController
+ * Servlet implementation class noticeDeleteController
  */
-@WebServlet("/salesgraph.me")
-public class ManagerSalesGraphController extends HttpServlet {
+@WebServlet("/delete.no")
+public class noticeDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerSalesGraphController() {
+    public noticeDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +29,17 @@ public class ManagerSalesGraphController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int chart = Integer.parseInt(request.getParameter("chart"));
-		ArrayList<Product> list = new ArrayList<Product>();
-		if(chart == 2) {
-			 list = new ProductService().selectMonthSales();
-		}else {
-			 list = new ProductService().selectDaySales();
-		}
+		int noticeNo = Integer.parseInt(request.getParameter("num"));
 		
-		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		int result = new NoticeService().deleteNotice(noticeNo);
+		HttpSession session = request.getSession();
+		if(result > 0) {
+			session.setAttribute("alertMsg", "삭제를 성공하였습니다.");
+			response.sendRedirect(request.getContextPath() + "/notice.no?cpage=1");
+		}else {
+			request.setAttribute("errorMsg", "삭제를 실패하였습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**

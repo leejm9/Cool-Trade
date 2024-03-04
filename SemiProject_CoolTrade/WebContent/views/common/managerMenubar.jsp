@@ -43,7 +43,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<%=contextPath %>/onload.page">
                 <div class="sidebar-brand-icon rotate-n-15">
                     
                 </div>
@@ -70,7 +70,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="<%= contextPath %>/member.in?cpage=1" data-toggle="collapse" data-target="#collapseTwo"
+                <a class="nav-link collapsed" href="<%= contextPath %>/member.in?cpage=1&dropDownValue=1" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>회원 조회</span>
@@ -206,7 +206,7 @@
                             </div>
                         </li>
 
-                        <button type="button" onclick="location.href = '<%= contextPath %>/notice.no';" class="btn btn-primary">공지사항</button>
+                        <button type="button" onclick="location.href = '<%= contextPath %>/notice.no?cpage=1';" class="btn btn-primary">공지사항</button>
                      
 
                         <div class="topbar-divider d-none d-sm-block"></div>

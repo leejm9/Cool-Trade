@@ -366,4 +366,18 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectDaySales">
+		SELECT
+		       TO_CHAR(SELL_DATE,'MM/DD') sell_date
+		     , SUM(PRICE) price
+		  FROM PRODUCT
+		  JOIN TRADE USING(PRODUCT_NO)
+		 WHERE TO_CHAR(SELL_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
+		   AND SELL_DATE > SYSDATE-7
+		 GROUP
+		    BY sell_date
+		 ORDER
+            BY sell_date
+	</entry>
+	
 </properties>

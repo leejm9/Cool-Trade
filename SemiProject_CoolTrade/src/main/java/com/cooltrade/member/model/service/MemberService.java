@@ -219,5 +219,90 @@ public class MemberService {
 		return list;
 				
 	}
+	public int countOndoList() {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countOndoList(conn);
+		close(conn);
+		return result;
+	}
+	public int countCbtnList() {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countCbtnList(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int countSearchList(String search) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countSearchList(conn,search);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Member> selectOndoList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectOndoList(conn,pi);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Member> selectCbtnList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectCbtnList(conn,pi);
+		close(conn);
+		return list;
+	}
+	public ArrayList<Member> selectSearchList(PageInfo pi, String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectSearchList(conn,pi,search);
+		close(conn);
+		return list;
+	}
+	
+	public int countBListSearch(String bsearch) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countBListSearch(conn, bsearch);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Member> selectBListSearch(PageInfo pi, String bsearch){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectBListSearch(conn,pi,bsearch);
+		close(conn);
+		return list;
+	}
+	
+	public int countSearchBoard(String search) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().countSearchBoard(conn,search);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Member> selectSearchBoard(PageInfo pi, String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Member> list = new MemberDao().selectSearchBoard(conn,pi,search);
+		close(conn);
+		return list;
+	}
+	
+	public Member selectMember(int uno) {
+		Connection conn = getConnection();
+		
+		Member m = new MemberDao().selectMember(conn,uno);
+		close(conn);
+		return m;
+	}
 	
 }

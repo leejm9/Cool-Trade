@@ -38,14 +38,22 @@
         }
         #div1 button{
         	width:15px;
-        	height:20px;
-        	border: 0px;
+        	height:22px;
+        	border: 1px solid #04b4fc; 
+        	border-radius: 10px;
+            color: #04b4fc;
+            background-color:white;
         }
         #div1 tr>*{
         	line-height:25px;
         	font-size:10px;
         }
-        
+        #div1 th{
+        	width: 100px; 
+        	text-align:center;
+        	font-weight: 2;
+        }
+       
 </style>
 
 </head>
@@ -111,7 +119,7 @@
 		                <button id="popbtn2" onclick="popbtn(2)">&gt;</button>
 		                </div>
 			                <div>
-			                    <table>
+			                    <table style="width:400px;">
 			                        <tr>
 			                            <td>&nbsp;1.고기&nbsp;</td>
 			                            <td>2.햄버거&nbsp;</td>
@@ -124,27 +132,36 @@
            				</div>
 			            <script>
 			            $(function(){
-			                $.ajax({
-			                    url: "popw.page",
-			                    data:{cbtn:1},
-			                    success: function(result) {
-	           						$("#div1 td").remove();
-			                    	let value = "";
-		           					for(let i =0; i<result.length; i++){
-		           						if((result[i].count)%5 == 1) {
-		           		                    value += "<td>&nbsp;" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
-		           		                } else {
-		           		                    value += "<td>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
-		           		                }
-		           						 		
-		           					}
-		           					$("#div1 tr").html(value);
-		           					
-			                    },
-			                    error: function() {
-			                        console.log("ajax 통신 실패");
-			                    }
-			                });
+			                var cbtn = 1;
+			                function fetchData() {
+			                    $.ajax({
+			                        url: "popw.page",
+			                        data: { cbtn: cbtn },
+			                        success: function(result) {
+			                            $("#div1 td").remove();
+			                            let value = "";
+			                            for (let i = 0; i < result.length; i++) {
+			                                if ((result[i].count) % 5 == 1) {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                } else {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                }
+			                            }
+			                            $("#div1 tr").html(value);
+			                            if (cbtn == 1) {
+			                                cbtn = 2;
+			                            } else {
+			                                cbtn = 1;
+			                            }
+			                            setTimeout(fetchData, 5000);
+			                        },
+			                        error: function() {
+			                            console.log("ajax 통신 실패");
+			                            setTimeout(fetchData, 5000);
+			                        }
+			                    });
+			                }
+			                fetchData();
 			            });
 			            
 		               	function popbtn(cbtn){
@@ -155,9 +172,9 @@
 	           						let value = "";
 		           					for(let i =0; i<result.length; i++){
 		           						if((result[i].count)%5 == 1) {
-		           		                    value += "<td>&nbsp;" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
 		           		                } else {
-		           		                    value += "<td>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a>&nbsp;</td>";
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
 		           		                }
 		           					}
 		           					$("#div1 tr").html(value);
@@ -211,7 +228,7 @@
                         </div>
                     </div>
                     <div id="notice-ds">
-                        공지사항
+                        <a href="<%= contextPath %>/notice.no?cpage=1"  >공지사항</a>
                     </div>
                 </div>
             </div>

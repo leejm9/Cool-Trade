@@ -1,30 +1,26 @@
 package com.cooltrade.manager;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.dao.ProductDao;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
-import com.google.gson.Gson;
+import com.cooltrade.member.model.service.MemberService;
+import com.cooltrade.member.model.vo.Member;
 
 /**
- * Servlet implementation class ManagerSalesGraphController
+ * Servlet implementation class MangerMemInfoDetailController
  */
-@WebServlet("/salesgraph.me")
-public class ManagerSalesGraphController extends HttpServlet {
+@WebServlet("/memInfo.detail")
+public class MangerMemInfoDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerSalesGraphController() {
+    public MangerMemInfoDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,16 +29,16 @@ public class ManagerSalesGraphController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int chart = Integer.parseInt(request.getParameter("chart"));
-		ArrayList<Product> list = new ArrayList<Product>();
-		if(chart == 2) {
-			 list = new ProductService().selectMonthSales();
-		}else {
-			 list = new ProductService().selectDaySales();
-		}
 		
-		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		int uno = Integer.parseInt(request.getParameter("uno"));
+		
+		Member m = new MemberService().selectMember(uno);
+		
+		request.setAttribute("m", m);
+		
+		request.getRequestDispatcher("views/manager/managerMemberDetail.jsp").forward(request, response);
+		
+		
 	}
 
 	/**

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.member.model.vo.Member;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class ManagerMemberInfoPageController
@@ -32,7 +33,19 @@ public class ManagerMemberInfoPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int listCount; 	 
+		int value = 1;
+		String dropDownValue = request.getParameter("dropDownValue");
+		if(dropDownValue != null && !dropDownValue.isEmpty()) {
+		    value = Integer.parseInt(dropDownValue);
+		}
+		
+		String search = request.getParameter("search");
+		int cpage = 1; 
+	    if (request.getParameter("cpage") != null) {
+	        cpage = Integer.parseInt(request.getParameter("cpage"));
+	    }
+		
+		int listCount = 0; 	 
 		int currentPage; 
 		int pageLimit;   
 		int boardLimit;  
@@ -41,9 +54,19 @@ public class ManagerMemberInfoPageController extends HttpServlet {
 		int startPage;	 
 		int endPage;	 
 		
-		listCount = new MemberService().selectListCount();
-		
-		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		if(search == null) {
+			System.out.println("!!!");
+			switch (value) {
+			case 1: listCount = new MemberService().selectListCount(); break;
+			case 2: listCount = new MemberService().countOndoList(); break;
+			case 3: listCount = new MemberService().countCbtnList(); break;
+			}
+		}else {
+			System.out.println("!!!2");
+			listCount = new MemberService().countSearchList(search); 
+		}
+			
+		currentPage = cpage;
 		
 		pageLimit = 5;
 		
@@ -61,13 +84,27 @@ public class ManagerMemberInfoPageController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-	
-		ArrayList<Member> list = new MemberService().selectList(pi);
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		if(search == null) {
+			switch (value) {
+			case 1: list = new MemberService().selectList(pi); break;
+			case 2: list = new MemberService().selectOndoList(pi); break;
+			case 3: list = new MemberService().selectCbtnList(pi); break;
+			}
+		}else {
+			list = new MemberService().selectSearchList(pi,search);
+		}
+		
+		
+		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("views/manager/managerMemberInfoPage.jsp").forward(request, response);
+		
+		
 	}
 
 	/**

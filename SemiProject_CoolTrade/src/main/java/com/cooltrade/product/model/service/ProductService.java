@@ -280,4 +280,12 @@ public class ProductService {
 		return list;
 	}
 	
+	public ArrayList<Product> selectDaySales(){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().selectDaySales(conn);
+		close(conn);
+		return list;
+	}
+	
 }
