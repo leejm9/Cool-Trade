@@ -564,7 +564,7 @@
 	
 
     <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
-    <input type="hidden" name="seller" value=<%= userNo %>>
+    <input type="hidden" name="seller" value="<%= userNo %>">
         <div id="wrap" style="margin-top: 180px;">
             <div id="main-content" class="flex-class">
                 <div id="right-content">
@@ -891,19 +891,10 @@
                                             <option value="울산">울산</option>
                                             <option value="부산">부산</option>
                                             <option value="제주">제주</option>
+                                            <option value="전국">전국</option>
                                         </select>
                                     </div>
                                 </div>
-                                
-                                <script>
-                                
-                                    document.getElementById('enroll').addEventListener('click', function() {
-                                        // 선택된 옵션의 값을 가져옴
-                                        var selectedZone = document.getElementById('trade-zone').value;
-                                    });
-                                </script>
-                                
-                                </script>
                                 
                             </div>
                         </div>

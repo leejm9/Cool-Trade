@@ -169,6 +169,7 @@
 		     , PSTATUS
 		     , TRADE_TYPE
 		     , TO_CHAR(UPLOAD_DATE, 'RR"-"MM"-"DD') UPLOAD_DATE
+		     , UPLOAD_TYPE
 		     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
      	    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
 	       	     WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
@@ -181,8 +182,7 @@
 		  JOIN MEMBER ON (USER_NO = SELLER_NO)
 		  JOIN PRODUCT_STATUS ON (PRODUCT_STATUS = PSTATUS_NO)
 		  JOIN CATEGORY USING (CATEGORY_NO)
-		 WHERE UPLOAD_TYPE = 'Y'
-		   AND PRODUCT_NO = ?
+		 WHERE PRODUCT_NO = ?
 	</entry>
 	
 	<entry key="selectMonthSales">
@@ -294,8 +294,6 @@
 		  )
 	</entry>
 	
-	
-	
 	<entry key="insertPopularWord">
 		INSERT
 		  INTO t_popular_word
@@ -346,4 +344,77 @@
 			, (SELECT NVL(MAX(a.user_popw_order) + 1, 1) FROM t_user_popular_word a)
 			)
 	</entry>
+	
+	<entry key="updateSellForm">
+		SELECT
+			   PRODUCT_NO
+		     , CATEGORY_NAME
+		     , PRODUCT_NAME
+		     , PRICE
+		     , PRODUCT_DESC
+		     , PIECES
+		     , ZONE
+		     , PRODUCT_STATUS
+		     , DELIVERY_CHARGE
+		     , TRADE_TYPE
+		     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+		  FROM PRODUCT
+		  JOIN CATEGORY USING (CATEGORY_NO)
+	 LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
+		 WHERE PRODUCT_NO = ?
+		   AND IMG_STATUS = 'Y'
+	</entry>
+	
+	<entry key="updateProductSell">
+		UPDATE
+		       PRODUCT
+		   SET CATEGORY_NO = ?
+		     , PRODUCT_NAME = ?
+		     , PRICE = ?
+		     , PRODUCT_DESC = ?
+		     , PIECES = ?
+		     , ZONE = ?
+		     , PRODUCT_STATUS = ?
+		     , DELIVERY_CHARGE = ?
+		     , TRADE_TYPE = ?
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="insertNewImagesList">
+		INSERT
+		  INTO IMAGES
+		  (
+		    IMG_NO
+		  , REF_PNO
+		  , REF_UNO
+		  , IMG_LEVEL
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , IMG_PATH
+		  )
+		  VALUES
+		  (
+		    SEQ_IMG.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="deleteProductSellImage">
+		 UPDATE
+		        IMAGES
+		    SET IMG_STATUS = 'N'
+		 WHERE REF_PNO = ?
+	</entry>
+	
+
+
+	
+	
+	
+	
 </properties>

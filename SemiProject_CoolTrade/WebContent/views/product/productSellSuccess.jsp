@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% int pno = (int)request.getAttribute("pno"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,14 +57,11 @@
 
 
 	<div class="wrap">
-		<input type="hidden" name="pno" value="<%= pno %>">
-		<input type="hidden" name="userNo" value="<%= userNo %>">
-
+		
 		<div id="con-1">판매하기</div>
 		<div id="con-2" align="center">상품이 등록되었습니다</div>
 		<div id="con-3">
 			<div>
-				<button id="btn1">작성한 글 확인</button>
 				<button id="btn2">판매내역 보기</button>
 				<button id="btn3">새 상품 판매</button>
 			</div>
@@ -74,15 +70,11 @@
 
 	<script>
 		$(function(){
-			$("#btn1").click(function(){
-				location.href = "<%= contextPath %>/detail.po";
+			$("#btn2").click(function(){
+				location.href = "<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1";
 			})
 
-			$("#bnt2").click(function(){
-				location.href = "<%= contextPath %>/sellList.me";
-			})
-
-			$("#bnt3").click(function(){
+			$("#btn3").click(function(){
 				location.href = "<%= contextPath %>/sellForm.po";
 			})
 

@@ -45,7 +45,7 @@ public class MemberBuyListController extends HttpServlet {
 		int startPage;
 		int endPage;
 		
-		listCount = new MemberService().buyListCountPo(userNo); // 회원이 등록한 판매 상품 개수
+		listCount = new MemberService().buyListCountPo(userNo); 
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		pageLimit = 5;
 		boardLimit = 5;
@@ -61,7 +61,6 @@ public class MemberBuyListController extends HttpServlet {
 		
 		ArrayList<Trade> list = new MemberService().buyListPo(pi, userNo);
 		
-		System.out.println(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

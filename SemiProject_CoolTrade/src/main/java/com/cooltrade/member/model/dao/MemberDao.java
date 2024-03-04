@@ -559,7 +559,7 @@ public class MemberDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("price"));
 				p.setTradeType(rset.getInt("trade_type"));
 				p.setSellStatus(rset.getString("sell_status"));
 				p.setTitleImg(rset.getString("titleimg"));
@@ -586,6 +586,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("buyListCountPo");
+		System.out.println("다오유저넘버리스트카운트" + userNo);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -595,6 +596,7 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				listCount = rset.getInt("count");
+				System.out.println(listCount);
 			}
 			
 		} catch (SQLException e) {
@@ -604,7 +606,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println(listCount);
 		return listCount;
 		
 	}
@@ -630,12 +632,130 @@ public class MemberDao {
 			while(rset.next()) {
 				Trade t = new Trade();
 				t.setTradeNo(rset.getInt("trade_no"));
-				t.setProductNo(rset.getString("product_name"));
-				t.setPrice(rset.getInt("price"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
 				t.setTradeDate(rset.getString("trade_date"));
-				t.setDeliveryStatus(rset.getString("deliver_status"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
 				
 				list.add(t);
+				System.out.println(t);
+			}
+			System.out.println(list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int updateSellStatus(Connection conn, int pNo, String sellStatus) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateSellStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sellStatus);
+			pstmt.setInt(2, pNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteProductSell(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProductSell");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int sellListStatusCo(Connection conn, int userNo, String sellStatus) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListStatusCo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, sellStatus);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Product> sellListStatusPo(Connection conn, PageInfo pi, int userNo, String sellStatus) {
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListStatusPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, sellStatus);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setStrPrice(rset.getString("price"));
+				p.setTradeType(rset.getInt("trade_type"));
+				p.setSellStatus(rset.getString("sell_status"));
+				p.setTitleImg(rset.getString("titleimg"));
+				p.setUploadDate(rset.getString("upload_date"));
+				
+				list.add(p);
 				
 			}
 			
@@ -651,9 +771,225 @@ public class MemberDao {
 		
 	}
 	
+	public int sellListSearchCount(Connection conn, int userNo, String word) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListSearchCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, word);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Product> sellListSearch(Connection conn, PageInfo pi, int userNo, String word) {
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListSearch");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, word);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setStrPrice(rset.getString("price"));
+				p.setTradeType(rset.getInt("trade_type"));
+				p.setSellStatus(rset.getString("sell_status"));
+				p.setTitleImg(rset.getString("titleimg"));
+				p.setUploadDate(rset.getString("upload_date"));
+				
+				list.add(p);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println(list);
+		return list;
+		
+	}
+	
+	public int buyListSelectCo(Connection conn, int userNo) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListSelectCo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+		
+	}
+	
+	public ArrayList<Trade> buyListSelectPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListSelectPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Trade t = new Trade();
+				t.setTradeNo(rset.getInt("trade_no"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public int buyListSearchCount(Connection conn, int userNo, String word) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListSearchCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, word);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+		
+	}
+	
+	public ArrayList<Trade> buyListSearchPo(Connection conn, PageInfo pi, int userNo, String word) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListSearchPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, word);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Trade t = new Trade();
+				t.setTradeNo(rset.getInt("trade_no"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 }
 
-
+	
 
 
 

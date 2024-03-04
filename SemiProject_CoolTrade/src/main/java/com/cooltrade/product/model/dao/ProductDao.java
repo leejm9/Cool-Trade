@@ -14,6 +14,7 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -340,6 +341,7 @@ public class ProductDao {
 				p.setUploadDate(rset.getString("upload_date"));
 				p.setCount(rset.getInt("count"));
 				p.setTimeDiff(rset.getString("time_diff"));
+				p.setUploadType(rset.getString("upload_type"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -426,6 +428,7 @@ public class ProductDao {
 	      return result;
 	   
 	}	
+	
 	public int insertPopularWord(Connection conn, String search) {
 		int result = 0;
 		
@@ -706,18 +709,163 @@ public class ProductDao {
 				result = pstmt.executeUpdate();
 			}
 			
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public ArrayList<Product> updateSellForm(Connection conn, int pno) {
+		ArrayList<Product> pList = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("updateSellForm");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setCategoryNo(rset.getString("category_name"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setProductDesc(rset.getString("product_desc"));
+				p.setPieces(rset.getInt("pieces"));
+				p.setZone(rset.getString("zone"));
+				p.setProductStatus(rset.getString("product_status"));
+				p.setDeliveryCharge(rset.getInt("delivery_charge"));
+				p.setTradeType(rset.getInt("trade_type"));
+				p.setTitleImg(rset.getString("titleimg"));
+				
+				pList.add(p);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pList;
+	}
+	
+	public int updateProductSell(Connection conn, Product p, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateProductSell");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getCategoryNo());
+			pstmt.setString(2, p.getProductName());
+			pstmt.setInt(3, p.getPrice());
+			pstmt.setString(4, p.getProductDesc());
+			pstmt.setInt(5, p.getPieces());
+			pstmt.setString(6, p.getZone());
+			pstmt.setString(7, p.getProductStatus());
+			pstmt.setInt(8, p.getDeliveryCharge());
+			pstmt.setInt(9, p.getTradeType());
+			pstmt.setInt(10, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateImagesList(Connection conn, ArrayList<Images> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateImagesList");
 		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, img.getImgLevel());
+				pstmt.setString(2, img.getOriginName());
+				pstmt.setString(3, img.getChangeName());
+				pstmt.setString(4, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertNewImagesList(Connection conn, ArrayList<Images> list, int pno, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNewImagesList");
+		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, pno);
+				pstmt.setInt(2, userNo);
+				pstmt.setInt(3, img.getImgLevel());
+				pstmt.setString(4, img.getOriginName());
+				pstmt.setString(5, img.getChangeName());
+				pstmt.setString(6, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteProductSellImage(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProductSellImage");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("딜리트다오리절트 : " + result);
+		return result;
 	}
 	
 }
+
+
+
+
+

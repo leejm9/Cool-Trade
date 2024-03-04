@@ -284,7 +284,7 @@
                             <li>
                                 <div>쿨거래</div>
                                 <div>
-                                    <a href="#"><%= count %></a>
+                                    <div><%= count %></div>
                                 </div>
                             </li>
                             <li>

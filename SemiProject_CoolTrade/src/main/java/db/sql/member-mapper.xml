@@ -248,19 +248,20 @@
 		       SELECT ROWNUM RNUM, A.*
 		         FROM (
 		              SELECT
-		                     PRODUCT_NO
-		                   , PRODUCT_NAME
-		                   , PRICE
-		                   , TRADE_TYPE
-		                   , SELL_STATUS
-		                   , COALESCE(IMG_PATH || CHANGE_NAME) "TITLEIMG"
-		                   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
-		                FROM PRODUCT P
-		                JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
-		               WHERE SELLER_NO = ?
-		                 AND IMG_LEVEL = '1'
-		               ORDER
-		                  BY UPLOAD_DATE DESC
+						     PRODUCT_NO
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+						   , TRADE_TYPE
+						   , SELL_STATUS
+						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+						FROM PRODUCT P
+						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+						WHERE SELLER_NO = ?
+						  AND UPLOAD_TYPE = 'Y'
+						ORDER 
+						   BY UPLOAD_DATE DESC
+							, PRODUCT_NO DESC 
 		                   ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
@@ -273,22 +274,192 @@
 		 WHERE BUYER_NO = ?
 	</entry>
 		
-	<entry key="BuyListPo">
+	<entry key="buyListPo">
 		SELECT *
 		  FROM (
 		       SELECT ROWNUM RNUM, A.*
 		         FROM (
 		              SELECT
-		                     TRADE_NO
-		                   , PRODUCT_NAME
-		                   , PRICE
-		                   , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
-		                   , DELIVERY_STATUS
-		                FROM TRADE
-		                JOIN PRODUCT USING (PRODUCT_NO)
-		               WHERE SELLER_NO = ?
-		               ORDER
-		                  BY TRADE_DATE DESC
+						     TRADE_NO
+						   , PRODUCT_NO
+						   , SELLER_NO
+						   , M.NICKNAME
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+					       , DELIVERY_STATUS
+				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+				           , UPLOAD_TYPE
+						FROM TRADE T
+						JOIN PRODUCT P USING (PRODUCT_NO)
+						JOIN MEMBER M ON (SELLER_NO = USER_NO)
+				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+					   WHERE BUYER_NO = ?
+					   ORDER
+						  BY TRADE_DATE DESC
+						   , PRODUCT_NO DESC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="updateSellStatus">
+		UPDATE PRODUCT
+		   SET SELL_STATUS = ?
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="deleteProductSell">
+		UPDATE 
+		       PRODUCT
+		   SET UPLOAD_TYPE = 'N'
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="sellListStatusCo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE SELLER_NO = ?
+		   AND UPLOAD_TYPE = 'Y'
+		   AND SELL_STATUS = ?
+	</entry>
+	
+	<entry key="sellListStatusPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     PRODUCT_NO
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+						   , TRADE_TYPE
+						   , SELL_STATUS
+						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+						FROM PRODUCT P
+						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+						WHERE SELLER_NO = ?
+						  AND UPLOAD_TYPE = 'Y'
+						  AND SELL_STATUS = ?
+						ORDER 
+						   BY UPLOAD_DATE DESC
+							, PRODUCT_NO DESC 
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="sellListSearchCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM PRODUCT
+		 WHERE SELLER_NO = ?
+		   AND UPLOAD_TYPE = 'Y'
+		   AND PRODUCT_NAME LIKE '%' || ? || '%'
+	</entry>	
+	
+	<entry key="sellListSearch">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     PRODUCT_NO
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+						   , TRADE_TYPE
+						   , SELL_STATUS
+						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+						FROM PRODUCT P
+						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+						WHERE SELLER_NO = ?
+						  AND UPLOAD_TYPE = 'Y'
+						  AND PRODUCT_NAME LIKE '%' || ? || '%'
+						ORDER 
+						   BY UPLOAD_DATE DESC
+							, PRODUCT_NO DESC 
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	
+	<entry key="buyListSelectCo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TRADE
+		 WHERE BUYER_NO = ?
+		 ORDER
+		    BY TRADE_NO ASC
+	</entry>
+		
+	<entry key="buyListSelectPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     TRADE_NO
+						   , PRODUCT_NO
+						   , SELLER_NO
+						   , M.NICKNAME
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+					       , DELIVERY_STATUS
+				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+				           , UPLOAD_TYPE
+						FROM TRADE T
+						JOIN PRODUCT P USING (PRODUCT_NO)
+						JOIN MEMBER M ON (SELLER_NO = USER_NO)
+				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+					   WHERE BUYER_NO = ?
+					   ORDER
+						  BY TRADE_NO ASC
+						   , PRODUCT_NO DESC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="buyListSearchCount">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TRADE
+		  JOIN PRODUCT USING (PRODUCT_NO)
+		 WHERE BUYER_NO = ?
+ 		   AND UPLOAD_TYPE = 'Y'
+   		   AND PRODUCT_NAME LIKE '%' || ? || '%'
+	</entry>
+		
+	<entry key="buyListSearchPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     TRADE_NO
+						   , PRODUCT_NO
+						   , SELLER_NO
+						   , M.NICKNAME
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+					       , DELIVERY_STATUS
+				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+				           , UPLOAD_TYPE
+						FROM TRADE T
+						JOIN PRODUCT P USING (PRODUCT_NO)
+						JOIN MEMBER M ON (SELLER_NO = USER_NO)
+				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+					   WHERE BUYER_NO = ?
+					     AND PRODUCT_NAME LIKE '%' || ? || '%'
+					   ORDER
+						  BY UPLOAD_TYPE DESC
+						   , PRODUCT_NO DESC
 		                   ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?

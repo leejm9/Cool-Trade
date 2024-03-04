@@ -9,6 +9,7 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -151,6 +152,7 @@ public class ProductService {
 	      
 	      return result;
 	}
+	
 	public int insertProductSell(Product p, ArrayList<Images> list) {
 		Connection conn = getConnection();
 		
@@ -160,10 +162,14 @@ public class ProductService {
 		if(result1 > 0 && result2 > 0) {
 			commit(conn);
 		} else {
-			
-			
+			rollback(conn);
 		}
+		
+		close(conn);
+		return result1 * result2;
+		
 	}
+	
 	public int insertPopularWord(String search) {
 		Connection conn = getConnection();
 		
@@ -224,7 +230,7 @@ public class ProductService {
 		}
 		
 		close(conn);
-		return result1 * result2;
+		return result;
 		
 	}
 	
@@ -255,6 +261,45 @@ public class ProductService {
 		
 		close(conn);
 		return imglist;
+		
+	}
+	
+	public ArrayList<Product> updateSellForm(int pno) {
+		Connection conn = getConnection();
+		ArrayList<Product> pList = new ProductDao().updateSellForm(conn, pno);
+		
+		close(conn);
+		return pList;
+	}
+	
+	public int deleteProductSellImage(int pno) {
+		Connection conn = getConnection();
+		int result = new ProductDao().deleteProductSellImage(conn, pno);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		System.out.println("딜리트서비스리절트 : " + result);
+		close(conn);
+		return result;
+	}
+	
+	public int updateProductSell(Product p, ArrayList<Images> list, int pno, int userNo) {
+		Connection conn = getConnection();
+		
+		int result1 = new ProductDao().updateProductSell(conn, p, pno); // 상품테이블 업데이트
+		int result2 = new ProductDao().insertNewImagesList(conn, list, pno, userNo); // 이미지테이블에 인서트
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		return result1 * result2;
 		
 	}
 	
