@@ -187,13 +187,13 @@
 	
 	<entry key="selectMonthSales">
 		SELECT
-		       TO_CHAR(SELL_DATE,'YY/MM') sell_date
+		       TO_CHAR(TRADE_DATE,'YY/MM') trade_date
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)
-		 WHERE TO_CHAR(SELL_DATE,'YY') = TO_CHAR(SYSDATE,'YY') <!-- 년도가 25년되면 넘어가도록 설정 -->
+		 WHERE TO_CHAR(TRADE_DATE,'YY') = TO_CHAR(SYSDATE,'YY') <!-- 년도가 25년되면 넘어가도록 설정 -->
 		 GROUP
-		    BY TO_CHAR(SELL_DATE,'YY/MM')
+		    BY TO_CHAR(TRADE_DATE,'YY/MM')
 		 ORDER
             BY 1
 	</entry>
@@ -385,16 +385,16 @@
 	
 	<entry key="selectDaySales">
 		SELECT
-		       TO_CHAR(SELL_DATE,'MM/DD') sell_date
+		       TO_CHAR(TRADE_DATE,'MM/DD') trade_date
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)
-		 WHERE TO_CHAR(SELL_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
-		   AND SELL_DATE > SYSDATE-7
+		 WHERE TO_CHAR(TRADE_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
+		   AND TRADE_DATE > SYSDATE-7
 		 GROUP
-		    BY sell_date
+		    BY trade_date
 		 ORDER
-            BY sell_date
+            BY trade_date
 	</entry>
 	
 </properties>

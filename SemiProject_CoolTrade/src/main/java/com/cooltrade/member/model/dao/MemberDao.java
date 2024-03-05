@@ -416,10 +416,10 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Member(rset.getInt("user_no"),
-									rset.getString("user_name"),
+				list.add(new Member(rset.getString("user_name"),
 									rset.getInt("caution"),
 									rset.getString("product_name"),
+									rset.getInt("product_no"),
 									rset.getDate("upload_date")
 									));
 			}
@@ -495,7 +495,7 @@ public class MemberDao {
 			
 			while(rset.next()) {
 				list.add(new Member(rset.getInt("count"),
-									rset.getString("enrolldate")
+									rset.getString("enroll_date")
 									));
 			}
 			
@@ -965,7 +965,6 @@ public class MemberDao {
 			pstmt.setString(2, search);
 			pstmt.setInt(3, startRow);
 			pstmt.setInt(4, endRow);
-			System.out.println(startRow);
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {

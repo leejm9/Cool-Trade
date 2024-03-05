@@ -360,7 +360,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				list.add(new Product(rset.getInt("price"),
-									 rset.getString("sell_date")
+									 rset.getString("trade_date")
 									 ));
 			}
 			
@@ -737,7 +737,7 @@ public class ProductDao {
 		}
 		return plist;
 	}
-	}
+
 	
 	public int countUserPopwList(Connection conn) {
 		int result = 0;
@@ -821,7 +821,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				list.add(new Product(rset.getInt("price"),
-									 rset.getString("sell_date")
+									 rset.getString("trade_date")
 									 ));
 			}
 			

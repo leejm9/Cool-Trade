@@ -15,14 +15,17 @@
 	
 %>
 <head>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>SB Admin 2 - Dashboard</title>
 	
 	<style>
 		#searchBtn2{
 			margin-bottom:5px;
 		}
-		
+		#dataTable tbody tr:hover{
+			background-color:rgb(211, 211, 211);
+			cursor:pointer;
+		}
 	</style>
 </head>
 
@@ -53,8 +56,8 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>제목</th>
-                                            <th>회원 번호</th>
+                                            <th><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>">제목</th>
+                                            <th>게시물 번호</th>
                                             <th>판매자 이름</th>
                                             <th>판매자 경고횟수</th>
                                             <th>등록일자</th>
@@ -68,10 +71,11 @@
 						                    <td colspan="6">조회된 게시글이 없습니다</td>
 						                </tr>
 										<% }else{ %>
+										
 	                                    	<% for(Member m : list){ %>
 		                                        <tr>
-		                                            <td><%= m.getProductTitle() %></td>
-		                                            <td><%= m.getUserNo() %></td>
+		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= m.getProductNo() %>"><%= m.getProductTitle() %></a></td>
+		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= m.getProductNo() %>"><%= m.getProductNo() %></a></td>
 		                                            <td><%= m.getUserName() %></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <td><%= m.getUploadDate() %></td>
@@ -82,12 +86,19 @@
                                     </tbody>
                                 </table>
                                 
+                                
+                                
                                 <div id="btn" align="center">
 	                                <% if(currentPage > 1){ %>
 				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
 				                    <% } %>
 				                    <% for(int i=1; i<= maxPage;i++){ %>
-						            <button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
+				                    	<% if(request.getParameter("boardsearch") ==  null){ %>
+						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>"><%= i %></button>
+						            	<% }else{ %>
+						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
+						            	<% } %>
+						            
 						            <% } %>
 						            <% if(currentPage != maxPage) { %>
 						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
@@ -96,7 +107,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <!-- /.container-fluid -->
 

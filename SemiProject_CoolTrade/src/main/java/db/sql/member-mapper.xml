@@ -193,7 +193,7 @@
 		          FROM (
 		                  SELECT 
 		                       PRODUCT_NAME
-		                     , USER_NO
+		                     , PRODUCT_NO
 		                     , USER_NAME
 		                     , CAUTION
 		                     , UPLOAD_DATE

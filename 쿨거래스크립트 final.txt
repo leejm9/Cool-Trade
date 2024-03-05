@@ -496,7 +496,46 @@ COMMENT ON COLUMN TRADE.BUYER_NO IS '구매자번호';
 COMMENT ON COLUMN TRADE.DELIVERY_STATUS IS '배송상태';
 COMMENT ON COLUMN TRADE.TRADE_DATE IS '거래일';
 
-
+INSERT
+   INTO TRADE
+   VALUES
+   (
+     SEQ_TRADE.NEXTVAL
+   , 2
+   , 5
+   , '상품준비중'
+   , SYSDATE
+   );
+INSERT
+   INTO TRADE
+   VALUES
+   (
+     SEQ_TRADE.NEXTVAL
+   , 3
+   , 5
+   , '배송중'
+   , SYSDATE
+   );
+INSERT
+   INTO TRADE
+   VALUES
+   (
+     SEQ_TRADE.NEXTVAL
+   , 4
+   , 5
+   , '배송완료'
+   , SYSDATE
+   );
+INSERT
+   INTO TRADE
+   VALUES
+   (
+     SEQ_TRADE.NEXTVAL
+   , 5
+   , 5
+   , '배송완료'
+   , SYSDATE
+   );
 ----------------------------------------------------------------------- 신고분류 테이블
 CREATE TABLE REPORT_TYPE(
    REPORT_TYPE_NO NUMBER PRIMARY KEY,

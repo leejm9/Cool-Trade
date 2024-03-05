@@ -32,13 +32,10 @@ public class NoticeDetailController extends HttpServlet {
 		
 		
 		int noticeNo = Integer.parseInt(request.getParameter("num"));
-		System.out.println(noticeNo);
 		int result = new NoticeService().increaseCount(noticeNo);
-		System.out.println(result);
 		if(result > 0) { 
 			Notice n = new NoticeService().selectNotice(noticeNo); 
 			
-			System.out.println(n);
 			request.setAttribute("n", n);
 			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);;
 		}else { 

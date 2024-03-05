@@ -15,9 +15,9 @@ public class Member {
 	private String userLevel;
 	private String userStatus;
 	private int caution;
-	
 	private int count;
 	private String productTitle;
+	private int productNo;
 	private String monthEnroll;
 	private Date uploadDate;
 	
@@ -33,6 +33,23 @@ public class Member {
 		super();
 		this.count = count;
 		this.monthEnroll = monthEnroll;
+	}
+	
+	
+	
+	public Member(String userName, int caution, String productTitle, int productNo, Date uploadDate) {
+		super();
+		this.userName = userName;
+		this.caution = caution;
+		this.productTitle = productTitle;
+		this.productNo = productNo;
+		this.uploadDate = uploadDate;
+	}
+
+	public Member(Date enrollDate, int count) {
+		super();
+		this.enrollDate = enrollDate;
+		this.count = count;
 	}
 
 	public Member(int userNo, String userId, String userName, String userStatus, int caution) {
@@ -116,6 +133,30 @@ public class Member {
 		this.userLevel = userLevel;
 		this.userStatus = userStatus;
 		this.caution = caution;
+	}
+	
+
+	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
+			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count,
+			String productTitle, int productNo, String monthEnroll, Date uploadDate) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.phone = phone;
+		this.email = email;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.userLevel = userLevel;
+		this.userStatus = userStatus;
+		this.caution = caution;
+		this.count = count;
+		this.productTitle = productTitle;
+		this.productNo = productNo;
+		this.monthEnroll = monthEnroll;
+		this.uploadDate = uploadDate;
 	}
 
 	public int getUserNo() {
@@ -249,13 +290,22 @@ public class Member {
 	public void setMonthEnroll(String monthEnroll) {
 		this.monthEnroll = monthEnroll;
 	}
+	
+	public int getProductNo() {
+		return productNo;
+	}
+
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
 
 	@Override
 	public String toString() {
 		return "Member [userNo=" + userNo + ", userId=" + userId + ", userPwd=" + userPwd + ", userName=" + userName
 				+ ", nickName=" + nickName + ", phone=" + phone + ", email=" + email + ", enrollDate=" + enrollDate
 				+ ", ondo=" + ondo + ", userLevel=" + userLevel + ", userStatus=" + userStatus + ", caution=" + caution
-				+ ", count=" + count + "]";
+				+ ", count=" + count + ", productTitle=" + productTitle + ", productNo=" + productNo + ", monthEnroll="
+				+ monthEnroll + ", uploadDate=" + uploadDate + "]";
 	}
 	
 }

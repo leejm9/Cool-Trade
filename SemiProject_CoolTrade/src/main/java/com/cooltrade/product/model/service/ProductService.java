@@ -268,6 +268,7 @@ public class ProductService {
 		close(conn);
 		
 		return plist;
+	}
 	public int countUserPopwList() {
 		Connection conn = getConnection();
 		
