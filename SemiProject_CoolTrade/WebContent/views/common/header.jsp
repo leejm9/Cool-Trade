@@ -215,16 +215,16 @@
                             <br>
                         </div>
                         <div class="category_hover-ds flex-ds">
-                            <a href="#">패션의류</a>
-                            <a href="#">패션잡화</a>
-                            <a href="#">뷰티</a>
-                            <a href="#">전자제품</a>
-                            <a href="#">리빙/생활</a>
-                            <a href="#">가구/인테리어</a>
-                            <a href="#">반려동물</a>
-                            <a href="#">도서/음반/문구</a>
-                            <a href="#">상품권</a>
-                            <a href="#">무료나눔</a>
+                            <a href="<%=contextPath %>/search.po?cno=C1">패션의류</a>
+                            <a href="<%=contextPath %>/search.po?cno=C2">패션잡화</a>
+                            <a href="<%=contextPath %>/search.po?cno=C3">뷰티</a>
+                            <a href="<%=contextPath %>/search.po?cno=C4">전자제품</a>
+                            <a href="<%=contextPath %>/search.po?cno=C5">리빙/생활</a>
+                            <a href="<%=contextPath %>/search.po?cno=C6">가구/인테리어</a>
+                            <a href="<%=contextPath %>/search.po?cno=C7">반려동물</a>
+                            <a href="<%=contextPath %>/search.po?cno=C8">도서/음반/문구</a>
+                            <a href="<%=contextPath %>/search.po?cno=C9">상품권</a>
+                            <a href="<%=contextPath %>/search.po?cno=C10">무료나눔</a>
                         </div>
                     </div>
                     <div id="notice-ds">

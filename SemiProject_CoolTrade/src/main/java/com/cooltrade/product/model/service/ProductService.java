@@ -339,5 +339,198 @@ public class ProductService {
 		return result1 * result2;
 		
 	}
+<<<<<<< HEAD
    
 }
+=======
+	
+	public int deletePopularSearch() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().deletePopularSearch(conn);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int insertPopularSearch(String[] s) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().insertPopularSearch(conn, s);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+		
+	}
+	
+	public ArrayList<Images> selectImages(int pno) {
+		Connection conn = getConnection();
+		
+		ArrayList<Images> imglist = new ProductDao().selectImages(conn, pno);
+		
+		close(conn);
+		
+		return imglist;
+	}
+	
+	public ArrayList<Product> searchKeywords(ArrayList<String> extractedKeywords, String cpCategory, int pno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> plist = new ProductDao().searchKeywords(conn, extractedKeywords, cpCategory, pno);
+		
+		close(conn);
+		
+		return plist;
+	}
+	
+	public ArrayList<Images> getTitleImg(ArrayList<Product> plist){
+		Connection conn = getConnection();
+		
+		ArrayList<Images> imglist = new ProductDao().getTitleImg(conn, plist);
+		
+		close(conn);
+		
+		return imglist;
+	}
+	
+	public ArrayList<Product> selectRecommendProduct(int pno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> plist = new ProductDao().selectRecommendProduct(conn, pno);
+		
+		close(conn);
+		
+		return plist;
+	}
+	public int countUserPopwList() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().countUserPopwList(conn);
+		
+		close(conn);
+		
+		return result;
+			
+	}
+	
+	public ArrayList<Search> selectUserPopwList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Search> list = new ProductDao().selectUserPopwList(conn,pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> selectDaySales(){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().selectDaySales(conn);
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> searchByCategory(String cno){
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().searchByCategory(conn, cno);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public String getCategoryName(String cno) {
+		Connection conn = getConnection();
+		
+		String CategoryName = new ProductDao().getCategoryName(conn, cno);
+		
+		close(conn);
+		
+		return CategoryName;
+	}
+	
+	public int countProductByCat(String cno) {
+		Connection conn = getConnection();
+		
+		int pCount = new ProductDao().countProductByCat(conn, cno);
+		
+		close(conn);
+		
+		return pCount;
+	}
+	
+	public ArrayList<Product> arrangeByDateC(String cno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangeByDateC(conn, cno);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceHighC(String cno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceHighC(conn, cno);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowC(String cno){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceLowC(conn, cno);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangeByDateS(String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangeByDateS(conn, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceHighS(String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceHighS(conn, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowS(String search){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceLowS(conn, search);
+		
+		close(conn);
+		
+		return list;
+	}
+}
+>>>>>>> ds

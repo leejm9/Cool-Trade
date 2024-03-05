@@ -1,11 +1,14 @@
+<%@page import="com.cooltrade.product.model.vo.Images"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%
 	ArrayList<Product> searchList = (ArrayList<Product>)request.getAttribute("searchList");
+	ArrayList<Images> imgList = (ArrayList<Images>)request.getAttribute("imgList");
 	ArrayList<Category> catList = (ArrayList<Category>)request.getAttribute("catList");
 	int pCount = (int)request.getAttribute("pCount");
 	String search = (String)request.getAttribute("search");
+	String cno = (String)request.getAttribute("cno");
 %>
 <!DOCTYPE html>
 <html>
@@ -21,7 +24,7 @@
 			<div class="category_list-ds flex-ds">
 				<%for(Category c : catList) {%>
 				<div class="cat-list-ds">
-					<a href="<%=contextPath%>/catlist?cno=<%=c.getCategoryNo()%>">
+					<a href="<%=contextPath%>/search.po?cno=<%=c.getCategoryNo()%>">
 						<div class="category_name-ds"><%=c.getCategoryName()%></div>
 						<div class="searched_items-ds"><%=c.getCategoryCount()%></div>
 					</a>
@@ -34,35 +37,93 @@
 				<span style="color: #04b4fc;"><%=search%></span>의 검색결과 <span style="color: rgb(136 136 136);"><%=pCount%>개</span>
 			</div>
 			<div>
-				<a href="#" class="aline-ds">최신순</a>
-				<a href="#" class="aline-ds">저가순</a>
-				<a href="#">고가순</a>
+				<a onclick="productListOrder(1)" class="aline-ds">최신순</a>
+				<a onclick="productListOrder(2)" class="aline-ds">저가순</a>
+				<a onclick="productListOrder(3)">고가순</a>
 			</div>
 		</div>
+	
+		<script>
+			function productListOrder(order){
+				let search = '<%=search%>';
+				let cno = '<%=cno%>';
+				$.ajax({
+					url: 'listOrder.po',
+					data : {order : order,
+							search: search,
+							cno : cno},
+					success : function(response){
+						arrangeList(response);
+					},
+					error : function(){
+						console.log("failed to load by order")
+					}
+				});
+			}
+			function arrangeList(data){
+				let plist = data.plist;
+				let imglist = data.imgList
+				
+				const productList = $("#search_content-ds");					
+				productList.empty();
+				
+				plist.forEach(function(product){
+					let img = imglist.find(i => i.refPno == product.productNo);
+			        let imagePath = img ? img.imgPath + img.changeName : "resources/images/noImage.png";
+			        let productHTML = '<div class="product_result-ds">'
+			        				+ '<a href="<%=contextPath%>/detail.po?pno=' + product.productNo + '" class="flex-ds show_detail-ds" style="flex-direction: column;" >'
+			        				+ '<div class="img_container-ds">'
+			        				+ '<img src="' + imagePath + '" alt="" class="product_thumbnail-ds">'
+			        				+ '</div>'
+			        				+ '<div class="search_title_price-ds">'
+			        				+ '<div class="search_ptitle-ds">'
+									+ product.productName
+									+ '</div>'
+									+ '<div class="search_price_time-ds flex-ds" style="justify-content: space-between;">'
+									+ '<div class="search_price-ds">'
+									+ product.price
+									+ '</div>'
+									+ '<div class="search_time-ds">' + product.timeDiff + '</div>'	
+									+ '</div>'
+									+ '</div>'
+									+ '<div class="country_location-ds flex-ds" style="align-items: center;width: 182px;height: 40px;">'
+									+ '<img src="https://cdn-icons-png.flaticon.com/512/535/535239.png" alt="위치 이미지" width="15" height="17" style="margin: 0px 10px;">'
+									+ product.zone
+									+ '</div>'
+									+ '</a>'
+									+ '</div>'
+									+ '</div>';
+									
+					productList.append(productHTML);
+				})
+			}
+			
+		</script>
+
 
 		<%if(searchList.size() != 0) {%>
 		<!-- 검색결과가 있는 경우-->
 		<div id="search_content-ds">
-		<%for(Product p : searchList){ %>
+		<%for(int i = 0; i < searchList.size(); i++){ %>
 			 <div class="product_result-ds">
-				<a href="<%=contextPath%>/detail.po?pno=<%=p.getProductNo()%>" class="flex-ds show_detail-ds" style="flex-direction: column;" >
+				<a href="<%=contextPath%>/detail.po?pno=<%=searchList.get(i).getProductNo()%>" class="flex-ds show_detail-ds" style="flex-direction: column;" >
 					<div class="img_container-ds">
-						<img src="resources/images/돋보기.png" alt="" class="product_thumbnail-ds">
+						<img src="<%=imgList.get(i).getImgPath()+imgList.get(i).getChangeName() %>" alt="" class="product_thumbnail-ds">
 					</div>
 					<div class="search_title_price-ds">
 						<div class="search_ptitle-ds">
-							<%=p.getProductName()%>
+							<%=searchList.get(i).getProductName()%>
 						</div>
 						<div class="search_price_time-ds flex-ds" style="justify-content: space-between;">
 							<div class="search_price-ds">
-								<%=p.getPrice()%>
+								<%=searchList.get(i).getPrice()%>
 							</div>
-							<div class="search_time-ds"><%=p.getTimeDiff() %></div>	
+							<div class="search_time-ds"><%=searchList.get(i).getTimeDiff() %></div>	
 						</div>
 					</div>
-					<div class="country_location-ds flex-ds" style="align-items: center;width: 192px;height: 40px;">
+					<div class="country_location-ds flex-ds" style="align-items: center;width: 182px;height: 40px;">
 						<img src="https://cdn-icons-png.flaticon.com/512/535/535239.png" alt="위치 이미지" width="15" height="17" style="margin: 0px 10px;">
-						<%=p.getZone()%>
+						<%=searchList.get(i).getZone()%>
 					</div>
 				</a>
 			</div>
