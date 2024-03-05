@@ -904,6 +904,7 @@ public class ProductDao {
 		} finally {
 			close(pstmt);
 		}
+		System.out.println("상품수정 다오" + result);
 		return result;
 	}
 	

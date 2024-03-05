@@ -67,7 +67,7 @@ public class MemberBuyListController extends HttpServlet {
 		//request.setAttribute("result", result);
 		
 		request.getRequestDispatcher("views/myPage/buyList.jsp").forward(request, response);
-	
+		
 	}
 
 	/**
