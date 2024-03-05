@@ -44,8 +44,6 @@
 	<entry key="selectListCount">
 		SELECT COUNT(*) count
 		  FROM MEMBER
-		 WHERE USER_LEVEL IN ('U','C')
-		   AND USER_STATUS = 'Y'
 	</entry>
 	
 	<entry key="selectList">
@@ -62,11 +60,8 @@
 		                     , USER_LEVEL
 		                     , CAUTION
 		                  FROM MEMBER 
-		                 WHERE USER_LEVEL IN ('U','C')
-		                   AND USER_STATUS = 'Y'
-		                   
 		                 ORDER
-		                    BY USER_NO DESC
+		                    BY ENROLL_DATE DESC
 		                    ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
@@ -213,13 +208,13 @@
 	
 	<entry key="deleteMember">
 		UPDATE MEMBER
-		   SET USER_STATUS = 'Y'
+		   SET USER_STATUS = 'N'
 		 WHERE USER_NO = ?
 	</entry>
 	
 	<entry key="recoveryMember">
 		UPDATE MEMBER
-		   SET USER_STATUS = 'N'
+		   SET USER_STATUS = 'Y'
 		 WHERE USER_NO = ?
 	</entry>
 	
@@ -294,6 +289,163 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-
+	<entry key="countOndoList">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE ONDO &lt;= 10.0
+	</entry>
 	
+	<entry key="countCbtnList">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE USER_LEVEL = 'C'
+	</entry>
+	
+	<entry key="countSearchList">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE USER_ID LIKE '%' || ? || '%'
+		    OR USER_NAME LIKE '%' || ? || '%'
+	</entry>
+
+	<entry key="selectOndoList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , ENROLL_DATE
+		                     , ONDO 
+		                     , USER_LEVEL
+		                     , CAUTION
+		                  FROM MEMBER 
+		                 WHERE USER_STATUS = 'Y'
+		                   AND ONDO &lt;= 10.0
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectCbtnList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , ENROLL_DATE
+		                     , ONDO 
+		                     , USER_LEVEL
+		                     , CAUTION
+		                  FROM MEMBER 
+		                 WHERE USER_STATUS = 'Y'
+		                   AND ONDO &lt;= 10.0
+		                   AND USER_LEVEL = 'C'
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectSearchList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , ENROLL_DATE
+		                     , ONDO 
+		                     , USER_LEVEL
+		                     , CAUTION
+		                  FROM MEMBER 
+		                 WHERE USER_STATUS = 'Y'
+		                   AND (USER_ID LIKE '%' || ? || '%'
+        					OR USER_NAME LIKE '%' || ? || '%')
+		                 ORDER
+		                    BY ENROLL_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="countBListSearch">
+		SELECT COUNT(*) count
+		  FROM MEMBER
+		 WHERE USER_LEVEL = 'B'
+		   AND CAUTION &gt;= 3
+		   AND USER_ID = ?
+		   AND USER_NAME = ?
+	</entry>
+	
+	<entry key="selectBListSearch">
+		SELECT *
+			  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_ID
+		                     , USER_NAME
+		                     , CAUTION
+		                     , USER_STATUS
+		                  FROM MEMBER 
+		                 WHERE USER_LEVEL = 'B'
+		                   AND CAUTION &gt;= 3
+		                   AND (USER_ID LIKE '%' || ? || '%'
+		  				   OR USER_NAME LIKE '%' || ? || '%') 
+		                 ORDER
+		                    BY USER_NO DESC
+		                    ) A
+		       		 )
+			 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="countSearchBoard">
+		 SELECT 
+               	COUNT(*) count
+           FROM PRODUCT P
+           JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+          WHERE (PRODUCT_NAME LIKE '%' || ? || '%'
+             OR USER_NAME LIKE '%' || ? || '%' )
+	</entry>
+	
+	<entry key="selectSearchBoard">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       USER_NO
+		                     , USER_NAME
+		                     , CAUTION
+		                     , PRODUCT_NAME
+		                     , UPLOAD_DATE
+		                  FROM PRODUCT P
+		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+		                 WHERE (PRODUCT_NAME LIKE '%' || ? || '%'
+             			   	OR USER_NAME LIKE '%' || ? || '%' )
+		                 ORDER
+		                    BY UPLOAD_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectMember">
+		SELECT
+		      *
+		  FROM MEMBER
+		 WHERE USER_NO = ?
+	</entry>
 </properties>

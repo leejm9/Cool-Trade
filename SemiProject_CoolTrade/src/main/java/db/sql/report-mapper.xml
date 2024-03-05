@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectRecentReport">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                 SELECT 
+		                       REPORT_CATE
+		                     , PRODUCT_NAME
+		                     , USER_NAME
+		                     , REPORT_DATE
+		                  FROM MEMBER M
+		                  JOIN PRODUCT P ON (M.USER_NO=P.SELLER_NO)
+		                  JOIN REPORT R USING (PRODUCT_NO)
+		                  JOIN REPORT_TYPE RT USING (REPORT_TYPE_NO)
+		                 ORDER
+		                    BY 4 DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN 1 AND 5
+	</entry>
+
+</properties>

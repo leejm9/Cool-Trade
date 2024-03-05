@@ -268,6 +268,32 @@ public class ProductService {
 		close(conn);
 		
 		return plist;
+	public int countUserPopwList() {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().countUserPopwList(conn);
+		
+		close(conn);
+		
+		return result;
+			
+	}
+	
+	public ArrayList<Search> selectUserPopwList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Search> list = new ProductDao().selectUserPopwList(conn,pi);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> selectDaySales(){
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().selectDaySales(conn);
+		close(conn);
+		return list;
 	}
 	
 }

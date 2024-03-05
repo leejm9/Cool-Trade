@@ -34,18 +34,28 @@ public class ManagerBlackListController extends HttpServlet {
 	 */
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int listCount; 	 
+		String bsearch = request.getParameter("bsearch");
+		
+	    int cpage = 1; 
+	    if (request.getParameter("cpage") != null) {
+	        cpage = Integer.parseInt(request.getParameter("cpage"));
+	    }
+	    System.out.println(cpage);
+		int listCount = 0 ; 	 
 		int currentPage; 
 		int pageLimit;   
 		int boardLimit;  
 		
 		int maxPage;	 
 		int startPage;	 
-		int endPage;	 
+		int endPage;	
 		
-		listCount = new MemberService().selectBlackListCount();
-		
-		currentPage = Integer.parseInt(request.getParameter("cpage"));
+		currentPage = cpage;
+		if(bsearch != null) {
+			listCount = new MemberService().countBListSearch(bsearch);
+		}else {
+			listCount = new MemberService().selectBlackListCount();
+		}
 		
 		pageLimit = 5;
 		
@@ -62,9 +72,14 @@ public class ManagerBlackListController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-	
-		ArrayList<Member> list = new MemberService().selectBlackList(pi);
 		
+		ArrayList<Member> list = new ArrayList<Member>();
+		if(bsearch == null) {
+			list = new MemberService().selectBlackList(pi);
+		}else {
+			list = new MemberService().selectBListSearch(pi,bsearch);
+		}
+
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		

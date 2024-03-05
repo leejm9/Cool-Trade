@@ -10,20 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.common.PageInfo;
-import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Search;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class ManagerBoardPageController
+ * Servlet implementation class AjaxPopwPageController
  */
-@WebServlet("/board.in")
-public class ManagerBoardPageController extends HttpServlet {
+@WebServlet("/popw.page")
+public class AjaxPopwPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerBoardPageController() {
+    public AjaxPopwPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +33,6 @@ public class ManagerBoardPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String search = request.getParameter("boardsearch");
 		int listCount; 	 
 		int currentPage; 
 		int pageLimit;   
@@ -41,24 +41,15 @@ public class ManagerBoardPageController extends HttpServlet {
 		int maxPage;	 
 		int startPage;	 
 		int endPage;	 
-		if(search == null) {
-			listCount = new MemberService().countBoardList();
-		}else {
-			listCount = new MemberService().countSearchBoard(search);
-		}
+		
+		listCount = new ProductService().countUserPopwList();
+		
+		currentPage = Integer.parseInt(request.getParameter("cbtn"));
 		
 		
-		int cpage = 1; 
-	    if (request.getParameter("cpage") != null) {
-	        cpage = Integer.parseInt(request.getParameter("cpage"));
-	    }
-	    currentPage = cpage;
+		pageLimit = 2;
 		
-		
-		
-		pageLimit = 5;
-		
-		boardLimit = 10;
+		boardLimit = 5;
 		
 		maxPage = (int)Math.ceil((double)listCount / boardLimit); 
 		
@@ -71,19 +62,13 @@ public class ManagerBoardPageController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
+	
+		ArrayList<Search> list = new ProductService().selectUserPopwList(pi);
 		
-		ArrayList<Member> list = new ArrayList<Member>();
-		if(search == null) {
-			list = new MemberService().selectBoardList(pi);
-		}else {
-			list = new MemberService().selectSearchBoard(pi,search);
+		if(list != null) {
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(list,response.getWriter());
 		}
-		
-		
-		request.setAttribute("pi", pi);
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/manager/managerBoardPage.jsp").forward(request, response);
 		
 	}
 

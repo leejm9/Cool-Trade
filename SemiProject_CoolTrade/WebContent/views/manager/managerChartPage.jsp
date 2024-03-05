@@ -64,6 +64,7 @@
 									$.ajax({
 									    url: 'salesgraph.me',
 									    method: 'GET',
+									    data:{chart:2},
 									    success: function(data) {
 									        console.log(data);
 									        
@@ -320,7 +321,7 @@
 		                                var percentages = [];
 		                                for(var i = 0; i < data.length; i++) {
 		                                    labels.push(data[i].categoryNo);
-		                                    percentages.push((data[i].count / total) * 100);
+		                                    percentages.push((data[i].count / total) * 100 );
 		                                }
 		                                var ctx = document.getElementById("myPieChart");
 		                                var myPieChart = new Chart(ctx, {

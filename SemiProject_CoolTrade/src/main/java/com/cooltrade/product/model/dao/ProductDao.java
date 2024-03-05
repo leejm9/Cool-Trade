@@ -388,7 +388,7 @@ public class ProductDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				list.add(new Product(rset.getString("categoryname"),
+				list.add(new Product(rset.getString("category_name"),
 									 rset.getInt("count")
 									 ));
 			}
@@ -718,28 +718,123 @@ public class ProductDao {
 		ResultSet rset = null;
 		ArrayList<Product> plist = new ArrayList<Product>();
 		String sql = prop.getProperty("selectRecommendProduct");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			while(rset.next()) {
+			Product p = new Product();
+					p.setProductNo(rset.getInt("product_no"));
+					p.setProductName(rset.getString("product_name"));
+					
+					plist.add(p);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+			// TODO Auto-generated catch block
+		}
+		return plist;
+	}
+	}
+	
+	public int countUserPopwList(Connection conn) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("countUserPopwList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt); 
+		}
+		return result;
+		
+	}
+	
+	public ArrayList<Search> selectUserPopwList(Connection conn, PageInfo pi){
+		ArrayList<Search> list = new ArrayList<Search>();
+		Search s = null;
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectUserPopwList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setInt(1, pno);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Product p = new Product();
-				p.setProductNo(rset.getInt("product_no"));
-				p.setProductName(rset.getString("product_name"));
 				
-				plist.add(p);
+				list.add(new Search(rset.getString("user_popw_word"),
+									rset.getInt("user_popw_order")
+									));
 			}
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			close(rset);
 			close(pstmt);
 		}
-		return plist;
+		
+		return list;
+		
 	}
+	
+	public ArrayList<Product> selectDaySales(Connection conn){
+		ArrayList<Product> list = new ArrayList<Product>();
+		Product p = null;
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectDaySales");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Product(rset.getInt("price"),
+									 rset.getString("sell_date")
+									 ));
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
 }

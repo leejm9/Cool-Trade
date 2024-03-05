@@ -364,4 +364,37 @@
 		 WHERE 
 		       RNUM &lt;= 20
 	</entry>
+	<entry key="countUserPopwList">
+			    SELECT COUNT(user_popw_word) count
+			    FROM t_user_popular_word
+	</entry>
+	
+	<entry key="selectUserPopwList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM(
+		            SELECT USER_POPW_ORDER, USER_POPW_WORD
+		              FROM t_user_popular_word 
+		             ORDER
+		                BY user_popw_order
+		                ) A
+		    )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectDaySales">
+		SELECT
+		       TO_CHAR(SELL_DATE,'MM/DD') sell_date
+		     , SUM(PRICE) price
+		  FROM PRODUCT
+		  JOIN TRADE USING(PRODUCT_NO)
+		 WHERE TO_CHAR(SELL_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
+		   AND SELL_DATE > SYSDATE-7
+		 GROUP
+		    BY sell_date
+		 ORDER
+            BY sell_date
+	</entry>
+	
 </properties>

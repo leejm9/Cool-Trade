@@ -10556,7 +10556,7 @@ a:focus {
     font-family: 'Font Awesome 5 Free';
   }
   .sidebar .nav-item .nav-link[data-toggle="collapse"].collapsed::after {
-    content: '\f105';
+    content: '';
   }
   .sidebar .sidebar-brand .sidebar-brand-icon i {
     font-size: 2rem;

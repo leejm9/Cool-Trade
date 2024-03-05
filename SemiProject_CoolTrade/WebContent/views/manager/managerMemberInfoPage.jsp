@@ -38,7 +38,21 @@
     <!-- Custom styles for this template-->
     <link href="resources/css/sb-admin-2.css" rel="stylesheet">
 
-    
+    <style>
+    	#searchBtn{
+    		display:flex;
+    		margin-bottom:5px;
+    	}
+    	#searchBtn2 {
+   		 	margin-left: auto; /* #searchBtn1 영역을 왼쪽으로 밀어냄 */
+   		 	display:flex;
+		}
+		#dataTable tbody td{
+			
+			cursor:pointer;
+		}
+		
+    </style>
 
 </head>
 
@@ -57,6 +71,36 @@
                             <h6 class="m-0 font-weight-bold text-primary">회원 조회 테이블</h6>
                         </div>
                         <div class="card-body">
+                        <div id="searchBtn">
+	                        <div id="searchBtn1">
+		                        <form action="<%= contextPath %>/member.in?cpage=1">
+		                        <input type="text" id="searchForm" name="search">
+		                        <button type="submit" style="border-color:white;" onclick="return memSearch();">검색</button>
+		                        </form>
+	                        </div>
+	                        <div id="searchBtn2" style="float:right; ">
+	                        	<select id="memDropDown">
+	                        		<option value="1" selected>최신순</option>
+	                        		<option value="2">온도10도이하만</option>
+	                        		<option value="3">쿨거래사용자만</option>
+	                        	</select>
+	                        </div>
+                        </div>
+                        
+                        <script>
+                        $(document).ready(function(){
+    					    $('#memDropDown').change(function(){
+    					        var selectedValue = $('#memDropDown').val();
+    					        location.href = '<%= contextPath %>/member.in?cpage=1&dropDownValue=' + selectedValue;
+        					    
+    					    });
+    					     // 페이지가 로드될 때 현재 선택된 드롭다운 값으로 설정
+    					    var currentDropDownValue = '<%= request.getParameter("dropDownValue") %>';
+    					    $('#memDropDown').val(currentDropDownValue);
+    					    
+    					});
+                        	
+						</script>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -78,7 +122,7 @@
 						                </tr>
 										<% }else{ %>
 	                                    	<% for(Member m : list){ %>
-	                                    		<% if(m.getCaution() < 3){ %>
+	                                    		
 		                                        <tr>
 		                                            <td><%= m.getUserNo() %></td>
 		                                            <td><%= m.getUserId() %></td>
@@ -88,7 +132,7 @@
 		                                            <td><%= m.getUserLevel() %></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <th>
-		                                            <% if(m.getOndo()>= 40.0f) { %>
+		                                            <% if(m.getOndo()<= 10.0f) { %>
 		                                            	<% if("C".equals(m.getUserLevel())) {%>
 		                                            		<button class="btn btn-primary" disabled>쿨거래사용자</button>
 		                                            	<% }else{ %>
@@ -97,13 +141,19 @@
 		                                            <% } %>
 		                                            </th>
 		                                        </tr>
-		                                        <% } %>
+		                                        
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
                                 
                                 <script>
+	                                $(function(){
+	                            		$("#dataTable>tbody>tr").click(function(){
+	                            			location.href = '<%= contextPath %>/memInfo.detail?uno=' + $(this).children().eq(0).text();
+	                            		})
+	                            	})
+                                
                                 	function coolTrade(userNo,currentPage,button){
                                 		var btn = $(button); 
                                 		$.ajax({
@@ -122,18 +172,32 @@
                                 			
                                 		})
                                 	}
+                                	
+                                	
                                 </script>
                                 
                                 <div id="btn" align="center">
+                                <% if(request.getParameter("search") != null) {%>
 	                                <% if(currentPage > 1){ %>
-				                    <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
+				                    <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') - 1)+'&dropDownValue=' + $('#memDropDown').val()+'&search=' + <%= request.getParameter("search") %>;">&lt;</button>
 				                    <% } %>
 				                    <% for(int i=1; i<= maxPage;i++){ %>
-						            <button onclick="location.href='<%= contextPath %>/member.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <button onclick="location.href='<%= contextPath %>/member.in?cpage=<%= i %>&search=<%= request.getParameter("search") %>';"><%= i %></button>
 						            <% } %>
 						            <% if(currentPage != maxPage) { %>
-						            <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
+						            <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') + 1)+'&dropDownValue=' + $('#memDropDown').val()+'&search=' + <%= request.getParameter("search") %>;">&gt;</button>
 									<% } %> 
+								<% }else{ %>
+									<% if(currentPage > 1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') - 1)+'&dropDownValue=' + $('#memDropDown').val();">&lt;</button>
+				                    <% } %>
+				                    <% for(int i=1; i<= maxPage;i++){ %>
+						            <button onclick="location.href='<%= contextPath %>/member.in?cpage=<%= i %>&dropDownValue=' + $('#memDropDown').val();"><%= i %></button>
+						            <% } %>
+						            <% if(currentPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/member.in?cpage='+ (parseInt('<%= currentPage %>') + 1)+'&dropDownValue=' + $('#memDropDown').val();">&gt;</button>
+									<% } %> 
+								<% } %>
 								</div>
 
                             </div>

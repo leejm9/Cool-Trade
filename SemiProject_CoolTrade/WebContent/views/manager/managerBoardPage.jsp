@@ -17,7 +17,13 @@
 <head>
 
     <title>SB Admin 2 - Dashboard</title>
-
+	
+	<style>
+		#searchBtn2{
+			margin-bottom:5px;
+		}
+		
+	</style>
 </head>
 
 <body id="page-top">
@@ -35,6 +41,14 @@
                             <h6 class="m-0 font-weight-bold text-primary">게시물 조회</h6>
                         </div>
                         <div class="card-body">
+                        	 <div id="searchBtn">
+		                        <div id="searchBtn2">
+			                        <form action="<%= contextPath %>/board.in?cpage=1">
+			                        <input type="text" id="boardForm" name="boardsearch">
+			                        <button type="submit" style="border-color:white;" >검색</button>
+			                        </form>
+		                        </div>
+	                        </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -73,7 +87,7 @@
 				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
 				                    <% } %>
 				                    <% for(int i=1; i<= maxPage;i++){ %>
-						            <button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
 						            <% } %>
 						            <% if(currentPage != maxPage) { %>
 						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>

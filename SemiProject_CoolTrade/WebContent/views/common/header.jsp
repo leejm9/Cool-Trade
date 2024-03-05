@@ -1,3 +1,4 @@
+<%@page import="com.cooltrade.product.model.vo.Search"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
 <%@page import="com.cooltrade.product.model.vo.Product"%>
 <%@page import="com.cooltrade.product.model.vo.Category"%>
@@ -27,6 +28,34 @@
 <script src="resources/js/cooltrade_ds.js"></script>
 <link rel="stylesheet" href="resources/css/cooltrade_ds.css">
 <link rel="stylesheet" href="resources/css/cooltrade_cr.css">
+
+<style>
+ 		#div1{
+            display: flex;
+            margin-top: 5px;
+            white-space: nowrap;
+            
+        }
+        #div1 button{
+        	width:15px;
+        	height:22px;
+        	border: 1px solid #04b4fc; 
+        	border-radius: 10px;
+            color: #04b4fc;
+            background-color:white;
+        }
+        #div1 tr>*{
+        	line-height:25px;
+        	font-size:10px;
+        }
+        #div1 th{
+        	width: 100px; 
+        	text-align:center;
+        	font-weight: 2;
+        }
+       
+</style>
+
 </head>
 <body>
 	<%if (alertMsg!=null){ %>
@@ -84,6 +113,77 @@
                             </button>
                         </form>
                         </div>
+                        <div id="div1">
+		                <div>
+		                <button id="popbtn1" onclick="popbtn(1);">&lt;</button>
+		                <button id="popbtn2" onclick="popbtn(2)">&gt;</button>
+		                </div>
+			                <div>
+			                    <table style="width:400px;">
+			                        <tr>
+			                            <td>&nbsp;1.고기&nbsp;</td>
+			                            <td>2.햄버거&nbsp;</td>
+			                            <td>3.피자&nbsp;</td>
+			                            <td>4.핸드폰&nbsp;</td>
+			                            <td>5.전자레인지</td>
+			                        </tr>
+			                    </table>
+			                </div>
+           				</div>
+			            <script>
+			            $(function(){
+			                var cbtn = 1;
+			                function fetchData() {
+			                    $.ajax({
+			                        url: "popw.page",
+			                        data: { cbtn: cbtn },
+			                        success: function(result) {
+			                            $("#div1 td").remove();
+			                            let value = "";
+			                            for (let i = 0; i < result.length; i++) {
+			                                if ((result[i].count) % 5 == 1) {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                } else {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                }
+			                            }
+			                            $("#div1 tr").html(value);
+			                            if (cbtn == 1) {
+			                                cbtn = 2;
+			                            } else {
+			                                cbtn = 1;
+			                            }
+			                            setTimeout(fetchData, 5000);
+			                        },
+			                        error: function() {
+			                            console.log("ajax 통신 실패");
+			                            setTimeout(fetchData, 5000);
+			                        }
+			                    });
+			                }
+			                fetchData();
+			            });
+			            
+		               	function popbtn(cbtn){
+		               		$.ajax({
+		           				url:"popw.page",
+		           				data:{cbtn:cbtn},
+		           				success:function(result){ 
+	           						let value = "";
+		           					for(let i =0; i<result.length; i++){
+		           						if((result[i].count)%5 == 1) {
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+		           		                } else {
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+		           		                }
+		           					}
+		           					$("#div1 tr").html(value);
+		           				}, error:function(){
+		           					console.log("ajax 통신 실패");
+		           				}
+		           			});
+		               	}
+		               </script>
                     </div>
                     <div id="chatSell-ds" class="flex-ds">
                         <div id="chatContainer-ds">
@@ -128,7 +228,7 @@
                         </div>
                     </div>
                     <div id="notice-ds">
-                        공지사항
+                        <a href="<%= contextPath %>/notice.no?cpage=1"  >공지사항</a>
                     </div>
                 </div>
             </div>

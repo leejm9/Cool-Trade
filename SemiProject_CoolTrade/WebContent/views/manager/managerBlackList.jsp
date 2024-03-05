@@ -25,7 +25,12 @@
 
     <title>SB Admin 2 - Dashboard</title>
 
-
+	<style>
+		#searchBtn1{
+			margin-bottom:5px;
+		}
+		
+	</style>
     
 
 </head>
@@ -46,6 +51,15 @@
                             <h6 class="m-0 font-weight-bold text-primary">블랙리스트 조회</h6>
                         </div>
                         <div class="card-body">
+	                        <div id="searchBtn">
+		                        <div id="searchBtn1">
+			                        <form action="<%= contextPath %>/blacklist.in?cpage=1">
+			                        <input type="text" id="bsearchForm" name="bsearch">
+			                        <button type="submit" style="border-color:white;" >검색</button>
+			                        </form>
+		                        </div>
+	                        </div>
+	                        
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
@@ -71,9 +85,9 @@
 		                                            <td><%= m.getUserId() %></td>
 		                                            <td><%= m.getUserName() %></td>
 		                                            <td><%= m.getCaution() %></td>
-		                                            <% if(m.getUserStatus().equals("N")){ %>
+		                                            <% if(m.getUserStatus().equals("Y")){ %>
 		                                            <td><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22);">추방</button></td>
-		                                       		<% }else if(m.getUserStatus().equals("Y")) { %>
+		                                       		<% }else if(m.getUserStatus().equals("N")) { %>
 		                                       		<td><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234);">복구</button></td>
 		                                       		<% } %>
 		                                        </tr>
@@ -117,13 +131,17 @@
                                 
                                 
                                 <div id="btn" align="center">
-	                                <% if(currentPage > 1){ %>
+	                                <% if(startPage!=1){ %>
 				                    <button onclick="location.href='<%= contextPath%>/blacklist.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
 				                    <% } %>
-				                    <% for(int i=1; i<= maxPage;i++){ %>
-						            <button onclick="location.href='<%= contextPath %>/blacklist.in?cpage=' + <%= i %>;"><%= i %></button>
+				                    <% for(int i = startPage; i<=endPage; i++){ %>
+				                    <%if(i == currentPage){ %>
+					                     <button disabled><%=i%></button>
+				                	<%}else{%>
+						            <button onclick="location.href='<%= contextPath %>/blacklist.in?cpage=' + <%= i %>+'&bsearch=<%= request.getParameter("bsearch") %>';"><%= i %></button>
 						            <% } %>
-						            <% if(currentPage != maxPage) { %>
+						            <% } %>
+						            <% if(endPage != maxPage) { %>
 						            <button onclick="location.href='<%= contextPath%>/blacklist.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
 									<% } %> 
 								</div>
