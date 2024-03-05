@@ -588,7 +588,7 @@
                                             <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                         </div>
                                         <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput1" name="image1">
+                                        	<input type="file" class="hidden-file-input" id="fileInput1" name="image1" required>
                                             <img src="" class="hidden-img">
                                             <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
                                         </div>

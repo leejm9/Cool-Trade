@@ -35,6 +35,8 @@ public class ProductSellUpdateFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		System.out.println("왜안와...?");
 
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		ArrayList<Product> pList = new ProductService().updateSellForm(pno);

@@ -8,7 +8,10 @@ import java.util.ArrayList;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Review;
+import com.cooltrade.product.model.vo.ReviewType;
 import com.cooltrade.product.model.vo.Trade;
 
 public class MemberService {
@@ -314,6 +317,21 @@ public class MemberService {
 		close(conn);
 		return list;
 				
+	}
+	
+	public int insertReview(Review r, ArrayList<ReviewType> list, Images img, int uno, int pno) {
+		Connection conn = getConnection();
+		int result1 = new MemberDao().insertReview(conn, r, uno, pno);
+		int result2 = new MemberDao().insertReviewType(conn, list);
+		int result3 = new MemberDao().insertReviewImg(conn, img);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2 * result3;
 	}
 	
 }

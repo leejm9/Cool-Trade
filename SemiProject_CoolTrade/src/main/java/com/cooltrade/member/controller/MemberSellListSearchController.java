@@ -67,8 +67,10 @@ public class MemberSellListSearchController extends HttpServlet {
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("word", word);
 		
 		//System.out.println(list);
+		
 		
 		request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
 		

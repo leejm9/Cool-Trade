@@ -5,6 +5,8 @@
 	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
 	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	String word = (String)request.getAttribute("word");
+	//int result = (int)request.getAttribute("result");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -336,6 +338,14 @@
 		    -moz-appearance: none; /* Firefox 지원 */
 		}
 		
+		.checkbox-input {
+			display: none;
+		}
+		
+		#checkbox-input1, #checkbox-input2, #checkbox-input3, #checkbox-input4, #checkbox-input5, #checkbox-input6 {
+			display: none;
+		}
+		
 
 </style>
 </head>
@@ -489,7 +499,11 @@
 	                                    <button type="button" class="list-select-btn">배송조회</button>
 	                                </td>
 	                                <td>
-	                                    <button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal">후기남기기</button>
+<%-- 	                                	<% if((int)request.getAttribute("result") > 0) { %> --%>
+<!-- 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button> -->
+<%-- 	                                	<% } else { %> --%>
+	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal">후기남기기</button>
+<%-- 	                                	<% } %> --%>
 	                                </td>
 	                                
 	                                <!-- 이용후기 모달 -->
@@ -506,19 +520,20 @@
 										      	<!-- Modal body -->
 										      	<div class="modal-body" align="center">
 										        
-										        	<form action="<%= contextPath %>/reviewForm.me" method="post" id="review-form" enctype="multipart/form-data">
-										        
-										        		<input type="hidden" name="userId" value="#">
+										        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
+										        		<input type="hidden" name="pno" value="<%= t.getProductNo() %>">
+										        		<input type="hidden" name="uno" value="<%= userNo %>">
+										        		<input type="hidden" name="cpage" value="1">
 										        
 									                	<div class="mo-h4"><h4 style="margin:0px;"><%= t.getNickname() %>과의 거래에 만족하셨나요?</h4></div>
 									                	<div class="rating mo-h4" onclick="divBlock();">
 															<h4 style="margin:0px;">
 																<fieldset class="rate">
-									                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="5"><label for="rating5"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating4" name="rating" value="4"><label for="rating4"></label>
+									                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
+									                                <input class="rating__star far fa-star" type="radio" id="rating4" name="rating" value="2"><label for="rating4"></label>
 									                                <input class="rating__star far fa-star" type="radio" id="rating3" name="rating" value="3"><label for="rating3"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating2" name="rating" value="2"><label for="rating2"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating1" name="rating" value="1"><label for="rating1"></label>
+									                                <input class="rating__star far fa-star" type="radio" id="rating2" name="rating" value="4"><label for="rating2"></label>
+									                                <input class="rating__star far fa-star" type="radio" id="rating1" name="rating" value="5"><label for="rating1"></label>
                                                                     <input type="hidden" id="hidden-input-stars" value="">
 									                            </fieldset>
 															</h4>
@@ -527,6 +542,7 @@
 															function divBlock(){
 																document.getElementById('h-review-div').style.display = 'block';
 															}
+															
 														</script>
 														
 														<div id="h-review-div">	
@@ -535,24 +551,23 @@
 																<div><small>해당하는 항목을 모두 골라주세요.</small></div>
 															</div>
 															<div id="se-review">
-																<input type="hidden" id="selectedValuesInput" name="selectedValues">
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 1);" value="1">
-																	친절하고 배려가 넘쳐요.
+																<div class="rv-checkbox" onclick="changeColor(this, 1);">
+																	<input type="checkbox" id="checkbox-input1" name="R1" value="R1">친절하고 배려가 넘쳐요.
 																</div>
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 2);" value="2">
-																	포장이 깔끔해요.
+																<div class="rv-checkbox" onclick="changeColor(this, 2);" value="2">
+																	<input type="checkbox" id="checkbox-input2" name="R2" value="R2">포장이 깔끔해요.
 																</div>
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 3);" value="3">
-																	채팅 답변이 빨라요.
+																<div class="rv-checkbox" onclick="changeColor(this, 3);" value="3">
+																	<input type="checkbox" id="checkbox-input3" name="R3" value="R3">채팅 답변이 빨라요.
 																</div>
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 4);" value="4">
-																	상품 설명과 실제 상품이 동일해요.
+																<div class="rv-checkbox" onclick="changeColor(this, 4);" value="4">
+																	<input type="checkbox" id="checkbox-input4" name="R4" value="R4">상품 설명과 실제 상품이 동일해요.
 																</div>
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 5);" value="5">
-																	상품 정보가 자세히 적혀있어요.
+																<div class="rv-checkbox" onclick="changeColor(this, 5);" value="5">
+																	<input type="checkbox" id="checkbox-input5" name="R5" value="R5">상품 정보가 자세히 적혀있어요.
 																</div>
-																<div class="rv-checkbox" name="checkReview" onclick="changeColor(this, 6);" value="5">
-																	배송이 빨라요.
+																<div class="rv-checkbox" onclick="changeColor(this, 6);" value="6">
+																	<input type="checkbox" id="checkbox-input6" name="R6" value="R6">배송이 빨라요.
 																</div>
 															</div>
 
@@ -560,11 +575,19 @@
                                                                 <label for="image" id="mo-la">
                                                                 	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
                                                                 </label>
-                                                                <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();">
+                                                                <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();" required>
                                                                 <div id="mo-img-div">
                                                                 	<img id="mo-img" src="#">
                                                                 </div>
                                                             </div>
+                                                            
+                                                            <script>
+                                                            
+                                                            	function changeColor(e, num){
+                                                            		document.getElementById("selectedValuesInput").value = num;
+                                                            	}
+                                                            	
+                                                            </script>
 															
 															<div>
 																<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요."></textarea>
@@ -614,17 +637,38 @@
                     executeRating(ratingStars);
                     
                     // 선택 div 색 바꾸기
+                    /*
                     function changeColor(element) {
 
                         var currentColor = element.style.backgroundColor;
+                        var input = element.querySelector('input[type="checkbox"]');
 
                         if(currentColor != "rgb(44, 44, 44)") {
                             element.style.backgroundColor = "rgb(44, 44, 44)";
                             element.style.color = "white";
+                   	        input.click();
                         } else if(element.style.backgroundColor == "rgb(44, 44, 44)") {
                             element.style.backgroundColor = "";
                             element.style.color = "black";
+                            input.click(false);
                         }                 
+                    }
+                    */
+                    function changeColor(element) {
+                        var input = element.querySelector('input[type="checkbox"]');
+                        
+                        // 체크박스의 선택 여부에 따라 처리
+                        if (!input.checked) {
+                            // 체크되지 않은 경우
+                            element.style.backgroundColor = "rgb(44, 44, 44)";
+                            element.style.color = "white";
+                            input.checked = true; // 체크박스 선택
+                        } else {
+                            // 이미 체크된 경우
+                            element.style.backgroundColor = "";
+                            element.style.color = "black";
+                            input.checked = false; // 체크박스 선택 해제
+                        }
                     }
                     
                     function chooseFile(){
@@ -648,21 +692,45 @@
                 
                 <div class="paging-area" align="center">
                     <div>
-                        <% if(currentPage != 1) { %>
-                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-                        <% } %>
+                    	<% System.out.println("검색어 : " + request.getParameter("search")); %>
+                    	<% if(request.getParameter("search") != null) { %>
+	                        <% if(currentPage != 1) { %>
+	                        	<% System.out.println("검색어가 널이 아니면 들어와야함"); %>
+	                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+	                        <% } %>
+	                        
+	                        <% for(int p=startPage; p<=endPage; p++) { %>
+	                            <% if(p == currentPage) { %>
+	                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+	                            <% } else { %>
+	                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+	                            <% } %>
+	                        <% } %>
+	                        
+	                        <% if(currentPage != maxPage) { %>
+	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+	                        <% } %>
+	                        
+                        <% } else { %>
+                        	<% if(currentPage != 1) { %>
+	                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+	                        <% } %>
+	                        
+	                        <% for(int p=startPage; p<=endPage; p++) { %>
+	                            <% if(p == currentPage) { %>
+	                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+	                            <% } else { %>
+	                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+	                            <% } %>
+	                        <% } %>
+	                        
+	                        <% if(currentPage != maxPage) { %>
+	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+	                        <% } %>
+	                        
+	                    <% } %>
                         
-                        <% for(int p=startPage; p<=endPage; p++) { %>
-                            <% if(p == currentPage) { %>
-                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-                            <% } else { %>
-                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-                            <% } %>
-                        <% } %>
                         
-                        <% if(currentPage != maxPage) { %>
-                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-                        <% } %>
 					</div>
 		        </div>
 

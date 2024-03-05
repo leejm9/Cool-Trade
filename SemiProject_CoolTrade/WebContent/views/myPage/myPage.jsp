@@ -290,7 +290,7 @@
                             <li>
                                 <div>받은후기</div>
                                 <div>
-                                    <a href="#">127</a>
+                                    <a href="<%= contextPath %>/reviewCount.me">127</a>
                                 </div>
                             </li>
                             <li>

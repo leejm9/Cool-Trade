@@ -60,10 +60,11 @@ public class MemberBuyListController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		ArrayList<Trade> list = new MemberService().buyListPo(pi, userNo);
-		
+		//int result = 0;
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		//request.setAttribute("result", result);
 		
 		request.getRequestDispatcher("views/myPage/buyList.jsp").forward(request, response);
 	

@@ -362,7 +362,7 @@
 		  JOIN CATEGORY USING (CATEGORY_NO)
 	 LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
 		 WHERE PRODUCT_NO = ?
-		   AND IMG_STATUS = 'Y'
+	  <!-- AND IMG_STATUS = 'Y'  -->
 	</entry>
 	
 	<entry key="updateProductSell">

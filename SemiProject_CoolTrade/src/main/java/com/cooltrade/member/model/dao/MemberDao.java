@@ -13,7 +13,10 @@ import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Review;
+import com.cooltrade.product.model.vo.ReviewType;
 import com.cooltrade.product.model.vo.Trade;
 
 public class MemberDao {
@@ -985,6 +988,77 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public int insertReview(Connection conn, Review r, int uno, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			pstmt.setInt(2, uno);
+			pstmt.setString(3, r.getReviewDetail());
+			pstmt.setInt(4, r.getScore());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("리뷰 : " + result);
+		return result;
+	}
+	
+	public int insertReviewType(Connection conn, ArrayList<ReviewType> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReviewType");
+		
+		try {
+			
+			for(ReviewType reType : list) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, reType.getReviewType());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("리뷰타입 : " + result);
+		return result;
+	}
+	
+	public int insertReviewImg(Connection conn, Images img) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertReviewImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, img.getOriginName());
+			pstmt.setString(2, img.getChangeName());
+			pstmt.setString(3, img.getImgPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("리뷰이미지 : " + result);
+		return result;
 	}
 	
 }

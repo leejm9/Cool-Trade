@@ -9,6 +9,7 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	String word = (String)request.getAttribute("word");
 %>
 <!DOCTYPE html>
 <html>
@@ -367,7 +368,7 @@
                                     			<% } %>
 	                                    	</div>
 	                                    	<div>
-	                                    		<a href="#"><%= p.getProductName() %></a>
+	                                    		<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><%= p.getProductName() %></a>
 	                                    	</div>
 	                                    </div>
 	                                </td>
@@ -447,26 +448,67 @@
                 
                 <div class="paging-area" align="center">
                     <div>
-                        <% if(currentPage != 1) { %>
-                           	<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-                        <% } %>
-                        
-                        <% for(int p=startPage; p<=endPage; p++) { %>
-                            <% if(p == currentPage) { %>
-                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-                            <% } else { %>
-                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-                            <% } %>
-                        <% } %>
-                        
-                        <% if(currentPage != maxPage) { %>
-                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-                        <% } %>
+                    	<% if(request.getParameter("search") != null) { %>
+	                        <% if(currentPage != 1) { %>
+	                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+	                        <% } %>
+	                        <% for(int p=startPage; p<=endPage; p++) { %>
+	                            	<% if(p == currentPage) { %>
+		                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+		                            <% } else { %>
+		                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+		                            <% } %>
+	                        <% } %>
+	                       	<% if(currentPage != maxPage) { %>
+	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+	                        <% } %>
+	                        
+                   		<% } else {%>  
+                   		
+                   			<% if(request.getParameter("status") != null) { %>
+	                   			<% if(currentPage != 1) { %>
+		                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            	<% if(p == currentPage) { %>
+			                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+			                            <% } else { %>
+			                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+			                            <% } %>
+		                        <% } %>
+		                       	<% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
+		                        
+	                      	<% } else { %>  
+	                      		<% if(currentPage != 1) { %>
+		                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            	<% if(p == currentPage) { %>
+			                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+			                            <% } else { %>
+			                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+			                            <% } %>
+		                        <% } %>
+		                       	<% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
+	                      	<% } %>
+	                      	
+                   		<% } %>
 					</div>
 		        </div>
 		        
 
                 <script>
+                
+                
+                
+                
+                
+                
+                
 
                     $(document).ready(function() {
                         // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가

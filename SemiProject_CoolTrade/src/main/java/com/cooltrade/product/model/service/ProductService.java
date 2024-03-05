@@ -266,6 +266,7 @@ public class ProductService {
 	
 	public ArrayList<Product> updateSellForm(int pno) {
 		Connection conn = getConnection();
+		System.out.println("서비스 pno : " + pno);
 		ArrayList<Product> pList = new ProductDao().updateSellForm(conn, pno);
 		
 		close(conn);

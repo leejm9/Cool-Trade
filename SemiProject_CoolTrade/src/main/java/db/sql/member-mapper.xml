@@ -465,6 +465,62 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="insertReview">
+		INSERT
+		  INTO REVIEW
+		  (
+		    REVIEW_NO
+		  , PRODUCT_NO
+		  , USER_NO
+		  , REVIEW_DETAIL
+		  , SCORE
+		  )
+		  VALUES
+		  (
+		    SEQ_REVIEW.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertReviewType">
+		INSERT
+		  INTO REVIEW_TYPE
+		  (
+		    REVIEW_NO
+		  , REVIEW_TYPE
+		  )
+		  VALUES
+		  (
+		    SEQ_REVIEW.CURRVAL
+		  , ?
+		  )
+	</entry>
+	
+	<entry key="insertReviewImg">
+		INSERT
+		  INTO IMAGES
+		  (
+		    IMG_NO
+		  , REF_RNO
+		  , IMG_LEVEL
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , IMG_PATH
+		  )
+		  VALUES
+		  (
+		    SEQ_IMG.NEXTVAL
+		  , SEQ_REVIEW.CURRVAL
+		  , 1
+		  , ?
+		  , ?
+		  , ?
+		  )
+	</entry>
+	
 
 	
 </properties>

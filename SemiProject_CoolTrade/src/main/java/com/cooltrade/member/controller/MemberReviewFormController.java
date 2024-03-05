@@ -12,9 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.cooltrade.common.MyFileRenamePolicy;
+import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.product.model.service.ProductService;
 import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Review;
+import com.cooltrade.product.model.vo.ReviewType;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
@@ -49,40 +52,74 @@ public class MemberReviewFormController extends HttpServlet {
 			// 전달 파일 업로드
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 		
-			int stars = Integer.parseInt(multiRequest.getParameter("stars"));
+			int uno =  Integer.parseInt(multiRequest.getParameter("uno"));
+			int pno = Integer.parseInt(multiRequest.getParameter("pno"));
+			int cpage = Integer.parseInt(multiRequest.getParameter("cpage"));
 			
-			System.out.println("별점2 : "+stars);
+			int score = Integer.parseInt(multiRequest.getParameter("rating"));
+			String content = multiRequest.getParameter("reviewContent");
+			// String[] reviewType = multiRequest.getParameterValues("reviewType");
+			
+			System.out.println("별점2 : "+ score);
+			System.out.println("콘텐츠 : "+ content);
+			
 			/*
-			for(int i=1; i<=5; i++) {
-				String key = "image" + i;
-				
-				if(multiRequest.getOriginalFileName(key) != null) {
-					Images img = new Images();
-					img.setOriginName(multiRequest.getOriginalFileName(key));
-					img.setChangeName(multiRequest.getFilesystemName(key));
-					img.setImgPath("resources/images_upfiles/");
+			for(int i=0; i<reviewType.length; i++) {
+				if(reviewType[i] != null) {
+					System.out.println("디브 : " + reviewType[i]);
+				}
+			}
+			*/
+			
+			Review r = new Review();
+			r.setProductNo(pno);
+			r.setUserNo(uno);
+			r.setReviewDetail(content);
+			r.setScore(score);
+			
+			ArrayList<ReviewType> list = new ArrayList<ReviewType>();
+			
+			for(int i=1; i<=6; i++) {
+				String key = "R" + i;
+				System.out.println("포문 들어옴" + key);
+				if(multiRequest.getParameter(key) != null) {
+					ReviewType reType = new ReviewType();
+					reType.setReviewType(key);
 					
-					if(i == 1) {
-						img.setImgLevel(1);
-					} else {
-						img.setImgLevel(2);
-					}
-					
-					list.add(img);
-					
-				} 
-				
+					list.add(reType);
+					System.out.println("이프문안에 리스트" + list);
+				}
 			}
 			
-			int result = new ProductService().insertProductSell(p, list);
+			//String image = multiRequest.getParameter("reviewImage");
+			//System.out.println(image);
+			Images img = new Images();
+			
+			for(int i=1; i<2; i++) {
+				String imgKey = "reviewImage";
+				
+				if(multiRequest.getOriginalFileName(imgKey) != null) {
+					img.setOriginName(multiRequest.getOriginalFileName(imgKey));
+					img.setChangeName(multiRequest.getFilesystemName(imgKey));
+					img.setImgPath("resources/images_upfiles/");
+					
+					System.out.println(img);
+				}
+			}
+			
+			int result = new MemberService().insertReview(r, list, img, uno, pno);
+			request.setAttribute("uno", uno);
+			request.setAttribute("pno", pno);
+			request.setAttribute("cpage", cpage);
+			request.setAttribute("result", result);
 			
 			if(result > 0) {
-				request.getSession().setAttribute("alertMsg", "상품이 성공적으로 등록 되었습니다.");
-				request.getRequestDispatcher("views/product/productSellSuccess.jsp").forward(request, response);
+				request.getSession().setAttribute("alertMsg", "후기를 전달했어요");
+				response.sendRedirect(request.getContextPath() + "/buylist.me?uno="+uno+"&cpage="+cpage);
 			} else {
 				System.out.println("실패");
 			}
-			*/
+			
 		}
 		
 	}

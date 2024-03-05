@@ -754,6 +754,7 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
+		System.out.println(pList);
 		return pList;
 	}
 	
