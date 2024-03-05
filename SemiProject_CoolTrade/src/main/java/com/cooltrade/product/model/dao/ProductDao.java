@@ -721,6 +721,8 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
 			while(rset.next()) {
 			Product p = new Product();
 					p.setProductNo(rset.getInt("product_no"));
@@ -736,7 +738,6 @@ public class ProductDao {
 			// TODO Auto-generated catch block
 		}
 		return plist;
-	}
 	}
 	
 	public int countUserPopwList(Connection conn) {
@@ -832,9 +833,289 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		
 		return list;
 	}
 	
+	public ArrayList<Product> searchByCategory(Connection conn, String cno){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchByCategory");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 	
+	public String getCategoryName(Connection conn, String cno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getCategoryName");
+		String CategoryName = "";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				CategoryName = rset.getString("category_name");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return CategoryName;
+	}
+	
+	public int countProductByCat(Connection conn, String cno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("countProductByCat");
+		int pCount = 0;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				pCount = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return pCount;
+	}
+	
+	public ArrayList<Product> arrangeByDateC(Connection conn, String cno){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangeByDateC");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceHighC(Connection conn, String cno){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceHighC");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowC(Connection conn, String cno){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceLowC");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangeByDateS(Connection conn, String search){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangeByDateS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceHighS(Connection conn, String search){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceHighS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowS(Connection conn, String search){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceLowS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setPrice(rset.getInt("price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }

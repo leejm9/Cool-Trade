@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.product.model.service.ProductService;
 import com.cooltrade.product.model.vo.Category;
+import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
 
 /**
@@ -36,23 +37,40 @@ public class SearchProductListController extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String search = request.getParameter("search");
+		String cno = request.getParameter("cno");
+		if(cno != null && search == null) {
+			ArrayList<Category> catList = new ProductService().selectCategoryList();
+			ArrayList<Product> searchList = new ProductService().searchByCategory(cno);
+			ArrayList<Images> imgList = new ProductService().getTitleImg(searchList);
+			String CategoryName = new ProductService().getCategoryName(cno);
+			int pCount = new ProductService().countProductByCat(cno);
+			
+			request.setAttribute("catList", catList);
+			request.setAttribute("searchList", searchList);
+			request.setAttribute("imgList", imgList);
+			request.setAttribute("search", CategoryName);
+			request.setAttribute("pCount", pCount);
+			request.setAttribute("cno", cno);
+			request.getRequestDispatcher("views/product/searchListView.jsp").forward(request, response);
+			
+			
+		}else if(search != null && cno == null) {
 
-		ArrayList<Product> searchList = new ProductService().searchProductList(search);
+			ArrayList<Category> catList = new ProductService().searchCatList(search);
+			ArrayList<Product> searchList = new ProductService().searchProductList(search);
+			ArrayList<Images> imgList = new ProductService().getTitleImg(searchList);
+		
+			int result = new ProductService().insertPopularWord(search);
+			int pCount = new ProductService().countProduct(search);
+			if(result >0) {
+				request.setAttribute("search", search);
+				request.setAttribute("pCount", pCount);
+				request.setAttribute("catList", catList);
+				request.setAttribute("searchList", searchList);
+				request.setAttribute("imgList", imgList);
 
-		ArrayList<Category> catList = new ProductService().searchCatList(search);
-		
-		int result = new ProductService().insertPopularWord(search);
-		
-		
-		int pCount = new ProductService().countProduct(search);
-		
-		if(result >0) {
-		request.setAttribute("search", search);
-		request.setAttribute("pCount", pCount);
-		request.setAttribute("searchList", searchList);
-		request.setAttribute("catList", catList);
-		
-		request.getRequestDispatcher("views/product/searchListView.jsp").forward(request, response);
+				request.getRequestDispatcher("views/product/searchListView.jsp").forward(request, response);
+			}
 		}
 	}
 
