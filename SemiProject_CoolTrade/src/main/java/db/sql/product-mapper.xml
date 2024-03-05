@@ -393,7 +393,6 @@
             BY sell_date
 	</entry>
 	
-<<<<<<< HEAD
 	<entry key="updateSellForm">
 		SELECT
 			   PRODUCT_NO
@@ -466,7 +465,6 @@
 	
 	
 	
-=======
 	<entry key="searchByCategory">
 			  SELECT PRODUCT_NO
      	    	   , SELLER_NO
@@ -642,5 +640,4 @@
          ORDER
             BY PRICE ASC
 	</entry>
->>>>>>> ds
 </properties>

@@ -201,104 +201,6 @@ public class ProductService {
       return endValue;
       
    }
-   
-   public int deletePopularSearch() {
-      Connection conn = getConnection();
-      
-      int result = new ProductDao().deletePopularSearch(conn);
-      
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      close(conn);
-      return result;
-   }
-   
-   public int insertPopularSearch(String[] s) {
-      Connection conn = getConnection();
-      
-      int result = new ProductDao().insertPopularSearch(conn, s);
-      
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      
-      close(conn);
-      
-      return result;
-      
-   }
-   
-   public ArrayList<Images> selectImages(int pno) {
-      Connection conn = getConnection();
-      
-      ArrayList<Images> imglist = new ProductDao().selectImages(conn, pno);
-      
-      close(conn);
-      
-      return imglist;
-   }
-   
-   public ArrayList<Product> searchKeywords(ArrayList<String> extractedKeywords, String cpCategory, int pno){
-      Connection conn = getConnection();
-      
-      ArrayList<Product> plist = new ProductDao().searchKeywords(conn, extractedKeywords, cpCategory, pno);
-      
-      close(conn);
-      
-      return plist;
-   }
-   
-   public ArrayList<Images> getTitleImg(ArrayList<Product> plist){
-      Connection conn = getConnection();
-      
-      ArrayList<Images> imglist = new ProductDao().getTitleImg(conn, plist);
-      
-      close(conn);
-      return imglist;
-      
-   }
-   
-   public ArrayList<Product> selectRecommendProduct(int pno){
-      Connection conn = getConnection();
-      
-      ArrayList<Product> plist = new ProductDao().selectRecommendProduct(conn, pno);
-      
-      close(conn);
-      
-      return plist;
-   }
-   public int countUserPopwList() {
-      Connection conn = getConnection();
-      
-      int result = new ProductDao().countUserPopwList(conn);
-      
-      close(conn);
-      
-      return result;
-         
-   }
-   
-   public ArrayList<Search> selectUserPopwList(PageInfo pi){
-      Connection conn = getConnection();
-      
-      ArrayList<Search> list = new ProductDao().selectUserPopwList(conn,pi);
-      
-      close(conn);
-      return list;
-   }
-   
-   public ArrayList<Product> selectDaySales(){
-      Connection conn = getConnection();
-      
-      ArrayList<Product> list = new ProductDao().selectDaySales(conn);
-      close(conn);
-      return list;
-   }
 
     public ArrayList<Product> updateSellForm(int pno) {
 		Connection conn = getConnection();
@@ -339,10 +241,6 @@ public class ProductService {
 		return result1 * result2;
 		
 	}
-<<<<<<< HEAD
-   
-}
-=======
 	
 	public int deletePopularSearch() {
 		Connection conn = getConnection();
@@ -533,4 +431,3 @@ public class ProductService {
 		return list;
 	}
 }
->>>>>>> ds
