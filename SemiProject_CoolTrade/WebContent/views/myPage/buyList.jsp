@@ -504,104 +504,96 @@
 <%-- 	                                	<% } else { %> --%>
 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal">후기남기기</button>
 <%-- 	                                	<% } %> --%>
-	                                </td>
-	                                
-	                                <!-- 이용후기 모달 -->
-				               		<div class="modal" id="reviewModal">
-									  	<div class="modal-dialog modal-dialog-centered">
-									    	<div class="modal-content">
-									
-										      	<!-- Modal Header -->
-										     	<div class="modal-header" align="center">
-										        	<h4 class="modal-title">후기 남기기</h4>
-										        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-										      	</div>
-										
-										      	<!-- Modal body -->
-										      	<div class="modal-body" align="center">
-										        
-										        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
-										        		<input type="hidden" name="pno" value="<%= t.getProductNo() %>">
-										        		<input type="hidden" name="uno" value="<%= userNo %>">
-										        		<input type="hidden" name="cpage" value="1">
-										        
-									                	<div class="mo-h4"><h4 style="margin:0px;"><%= t.getNickname() %>과의 거래에 만족하셨나요?</h4></div>
-									                	<div class="rating mo-h4" onclick="divBlock();">
-															<h4 style="margin:0px;">
-																<fieldset class="rate">
-									                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating4" name="rating" value="2"><label for="rating4"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating3" name="rating" value="3"><label for="rating3"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating2" name="rating" value="4"><label for="rating2"></label>
-									                                <input class="rating__star far fa-star" type="radio" id="rating1" name="rating" value="5"><label for="rating1"></label>
-                                                                    <input type="hidden" id="hidden-input-stars" value="">
-									                            </fieldset>
-															</h4>
-														</div>
-														<script>
-															function divBlock(){
-																document.getElementById('h-review-div').style.display = 'block';
-															}
-															
-														</script>
-														
-														<div id="h-review-div">	
-															<div id="mo-co2">
-																<div><%= t.getNickname() %> 에게 후기를 남겨주세요.</div>
-																<div><small>해당하는 항목을 모두 골라주세요.</small></div>
-															</div>
-															<div id="se-review">
-																<div class="rv-checkbox" onclick="changeColor(this, 1);">
-																	<input type="checkbox" id="checkbox-input1" name="R1" value="R1">친절하고 배려가 넘쳐요.
-																</div>
-																<div class="rv-checkbox" onclick="changeColor(this, 2);" value="2">
-																	<input type="checkbox" id="checkbox-input2" name="R2" value="R2">포장이 깔끔해요.
-																</div>
-																<div class="rv-checkbox" onclick="changeColor(this, 3);" value="3">
-																	<input type="checkbox" id="checkbox-input3" name="R3" value="R3">채팅 답변이 빨라요.
-																</div>
-																<div class="rv-checkbox" onclick="changeColor(this, 4);" value="4">
-																	<input type="checkbox" id="checkbox-input4" name="R4" value="R4">상품 설명과 실제 상품이 동일해요.
-																</div>
-																<div class="rv-checkbox" onclick="changeColor(this, 5);" value="5">
-																	<input type="checkbox" id="checkbox-input5" name="R5" value="R5">상품 정보가 자세히 적혀있어요.
-																</div>
-																<div class="rv-checkbox" onclick="changeColor(this, 6);" value="6">
-																	<input type="checkbox" id="checkbox-input6" name="R6" value="R6">배송이 빨라요.
-																</div>
-															</div>
 
-                                                            <div id="mo-img-input-area">
-                                                                <label for="image" id="mo-la">
-                                                                	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
-                                                                </label>
-                                                                <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();" required>
-                                                                <div id="mo-img-div">
-                                                                	<img id="mo-img" src="#">
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <script>
-                                                            
-                                                            	function changeColor(e, num){
-                                                            		document.getElementById("selectedValuesInput").value = num;
-                                                            	}
-                                                            	
-                                                            </script>
-															
-															<div>
-																<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요."></textarea>
-															</div>
-									                	
-									                		<div>
-										                		<button type="submit" class="btn btn-sm btn-danger">후기 보내기</button>
-									                		</div>
-									                	</div>
-									      			</form>
-										      	</div>
-								    		</div>
-									  	</div>
-									</div>
+			                                <!-- 이용후기 모달 -->
+						               		<div class="modal" id="reviewModal">
+											  	<div class="modal-dialog modal-dialog-centered">
+											    	<div class="modal-content">
+											
+												      	<!-- Modal Header -->
+												     	<div class="modal-header" align="center">
+												        	<h4 class="modal-title">후기 남기기</h4>
+												        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+												      	</div>
+												
+												      	<!-- Modal body -->
+												      	<div class="modal-body" align="center">
+												        
+												        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
+												        		<input type="hidden" name="pno" value="<%= t.getProductNo() %>">
+												        		<input type="hidden" name="uno" value="<%= userNo %>">
+												        		<input type="hidden" name="cpage" value="1">
+												        
+											                	<div class="mo-h4"><h4 style="margin:0px;"><%= t.getNickname() %>과의 거래에 만족하셨나요?</h4></div>
+											                	<div class="rating mo-h4" onclick="divBlock();">
+																	<h4 style="margin:0px;">
+																		<fieldset class="rate">
+											                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
+											                                <input class="rating__star far fa-star" type="radio" id="rating4" name="rating" value="2"><label for="rating4"></label>
+											                                <input class="rating__star far fa-star" type="radio" id="rating3" name="rating" value="3"><label for="rating3"></label>
+											                                <input class="rating__star far fa-star" type="radio" id="rating2" name="rating" value="4"><label for="rating2"></label>
+											                                <input class="rating__star far fa-star" type="radio" id="rating1" name="rating" value="5"><label for="rating1"></label>
+		                                                                    <input type="hidden" id="hidden-input-stars" value="">
+											                            </fieldset>
+																	</h4>
+																</div>
+																<script>
+																	function divBlock(){
+																		document.getElementById('h-review-div').style.display = 'block';
+																	}
+																	
+																</script>
+																
+																<div id="h-review-div">	
+																	<div id="mo-co2">
+																		<div><%= t.getNickname() %> 에게 후기를 남겨주세요.</div>
+																		<div><small>해당하는 항목을 모두 골라주세요.</small></div>
+																	</div>
+																	<div id="se-review">
+																		<div class="rv-checkbox" onclick="changeColor(this, 1);">
+																			<input type="checkbox" id="checkbox-input1" name="R1" value="R1">친절하고 배려가 넘쳐요.
+																		</div>
+																		<div class="rv-checkbox" onclick="changeColor(this, 2);" value="2">
+																			<input type="checkbox" id="checkbox-input2" name="R2" value="R2">포장이 깔끔해요.
+																		</div>
+																		<div class="rv-checkbox" onclick="changeColor(this, 3);" value="3">
+																			<input type="checkbox" id="checkbox-input3" name="R3" value="R3">채팅 답변이 빨라요.
+																		</div>
+																		<div class="rv-checkbox" onclick="changeColor(this, 4);" value="4">
+																			<input type="checkbox" id="checkbox-input4" name="R4" value="R4">상품 설명과 실제 상품이 동일해요.
+																		</div>
+																		<div class="rv-checkbox" onclick="changeColor(this, 5);" value="5">
+																			<input type="checkbox" id="checkbox-input5" name="R5" value="R5">상품 정보가 자세히 적혀있어요.
+																		</div>
+																		<div class="rv-checkbox" onclick="changeColor(this, 6);" value="6">
+																			<input type="checkbox" id="checkbox-input6" name="R6" value="R6">배송이 빨라요.
+																		</div>
+																	</div>
+		
+		                                                            <div id="mo-img-input-area">
+		                                                                <label for="image" id="mo-la">
+		                                                                	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
+		                                                                </label>
+		                                                                <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();" required>
+		                                                                <div id="mo-img-div">
+		                                                                	<img id="mo-img" src="#">
+		                                                                </div>
+		                                                            </div>
+		                                                            
+																	<div>
+																		<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요."></textarea>
+																	</div>
+											                	
+											                		<div>
+												                		<button type="submit" class="btn btn-sm btn-danger">후기 보내기</button>
+											                		</div>
+											                	</div>
+											      			</form>
+												      	</div>
+										    		</div>
+											  	</div>
+											</div>
+	                                </td>
 	                            </tr>
 							<% } %>
                         </tbody>
