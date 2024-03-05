@@ -562,7 +562,7 @@ public class MemberDao {
             Product p = new Product();
             p.setProductNo(rset.getInt("product_no"));
             p.setProductName(rset.getString("product_name"));
-            p.setPrice(rset.getInt("price"));
+            p.setStrPrice(rset.getString("price"));
             p.setTradeType(rset.getInt("trade_type"));
             p.setSellStatus(rset.getString("sell_status"));
             p.setTitleImg(rset.getString("titleimg"));

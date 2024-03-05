@@ -219,7 +219,7 @@ body{
     color: #04b4fc;
 }
 #chat-ds{
-    margin-right: 15px;
+    margin-left: 15px;
 }
 #chat-ds::after{
     margin-left: 15px;
