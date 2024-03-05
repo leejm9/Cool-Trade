@@ -3,7 +3,6 @@
     
 <%
 	ArrayList<Product> searchList = (ArrayList<Product>)request.getAttribute("searchList");
-	ArrayList<Category> catList = (ArrayList<Category>)request.getAttribute("catList");
 	int pCount = (int)request.getAttribute("pCount");
 	String search = (String)request.getAttribute("search");
 %>
@@ -19,14 +18,12 @@
 		<div class="category_table-ds">
 			<div class="category_header-ds"><h3>카테고리</h3></div>
 			<div class="category_list-ds flex-ds">
-				<%for(Category c : catList) {%>
 				<div class="cat-list-ds">
-					<a href="<%=contextPath%>/catlist?cno=<%=c.getCategoryNo()%>">
+					<a href="<%contextPath%>/catlist?cno=<%=c.getCategoryNo()%>">
 						<div class="category_name-ds"><%=c.getCategoryName()%></div>
 						<div class="searched_items-ds"><%=c.getCategoryCount()%></div>
 					</a>
 				</div>
-				<%} %>
 			</div>
 		</div>
 		<div id="search_header-ds">
@@ -66,9 +63,9 @@
 					</div>
 				</a>
 			</div>
-			 <%} %>
+			 <%}; %>
 		</div>
-		<%}else{ %>
+		<%}else{%>
 		<!-- 검색결과가 없는 경우 -->
 		<div id="no_match_container-ds">
 			<div id="no_match_text-ds" class="flex-ds" align="center">

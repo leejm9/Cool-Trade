@@ -96,8 +96,6 @@
      	        WHERE UPLOAD_TYPE = 'Y'
      	          AND PRODUCT_NAME LIKE '%' || ? || '%'
      	           OR PRODUCT_DESC LIKE '%' || ? || '%'
-     	        ORDER 
-     	           BY PRODUCT_NO DESC
 	</entry> 
 	
 	<entry key="searchCatList">
