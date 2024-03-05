@@ -5,6 +5,7 @@ public class Images {
 	private int imgNo;
 	private int refPno;
 	private int refUno;
+	private int refRno;
 	private int imgLevel;
 	private String originName;
 	private String changeName;
@@ -14,12 +15,13 @@ public class Images {
 
 	public Images() {}
 
-	public Images(int imgNo, int refPno, int refUno, int imgLevel, String originName, String changeName, String imgPath,
+	public Images(int imgNo, int refPno, int refUno, int refRno, int imgLevel, String originName, String changeName, String imgPath,
 			String uploadDate, String imgStatus) {
 		super();
 		this.imgNo = imgNo;
 		this.refPno = refPno;
 		this.refUno = refUno;
+		this.refRno = refRno;
 		this.imgLevel = imgLevel;
 		this.originName = originName;
 		this.changeName = changeName;
@@ -50,6 +52,14 @@ public class Images {
 
 	public void setRefUno(int refUno) {
 		this.refUno = refUno;
+	}
+
+	public int getRefRno() {
+		return refRno;
+	}
+
+	public void setRefRno(int refRno) {
+		this.refRno = refRno;
 	}
 
 	public int getImgLevel() {

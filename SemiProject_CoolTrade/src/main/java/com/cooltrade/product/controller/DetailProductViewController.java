@@ -44,6 +44,9 @@ public class DetailProductViewController extends HttpServlet {
 			ArrayList<Images> imglist = new ProductService().selectImages(pno);
 			request.setAttribute("p", p);
 			request.setAttribute("imglist",	imglist);
+			String uploadType = p.getUploadType();
+			System.out.println(uploadType);
+			
 			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
 		}
 	}

@@ -27,6 +27,10 @@ public class MemberLikeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
+		
+		
+		
 		request.getRequestDispatcher("views/myPage/likeList.jsp").forward(request, response);
 	
 	}

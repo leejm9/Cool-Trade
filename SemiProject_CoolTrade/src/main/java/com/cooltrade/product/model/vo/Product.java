@@ -24,6 +24,7 @@ public class Product {
 	private int pieces;
 	private String sellStatus;
 	private String titleImg;
+	private String strPrice;
 	
 	public Product() {}
 	
@@ -100,6 +101,36 @@ public class Product {
 		this.tradeType = tradeType;
 		this.deliveryCharge = deliveryCharge;
 		this.pieces = pieces;
+	}
+
+	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
+			String zone, int count, String productStatus, String uploadDate, String uploadType, double ondo,
+			String timeDiff, int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales,
+			int deliveryCharge, int pieces, String sellStatus, String titleImg, String strPrice) {
+		super();
+		this.productNo = productNo;
+		this.sellerNo = sellerNo;
+		this.categoryNo = categoryNo;
+		this.productName = productName;
+		this.price = price;
+		this.productDesc = productDesc;
+		this.zone = zone;
+		this.count = count;
+		this.productStatus = productStatus;
+		this.uploadDate = uploadDate;
+		this.uploadType = uploadType;
+		this.ondo = ondo;
+		this.timeDiff = timeDiff;
+		this.salesRate = salesRate;
+		this.tstockgoods = tstockgoods;
+		this.reportedProduct = reportedProduct;
+		this.tradeType = tradeType;
+		this.monthSales = monthSales;
+		this.deliveryCharge = deliveryCharge;
+		this.pieces = pieces;
+		this.sellStatus = sellStatus;
+		this.titleImg = titleImg;
+		this.strPrice = strPrice;
 	}
 
 	public int getProductNo() {
@@ -276,6 +307,14 @@ public class Product {
 
 	public void setTitleImg(String titleImg) {
 		this.titleImg = titleImg;
+	}
+
+	public String getStrPrice() {
+		return strPrice;
+	}
+
+	public void setStrPrice(String strPrice) {
+		this.strPrice = strPrice;
 	}
 
 	@Override

@@ -9,6 +9,7 @@
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
+	String word = (String)request.getAttribute("word");
 %>
 <!DOCTYPE html>
 <html>
@@ -169,7 +170,7 @@
         text-align: center;
         font-size: 14px;
         border: 1px solid #e6e6e6;
-        padding: 10px 20px;
+        padding: 10px 10px;
     }
 
     th {
@@ -297,20 +298,48 @@
                             판매 내역
                         </button>
                 </div>
+                
                 <div id="right-content-search-area">
                     <div id="sell-list-search">
-                        <input type="text" placeholder="상품명을 입력해주세요." maxlength="20">
+                        <input id="sellsearchInput" type="text" placeholder="상품명을 입력해주세요." maxlength="20">
                     </div>
                     <div>
-                        <button type="button" class="sell-list-select-btn">판매중</button>
+                        <button type="button" class="sell-list-select-btn" onclick="statusBtn(1, <%= userNo %>);">판매중</button>
                     </div>
                     <div>
-                        <button type="button" class="sell-list-select-btn">예약중</button>
+                        <button type="button" class="sell-list-select-btn" onclick="statusBtn(2, <%= userNo %>);">예약중</button>
                     </div>
                     <div>
-                        <button type="button" class="sell-list-select-btn">판매완료</button>
+                        <button type="button" class="sell-list-select-btn" onclick="statusBtn(3, <%= userNo %>);">판매완료</button>
                     </div>
                 </div>
+                
+                <script>
+					// 검색창
+					let uno = <%= userNo %>;
+				    document.getElementById("sellsearchInput").addEventListener("keyup", function(event) {
+				        // 13은 Enter 키의 키코드입니다.
+				        if (event.keyCode === 13) {
+				            // 검색어 입력란의 값 가져오기
+				            var word = document.getElementById("sellsearchInput").value;
+				            console.log(word);
+				            // 검색어가 비어있지 않은 경우에만 이동
+				            if (word.trim() !== "") {
+				                // 새로운 URL 생성하여 페이지 이동
+				            	location.href = "<%= contextPath %>/sellListSearch.me?search="+word+"&uno="+uno+"&cpage=1";
+				            }
+				        }
+				    });
+                
+                	// 판매상태 조회
+                	function statusBtn(num, uno){
+                		console.log(num);
+                		console.log(uno);
+                		location.href = "<%= contextPath %>/sellListStatus.me?status="+num+"&uno="+uno+"&cpage=1";
+                	}
+                	
+                </script>
+                
                 <div id="right-content-read">
                     <table>
                         <thead>
@@ -332,17 +361,22 @@
 	                                <td>
 	                                    <div>
 	                                    	<div>
-	                                    		<% if(p.getTitleImg == null) { %>
-	                                    			<a href="#"><img class="titleImg" src="resources/images/user-icon.png"></a>
+	                                    		<% if(p.getTitleImg() != null) { %>
+	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>"></a>
 	                                    		<% } else { %>
-	                                    			<a href="#"><img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>"></a>
+	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
+                                    			<% } %>
 	                                    	</div>
 	                                    	<div>
-	                                    		<a href="#"><%= p.getProductName() %></a>
+	                                    		<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><%= p.getProductName() %></a>
 	                                    	</div>
 	                                    </div>
 	                                </td>
-	                                <td><%= p.getPrice() %></td>
+	                                
+	                                <td class="td-price">
+	                                	<%= p.getStrPrice() %>원
+	                                </td>
+	                                
 	                                <td>3</td>
 	                                	<% if(p.getTradeType() == 1) { %>
 	                                		<td>X</td>
@@ -351,23 +385,61 @@
 	                                	<% } %>
 	                                
 	                                <td>
-	                                    <select name="sell-status" onchange="changeStatus();" id="selectBox">
-	                                        <option value="판매중">판매중</option>
-	                                        <option value="예약중">예약중</option>
-	                                        <option value="판매완료">판매완료</option>
-	                                    </select>
+
+                                        <% if(p.getSellStatus().equals("판매중")) { %>
+                                        	<select name="sell-status" onchange="changeSel(this, <%= p.getProductNo() %>);">
+		                                        <option value="판매중" selected>판매중</option>
+		                                        <option value="예약중">예약중</option>
+		                                        <option value="판매완료">판매완료</option>
+	                                    	</select>
+                                        <% } else if(p.getSellStatus().equals("예약중")) { %>
+											<select name="sell-status" onchange="changeSel(this, <%= p.getProductNo() %>);">
+		                                        <option value="판매중">판매중</option>
+		                                        <option value="예약중" selected>예약중</option>
+		                                        <option value="판매완료">판매완료</option>
+	                                   	 </select>
+										<% } else { %>
+		                                    <select name="sell-status" onchange="changeSel(this, <%= p.getProductNo() %>);">
+		                                        <option value="판매중">판매중</option>
+		                                        <option value="예약중">예약중</option>
+		                                        <option value="판매완료" selected>판매완료</option>
+		                                    </select>
+		                                <% } %>
+                                    <script>
+										// 판매상태 변경 ajax
+                                    	function changeSel(op, num){
+                                    		let option = op.value;
+                                    		console.log(op, option, num);
+                                    		$.ajax({
+                                    			url:"ajaxselllist.me",
+                                    			data:{
+                                    					pno:num,
+                                    					sellstatus:option
+                                    			},
+                                    			type:"post",
+                                    			success:function(result){
+                                    				alert("판매상태가 변경되었습니다.");
+                                    			}
+                                    		});
+                                    	}
+                                    </script>
+                                    
 	                                </td>
+
+
+
+
 	                                <td>
 	                                    <div>
-	                                        <button type="button" class="func-btn">UP</button>
+	                                        <button type="button" class="func-btn" onclick="updateBtn(this, <%= p.getProductNo() %>);">수정</button>
 	                                    </div>
 	                                    <div>
-	                                        <button type="button" class="func-btn">수정</button>
-	                                    </div>
-	                                    <div>
-	                                        <button type="button" class="func-btn">삭제</button>
+	                                        <button type="button" class="func-btn" onclick="deleteBtn(<%= p.getProductNo() %>);">삭제</button>
 	                                    </div>                                   
 	                                </td>
+	                                
+	                                
+	                                
                             	</tr>
                             <% } %>
                         </tbody>
@@ -376,29 +448,100 @@
                 
                 <div class="paging-area" align="center">
                     <div>
-                        <% if(currentPage != 1) { %>
-                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-                        <% } %>
-                        
-                        <% for(int p=startPage; p<=endPage; p++) { %>
-                            <% if(p == currentPage) { %>
-                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-                            <% } else { %>
-                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-                            <% } %>
-                        <% } %>
-                        
-                        <% if(currentPage != maxPage) { %>
-                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-                        <% } %>
+                    	<% if(request.getParameter("search") != null) { %>
+	                        <% if(currentPage != 1) { %>
+	                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+	                        <% } %>
+	                        <% for(int p=startPage; p<=endPage; p++) { %>
+	                            	<% if(p == currentPage) { %>
+		                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+		                            <% } else { %>
+		                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+		                            <% } %>
+	                        <% } %>
+	                       	<% if(currentPage != maxPage) { %>
+	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/sellListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+	                        <% } %>
+	                        
+                   		<% } else {%>  
+                   		
+                   			<% if(request.getParameter("status") != null) { %>
+	                   			<% if(currentPage != 1) { %>
+		                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            	<% if(p == currentPage) { %>
+			                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+			                            <% } else { %>
+			                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+			                            <% } %>
+		                        <% } %>
+		                       	<% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/sellListStatus.me?status=<%= request.getParameter("status") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
+		                        
+	                      	<% } else { %>  
+	                      		<% if(currentPage != 1) { %>
+		                           		<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            	<% if(p == currentPage) { %>
+			                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+			                            <% } else { %>
+			                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+			                            <% } %>
+		                        <% } %>
+		                       	<% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
+	                      	<% } %>
+	                      	
+                   		<% } %>
 					</div>
 		        </div>
+		        
 
                 <script>
+                
+                
+                
+                
+                
+                
+                
+
                     $(document).ready(function() {
                         // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
                         $('#pageBtn_<%= currentPage %>').addClass('active-page');
                     });
+                    
+                    // 수정하기 버튼 이벤트
+                	function updateBtn(btn, num){
+                		console.log(location.href);
+                		console.log(num);
+                		location.href = "<%= contextPath %>/updateSellForm.po?pno="+num;
+                	}
+                    
+                    // 삭제하기 버튼 이벤트
+                    function deleteBtn(num){
+                    	$.ajax({
+                			url:"ajaxselldelete.me",
+                			data:{
+                					pno:num,
+                			},
+                			type:"post",
+                			success:function(result){
+                				if(!confirm("상품을 삭제하시겠습니까?")){
+                					console.log("취소")
+                				}else{
+                					alert("상품이 삭제되었습니다.");
+                					document.location.href = document.location.href;
+                				}
+                			}
+                		});
+
+                    }
+                    
                 </script>
 		        
             </div>

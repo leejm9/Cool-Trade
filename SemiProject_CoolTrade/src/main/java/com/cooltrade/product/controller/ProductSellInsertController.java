@@ -97,14 +97,11 @@ public class ProductSellInsertController extends HttpServlet {
 					
 					list.add(img);
 					
-				}
+				} 
 				
 			}
 			
 			int result = new ProductService().insertProductSell(p, list);
-			
-			int pno = p.getProductNo();
-			request.setAttribute("pno", pno);
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "상품이 성공적으로 등록 되었습니다.");
