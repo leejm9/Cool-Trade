@@ -1,10 +1,19 @@
+<%@page import="com.cooltrade.product.model.vo.Review"%>
+<%@page import="com.cooltrade.product.model.vo.ReviewType"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int reviewCount = (int)request.getAttribute("reviewCount");
+	ArrayList<ReviewType> rtList = (ArrayList<ReviewType>)request.getAttribute("reviewTypeCount");
+	ArrayList<Review> rList = (ArrayList<Review>)request.getAttribute("reviewList");
+	Review avg = (Review)request.getAttribute("avg");
+%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <style>
     @font-face {
         font-family: 'GmarketSansMedium';
@@ -190,7 +199,61 @@
         border: none;
         background-color: transparent;
     }
+    
+    #reviewImg {
+    	width: 130px;
+	    height: 130px;
+	    margin-top: 30px;
+    }
+    
+    #reviewImgDiv {
+    	display: flex;
+	    justify-content: flex-end;
+	    height: 5px;
+    }
+    
+	#starScore>span {
+	    appearance: none;
+	    -webkit-appearance: none; /* Safari 및 Chrome 지원 */
+	    -moz-appearance: none; /* Firefox 지원 */
+	}
 
+	.rating {
+	   position: relative;
+	   width: 180px;
+	   background: transparent;
+	   display: flex;
+	   justify-content: center;
+	   align-items: center;
+	   gap: .3em;
+	   padding: 5px;
+	   overflow: hidden;
+	   border-radius: 20px;
+	   box-shadow: 0 0 2px #b3acac;
+	}
+	
+	.rating__result {
+	   position: absolute;
+	   top: 0;
+	   left: 0;
+	   transform: translateY(-10px) translateX(-5px);
+	   z-index: -9;
+	   font: 3em Arial, Helvetica, sans-serif;
+	   color: #ebebeb8e;
+	   pointer-events: none;
+	}
+	
+	.rating__star {
+	   font-size: 1.3em;
+	   color: #dabd18b2;
+	   transition: filter linear .3s;
+	}
+	/*
+	.rating__star:hover {
+	   filter: drop-shadow(1px 1px 4px gold);
+	}
+	*/
+	
 </style>
 </head>
 <body>
@@ -216,7 +279,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -247,65 +310,99 @@
 
                 <div id="trade-review-count">
                     받은 후기
-                    <span>38</span>
+                    <span><%= reviewCount %></span>
                 </div>
 
                 <div id="trade-review-total">                                               
                     <div>
-                        <div>5</div>
-                        <div>⭐⭐⭐⭐⭐</div>
+                        <div><%= avg.getScore() %></div>
+                        <div id="avgStar"></div>
                     </div>
                     <div>
-                        <div>100%</div>
+                        <div><%= avg.getReviewType() %></div>
                         <div><small>만족후기</small></div>
                     </div>
                 </div>
+                
+                <script>
+					//const starClassActive = "rating__star fas fa-star"; // 텅빈별
+	              	//const starClassInactive = "rating__star far fa-star"; // 색칠한별
+	              	var avgStar = document.getElementById("avgStar").innerHTML;
+	              	console.log("avgStar" + avgStar);
+	              	var avgScore = <%= avg.getScore() %>;
+	              	console.log("avgScore : " + avgScore)
+
+	              	var starscore = '';
+
+	              	for (var i = 1; i <= 5; i++) {
+	              	    if (i <= avgScore) {
+	              	        starscore += '<span class="rating__star fas fa-star"></span>';
+	              	    } else {
+	              	        starscore += '<span class="rating__star far fa-star"></span>';
+	              	    }
+	              	}
+
+	              	document.getElementById("avgStar").innerHTML = starscore;
+	              	
+				</script>
 
                 <div>
                     <div id="review-select-section-top">
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>❤️</div>
+                                <div>
+                                	<img src="resources/images/heart.png" width="20px" height="20px">
+                                </div>
                                 <div>친절하고 배려가 넘쳐요.</div>
                             </div>
-                            <div>2</div>
+                            <div><%= rtList.get(0).getCount() %></div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>🎁</div>
+                                <div>
+                                	<img src="resources/images/giftbox.png" width="20px" height="20px">
+                                </div>
                                 <div>포장이 깔끔해요.</div>
                             </div>
-                            <div>1</div>
+                            <div><%= rtList.get(1).getCount() %></div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>🗨️</div>
+                                <div>
+                                	<img src="resources/images/speech.png" width="20px" height="20px">
+                                </div>
                                 <div>채팅 답변이 빨라요.</div>
                             </div>
-                            <div>4</div>
+                            <div><%= rtList.get(2).getCount() %></div>
                         </div>
                     </div>
                     <div id="review-select-section-bottom">
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>✅</div>
+                                <div>
+                                	<img src="resources/images/checkmark.png" width="20px" height="20px">
+                                </div>
                                 <div>상품 설명과 실제 상품이 동일해요.</div>
                             </div>
-                            <div>3</div>
+                            <div><%= rtList.get(3).getCount() %></div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>📄</div>
+                                <div>
+                                	<img src="resources/images/document.png" width="20px" height="20px">
+                                </div>
                                 <div>상품 정보가 자세히 적혀있어요.</div>
                             </div>
-                            <div>5</div>
+                            <div><%= rtList.get(4).getCount() %></div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
-                                <div>🛻</div>
+                                <div>
+                                	<img src="resources/images/shipping-truck.png" width="20px" height="20px">
+                                </div>
                                 <div>배송이 빨라요.</div>
                             </div>
-                            <div>2</div>
+                            <div><%= rtList.get(5).getCount() %></div>
                         </div>
                     </div>
                 </div>
@@ -317,7 +414,7 @@
                 </div>
 
                 <script>
-                    
+                    // 누르면 펼치고 누르면 닫힘
                     let newImg = "resources/images/upArrow.png";
                     let currentImg = "resources/images/downArrow.png";
 
@@ -333,40 +430,41 @@
                             $(reviewBtn).attr('src', currentImg);
                         }
                     }
-
+                    
                 </script>
-
+				<% for(Review r : rList) { %>
                 <div id="review-list-area" class="flex-class">
                     <div id="buyer-profile-img">
                         <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
                     </div>
                     <div id="review-content">
                         <div class="flex-class" id="review-content-buyer-name">
-                            <div>구매자 닉네임</div>
+                            <div><%= r.getNickName() %></div>
                             <div>1개월 전</div>
                         </div>
                         <div class="flex-class">
-                            <div>⭐⭐⭐⭐⭐</div>
+                            <div id="starScore">
+                            	<input type="text" id="starInput" value="<%= r.getScore() %>">
+                           	</div>
                         </div>
                         <div class="flex-class">
                             <div>
                                 <button type="button" id="product-title-btn">
-                                    판매상품 제목
+                                    <%= r.getProductName() %>
                                     <img src="resources/images/greater than.png" alt="" width="7" height="10">
                                 </button>
                             </div>
                         </div>
-                        <div class="flex-class">
+                        <div class="flex-class" id="reviewImgDiv" style="height:5px;">
                             <div>
-                                <img src="" alt="리뷰 사진">
+                                <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
                             </div>    
                         </div>
                         <div class="flex-class">
-                            <div>리뷰 내용</div>
+                            <div><%= r.getReviewDetail() %></div>
                         </div>
                         <div class="flex-class">
-                            <div>상품 설명과 실제 상품이 동일해요.</div>
-                            <div>배송이 빨라요.</div>
+                            	<div>친절해요.</div>
                         </div>
                         <div class="flex-class">
                             <div>
@@ -375,7 +473,30 @@
                         </div>
                     </div>
                 </div>
-
+				
+				<script>
+						//const starClassActive = "rating__star fas fa-star"; // 텅빈별
+		              	//const starClassInactive = "rating__star far fa-star"; // 색칠한별
+		              	var starScoreList = document.querySelectorAll("#starScore");
+						starScoreList.forEach(function(starScoreElement) {
+						    var stars = starScoreElement.querySelectorAll("#starInput").value;
+						    var star = '';
+						    console.log(stars);
+						
+						    for (var i = 1; i <= 5; i++) {
+						        if (i <= parseInt(stars)) {
+						            star += '<span class="rating__star fas fa-star"></span>';
+						        } else {
+						            star += '<span class="rating__star far fa-star"></span>';
+						        }
+						    }
+						
+						    starScoreElement.innerHTML = star;
+						});
+	              	
+				</script>
+				<% } %>
+				
                 <div id="moreBtn-area">
                     <div id="moreBtn" class="flex-class">
                         <div>

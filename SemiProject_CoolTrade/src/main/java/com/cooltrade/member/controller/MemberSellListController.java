@@ -67,7 +67,7 @@ public class MemberSellListController extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
-//		System.out.println("셀리스트" + list);
+//		System.out.println("sell리스트" + list);
 		
 		request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
 		

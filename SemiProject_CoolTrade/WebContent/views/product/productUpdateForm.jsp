@@ -596,14 +596,14 @@
 	                                        <% for(int i=0; i<=4; i++) { %>
 											    <% if(pList.size() > i) { %>
 											        <div class="hidden-div" style="display:block;">
-											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>">
+											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>" required>
 											            <img src="<%= contextPath %>/<%= pList.get(i).getTitleImg() %>" class="hidden-img">
 											            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
  											            <!-- <div>originImage<%= i+1 %></div> -->
 											        </div>
 											    <% } else { %>
 											        <div class="hidden-div" style="display:none;">
-											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>">
+											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>" required>
 											            <img src="#" class="hidden-img">
 											            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
 														<!-- <div>image<%= i+1 %></div> -->

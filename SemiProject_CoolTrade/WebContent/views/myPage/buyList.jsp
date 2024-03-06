@@ -372,7 +372,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -634,8 +634,8 @@
                     const selectedStarsInput = document.getElementById("selectedStars");
                     
                     function executeRating(stars) {
-                      	const starClassActive = "rating__star fas fa-star";
-                      	const starClassInactive = "rating__star far fa-star";
+                      	const starClassActive = "rating__star fas fa-star"; // 텅빈별
+                      	const starClassInactive = "rating__star far fa-star"; // 색칠한별
                       	const starsLength = stars.length;
                       	let i;
                       

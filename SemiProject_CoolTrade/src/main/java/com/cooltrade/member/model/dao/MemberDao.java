@@ -1216,7 +1216,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		System.out.println(list);
+		//System.out.println(list);
 		return list;
 		
 	}
@@ -1433,5 +1433,127 @@ public class MemberDao {
 		System.out.println("리뷰이미지 : " + result);
 		return result;
 	}   
+	
+	public int reviewCount(Connection conn, int uno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<ReviewType> reviewTypeCount(Connection conn, int uno) {
+		ArrayList<ReviewType> list = new ArrayList<ReviewType>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewTypeCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ReviewType rt = new ReviewType();
+				rt.setReviewType(rset.getString("review_type"));
+				rt.setCount(rset.getInt("count"));
+				
+				list.add(rt);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Review> reviewList(Connection conn, int uno) {
+		ArrayList<Review> list = new ArrayList<Review>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review r = new Review();
+				r.setReviewNo(rset.getInt("review_no"));
+				r.setUserNo(rset.getInt("user_no"));
+				r.setNickName(rset.getString("nickname"));
+				r.setScore(rset.getInt("score"));
+				r.setProductNo(rset.getInt("product_no"));
+				r.setProductName(rset.getString("product_name"));
+				r.setTitleImg(rset.getString("titleimg"));
+				r.setReviewDetail(rset.getString("review_detail"));
+				r.setReviewDate(rset.getString("review_date"));
+				
+				list.add(r);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Review starAvg(Connection conn, int uno) {
+		Review r = new Review();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("starAvg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				r.setScore(rset.getInt("score"));
+				r.setReviewType(rset.getString("avg"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return r;
+	}
    
 }

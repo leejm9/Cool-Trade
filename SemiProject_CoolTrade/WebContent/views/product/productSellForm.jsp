@@ -686,6 +686,7 @@
 
                                 <div id="sell-section-category" class="flex-class">
                                     <div id="sell-section-category-title">
+                                    	<input type="hidden" id="categoryTest" name="category">
                                         카테고리
                                         <span class="redColor">*</span>
                                     </div>
@@ -694,8 +695,8 @@
                                             <ul>
                                                 <% for(Category c : list) { %>
                                                     <li>
-                                                        <div><%= c.getCategoryName() %></div>
-                                                        <input type="hidden" id="select-category" name="category" value="<%= c.getCategoryNo() %>" required>
+                                                        <div class="test"><%= c.getCategoryName() %></div>
+                                                        <input type="hidden" id="select-category"  value="<%= c.getCategoryNo() %>" required>
                                                     </li>
                                                 <% } %>
                                             </ul>
@@ -708,7 +709,7 @@
                                 </div>
 
                                 <script>  
-                                    
+                                    /*
                                     // 카테고리 선택 요소에 대한 클릭 이벤트 처리
                                     document.querySelectorAll('#sell-section-category-select-list div').forEach(item => {
                                         item.addEventListener('click', event => {
@@ -741,31 +742,38 @@
                                             });
                                         });
                                     });
+                                    */
                                     
-                                    /*
                                     document.addEventListener('DOMContentLoaded', function() {
-                                        var selectButtons = document.querySelectorAll('#sell-section-category-select-list input[type="button"]');
+                                    	
+                                        var selectButtons = document.querySelectorAll('.test');
                                         var categoryNameDisplay = document.getElementById('select-category-name');
-                                        var categoryVal = document.getElementById("categoryVal").value;
+                                        var categoryVal = document.getElementById("select-category").value;
+                                        var categoryTest = document.getElementById("categoryTest");
                                         
                                         // 각 버튼에 클릭 이벤트 리스너 추가
                                         selectButtons.forEach(function(button) {
                                             button.addEventListener('click', function() {
-                                                var categoryName = this.value; // 클릭된 버튼의 값(카테고리 닉네임)
+                                            	console.log("zz")
+                                            	console.log(this.nextElementSibling.value)
+                                            	categoryTest.value = this.nextElementSibling.value;
+                                            	console.log(categoryTest);
+                                                var categoryName = this.innerHTML; // 클릭된 버튼의 값(카테고리 닉네임)
                                                 var categoryNoInput = this.nextElementSibling; // 클릭된 버튼 다음에 있는 숨겨진 input 요소
                                                 var categoryNo = categoryNoInput.value; // 숨겨진 input 요소의 값(카테고리 번호)
+                                                
                                                 
                                                 // 선택한 카테고리 닉네임을 select-category-name div에 표시
                                                 console.log(categoryNo);
                                                 console.log(categoryName);
-                                                document.getElementById("categoryVal").value = categoryNo;
-                                                console.log(document.getElementById("categoryVal").value);
+                                                categoryVal.value = categoryNo;
+                                                console.log(categoryVal.value);
                                                 categoryNameDisplay.textContent = categoryName;
                                                 
                                             });
                                         });
                                     });
-                                    */
+                                    
                                 </script>
 
                                 <div id="sell-section-product-status">

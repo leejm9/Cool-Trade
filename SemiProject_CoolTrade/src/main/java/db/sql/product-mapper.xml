@@ -453,10 +453,9 @@
 	</entry>
 	
 	<entry key="deleteProductSellImage">
-		 UPDATE
+		 DELETE
 		        IMAGES
-		    SET IMG_STATUS = 'N'
-		 WHERE REF_PNO = ?
+		  WHERE REF_PNO = ?
 	</entry>
 	
 

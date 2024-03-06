@@ -268,7 +268,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>

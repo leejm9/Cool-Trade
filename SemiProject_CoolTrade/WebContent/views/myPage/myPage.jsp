@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%
 	int count = (int)request.getAttribute("count");
+	int reviewCount = (int)request.getAttribute("reviewCount");
 %>
 <!DOCTYPE html>
 <html>
@@ -206,7 +207,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -219,7 +220,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -290,7 +291,7 @@
                             <li>
                                 <div>받은후기</div>
                                 <div>
-                                    <a href="<%= contextPath %>/reviewCount.me">127</a>
+                                    <a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>"><%= reviewCount %></a>
                                 </div>
                             </li>
                             <li>
