@@ -89,9 +89,9 @@
 		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <% if(m.getUserStatus().equals("Y")){ %>
-		                                            <td class="no-hover"><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22); border: none;">추방</button></td>
+		                                            <td align="center"><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22); border: none;">추방</button></td>
 		                                       		<% }else if(m.getUserStatus().equals("N")) { %>
-		                                       		<td class="no-hover"><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234); border: none;">복구</button></td>
+		                                       		<td align="center"><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234); border: none;">복구</button></td>
 		                                       		<% } %>
 		                                        </tr>
                                         	<% } %>

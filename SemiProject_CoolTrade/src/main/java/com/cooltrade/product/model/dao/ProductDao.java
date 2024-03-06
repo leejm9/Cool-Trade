@@ -721,6 +721,7 @@ public class ProductDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, pno);
+			rset = pstmt.executeQuery();
 			while(rset.next()) {
 			Product p = new Product();
 					p.setProductNo(rset.getInt("product_no"));
@@ -835,6 +836,25 @@ public class ProductDao {
 		
 		return list;
 	}
-	
+	public int deleteBoard(Connection conn ,int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }

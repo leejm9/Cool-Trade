@@ -56,11 +56,12 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>">제목</th>
+                                            <th>제목</th>
                                             <th>게시물 번호</th>
                                             <th>판매자 이름</th>
                                             <th>판매자 경고횟수</th>
                                             <th>등록일자</th>
+                                            <th>게시물 상태</th>
                                             <th>복구/삭제</th>
                                         </tr>
                                     </thead>
@@ -79,12 +80,34 @@
 		                                            <td><%= m.getUserName() %></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <td><%= m.getUploadDate() %></td>
-		                                            <td><button>삭제</button></td>
+		                                            <td>
+		                                            	<% if(m.getProductStatus().equals("N")){ %>
+		                                            	삭제된 게시물
+		                                            	<% } %>
+		                                            </td>
+		                                            <td align="center"><button class="btn btn-danger" onclick="deleteBoard(<%= m.getProductNo() %>);">삭제</button></td>
 		                                        </tr>
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
+                               
+                                <script>
+                                	function deleteBoard(pno){
+                                		$.ajax({
+                                			url:"delete.board",
+                                			data:{pno:pno},
+                                			success:function(a){
+                                				alert("삭제되었습니다");
+                                				$(this).prop("disabled",true);
+                                				$(this).siblings().eq(5).text("삭제된 게시물");
+                                				location.reload();
+                                			},error:function(a){
+                                				console.log("오류발생");
+                                			}
+                                		})
+                                	}
+                                </script>
                                 
                                 
                                 

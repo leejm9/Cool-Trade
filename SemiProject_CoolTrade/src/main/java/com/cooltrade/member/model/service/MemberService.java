@@ -103,7 +103,7 @@ public class MemberService {
 		}else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return result;
 	}
 	
@@ -160,7 +160,7 @@ public class MemberService {
 		}else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return result;
 	}
 	
@@ -174,7 +174,7 @@ public class MemberService {
 		}else {
 			rollback(conn);
 		}
-		
+		close(conn);
 		return result;
 	}
 	public ArrayList<Member> selectEnrollMonth(){

@@ -397,4 +397,10 @@
             BY trade_date
 	</entry>
 	
+	<entry key="deleteBoard">
+		UPDATE PRODUCT
+		   SET UPLOAD_TYPE = 'N'
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
 </properties>

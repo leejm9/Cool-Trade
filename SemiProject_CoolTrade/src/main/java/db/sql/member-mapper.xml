@@ -197,6 +197,7 @@
 		                     , USER_NAME
 		                     , CAUTION
 		                     , UPLOAD_DATE
+		                     , UPLOAD_TYPE
 		                  FROM PRODUCT P
 		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
 		                 ORDER

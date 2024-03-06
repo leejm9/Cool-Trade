@@ -131,7 +131,7 @@
 		                                            <td><%= m.getOndo() %></td>
 		                                            <td><%= m.getUserLevel() %></td>
 		                                            <td><%= m.getCaution() %></td>
-		                                            <th>
+		                                            <td align="center">
 		                                            <% if(m.getOndo()<= 10.0f) { %>
 		                                            	<% if("C".equals(m.getUserLevel())) {%>
 		                                            		<button class="btn btn-primary" disabled>쿨거래사용자</button>
@@ -139,7 +139,7 @@
 		                                            		<button onclick="coolTrade(<%= m.getUserNo() %>,<%= currentPage %> ,this);" class="btn btn-primary">쿨거래</button>
 		                                            	<% } %>
 		                                            <% } %>
-		                                            </th>
+		                                            </td>
 		                                        </tr>
 		                                        
                                         	<% } %>

@@ -20,7 +20,8 @@ public class Member {
 	private int productNo;
 	private String monthEnroll;
 	private Date uploadDate;
-	
+	private String productName;
+	private String productStatus;
 	
 	public Member() {}
 	
@@ -88,6 +89,31 @@ public class Member {
 		this.caution = caution;
 	}
 
+	
+	
+	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
+			int caution) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userName = userName;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.userLevel = userLevel;
+		this.caution = caution;
+	}
+
+	public Member(String userName, int caution, int productNo, Date uploadDate, String productName,
+			String productStatus) {
+		super();
+		this.userName = userName;
+		this.caution = caution;
+		this.productNo = productNo;
+		this.uploadDate = uploadDate;
+		this.productName = productName;
+		this.productStatus = productStatus;
+	}
+
 	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count) {
 		super();
@@ -106,17 +132,7 @@ public class Member {
 		this.count = count;
 	}
 
-	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
-			int caution) {
-		super();
-		this.userNo = userNo;
-		this.userId = userId;
-		this.userName = userName;
-		this.enrollDate = enrollDate;
-		this.ondo = ondo;
-		this.userLevel = userLevel;
-		this.caution = caution;
-	}
+	
 
 	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
 			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution) {
@@ -297,6 +313,26 @@ public class Member {
 
 	public void setProductNo(int productNo) {
 		this.productNo = productNo;
+	}
+	
+	
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	
+	
+	public String getProductStatus() {
+		return productStatus;
+	}
+
+	public void setProductStatus(String productStatus) {
+		this.productStatus = productStatus;
 	}
 
 	@Override

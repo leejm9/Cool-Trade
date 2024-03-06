@@ -418,9 +418,10 @@ public class MemberDao {
 			while(rset.next()) {
 				list.add(new Member(rset.getString("user_name"),
 									rset.getInt("caution"),
-									rset.getString("product_name"),
 									rset.getInt("product_no"),
-									rset.getDate("upload_date")
+									rset.getDate("upload_date"),
+									rset.getString("product_name"),
+									rset.getString("upload_type")
 									));
 			}
 			
