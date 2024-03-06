@@ -1,5 +1,16 @@
+
+
+
+
+
+// ------------------------삭제 예정 -------------------------------------------
+
+
+<%@page import="java.util.Date"%>
+<%@page import="com.cooltrade.member.model.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,7 +88,8 @@
 
         <div class="idcheck2">
             <p> - 입력된 정보로 등록된 아이디입니다.</p>
-            <p> • ab*d(가입일: xxxx-xx-xx)</p>
+            <p>테스트</p>
+            <p> • <%=id %>(가입일: <%=joinDate %>)</p>
         </div>
 
         <a href="#" class="loginbtn" align=center>로그인</a>

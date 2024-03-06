@@ -202,7 +202,16 @@ button {
    <div class="form-group">
      <div class="input-group">
       <input type="text" id="email" name="email" placeholder="이메일 주소"required>
-      <button type="button" id="getVerifyCode">인증번호받기</button>
+      <button type="button" id="getVerifyCode" onclick="sendVerifyCode();">인증번호받기</button>
+     </div>
+     <br>
+   </div>
+   
+   
+   <div class="form-group">
+     <div class="input-group">
+      <input type="text" id="verifyCode"  placeholder="인증번호" required>
+      <button type="button" id="getVerifyCode" onclick="checkVerifyCode();">인증번호확인</button>
      </div>
      <br>
    </div>
@@ -314,7 +323,7 @@ button {
     	if (userId.trim() === "") {
     		alert("아이디를 입력해 주세요.");
     		$('#userId').focus();
-    		retrun;
+    		return;
     	}
     	
     	$.ajax({
@@ -365,61 +374,66 @@ button {
     	if (!checkUserId) {
     		alert("아이디 중복확인을 먼저 해주세요.");
     		$('#userId').focus();
-    		retrun;
+    		return;
     	}
     	if (userId.trim() === "") {
     		alert("아이디를 입력해 주세요.");
     		userId.focus();
-    		retrun;
+    		return;
     	}
     	
     	const password = $('#password').val();
     	if (password.trim() === "") {
     		alert("비밀번호를 입력해 주세요.");
     		$('#password').focus();
-    		retrun;
+    		return;
     	}
     	if (password.length < 4) {
     		alert("비밀번호를 4자리 이상 입력해 주세요.");
     		$('#password').focus();
-    		retrun;
+    		return;
     	}
     	const passwordCheck = $('#passwordCheck').val();
     	if (password !== passwordCheck) {
     		alert("비밀번호와 비밀번호 확인이 다릅니다.");
     		$('#passwordCheck').focus();
-    		retrun;
+    		return;
     	}
     	const name = $('#name').val();
     	if (name.trim() === "") {
     		alert("이름을 입력해 주세요.");
     		$('#name').focus();
-    		retrun;
+    		return;
     	}
     	const phone = $('#phone').val().replaceAll('-', '');
     	if (phone.trim() === "") {
     		alert("핸드폰 번호를 입력해 주세요.");
     		$('#phone').focus();
-    		retrun;
+    		return;
     	}
     	
     	const nickName = $('#nickName').val();
     	if (nickName.trim() === "") {
     		alert("닉네임을 입력해 주세요.");
     		$('#nickName').focus();
-    		retrun;
+    		return;
     	}
     	
     	const email = $('#email').val();
     	//if (!checkEmail) {
     	//	alert("이메일을 인증해 주세요.");
     	//	$('#email').focus();
-    	//	retrun;
+    	//	return;
     	//}
     	if (email.trim() === "") {
     		alert("이메일을 입력해 주세요.");
     		$('#email').focus();
-    		retrun;
+    		return;
+    	}
+    	
+    	if(IS_VERIFY === false) {
+    		alert("인증번호를 인증해 주세요.");
+    		return;
     	}
     	
     	$.ajax({
@@ -444,6 +458,51 @@ button {
 			console.log("ajax 통신실패 ");	
 		}
     	})
+    }
+    
+    function sendVerifyCode() {
+    	const email = $('#email').val().trim();
+      if (email === "") {
+        alert("이메일을 입력해 주세요.");
+        $('#email').focus();
+        return;
+      }
+      $.ajax({
+    	  url : 'sendverifycode.do',
+    	  data : {
+    		  email : email
+    	  },
+    	  success : function(result) {
+   	      if (result == "success") {
+ 	          alert("인증번호 발송에 성공했습니다.");
+ 	        } else {
+ 	          alert("인증번호 발송에 실패했습니다.");
+ 	        }
+    	  }
+      });
+    }
+    var IS_VERIFY = false;
+    function checkVerifyCode() {
+      const verifyCode = $('#verifyCode').val().trim();
+      if (verifyCode === "") {
+        alert("인증번호를 입력해 주세요.");
+        $('#verifyCode').focus();
+        return;
+      }
+      $.ajax({
+        url : 'verifycode.do',
+        data : {
+        	verifyCode : verifyCode
+        },
+        success : function(result) {
+          if (result == "success") {
+            alert("인증번호 인증에 성공했습니다.");
+            IS_VERIFY = true;
+          } else {
+            alert("인증번호가 일치하지 않습니다.");
+          }
+        }
+      });
     }
   </script>
 </body>

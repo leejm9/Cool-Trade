@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.Member;
 import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.Product;
@@ -417,5 +418,25 @@ public class MemberService {
 		close(conn);
 		return result1 * result2 * result3;
 	}
-   
+   public int saveBankAccount(int userNo, String bank, String account) {
+    Connection conn = getConnection();
+
+    int result = new MemberDao().saveBankAccount(conn, userNo, bank, account);
+
+    if (result > 0) {
+      commit(conn);
+    } else {
+      rollback(conn);
+    }
+
+    return result;
+  }
+
+  public BankAccount selectBankAccount(int userNo) {
+    Connection conn = getConnection();
+
+    BankAccount bankAccount = new MemberDao().selectBankAccount(conn, userNo);
+    close(conn);
+    return bankAccount;
+  }
 }

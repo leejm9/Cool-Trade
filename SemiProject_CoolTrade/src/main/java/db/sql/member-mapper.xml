@@ -3,49 +3,49 @@
 <properties>
 
 	<entry key="loginMember">
-		SELECT 
-		      	USER_NO
-			  , USER_ID
-			  ,	USER_PWD
-			  ,	USER_NAME
-			  ,	NICKNAME
-			  ,	PHONE
-			  ,	EMAIL
-			  ,	ENROLL_DATE
-			  ,	ONDO
-			  ,	USER_LEVEL
-			  ,	USER_STATUS
-			  ,	CAUTION
-		  FROM MEMBER
-		 WHERE USER_ID = ?
-		   AND USER_PWD = ?
-		   AND USER_STATUS = 'Y'
+		SELECT
+		USER_NO
+		, USER_ID
+		, USER_PWD
+		, USER_NAME
+		, NICKNAME
+		, PHONE
+		, EMAIL
+		, ENROLL_DATE
+		, ONDO
+		, USER_LEVEL
+		, USER_STATUS
+		, CAUTION
+		FROM MEMBER
+		WHERE USER_ID = ?
+		AND USER_PWD = ?
+		AND USER_STATUS = 'Y'
 	</entry>
-	
+
 	<entry key="idMember">
-		SELECT 
-		      	USER_NO
-			  , USER_ID
-			  ,	USER_PWD
-			  ,	USER_NAME
-			  ,	NICKNAME
-			  ,	PHONE
-			  ,	EMAIL
-			  ,	ENROLL_DATE
-			  ,	ONDO
-			  ,	USER_LEVEL
-			  ,	USER_STATUS
-			  ,	CAUTION
-		  FROM MEMBER
-		 WHERE USER_ID = ?
-		   AND USER_STATUS = 'Y'
+		SELECT
+		USER_NO
+		, USER_ID
+		, USER_PWD
+		, USER_NAME
+		, NICKNAME
+		, PHONE
+		, EMAIL
+		, ENROLL_DATE
+		, ONDO
+		, USER_LEVEL
+		, USER_STATUS
+		, CAUTION
+		FROM MEMBER
+		WHERE USER_ID = ?
+		AND USER_STATUS = 'Y'
 	</entry>
-	
+
 	<entry key="selectListCount">
 		SELECT COUNT(*) count
 		  FROM MEMBER
 	</entry>
-	
+
 	<entry key="selectList">
 		SELECT *
 		  FROM(
@@ -66,158 +66,161 @@
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
-	
+
 
 	<entry key="insertMember">
-	INSERT
-	INTO MEMBER (
-	USER_NO, USER_ID, USER_PWD, USER_NAME, NICKNAME, PHONE, EMAIL,CAUTION) 
-	VALUES 
-			(
-			SEQ_MEM.NEXTVAL
-			, ?
-			, ?
-			, ?
-			, ?
-			, ?
-			, ? 
-			, 0
-			)
-		  
+		INSERT
+		INTO MEMBER (
+		USER_NO, USER_ID, USER_PWD, USER_NAME, PHONE, NICKNAME, EMAIL,CAUTION)
+		VALUES
+		(
+		SEQ_MEM.NEXTVAL
+		, ?
+		, ?
+		, ?
+		, ?
+		, ?
+		, ?
+		, 0
+		)
+
 	</entry>
+
+
+
+	<!-- <entry key="insertMember"> INSERT INTO MEMBER ( USER_NO, USER_ID, USER_PWD, 
+		USER_NAME, PHONE, NICKNAME, EMAIL, CAUTION) VALUES ( 'M'||SEQ_MEM.NEXTVAL 
+		, ? , ? , ? , ? , ? , ? , 0 ) </entry> -->
 	
-	 
-	
-	<!--  
-	<entry key="insertMember">
-	INSERT
-	  INTO MEMBER (
-	  USER_NO, USER_ID, USER_PWD, USER_NAME, 
-	  PHONE, NICKNAME, EMAIL, CAUTION)
-	VALUES
-		   (
-		   'M'||SEQ_MEM.NEXTVAL
-		 , ?
-		 , ?
-		 , ?
-		 , ?
-		 , ?
-		 , ?
-		 , 0
-		   )	  
+	<entry key="searchId">
+		SELECT
+		USER_NO
+		, USER_ID
+		, USER_PWD
+		, USER_NAME
+		, NICKNAME
+		, PHONE
+		, EMAIL
+		, ENROLL_DATE
+		, ONDO
+		, USER_LEVEL
+		, USER_STATUS
+		, CAUTION
+		FROM MEMBER
+		WHERE USER_NAME = ?
+		AND EMAIL = ?
+		AND USER_STATUS = 'Y'
 	</entry>
-	
-	-->
-	
+
 	<entry key="searchPwd">
-		SELECT 
-		      	USER_NO
-			  , USER_ID
-			  ,	USER_PWD
-			  ,	USER_NAME
-			  ,	NICKNAME
-			  ,	PHONE
-			  ,	EMAIL
-			  ,	ENROLL_DATE
-			  ,	ONDO
-			  ,	USER_LEVEL
-			  ,	USER_STATUS
-			  ,	CAUTION
-		  FROM MEMBER
-		 WHERE USER_ID = ?
-		   AND USER_NAME = ?
-		   AND EMAIL = ?
-		   AND USER_STATUS = 'Y'
+		SELECT
+		USER_NO
+		, USER_ID
+		, USER_PWD
+		, USER_NAME
+		, NICKNAME
+		, PHONE
+		, EMAIL
+		, ENROLL_DATE
+		, ONDO
+		, USER_LEVEL
+		, USER_STATUS
+		, CAUTION
+		FROM MEMBER
+		WHERE USER_ID = ?
+		AND USER_NAME = ?
+		AND EMAIL = ?
+		AND USER_STATUS = 'Y'
 	</entry>
-	
+
 	<entry key="changePwd">
 		UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?
 	</entry>
-	
+
 	<entry key="countMember">
 		SELECT
-			   COUNT(*) count
-		  FROM MEMBER
-		 WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		COUNT(*) count
+		FROM MEMBER
+		WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
 	</entry>
-	
+
 	<entry key="updateUserLevel">
 		UPDATE MEMBER
-		   SET USER_LEVEL = 'C'
-		 WHERE USER_NO = ?
+		SET USER_LEVEL = 'C'
+		WHERE USER_NO = ?
 	</entry>
-	
+
 	<entry key="selectBlackListCount">
 		SELECT COUNT(*) count
-		  FROM MEMBER
-		 WHERE CAUTION >= 3
+		FROM MEMBER
+		WHERE CAUTION >= 3
 	</entry>
-	
+
 	<entry key="selectBlackList">
 		SELECT *
-		  FROM(
-	        SELECT ROWNUM RNUM, A.*
-	          FROM (
-	                  SELECT 
-	                       USER_NO
-	                     , USER_ID
-	                     , USER_NAME
-	                     , CAUTION
-	                     , USER_STATUS
-	                  FROM MEMBER 
-	                 WHERE USER_LEVEL = 'B'
-	                 ORDER
-	                    BY USER_NO DESC
-	                    ) A
-	       		 )
-		 WHERE RNUM BETWEEN ? AND ?
+		FROM(
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT
+		USER_NO
+		, USER_ID
+		, USER_NAME
+		, CAUTION
+		, USER_STATUS
+		FROM MEMBER
+		WHERE USER_LEVEL = 'B'
+		ORDER
+		BY USER_NO DESC
+		) A
+		)
+		WHERE RNUM BETWEEN ? AND ?
 	</entry>
-	
+
 	<entry key="selectTradeTypeCount">
 		SELECT COUNT(TRADE_TYPE) "COUNT"
-		  FROM PRODUCT
-		 WHERE SELLER_NO = ?
-		   AND TRADE_TYPE = 2
-	</entry> 
-	  
+		FROM PRODUCT
+		WHERE SELLER_NO = ?
+		AND TRADE_TYPE = 2
+	</entry>
+
 	<entry key="countBoardList">
 		SELECT
-			   COUNT(*) count
-		  FROM PRODUCT
+		COUNT(*) count
+		FROM PRODUCT
 	</entry>
-	
+
 	<entry key="selectBoardList">
 		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       PRODUCT_NAME
-		                     , USER_NO
-		                     , USER_NAME
-		                     , CAUTION
-		                     , UPLOAD_DATE
-		                  FROM PRODUCT P
-		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
-		                 ORDER
-		                    BY UPLOAD_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
+		FROM(
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT
+		PRODUCT_NAME
+		, USER_NO
+		, USER_NAME
+		, CAUTION
+		, UPLOAD_DATE
+		FROM PRODUCT P
+		JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+		ORDER
+		BY UPLOAD_DATE DESC
+		) A
+		)
+		WHERE RNUM BETWEEN ? AND ?
 	</entry>
-	
+
 	<entry key="deleteMember">
 		UPDATE MEMBER
 		   SET USER_STATUS = 'N'
 		 WHERE USER_NO = ?
 	</entry>
-	
+
 	<entry key="recoveryMember">
 		UPDATE MEMBER
 		   SET USER_STATUS = 'Y'
 		 WHERE USER_NO = ?
 	</entry>
-	
+
 	<entry key="selectEnrollMonth">
 		SELECT
 		       TO_CHAR(ENROLL_DATE,'YY-MM') ENROLL_DATE
@@ -676,4 +679,31 @@
 		  FROM MEMBER
 		 WHERE USER_NO = ?
 	</entry>
+		TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
+		, COUNT(*) count
+		FROM MEMBER
+		GROUP
+		BY TO_CHAR(ENROLL_DATE,'YY-MM')
+		ORDER
+		BY 1
+	</entry>
+
+	<entry key="saveBankAccount">
+		MERGE INTO BANK_ACCOUNT tgt USING (SELECT ? AS USER_NO, ? AS BANK, ? AS
+		ACCOUNT FROM DUAL) src ON (tgt.USER_NO=src.USER_NO)
+		WHEN MATCHED THEN
+		UPDATE SET tgt.BANK=src.BANK, tgt.ACCOUNT=src.ACCOUNT
+		WHEN NOT MATCHED THEN
+		INSERT (BANKACCOUNT_NO, USER_NO, BANK, ACCOUNT) VALUES (SEQ_BANK.NEXTVAL,
+		src.USER_NO, src.BANK, src.ACCOUNT)
+	</entry>
+	<entry key="selectBankAccount">
+		SELECT BANKACCOUNT_NO,
+		USER_NO,
+		BANK,
+		ACCOUNT
+		FROM BANK_ACCOUNT
+		WHERE USER_NO = ?
+	</entry>
+
 </properties>
