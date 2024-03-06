@@ -1,6 +1,6 @@
 <%@page import="com.cooltrade.product.model.vo.Trade"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%  
 	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
 	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
@@ -452,32 +452,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                        	<% for(Trade t : list) { %>
+                        	<% for(int i=0; i<list.size(); i++) { %>
 	                            <tr>
-	                                <td id="td-date"><%= t.getTradeDate() %></td>
+	                                <td id="td-date"><%= list.get(i).getTradeDate() %></td>
 	                                <td id="td-po">
 	                                    <div>
-	                                    	<% if(t.getUploadType().equals("Y")) { %>
+	                                    	<% if(list.get(i).getUploadType().equals("Y")) { %>
 		                                    	<div>
-			                                        <% if(t.getTitleImg() != null) { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= t.getTitleImg() %>"></a>
+			                                        <% if(list.get(i).getTitleImg() != null) { %>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><%= t.getProductName() %></a>
+			                                        <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } else { %>
 	                                    		<div>
-			                                        <% if(t.getTitleImg() != null) { %>
-		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="<%= contextPath %>/<%= t.getTitleImg() %>"></a>
+			                                        <% if(list.get(i).getTitleImg() != null) { %>
+		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
 		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a class="deletePo" href="#" onclick="deletePo(this);"><%= t.getProductName() %></a>
+			                                        <a class="deletePo" href="#" onclick="deletePo(this);"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } %>
 	                                    	
@@ -493,20 +493,20 @@
 	                                    </div>
 	                                </td>
 	                                
-	                                <td><%= t.getStrPrice() %>원</td>
+	                                <td><%= list.get(i).getStrPrice() %>원</td>
 	                                <td>
-	                                    <div class="deliver-status"><%= t.getDeliveryStatus() %></div>
+	                                    <div class="deliver-status"><%= list.get(i).getDeliveryStatus() %></div>
 	                                    <button type="button" class="list-select-btn">배송조회</button>
 	                                </td>
 	                                <td>
 <%-- 	                                	<% if((int)request.getAttribute("result") > 0) { %> --%>
 <!-- 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button> -->
 <%--                                 		<% } else { %> --%>
-                                   			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" data-index="1">후기남기기</button>
+                                   			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal<%= i %>" data-index="1">후기남기기</button>
 <%-- 	                                	<% } %> --%>
 
 											<!-- 이용후기 모달 -->
-							           		<div class="modal" id="reviewModal">
+							           		<div class="modal" id="reviewModal<%= i %>">
 											  	<div class="modal-dialog modal-dialog-centered">
 											    	<div class="modal-content">
 											    	
@@ -529,7 +529,7 @@
 											    		
 											    		$(document).ready(function(){
 										    			  	// 모달을 열 때마다 해당 버튼의 data-index 속성값을 가져와 모달 본문에 적용합니다.
-										    			  	$('#myModal').on('show.bs.modal', function (event) {
+										    			  	$('[id="reviewModal"]').on('show.bs.modal', function (event) {
 										    			    	var button = $(event.relatedTarget);
 										    			    	var index = button.data('index');
 										    			    	$('#indexValue').text(index);
@@ -546,11 +546,11 @@
 												      	<div class="modal-body" align="center">
 												        
 												        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
-												        		<input type="hidden" name="pno" value="<%= t.getProductNo() %>">
+												        		<input type="hidden" name="pno" value="<%= list.get(i).getProductNo() %>">
 												        		<input type="hidden" name="uno" value="<%= userNo %>">
 												        		<input type="hidden" name="cpage" value="1">
 												        
-											                	<div class="mo-h4"><h4 style="margin:0px;"><%= t.getNickname() %>과의 거래에 만족하셨나요?</h4></div>
+											                	<div class="mo-h4"><h4 style="margin:0px;"><%= list.get(i).getNickname() %>과의 거래에 만족하셨나요?</h4></div>
 											                	<div class="rating mo-h4" onclick="divBlock();">
 																	<h4 style="margin:0px;">
 																		<fieldset class="rate">
@@ -566,7 +566,7 @@
 																
 																<div id="h-review-div">	
 																	<div id="mo-co2">
-																		<div><%= t.getNickname() %> 에게 후기를 남겨주세요.</div>
+																		<div><%=list.get(i).getNickname() %> 에게 후기를 남겨주세요.</div>
 																		<div><small>해당하는 항목을 모두 골라주세요.</small></div>
 																	</div>
 																	<div id="se-review">
@@ -613,11 +613,6 @@
 										    		</div>
 											  	</div>
 											</div>
-
-
-
-
-
 	                                </td>
 	                            </tr>
 							<% } %>
