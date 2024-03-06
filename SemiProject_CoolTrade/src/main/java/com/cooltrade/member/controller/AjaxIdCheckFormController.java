@@ -1,26 +1,29 @@
+// --------------------삭제 예정 ----------------------------------------
+
+
+
+
 package com.cooltrade.member.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.member.model.service.MemberService;
-
 /**
- * Servlet implementation class MemberLoginController
+ * Servlet implementation class MemberIdcheckController
  */
-@WebServlet("/changepwd.do")
-public class AjaxChangePwdController extends HttpServlet {
+@WebServlet("/changeid.do")
+public class AjaxIdCheckFormController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public AjaxChangePwdController() {
+    public AjaxIdCheckFormController() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -28,14 +31,7 @@ public class AjaxChangePwdController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
-		int success = new MemberService().changePwd(id, password);
-		if (success > 0) {
-			response.getWriter().print("success");
-		} else {
-			response.getWriter().print("fail");
-		}
+		request.getRequestDispatcher("views/member/memberidCheck.jsp").forward(request, response);
 	}
 
 	/**

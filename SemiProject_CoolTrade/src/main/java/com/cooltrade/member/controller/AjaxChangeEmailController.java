@@ -7,20 +7,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.cooltrade.member.model.service.MemberService;
+import com.cooltrade.member.model.vo.Member;
 
 /**
  * Servlet implementation class MemberLoginController
  */
-@WebServlet("/changepwd.do")
-public class AjaxChangePwdController extends HttpServlet {
+@WebServlet("/changeemail.do")
+public class AjaxChangeEmailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
      */
-    public AjaxChangePwdController() {
+    public AjaxChangeEmailController() {
         // TODO Auto-generated constructor stub
     }
 
@@ -28,9 +30,11 @@ public class AjaxChangePwdController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		String password = request.getParameter("password");
-		int success = new MemberService().changePwd(id, password);
+	  HttpSession session = request.getSession();
+    Member m = (Member)session.getAttribute("loginUser");
+    String id = m.getUserId();
+		String email = request.getParameter("email");
+		int success = new MemberService().changeEmail(id, email);
 		if (success > 0) {
 			response.getWriter().print("success");
 		} else {

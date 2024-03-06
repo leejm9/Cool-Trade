@@ -12,6 +12,7 @@ import java.util.Properties;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.Member;
 
 public class MemberDao {
@@ -154,7 +155,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("user_no"),
+				m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -219,6 +220,9 @@ public class MemberDao {
 			pstmt.setString(4, m.getPhone());		// PHONE
 			pstmt.setString(5, m.getNickName());	// NICKNAME
 			pstmt.setString(6, m.getEmail());		// EMAIL
+			
+			
+
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -507,6 +511,214 @@ public class MemberDao {
 		return list;
 	}
 	
+	public Member searchId(Connection conn,String name, String email) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchId");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("user_no"),
+							   rset.getString("user_id"),
+							   rset.getString("user_pwd"),
+							   rset.getString("user_name"),
+							   rset.getString("nickname"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getDate("enroll_date"),
+							   rset.getDouble("ondo"),
+							   rset.getString("user_level"),
+							   rset.getString("user_status"),
+							   rset.getInt("caution"));
+			}
+			
+			System.out.println(m);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);		
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public Member searchPwd(Connection conn, String userId, String name, String email) {
+		Member m = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("searchPwd");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("user_no"),
+							   rset.getString("user_id"),
+							   rset.getString("user_pwd"),
+							   rset.getString("user_name"),
+							   rset.getString("nickname"),
+							   rset.getString("phone"),
+							   rset.getString("email"),
+							   rset.getDate("enroll_date"),
+							   rset.getDouble("ondo"),
+							   rset.getString("user_level"),
+							   rset.getString("user_status"),
+							   rset.getInt("caution"));
+			}
+			
+			System.out.println(m);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);		
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public int changePwd(Connection conn, String id, String password) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("changePwd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, password);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+
+	public int changePhone(Connection conn, String id, String phone) {
+    int result = 0;
+    PreparedStatement pstmt = null;
+    
+    String sql = prop.getProperty("changePhone");
+    try {
+      pstmt = conn.prepareStatement(sql);
+      
+      pstmt.setString(1, phone);
+      pstmt.setString(2, id);
+      
+      result = pstmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }finally {
+      close(pstmt);
+    }
+    
+    return result;
+  }
+	
+
+  public int changeEmail(Connection conn, String id, String email) {
+    int result = 0;
+    PreparedStatement pstmt = null;
+    
+    String sql = prop.getProperty("changeEmail");
+    try {
+      pstmt = conn.prepareStatement(sql);
+      
+      pstmt.setString(1, email);
+      pstmt.setString(2, id);
+      
+      result = pstmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }finally {
+      close(pstmt);
+    }
+    
+    return result;
+  }
+  
+  public int saveBankAccount(Connection conn, int userNo, String bank, String account) {
+    int result = 0;
+    PreparedStatement pstmt = null;
+    
+    String sql = prop.getProperty("saveBankAccount");
+    try {
+      pstmt = conn.prepareStatement(sql);
+      
+      pstmt.setInt(1, userNo);
+      pstmt.setString(2, bank);
+      pstmt.setString(3, account);
+      
+      result = pstmt.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }finally {
+      close(pstmt);
+    }
+    
+    return result;
+  }
+
+  public BankAccount selectBankAccount(Connection conn, int userNo) {
+    BankAccount bankAccount = null;
+    PreparedStatement pstmt = null;
+    ResultSet rset = null;
+    
+    String sql = prop.getProperty("selectBankAccount");
+    
+    try {
+      
+      pstmt = conn.prepareStatement(sql);
+      
+      pstmt.setInt(1, userNo);
+      
+      rset = pstmt.executeQuery();
+      
+      if(rset.next()) {
+        bankAccount = new BankAccount();
+        bankAccount.setBankaccountNo(rset.getInt("bankaccount_no"));
+        bankAccount.setUserNo(rset.getInt("user_no"));
+        bankAccount.setBank(rset.getString("bank"));
+        bankAccount.setAccount(rset.getString("account"));
+      }
+      
+      System.out.println(bankAccount);
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }finally {
+      close(rset);    
+      close(pstmt);
+    }
+    return bankAccount;
+  }
+  
+	
+
 }
 
 

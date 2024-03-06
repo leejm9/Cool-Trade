@@ -15,20 +15,19 @@ public class Member {
 	private String userLevel;
 	private String userStatus;
 	private int caution;
-	
+
 	private int count;
 	private String productTitle;
 	private String monthEnroll;
 	private Date uploadDate;
-	
-	
-	public Member() {}
-	
+
+	public Member() {
+	}
+
 	public Member(int count) {
 		super();
 		this.count = count;
 	}
-	
 
 	public Member(int count, String monthEnroll) {
 		super();
@@ -89,9 +88,6 @@ public class Member {
 		this.caution = caution;
 		this.count = count;
 	}
-	
-	
-	
 
 	public Member(int userNo, String userId, String userName, Date enrollDate, double ondo, String userLevel,
 			int caution) {
@@ -225,8 +221,6 @@ public class Member {
 	public void setCount(int count) {
 		this.count = count;
 	}
-	
-	
 
 	public String getProductTitle() {
 		return productTitle;
@@ -243,8 +237,6 @@ public class Member {
 	public void setUploadDate(Date uploadDate) {
 		this.uploadDate = uploadDate;
 	}
-	
-	
 
 	public String getMonthEnroll() {
 		return monthEnroll;
@@ -261,9 +253,5 @@ public class Member {
 				+ ", ondo=" + ondo + ", userLevel=" + userLevel + ", userStatus=" + userStatus + ", caution=" + caution
 				+ ", count=" + count + "]";
 	}
-	
-	
-	
-	
-	
+
 }
