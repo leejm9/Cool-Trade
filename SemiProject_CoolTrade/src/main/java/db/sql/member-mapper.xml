@@ -2,708 +2,722 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<entry key="loginMember">
-		SELECT
-		USER_NO
-		, USER_ID
-		, USER_PWD
-		, USER_NAME
-		, NICKNAME
-		, PHONE
-		, EMAIL
-		, ENROLL_DATE
-		, ONDO
-		, USER_LEVEL
-		, USER_STATUS
-		, CAUTION
-		FROM MEMBER
-		WHERE USER_ID = ?
-		AND USER_PWD = ?
-		AND USER_STATUS = 'Y'
-	</entry>
+   <entry key="loginMember">
+      SELECT 
+               USER_NO
+           , USER_ID
+           ,   USER_PWD
+           ,   USER_NAME
+           ,   NICKNAME
+           ,   PHONE
+           ,   EMAIL
+           ,   ENROLL_DATE
+           ,   ONDO
+           ,   USER_LEVEL
+           ,   USER_STATUS
+           ,   CAUTION
+        FROM MEMBER
+       WHERE USER_ID = ?
+         AND USER_PWD = ?
+         AND USER_STATUS = 'Y'
+   </entry>
+   
+   <entry key="idMember">
+      SELECT 
+               USER_NO
+           , USER_ID
+           ,   USER_PWD
+           ,   USER_NAME
+           ,   NICKNAME
+           ,   PHONE
+           ,   EMAIL
+           ,   ENROLL_DATE
+           ,   ONDO
+           ,   USER_LEVEL
+           ,   USER_STATUS
+           ,   CAUTION
+        FROM MEMBER
+       WHERE USER_ID = ?
+         AND USER_STATUS = 'Y'
+   </entry>
+   
+   <entry key="selectListCount">
+      SELECT COUNT(*) count
+        FROM MEMBER
+   </entry>
+   
+   <entry key="selectList">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_ID
+                           , USER_NAME
+                           , ENROLL_DATE
+                           , ONDO 
+                           , USER_LEVEL
+                           , CAUTION
+                        FROM MEMBER 
+                       ORDER
+                          BY ENROLL_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
 
-	<entry key="idMember">
-		SELECT
-		USER_NO
-		, USER_ID
-		, USER_PWD
-		, USER_NAME
-		, NICKNAME
-		, PHONE
-		, EMAIL
-		, ENROLL_DATE
-		, ONDO
-		, USER_LEVEL
-		, USER_STATUS
-		, CAUTION
-		FROM MEMBER
-		WHERE USER_ID = ?
-		AND USER_STATUS = 'Y'
-	</entry>
-
-	<entry key="selectListCount">
-		SELECT COUNT(*) count
+   <entry key="insertMember">
+   INSERT
+   INTO MEMBER (
+   USER_NO, USER_ID, USER_PWD, USER_NAME,  PHONE, NICKNAME, EMAIL,CAUTION) 
+   VALUES 
+         (
+         SEQ_MEM.NEXTVAL
+         , ?
+         , ?
+         , ?
+         , ?
+         , ?
+         , ? 
+         , 0
+         )
+        
+   </entry>
+   
+    
+   
+   <!--  
+   <entry key="insertMember">
+   INSERT
+     INTO MEMBER (
+     USER_NO, USER_ID, USER_PWD, USER_NAME, 
+     PHONE, NICKNAME, EMAIL, CAUTION)
+   VALUES
+         (
+         'M'||SEQ_MEM.NEXTVAL
+       , ?
+       , ?
+       , ?
+       , ?
+       , ?
+       , ?
+       , 0
+         )     
+   </entry>
+   
+   -->
+   
+   <entry key="searchId">
+		SELECT 
+		      	USER_NO
+			  , USER_ID
+			  ,	USER_PWD
+			  ,	USER_NAME
+			  ,	NICKNAME
+			  ,	PHONE
+			  ,	EMAIL
+			  ,	ENROLL_DATE
+			  ,	ONDO
+			  ,	USER_LEVEL
+			  ,	USER_STATUS
+			  ,	CAUTION
 		  FROM MEMBER
+		 WHERE USER_NAME = ?
+		   AND EMAIL = ?
+		   AND USER_STATUS = 'Y'
 	</entry>
+   
+   
+   <entry key="searchPwd">
+      SELECT 
+               USER_NO
+           , USER_ID
+           ,   USER_PWD
+           ,   USER_NAME
+           ,   NICKNAME
+           ,   PHONE
+           ,   EMAIL
+           ,   ENROLL_DATE
+           ,   ONDO
+           ,   USER_LEVEL
+           ,   USER_STATUS
+           ,   CAUTION
+        FROM MEMBER
+       WHERE USER_ID = ?
+         AND USER_NAME = ?
+         AND EMAIL = ?
+         AND USER_STATUS = 'Y'
+   </entry>
+   
+   <entry key="changePwd">
+      UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?
+   </entry>
+   <entry key="changePhone">
+    UPDATE MEMBER SET PHONE = ? WHERE USER_ID = ?
+  </entry>
+  <entry key="changeEmail">
+    UPDATE MEMBER SET EMAIL = ? WHERE USER_ID = ?
+  </entry>
+   
+   <entry key="saveBankAccount">
+	   MERGE INTO BANK_ACCOUNT tgt	USING (SELECT ? AS USER_NO, ? AS BANK, ? AS ACCOUNT FROM DUAL) src	ON (tgt.USER_NO=src.USER_NO)
+				   WHEN MATCHED THEN 
+				    UPDATE SET tgt.BANK=src.BANK, tgt.ACCOUNT=src.ACCOUNT
+				   WHEN NOT MATCHED THEN 
+				    INSERT (BANKACCOUNT_NO, USER_NO, BANK, ACCOUNT)	VALUES (SEQ_BANK.NEXTVAL,  src.USER_NO, src.BANK, src.ACCOUNT)
+	</entry>
+	<entry key="selectBankAccount">
+	  SELECT BANKACCOUNT_NO, 
+	         USER_NO,
+	         BANK, 
+	         ACCOUNT 
+	    FROM BANK_ACCOUNT
+	   WHERE USER_NO = ?
+	</entry>
+   
+   
+   <entry key="countMember">
+      SELECT
+            COUNT(*) count
+        FROM MEMBER
+       WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+   </entry>
+   
+   <entry key="updateUserLevel">
+      UPDATE MEMBER
+         SET USER_LEVEL = 'C'
+       WHERE USER_NO = ?
+   </entry>
+   
+   <entry key="selectBlackListCount">
+      SELECT COUNT(*) count
+        FROM MEMBER
+       WHERE CAUTION >= 3
+   </entry>
+   
+   <entry key="selectBlackList">
+      SELECT *
+        FROM(
+           SELECT ROWNUM RNUM, A.*
+             FROM (
+                     SELECT 
+                          USER_NO
+                        , USER_ID
+                        , USER_NAME
+                        , CAUTION
+                        , USER_STATUS
+                     FROM MEMBER 
+                    WHERE USER_LEVEL = 'B'
+                    ORDER
+                       BY USER_NO DESC
+                       ) A
+                 )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="selectTradeTypeCount">
+      SELECT COUNT(TRADE_TYPE) "COUNT"
+        FROM PRODUCT
+       WHERE SELLER_NO = ?
+         AND TRADE_TYPE = 2
+   </entry> 
+     
+   <entry key="countBoardList">
+      SELECT
+            COUNT(*) count
+        FROM PRODUCT
+   </entry>
+   
+   <entry key="selectBoardList">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             PRODUCT_NAME
+                           , USER_NO
+                           , USER_NAME
+                           , CAUTION
+                           , UPLOAD_DATE
+                        FROM PRODUCT P
+                        JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+                       ORDER
+                          BY UPLOAD_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="deleteMember">
+      UPDATE MEMBER
+         SET USER_STATUS = 'N'
+       WHERE USER_NO = ?
+   </entry>
+   
+   <entry key="recoveryMember">
+      UPDATE MEMBER
+         SET USER_STATUS = 'Y'
+       WHERE USER_NO = ?
+   </entry>
+   
+   <entry key="selectEnrollMonth">
+      SELECT
+             TO_CHAR(ENROLL_DATE,'YY-MM') ENROLL_DATE
+           , COUNT(*) count
+        FROM MEMBER
+       GROUP
+          BY TO_CHAR(ENROLL_DATE,'YY-MM')
+       ORDER
+          BY 1
+   </entry>
+   
+   <entry key="sellListCountPo">
+      SELECT
+             COUNT(*) COUNT
+        FROM PRODUCT
+       WHERE SELLER_NO = ?
+         AND UPLOAD_TYPE = 'Y'
+   </entry>
+   
+   <entry key="sellListPo">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       PRODUCT_NO
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                     , TRADE_TYPE
+                     , SELL_STATUS
+                     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                     , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+                  FROM PRODUCT P
+                  LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE SELLER_NO = ?
+                    AND UPLOAD_TYPE = 'Y'
+                  ORDER 
+                     BY UPLOAD_DATE DESC
+                     , PRODUCT_NO DESC
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="buyListCountPo">
+      SELECT
+             COUNT(*) COUNT
+        FROM TRADE
+       WHERE BUYER_NO = ?
+   </entry>
+      
+   <entry key="buyListPo">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       TRADE_NO
+                     , PRODUCT_NO
+                     , SELLER_NO
+                     , M.NICKNAME
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                      , DELIVERY_STATUS
+                       , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+                       , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                       , UPLOAD_TYPE
+                  FROM TRADE T
+                  JOIN PRODUCT P USING (PRODUCT_NO)
+                  JOIN MEMBER M ON (SELLER_NO = USER_NO)
+               LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE BUYER_NO = ?
+                  ORDER
+                    BY TRADE_DATE DESC
+                     , PRODUCT_NO DESC
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="countOndoList">
+      SELECT COUNT(*) count
+        FROM MEMBER
+       WHERE ONDO &lt;= 10.0
+   </entry>
+   <entry key="updateSellStatus">
+      UPDATE PRODUCT
+         SET SELL_STATUS = ?
+       WHERE PRODUCT_NO = ?
+   </entry>
+   
+   <entry key="deleteProductSell">
+      UPDATE 
+             PRODUCT
+         SET UPLOAD_TYPE = 'N'
+       WHERE PRODUCT_NO = ?
+   </entry>
+   
+   <entry key="sellListStatusCo">
+      SELECT
+             COUNT(*) COUNT
+        FROM PRODUCT
+       WHERE SELLER_NO = ?
+         AND UPLOAD_TYPE = 'Y'
+         AND SELL_STATUS = ?
+   </entry>
+   
+   <entry key="sellListStatusPo">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       PRODUCT_NO
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                     , TRADE_TYPE
+                     , SELL_STATUS
+                     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                     , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+                  FROM PRODUCT P
+                  LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE SELLER_NO = ?
+                    AND UPLOAD_TYPE = 'Y'
+                    AND SELL_STATUS = ?
+                  ORDER 
+                     BY UPLOAD_DATE DESC
+                     , PRODUCT_NO DESC 
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="sellListSearchCount">
+      SELECT
+             COUNT(*) COUNT
+        FROM PRODUCT
+       WHERE SELLER_NO = ?
+         AND UPLOAD_TYPE = 'Y'
+         AND PRODUCT_NAME LIKE '%' || ? || '%'
+   </entry>   
+   
+   <entry key="sellListSearch">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       PRODUCT_NO
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                     , TRADE_TYPE
+                     , SELL_STATUS
+                     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                     , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+                  FROM PRODUCT P
+                  LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE SELLER_NO = ?
+                    AND UPLOAD_TYPE = 'Y'
+                    AND PRODUCT_NAME LIKE '%' || ? || '%'
+                  ORDER 
+                     BY UPLOAD_DATE DESC
+                     , PRODUCT_NO DESC 
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
 
-	<entry key="selectList">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_ID
-		                     , USER_NAME
-		                     , ENROLL_DATE
-		                     , ONDO 
-		                     , USER_LEVEL
-		                     , CAUTION
-		                  FROM MEMBER 
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
+   
+   <entry key="buyListSelectCo">
+      SELECT
+             COUNT(*) COUNT
+        FROM TRADE
+       WHERE BUYER_NO = ?
+       ORDER
+          BY TRADE_NO ASC
+   </entry>
+      
+   <entry key="buyListSelectPo">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       TRADE_NO
+                     , PRODUCT_NO
+                     , SELLER_NO
+                     , M.NICKNAME
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                      , DELIVERY_STATUS
+                       , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+                       , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                       , UPLOAD_TYPE
+                  FROM TRADE T
+                  JOIN PRODUCT P USING (PRODUCT_NO)
+                  JOIN MEMBER M ON (SELLER_NO = USER_NO)
+               LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE BUYER_NO = ?
+                  ORDER
+                    BY TRADE_NO ASC
+                     , PRODUCT_NO DESC
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="buyListSearchCount">
+      SELECT
+             COUNT(*) COUNT
+        FROM TRADE
+        JOIN PRODUCT USING (PRODUCT_NO)
+       WHERE BUYER_NO = ?
+          AND UPLOAD_TYPE = 'Y'
+            AND PRODUCT_NAME LIKE '%' || ? || '%'
+   </entry>
+      
+   <entry key="buyListSearchPo">
+      SELECT *
+        FROM (
+             SELECT ROWNUM RNUM, A.*
+               FROM (
+                    SELECT
+                       TRADE_NO
+                     , PRODUCT_NO
+                     , SELLER_NO
+                     , M.NICKNAME
+                     , PRODUCT_NAME
+                     , TO_CHAR(PRICE, '999,999,999') PRICE
+                      , DELIVERY_STATUS
+                       , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+                       , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                       , UPLOAD_TYPE
+                  FROM TRADE T
+                  JOIN PRODUCT P USING (PRODUCT_NO)
+                  JOIN MEMBER M ON (SELLER_NO = USER_NO)
+               LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+                  WHERE BUYER_NO = ?
+                    AND PRODUCT_NAME LIKE '%' || ? || '%'
+                  ORDER
+                    BY UPLOAD_TYPE DESC
+                     , PRODUCT_NO DESC
+                         ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="insertReview">
+      INSERT
+        INTO REVIEW
+        (
+          REVIEW_NO
+        , PRODUCT_NO
+        , USER_NO
+        , REVIEW_DETAIL
+        , SCORE
+        )
+        VALUES
+        (
+          SEQ_REVIEW.NEXTVAL
+        , ?
+        , ?
+        , ?
+        , ?
+        )
+   </entry>
+   
+   <entry key="insertReviewType">
+      INSERT
+        INTO REVIEW_TYPE
+        (
+          REVIEW_NO
+        , REVIEW_TYPE
+        )
+        VALUES
+        (
+          SEQ_REVIEW.CURRVAL
+        , ?
+        )
+   </entry>
+   
+   <entry key="insertReviewImg">
+      INSERT
+        INTO IMAGES
+        (
+          IMG_NO
+        , REF_RNO
+        , IMG_LEVEL
+        , ORIGIN_NAME
+        , CHANGE_NAME
+        , IMG_PATH
+        )
+        VALUES
+        (
+          SEQ_IMG.NEXTVAL
+        , SEQ_REVIEW.CURRVAL
+        , 1
+        , ?
+        , ?
+        , ?
+        )
+   </entry>
+   
 
+   
+   <entry key="countCbtnList">
+      SELECT COUNT(*) count
+        FROM MEMBER
+       WHERE USER_LEVEL = 'C'
+   </entry>
+   
+   <entry key="countSearchList">
+      SELECT COUNT(*) count
+        FROM MEMBER
+       WHERE USER_ID LIKE '%' || ? || '%'
+          OR USER_NAME LIKE '%' || ? || '%'
+   </entry>
 
-	<entry key="insertMember">
-		INSERT
-		INTO MEMBER (
-		USER_NO, USER_ID, USER_PWD, USER_NAME, PHONE, NICKNAME, EMAIL,CAUTION)
-		VALUES
-		(
-		SEQ_MEM.NEXTVAL
-		, ?
-		, ?
-		, ?
-		, ?
-		, ?
-		, ?
-		, 0
-		)
-
-	</entry>
-
-
-
-	<!-- <entry key="insertMember"> INSERT INTO MEMBER ( USER_NO, USER_ID, USER_PWD, 
-		USER_NAME, PHONE, NICKNAME, EMAIL, CAUTION) VALUES ( 'M'||SEQ_MEM.NEXTVAL 
-		, ? , ? , ? , ? , ? , ? , 0 ) </entry> -->
-	
-	<entry key="searchId">
-		SELECT
-		USER_NO
-		, USER_ID
-		, USER_PWD
-		, USER_NAME
-		, NICKNAME
-		, PHONE
-		, EMAIL
-		, ENROLL_DATE
-		, ONDO
-		, USER_LEVEL
-		, USER_STATUS
-		, CAUTION
-		FROM MEMBER
-		WHERE USER_NAME = ?
-		AND EMAIL = ?
-		AND USER_STATUS = 'Y'
-	</entry>
-
-	<entry key="searchPwd">
-		SELECT
-		USER_NO
-		, USER_ID
-		, USER_PWD
-		, USER_NAME
-		, NICKNAME
-		, PHONE
-		, EMAIL
-		, ENROLL_DATE
-		, ONDO
-		, USER_LEVEL
-		, USER_STATUS
-		, CAUTION
-		FROM MEMBER
-		WHERE USER_ID = ?
-		AND USER_NAME = ?
-		AND EMAIL = ?
-		AND USER_STATUS = 'Y'
-	</entry>
-
-	<entry key="changePwd">
-		UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?
-	</entry>
-
-	<entry key="countMember">
-		SELECT
-		COUNT(*) count
-		FROM MEMBER
-		WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
-	</entry>
-
-	<entry key="updateUserLevel">
-		UPDATE MEMBER
-		SET USER_LEVEL = 'C'
-		WHERE USER_NO = ?
-	</entry>
-
-	<entry key="selectBlackListCount">
-		SELECT COUNT(*) count
-		FROM MEMBER
-		WHERE CAUTION >= 3
-	</entry>
-
-	<entry key="selectBlackList">
-		SELECT *
-		FROM(
-		SELECT ROWNUM RNUM, A.*
-		FROM (
-		SELECT
-		USER_NO
-		, USER_ID
-		, USER_NAME
-		, CAUTION
-		, USER_STATUS
-		FROM MEMBER
-		WHERE USER_LEVEL = 'B'
-		ORDER
-		BY USER_NO DESC
-		) A
-		)
-		WHERE RNUM BETWEEN ? AND ?
-	</entry>
-
-	<entry key="selectTradeTypeCount">
-		SELECT COUNT(TRADE_TYPE) "COUNT"
-		FROM PRODUCT
-		WHERE SELLER_NO = ?
-		AND TRADE_TYPE = 2
-	</entry>
-
-	<entry key="countBoardList">
-		SELECT
-		COUNT(*) count
-		FROM PRODUCT
-	</entry>
-
-	<entry key="selectBoardList">
-		SELECT *
-		FROM(
-		SELECT ROWNUM RNUM, A.*
-		FROM (
-		SELECT
-		PRODUCT_NAME
-		, USER_NO
-		, USER_NAME
-		, CAUTION
-		, UPLOAD_DATE
-		FROM PRODUCT P
-		JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
-		ORDER
-		BY UPLOAD_DATE DESC
-		) A
-		)
-		WHERE RNUM BETWEEN ? AND ?
-	</entry>
-
-	<entry key="deleteMember">
-		UPDATE MEMBER
-		   SET USER_STATUS = 'N'
-		 WHERE USER_NO = ?
-	</entry>
-
-	<entry key="recoveryMember">
-		UPDATE MEMBER
-		   SET USER_STATUS = 'Y'
-		 WHERE USER_NO = ?
-	</entry>
-
-	<entry key="selectEnrollMonth">
-		SELECT
-		       TO_CHAR(ENROLL_DATE,'YY-MM') ENROLL_DATE
-		     , COUNT(*) count
-		  FROM MEMBER
-		 GROUP
-		    BY TO_CHAR(ENROLL_DATE,'YY-MM')
-		 ORDER
-		    BY 1
-	</entry>
-	
-	<entry key="sellListCountPo">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM PRODUCT
-		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
-	</entry>
-	
-	<entry key="sellListPo">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     PRODUCT_NO
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-						   , TRADE_TYPE
-						   , SELL_STATUS
-						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
-						FROM PRODUCT P
-						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
-						ORDER 
-						   BY UPLOAD_DATE DESC
-							, PRODUCT_NO DESC 
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="buyListCountPo">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM TRADE
-		 WHERE BUYER_NO = ?
-	</entry>
-		
-	<entry key="buyListPo">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     TRADE_NO
-						   , PRODUCT_NO
-						   , SELLER_NO
-						   , M.NICKNAME
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-					       , DELIVERY_STATUS
-				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
-				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-				           , UPLOAD_TYPE
-						FROM TRADE T
-						JOIN PRODUCT P USING (PRODUCT_NO)
-						JOIN MEMBER M ON (SELLER_NO = USER_NO)
-				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-					   WHERE BUYER_NO = ?
-					   ORDER
-						  BY TRADE_DATE DESC
-						   , PRODUCT_NO DESC
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="countOndoList">
-		SELECT COUNT(*) count
-		  FROM MEMBER
-		 WHERE ONDO &lt;= 10.0
-	</entry>
-	<entry key="updateSellStatus">
-		UPDATE PRODUCT
-		   SET SELL_STATUS = ?
-		 WHERE PRODUCT_NO = ?
-	</entry>
-	
-	<entry key="deleteProductSell">
-		UPDATE 
-		       PRODUCT
-		   SET UPLOAD_TYPE = 'N'
-		 WHERE PRODUCT_NO = ?
-	</entry>
-	
-	<entry key="sellListStatusCo">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM PRODUCT
-		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
-		   AND SELL_STATUS = ?
-	</entry>
-	
-	<entry key="sellListStatusPo">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     PRODUCT_NO
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-						   , TRADE_TYPE
-						   , SELL_STATUS
-						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
-						FROM PRODUCT P
-						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
-						  AND SELL_STATUS = ?
-						ORDER 
-						   BY UPLOAD_DATE DESC
-							, PRODUCT_NO DESC 
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="sellListSearchCount">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM PRODUCT
-		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
-		   AND PRODUCT_NAME LIKE '%' || ? || '%'
-	</entry>	
-	
-	<entry key="sellListSearch">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     PRODUCT_NO
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-						   , TRADE_TYPE
-						   , SELL_STATUS
-						   , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
-						FROM PRODUCT P
-						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
-						  AND PRODUCT_NAME LIKE '%' || ? || '%'
-						ORDER 
-						   BY UPLOAD_DATE DESC
-							, PRODUCT_NO DESC 
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-
-	
-	<entry key="buyListSelectCo">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM TRADE
-		 WHERE BUYER_NO = ?
-		 ORDER
-		    BY TRADE_NO ASC
-	</entry>
-		
-	<entry key="buyListSelectPo">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     TRADE_NO
-						   , PRODUCT_NO
-						   , SELLER_NO
-						   , M.NICKNAME
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-					       , DELIVERY_STATUS
-				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
-				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-				           , UPLOAD_TYPE
-						FROM TRADE T
-						JOIN PRODUCT P USING (PRODUCT_NO)
-						JOIN MEMBER M ON (SELLER_NO = USER_NO)
-				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-					   WHERE BUYER_NO = ?
-					   ORDER
-						  BY TRADE_NO ASC
-						   , PRODUCT_NO DESC
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="buyListSearchCount">
-		SELECT
-		       COUNT(*) COUNT
-		  FROM TRADE
-		  JOIN PRODUCT USING (PRODUCT_NO)
-		 WHERE BUYER_NO = ?
- 		   AND UPLOAD_TYPE = 'Y'
-   		   AND PRODUCT_NAME LIKE '%' || ? || '%'
-	</entry>
-		
-	<entry key="buyListSearchPo">
-		SELECT *
-		  FROM (
-		       SELECT ROWNUM RNUM, A.*
-		         FROM (
-		              SELECT
-						     TRADE_NO
-						   , PRODUCT_NO
-						   , SELLER_NO
-						   , M.NICKNAME
-						   , PRODUCT_NAME
-						   , TO_CHAR(PRICE, '999,999,999') PRICE
-					       , DELIVERY_STATUS
-				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
-				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-				           , UPLOAD_TYPE
-						FROM TRADE T
-						JOIN PRODUCT P USING (PRODUCT_NO)
-						JOIN MEMBER M ON (SELLER_NO = USER_NO)
-				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-					   WHERE BUYER_NO = ?
-					     AND PRODUCT_NAME LIKE '%' || ? || '%'
-					   ORDER
-						  BY UPLOAD_TYPE DESC
-						   , PRODUCT_NO DESC
-		                   ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="insertReview">
-		INSERT
-		  INTO REVIEW
-		  (
-		    REVIEW_NO
-		  , PRODUCT_NO
-		  , USER_NO
-		  , REVIEW_DETAIL
-		  , SCORE
-		  )
-		  VALUES
-		  (
-		    SEQ_REVIEW.NEXTVAL
-		  , ?
-		  , ?
-		  , ?
-		  , ?
-		  )
-	</entry>
-	
-	<entry key="insertReviewType">
-		INSERT
-		  INTO REVIEW_TYPE
-		  (
-		    REVIEW_NO
-		  , REVIEW_TYPE
-		  )
-		  VALUES
-		  (
-		    SEQ_REVIEW.CURRVAL
-		  , ?
-		  )
-	</entry>
-	
-	<entry key="insertReviewImg">
-		INSERT
-		  INTO IMAGES
-		  (
-		    IMG_NO
-		  , REF_RNO
-		  , IMG_LEVEL
-		  , ORIGIN_NAME
-		  , CHANGE_NAME
-		  , IMG_PATH
-		  )
-		  VALUES
-		  (
-		    SEQ_IMG.NEXTVAL
-		  , SEQ_REVIEW.CURRVAL
-		  , 1
-		  , ?
-		  , ?
-		  , ?
-		  )
-	</entry>
-	
-
-	
-	<entry key="countCbtnList">
-		SELECT COUNT(*) count
-		  FROM MEMBER
-		 WHERE USER_LEVEL = 'C'
-	</entry>
-	
-	<entry key="countSearchList">
-		SELECT COUNT(*) count
-		  FROM MEMBER
-		 WHERE USER_ID LIKE '%' || ? || '%'
-		    OR USER_NAME LIKE '%' || ? || '%'
-	</entry>
-
-	<entry key="selectOndoList">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_ID
-		                     , USER_NAME
-		                     , ENROLL_DATE
-		                     , ONDO 
-		                     , USER_LEVEL
-		                     , CAUTION
-		                  FROM MEMBER 
-		                 WHERE USER_STATUS = 'Y'
-		                   AND ONDO &lt;= 10.0
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="selectCbtnList">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_ID
-		                     , USER_NAME
-		                     , ENROLL_DATE
-		                     , ONDO 
-		                     , USER_LEVEL
-		                     , CAUTION
-		                  FROM MEMBER 
-		                 WHERE USER_STATUS = 'Y'
-		                   AND ONDO &lt;= 10.0
-		                   AND USER_LEVEL = 'C'
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="selectSearchList">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_ID
-		                     , USER_NAME
-		                     , ENROLL_DATE
-		                     , ONDO 
-		                     , USER_LEVEL
-		                     , CAUTION
-		                  FROM MEMBER 
-		                 WHERE USER_STATUS = 'Y'
-		                   AND (USER_ID LIKE '%' || ? || '%'
-        					OR USER_NAME LIKE '%' || ? || '%')
-		                 ORDER
-		                    BY ENROLL_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="countBListSearch">
-		SELECT COUNT(*) count
-		  FROM MEMBER
-		 WHERE USER_LEVEL = 'B'
-		   AND CAUTION &gt;= 3
-		   AND USER_ID = ?
-		   AND USER_NAME = ?
-	</entry>
-	
-	<entry key="selectBListSearch">
-		SELECT *
-			  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_ID
-		                     , USER_NAME
-		                     , CAUTION
-		                     , USER_STATUS
-		                  FROM MEMBER 
-		                 WHERE USER_LEVEL = 'B'
-		                   AND CAUTION &gt;= 3
-		                   AND (USER_ID LIKE '%' || ? || '%'
-		  				   OR USER_NAME LIKE '%' || ? || '%') 
-		                 ORDER
-		                    BY USER_NO DESC
-		                    ) A
-		       		 )
-			 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="countSearchBoard">
-		 SELECT 
-               	COUNT(*) count
+   <entry key="selectOndoList">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_ID
+                           , USER_NAME
+                           , ENROLL_DATE
+                           , ONDO 
+                           , USER_LEVEL
+                           , CAUTION
+                        FROM MEMBER 
+                       WHERE USER_STATUS = 'Y'
+                         AND ONDO &lt;= 10.0
+                       ORDER
+                          BY ENROLL_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="selectCbtnList">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_ID
+                           , USER_NAME
+                           , ENROLL_DATE
+                           , ONDO 
+                           , USER_LEVEL
+                           , CAUTION
+                        FROM MEMBER 
+                       WHERE USER_STATUS = 'Y'
+                         AND ONDO &lt;= 10.0
+                         AND USER_LEVEL = 'C'
+                       ORDER
+                          BY ENROLL_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="selectSearchList">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_ID
+                           , USER_NAME
+                           , ENROLL_DATE
+                           , ONDO 
+                           , USER_LEVEL
+                           , CAUTION
+                        FROM MEMBER 
+                       WHERE USER_STATUS = 'Y'
+                         AND (USER_ID LIKE '%' || ? || '%'
+                       OR USER_NAME LIKE '%' || ? || '%')
+                       ORDER
+                          BY ENROLL_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="countBListSearch">
+      SELECT COUNT(*) count
+        FROM MEMBER
+       WHERE USER_LEVEL = 'B'
+         AND CAUTION &gt;= 3
+         AND USER_ID = ?
+         AND USER_NAME = ?
+   </entry>
+   
+   <entry key="selectBListSearch">
+      SELECT *
+           FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_ID
+                           , USER_NAME
+                           , CAUTION
+                           , USER_STATUS
+                        FROM MEMBER 
+                       WHERE USER_LEVEL = 'B'
+                         AND CAUTION &gt;= 3
+                         AND (USER_ID LIKE '%' || ? || '%'
+                       OR USER_NAME LIKE '%' || ? || '%') 
+                       ORDER
+                          BY USER_NO DESC
+                          ) A
+                    )
+          WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="countSearchBoard">
+       SELECT 
+                  COUNT(*) count
            FROM PRODUCT P
            JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
           WHERE (PRODUCT_NAME LIKE '%' || ? || '%'
              OR USER_NAME LIKE '%' || ? || '%' )
-	</entry>
-	
-	<entry key="selectSearchBoard">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       USER_NO
-		                     , USER_NAME
-		                     , CAUTION
-		                     , PRODUCT_NAME
-		                     , UPLOAD_DATE
-		                  FROM PRODUCT P
-		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
-		                 WHERE (PRODUCT_NAME LIKE '%' || ? || '%'
-             			   	OR USER_NAME LIKE '%' || ? || '%' )
-		                 ORDER
-		                    BY UPLOAD_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	
-	<entry key="selectMember">
-		SELECT
-		      *
-		  FROM MEMBER
-		 WHERE USER_NO = ?
-	</entry>
-		TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
-		, COUNT(*) count
-		FROM MEMBER
-		GROUP
-		BY TO_CHAR(ENROLL_DATE,'YY-MM')
-		ORDER
-		BY 1
-	</entry>
-
-	<entry key="saveBankAccount">
-		MERGE INTO BANK_ACCOUNT tgt USING (SELECT ? AS USER_NO, ? AS BANK, ? AS
-		ACCOUNT FROM DUAL) src ON (tgt.USER_NO=src.USER_NO)
-		WHEN MATCHED THEN
-		UPDATE SET tgt.BANK=src.BANK, tgt.ACCOUNT=src.ACCOUNT
-		WHEN NOT MATCHED THEN
-		INSERT (BANKACCOUNT_NO, USER_NO, BANK, ACCOUNT) VALUES (SEQ_BANK.NEXTVAL,
-		src.USER_NO, src.BANK, src.ACCOUNT)
-	</entry>
-	<entry key="selectBankAccount">
-		SELECT BANKACCOUNT_NO,
-		USER_NO,
-		BANK,
-		ACCOUNT
-		FROM BANK_ACCOUNT
-		WHERE USER_NO = ?
-	</entry>
-
-</properties>
+   </entry>
+   
+   <entry key="selectSearchBoard">
+      SELECT *
+        FROM(
+              SELECT ROWNUM RNUM, A.*
+                FROM (
+                        SELECT 
+                             USER_NO
+                           , USER_NAME
+                           , CAUTION
+                           , PRODUCT_NAME
+                           , UPLOAD_DATE
+                        FROM PRODUCT P
+                        JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+                       WHERE (PRODUCT_NAME LIKE '%' || ? || '%'
+                            OR USER_NAME LIKE '%' || ? || '%' )
+                       ORDER
+                          BY UPLOAD_DATE DESC
+                          ) A
+              )
+       WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   
+   <entry key="selectMember">
+      SELECT
+            *
+        FROM MEMBER
+       WHERE USER_NO = ?
+   </entry>
+   </properties>
