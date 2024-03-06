@@ -1,5 +1,4 @@
 <%@page import="com.cooltrade.product.model.vo.Trade"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%  
 	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
@@ -502,7 +501,7 @@
 <%-- 	                                	<% if((int)request.getAttribute("result") > 0) { %> --%>
 <!-- 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button> -->
 <%--                                 		<% } else { %> --%>
-                                   			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal<%= i %>" data-index="1">후기남기기</button>
+                                   			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal<%= i %>">후기남기기</button>
 <%-- 	                                	<% } %> --%>
 
 											<!-- 이용후기 모달 -->
@@ -511,30 +510,31 @@
 											    	<div class="modal-content">
 											    	
 											    	<script>
-												    	var modal = document.getElementById("reviewModal");
-												    	var closeDiv = document.getElementsByClassName("close")[0];
-												    	
-												    	closeDiv.onclick = function() {
-											    		  	modal.style.display = "none";
-											    		  	location.reload();
-											    		}
-								
-											    		// 모달 외부를 클릭하면 모달을 닫습니다.
-											    		window.onclick = function(event) {
-											    		  	if (event.target == modal) {
-											    		    modal.style.display = "none";
-											    		    location.reload();
-											    		  	}
-											    		}
 											    		
-											    		$(document).ready(function(){
-										    			  	// 모달을 열 때마다 해당 버튼의 data-index 속성값을 가져와 모달 본문에 적용합니다.
-										    			  	$('[id="reviewModal"]').on('show.bs.modal', function (event) {
-										    			    	var button = $(event.relatedTarget);
-										    			    	var index = button.data('index');
-										    			    	$('#indexValue').text(index);
-										    			  	});
-										    			});
+											    		// 모달이 닫히면 새로고침
+											    		$('#reviewModal<%= i %>').on('hidden.bs.modal', function (e) {
+											    		    location.reload();
+											    		});
+											    		
+<%-- 								                    	$("#divBlock<%= i %>").click(function(){ --%>
+// 								                    		var hReviewDiv = document.getElementById("h-review-div");
+// 								    					    hReviewDiv.style.display = "block";
+// 								                    	})
+								                    	/*
+								                    	function openDiv(){
+// 								                    		var hReviewDiv = document.getElementById("h-review-div"+e);
+// 								    					    hReviewDiv.style.display = "block";
+															console.log("오냐?");
+															$("#h-review-div").css("display", "block");
+								    					    //document.getElementById("h-review-div").style.display = "block";
+								                    	}
+								                    	*/
+								                    	$(".divBlock").click(function(){
+															console.log("여긴오냐?");
+								                    		var hReviewDiv = document.getElementsByClassName("h-review-div");
+								    					    hReviewDiv.style.display = "block";
+								                    	})
+											    		
 											    	</script>
 												      	<!-- Modal Header -->
 												     	<div class="modal-header" align="center">
@@ -551,7 +551,7 @@
 												        		<input type="hidden" name="cpage" value="1">
 												        
 											                	<div class="mo-h4"><h4 style="margin:0px;"><%= list.get(i).getNickname() %>과의 거래에 만족하셨나요?</h4></div>
-											                	<div class="rating mo-h4" onclick="divBlock();">
+											                	<div class="rating mo-h4" onclick="openDiv();" class="divBlokc">
 																	<h4 style="margin:0px;">
 																		<fieldset class="rate">
 											                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
@@ -564,7 +564,7 @@
 																	</h4>
 																</div>
 																
-																<div id="h-review-div">	
+																<div id="h-review-div" class="h-review-div" style="display:none">	
 																	<div id="mo-co2">
 																		<div><%=list.get(i).getNickname() %> 에게 후기를 남겨주세요.</div>
 																		<div><small>해당하는 항목을 모두 골라주세요.</small></div>
@@ -650,24 +650,6 @@
 
                     executeRating(ratingStars);
                     
-                    // 선택 div 색 바꾸기
-                    /*
-                    function changeColor(element) {
-
-                        var currentColor = element.style.backgroundColor;
-                        var input = element.querySelector('input[type="checkbox"]');
-
-                        if(currentColor != "rgb(44, 44, 44)") {
-                            element.style.backgroundColor = "rgb(44, 44, 44)";
-                            element.style.color = "white";
-                   	        input.click();
-                        } else if(element.style.backgroundColor == "rgb(44, 44, 44)") {
-                            element.style.backgroundColor = "";
-                            element.style.color = "black";
-                            input.click(false);
-                        }                 
-                    }
-                    */
                     function changeColor(element) {
                         var input = element.querySelector('input[type="checkbox"]');
                         
@@ -702,10 +684,6 @@
 						
 					}
 					
-					function divBlock(){
-						$("#h-review-div").css("display", "block");
-					}
-                    
                     </script>  
                 
                 <div class="paging-area" align="center">
