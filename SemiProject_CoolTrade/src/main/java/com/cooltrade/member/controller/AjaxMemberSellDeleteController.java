@@ -32,7 +32,9 @@ public class AjaxMemberSellDeleteController extends HttpServlet {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		int result = new MemberService().deleteProductSell(pno);
 		
-		response.getWriter().print(result);
+		if(result > 0) {
+			response.getWriter().print(result);
+		}
 		
 	}
 

@@ -1,8 +1,6 @@
 package com.cooltrade.product.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,21 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Images;
-import com.cooltrade.product.model.vo.LikeProduct;
-import com.cooltrade.product.model.vo.Product;
 
 /**
- * Servlet implementation class DetilProductViewController
+ * Servlet implementation class AjaxLikeProductInsertController
  */
-@WebServlet("/detail.po")
-public class DetailProductViewController extends HttpServlet {
+@WebServlet("/ajaxlike.po")
+public class AjaxLikeProductInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DetailProductViewController() {
+    public AjaxLikeProductInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,26 +28,15 @@ public class DetailProductViewController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+		int uno = Integer.parseInt(request.getParameter("uno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		
-		int likeCount = new ProductService().selectLikeCount(pno);
-		
-		// 1. 조회수 증가
-		int result = new ProductService().increaseCount(pno);
-		
-		// 2. 조회수 증가하면 성공
-		if(result>0) {
-			Product p = new ProductService().selectProductDetail(pno); 
-			ArrayList<Images> imglist = new ProductService().selectImages(pno);
-			request.setAttribute("p", p);
-			request.setAttribute("imglist",	imglist);
-			String uploadType = p.getUploadType();
-			System.out.println(uploadType);
-			request.setAttribute("likeCount", likeCount);
-			
-			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
+		int result = new ProductService().likeInsert(uno, pno);
+	
+		if(result > 0) {
+			response.getWriter().print(result);
 		}
+		
 	}
 
 	/**

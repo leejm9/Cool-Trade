@@ -458,8 +458,22 @@
 		  WHERE REF_PNO = ?
 	</entry>
 	
+	<entry key="likeInsert">
+		INSERT
+		  INTO LIKE_PRODUCT
+		VALUES
+		    (
+		      ?
+		    , ?
+		    , DEFAULT
+		    )
+	</entry>
 
-
+	<entry key="selectLikeCount">
+		SELECT COUNT(*) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE PRODUCT_NO = ?
+	</entry>
 	
 	
 	

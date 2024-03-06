@@ -15,6 +15,7 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
+import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -723,12 +724,13 @@ public class ProductDao {
          pstmt = conn.prepareStatement(sql);
          pstmt.setInt(1, pno);
          while(rset.next()) {
-         Product p = new Product();
-               p.setProductNo(rset.getInt("product_no"));
-               p.setProductName(rset.getString("product_name"));
-               
-               plist.add(p);
-            }
+        	 Product p = new Product();
+             p.setProductNo(rset.getInt("product_no"));
+             p.setProductName(rset.getString("product_name"));
+           
+             plist.add(p);
+         }
+         
       } catch (SQLException e) {
          e.printStackTrace();
       }finally {
@@ -983,6 +985,53 @@ public class ProductDao {
 		}
 		System.out.println("딜리트다오리절트 : " + result);
 		return result;
+	}
+	
+	public int likeInsert(Connection conn, int uno, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("likeInsert");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectLikeCount(Connection conn, int pno) {
+		int likeCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLikeCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				likeCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return likeCount;
 	}
 
 }

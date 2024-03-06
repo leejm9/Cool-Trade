@@ -502,13 +502,6 @@
 		        
 
                 <script>
-                
-                
-                
-                
-                
-                
-                
 
                     $(document).ready(function() {
                         // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
@@ -524,23 +517,23 @@
                     
                     // 삭제하기 버튼 이벤트
                     function deleteBtn(num){
-                    	$.ajax({
-                			url:"ajaxselldelete.me",
-                			data:{
-                					pno:num,
-                			},
-                			type:"post",
-                			success:function(result){
-                				if(!confirm("상품을 삭제하시겠습니까?")){
-                					console.log("취소")
-                				}else{
-                					alert("상품이 삭제되었습니다.");
-                					document.location.href = document.location.href;
-                				}
-                			}
-                		});
-
-                    }
+                    	console.log("d");
+                    	if(confirm("상품을 삭제하시겠습니까?")){
+	                    	$.ajax({
+	                			url:"ajaxselldelete.me",
+	                			data:{
+	                					pno:num,
+	                			},
+	                			type:"post",
+	                			success:function(result){
+	                				alert("상품이 삭제되었습니다.");
+	                				location.reload();
+	                			}	
+                			})
+                		} else{
+                			console.log("취소");
+                		}
+                   	}
                     
                 </script>
 		        
