@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cooltrade.member.model.service.MemberService;
+import com.cooltrade.member.model.vo.Member;
+
 /**
  * Servlet implementation class ChatRoomConroller
  */
@@ -27,9 +30,12 @@ public class ChatRoomConroller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String pno = request.getParameter("pno");
+		
+		request.setAttribute("pno", pno);
 		
 		
-		request.getRequestDispatcher("views/chat/chatpage.jsp").forward(request, response);
+		request.getRequestDispatcher("views/chat/chatWindow.jsp").forward(request, response);
 	}
 
 	/**
