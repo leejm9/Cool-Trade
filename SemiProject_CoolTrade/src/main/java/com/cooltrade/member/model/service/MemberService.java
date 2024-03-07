@@ -355,91 +355,6 @@ public class MemberService {
 		return list;
 	}
 	
-	public Member idMember(String userId) {
-		Connection conn = getConnection();
-		
-		Member m = new MemberDao().idMember(conn, userId);
-		
-		close(conn);
-		
-		return m;
-		
-	}
-	
-	
-//	public int insertMember(Member m) {
-//		Connection conn = getConnection();
-//		
-//		int result = new MemberDao().insertMember(conn, m);
-//		
-//		if(result >0) {
-//			commit(conn);
-//		}else {
-//			rollback(conn);
-//		}
-//		
-//		close(conn);
-//		return result;
-//	}
-	
-	
-	public int insertMember(Member m) {
-		Connection conn = getConnection();
-		
-		int result = new MemberDao().insertMember(conn, m);
-		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		
-		close(conn);
-		return result;
-	}
-	
-	
-	public Member countMember() {
-		Connection conn = getConnection();
-		
-		Member m = new MemberDao().countMember(conn);
-		close(conn);
-		return m;
-	}
-	
-	public int updateUserLevel(int userNo) {
-		Connection conn = getConnection();
-		
-		int result = new MemberDao().updateUserLevel(conn, userNo);
-		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		close(conn);
-		return result;
-	}
-	
-	public int selectBlackListCount() {
-		Connection conn = getConnection();
-		
-		int result = new MemberDao().selectBlackListCount(conn);
-		
-		close(conn);
-		return result;
-	}
-	
-	public ArrayList<Member> selectBlackList(PageInfo pi){
-		Connection conn = getConnection();
-		
-		ArrayList<Member> list = new MemberDao().selectBlackList(conn, pi);
-		
-		close(conn);
-		return list;
-				
-	} 
-	
 	public ArrayList<Product> sellListSearch(PageInfo pi, int userNo, String word) {
 		// System.out.println("서비스에 키워드오나?" + word);
 		Connection conn = getConnection();
@@ -456,38 +371,6 @@ public class MemberService {
 		
       close(conn);
       return listCount;
-
-
-		
-	}
-	
-	public int recoveryMember(int userNo) {
-		Connection conn = getConnection();
-		
-		int result = new MemberDao().recoveryMember(conn,userNo);
-		
-		if(result > 0) {
-			commit(conn);
-		}else {
-			rollback(conn);
-		}
-		close(conn);
-		return result;
-	}
-	public ArrayList<Member> selectEnrollMonth(){
-		Connection conn = getConnection();
-		
-		ArrayList<Member> list = new MemberDao().selectEnrollMonth(conn);
-		close(conn);
-		return list;
-	}	
-	
-	public int sellListCountPo(int userNo) {
-		Connection conn = getConnection();
-		int listCount = new MemberDao().sellListCountPo(conn, userNo);
-		
-		close(conn);
-		return listCount;
 		
 	}
 	
@@ -537,28 +420,29 @@ public class MemberService {
 		close(conn);
 		return result1 * result2 * result3;
 	}
-   public int saveBankAccount(int userNo, String bank, String account) {
-    Connection conn = getConnection();
+	
+    public int saveBankAccount(int userNo, String bank, String account) {
+	    Connection conn = getConnection();
+	
+	    int result = new MemberDao().saveBankAccount(conn, userNo, bank, account);
+	
+	    if (result > 0) {
+	      commit(conn);
+	    } else {
+	      rollback(conn);
+	    }
+	    close(conn);
+	    return result;
+   }
 
-    int result = new MemberDao().saveBankAccount(conn, userNo, bank, account);
+	public BankAccount selectBankAccount(int userNo) {
+	    Connection conn = getConnection();
+	
+	    BankAccount bankAccount = new MemberDao().selectBankAccount(conn, userNo);
+	    close(conn);
+	    return bankAccount;
+	}
 
-    if (result > 0) {
-      commit(conn);
-    } else {
-      rollback(conn);
-    }
-    close(conn);
-    return result;
-  }
-
-  public BankAccount selectBankAccount(int userNo) {
-    Connection conn = getConnection();
-
-    BankAccount bankAccount = new MemberDao().selectBankAccount(conn, userNo);
-    close(conn);
-    return bankAccount;
-  }
-}
 	
 	public int reviewCount(int uno) {
 		Connection conn = getConnection();
