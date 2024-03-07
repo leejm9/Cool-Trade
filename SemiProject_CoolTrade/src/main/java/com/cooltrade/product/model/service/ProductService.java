@@ -429,5 +429,16 @@ public class ProductService {
 		close(conn);
 		
 		return list;
+	public int deleteBoard(int pno) {
+		Connection conn = getConnection();
+		
+		int result = new ProductDao().deleteBoard(conn, pno);
+		if(result >0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 }

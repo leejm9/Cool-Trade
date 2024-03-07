@@ -191,22 +191,23 @@
 
 	<entry key="selectBoardList">
 		SELECT *
-		FROM(
-		SELECT ROWNUM RNUM, A.*
-		FROM (
-		SELECT
-		PRODUCT_NAME
-		, USER_NO
-		, USER_NAME
-		, CAUTION
-		, UPLOAD_DATE
-		FROM PRODUCT P
-		JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
-		ORDER
-		BY UPLOAD_DATE DESC
-		) A
-		)
-		WHERE RNUM BETWEEN ? AND ?
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                  SELECT 
+		                       PRODUCT_NAME
+		                     , PRODUCT_NO
+		                     , USER_NAME
+		                     , CAUTION
+		                     , UPLOAD_DATE
+		                     , UPLOAD_TYPE
+		                  FROM PRODUCT P
+		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+		                 ORDER
+		                    BY UPLOAD_DATE DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 
 	<entry key="deleteMember">

@@ -38,7 +38,7 @@
             background-color: white;
             padding-top:25px;
         }
-    
+    	
 </style>
 
 </head>
@@ -104,7 +104,7 @@
         </div>
         
 	   <div>
-	       <a href="<%= contextPath %>/member.in?cpage=1&dropDownValue=1"  class="btn btn-sm btn-secondary">목록가기</a>
+	       <a href="<%= contextPath %>/blacklist.in?cpage=1"  class="btn btn-sm btn-secondary">목록가기</a>
 	       <a href="<%= contextPath %>/delete.detail?uno=<%= m.getUserNo() %>" class="btn btn-sm btn-danger">추방하기</a>
 	       
 	   </div>

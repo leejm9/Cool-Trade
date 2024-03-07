@@ -47,8 +47,8 @@
    		 	margin-left: auto; /* #searchBtn1 영역을 왼쪽으로 밀어냄 */
    		 	display:flex;
 		}
-		#dataTable tbody td{
-			
+		#dataTable tbody tr:hover{
+			background-color:rgb(211, 211, 211);
 			cursor:pointer;
 		}
 		
@@ -118,20 +118,20 @@
                                     <tbody>
                                     	<% if(list.isEmpty()){ %>
 						                <tr>
-						                    <td colspan="6">조회된 게시글이 없습니다</td>
+						                    <td colspan="8" align="center">조회된 게시글이 없습니다</td>
 						                </tr>
 										<% }else{ %>
 	                                    	<% for(Member m : list){ %>
 	                                    		
 		                                        <tr>
 		                                            <td><%= m.getUserNo() %></td>
-		                                            <td><%= m.getUserId() %></td>
-		                                            <td><%= m.getUserName() %></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserId() %></a></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getEnrollDate() %></td>
 		                                            <td><%= m.getOndo() %></td>
 		                                            <td><%= m.getUserLevel() %></td>
 		                                            <td><%= m.getCaution() %></td>
-		                                            <th>
+		                                            <td align="center">
 		                                            <% if(m.getOndo()<= 10.0f) { %>
 		                                            	<% if("C".equals(m.getUserLevel())) {%>
 		                                            		<button class="btn btn-primary" disabled>쿨거래사용자</button>
@@ -139,7 +139,7 @@
 		                                            		<button onclick="coolTrade(<%= m.getUserNo() %>,<%= currentPage %> ,this);" class="btn btn-primary">쿨거래</button>
 		                                            	<% } %>
 		                                            <% } %>
-		                                            </th>
+		                                            </td>
 		                                        </tr>
 		                                        
                                         	<% } %>
@@ -148,12 +148,6 @@
                                 </table>
                                 
                                 <script>
-	                                $(function(){
-	                            		$("#dataTable>tbody>tr").click(function(){
-	                            			location.href = '<%= contextPath %>/memInfo.detail?uno=' + $(this).children().eq(0).text();
-	                            		})
-	                            	})
-                                
                                 	function coolTrade(userNo,currentPage,button){
                                 		var btn = $(button); 
                                 		$.ajax({
@@ -172,8 +166,6 @@
                                 			
                                 		})
                                 	}
-                                	
-                                	
                                 </script>
                                 
                                 <div id="btn" align="center">

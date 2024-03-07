@@ -85,11 +85,13 @@
                 </div>
                 <div id="like_chat_buy-ds" class="flex-ds">
                     <button class="btn btn-lg btn-secondary">❤️찜<span>89</span></button>
-                    <button class="btn btn-lg btn-warning">💬 채팅하기</button>
+                    <button class="btn btn-lg btn-warning" onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>'">💬 채팅하기</button>
                     <button class="btn btn-lg btn-danger">바로사버리기</button>
                 </div>
             </div>
         </div>
+        
+        
         
         <div id="related_products-ds">
 	        <button class="prev-ds"> &lt; </button>

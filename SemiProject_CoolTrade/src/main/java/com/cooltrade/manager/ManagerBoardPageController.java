@@ -32,7 +32,12 @@ public class ManagerBoardPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String search = request.getParameter("boardsearch");
+		String search = null;
+		String boardsearch = request.getParameter("boardsearch");
+		if(boardsearch != null) {
+			search = boardsearch;
+		}
+		
 		int listCount; 	 
 		int currentPage; 
 		int pageLimit;   
@@ -41,16 +46,17 @@ public class ManagerBoardPageController extends HttpServlet {
 		int maxPage;	 
 		int startPage;	 
 		int endPage;	 
-		if(search == null) {
-			listCount = new MemberService().countBoardList();
-		}else {
-			listCount = new MemberService().countSearchBoard(search);
+		if (search == null || search.isEmpty()) {
+		    listCount = new MemberService().countBoardList();
+		} else {
+		    listCount = new MemberService().countSearchBoard(search);
 		}
 		
 		
 		int cpage = 1; 
-	    if (request.getParameter("cpage") != null) {
-	        cpage = Integer.parseInt(request.getParameter("cpage"));
+	    String cpageParam = request.getParameter("cpage");
+	    if (cpageParam != null) {
+	        cpage = Integer.parseInt(cpageParam);
 	    }
 	    currentPage = cpage;
 		
@@ -78,7 +84,6 @@ public class ManagerBoardPageController extends HttpServlet {
 		}else {
 			list = new MemberService().selectSearchBoard(pi,search);
 		}
-		
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);

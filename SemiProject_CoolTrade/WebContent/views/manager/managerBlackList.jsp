@@ -29,7 +29,10 @@
 		#searchBtn1{
 			margin-bottom:5px;
 		}
-		
+		#dataTable tbody tr:hover{
+			background-color:rgb(211, 211, 211);
+			cursor:pointer;
+		}
 	</style>
     
 
@@ -82,13 +85,13 @@
 	                                    	<% for(Member m : list){ %>
 		                                        <tr>
 		                                            <td><%= m.getUserNo() %></td>
-		                                            <td><%= m.getUserId() %></td>
-		                                            <td><%= m.getUserName() %></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserId() %></a></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <% if(m.getUserStatus().equals("Y")){ %>
-		                                            <td><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22);">추방</button></td>
+		                                            <td align="center"><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22); border: none;">추방</button></td>
 		                                       		<% }else if(m.getUserStatus().equals("N")) { %>
-		                                       		<td><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234);">복구</button></td>
+		                                       		<td align="center"><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234); border: none;">복구</button></td>
 		                                       		<% } %>
 		                                        </tr>
                                         	<% } %>
@@ -123,10 +126,7 @@
 							                		console.log("ajax 통신 실패");
 							                	}
 							                })
-							            	
 							        }        
-							            
-							       
 							    </script>
                                 
                                 

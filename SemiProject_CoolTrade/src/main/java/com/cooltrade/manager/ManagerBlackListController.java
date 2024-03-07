@@ -37,10 +37,10 @@ public class ManagerBlackListController extends HttpServlet {
 		String bsearch = request.getParameter("bsearch");
 		
 	    int cpage = 1; 
-	    if (request.getParameter("cpage") != null) {
-	        cpage = Integer.parseInt(request.getParameter("cpage"));
+	    String cpageParam = request.getParameter("cpage");
+	    if (cpageParam != null) {
+	        cpage = Integer.parseInt(cpageParam);
 	    }
-	    System.out.println(cpage);
 		int listCount = 0 ; 	 
 		int currentPage; 
 		int pageLimit;   

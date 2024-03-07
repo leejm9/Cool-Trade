@@ -1,4 +1,4 @@
-package com.cooltrade.notice.controller;
+package com.cooltrade.manager;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.notice.model.service.NoticeService;
-import com.cooltrade.notice.model.vo.Notice;
+import com.cooltrade.product.model.dao.ProductDao;
+import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Product;
 
 /**
- * Servlet implementation class NoticeDetailController
+ * Servlet implementation class ManagerDeleteBoardController
  */
-@WebServlet("/detail.no")
-public class NoticeDetailController extends HttpServlet {
+@WebServlet("/delete.board")
+public class ManagerDeleteBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDetailController() {
+    public ManagerDeleteBoardController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,24 +31,22 @@ public class NoticeDetailController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		int noticeNo = Integer.parseInt(request.getParameter("num"));
-		int result = new NoticeService().increaseCount(noticeNo);
-		if(result > 0) { 
-			Notice n = new NoticeService().selectNotice(noticeNo); 
+		int result = new ProductService().deleteBoard(pno);
+		
+		if(result >0) {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().print(result);
+		}else {
 			
-			request.setAttribute("n", n);
-			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);;
-		}else { 
-			request.setAttribute("errorMsg", "공지사항 상세 조회 실패!");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		}	
+		
+		
+		
+		
 		
 	}
-		
-		
-	
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -29,14 +29,27 @@ public class MangerMemInfoDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int cpage = 1;
+		String cpageParam = request.getParameter("cpage");
+		if (cpageParam != null) {
+		    cpage = Integer.parseInt(cpageParam);
+		}
+		
+		
+		
 		
 		int uno = Integer.parseInt(request.getParameter("uno"));
 		
 		Member m = new MemberService().selectMember(uno);
 		
 		request.setAttribute("m", m);
+		System.out.println(cpage);
+		if(cpage == 1) {
+			request.getRequestDispatcher("views/manager/managerMemberDetail.jsp").forward(request, response);
+		}else {
+			request.getRequestDispatcher("views/manager/managerBlackDetail.jsp").forward(request, response);
+		}
 		
-		request.getRequestDispatcher("views/manager/managerMemberDetail.jsp").forward(request, response);
 		
 		
 	}
