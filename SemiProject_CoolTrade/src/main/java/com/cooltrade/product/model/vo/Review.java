@@ -14,6 +14,7 @@ public class Review {
 	private String productName;
 	private String titleImg;
 	private String reviewTypeDetail;
+	private int avgScore;
 	
 	public Review() {}
 
@@ -31,7 +32,7 @@ public class Review {
 	}
 
 	public Review(int reviewNo, int productNo, int userNo, int imgNo, String reviewDetail, int score, String reviewDate,
-			String reviewType, String nickName, String productName, String titleImg, String reviewTypeDetail) {
+			String reviewType, String nickName, String productName, String titleImg, String reviewTypeDetail, int avgScore) {
 		super();
 		this.reviewNo = reviewNo;
 		this.productNo = productNo;
@@ -45,6 +46,7 @@ public class Review {
 		this.productName = productName;
 		this.titleImg = titleImg;
 		this.reviewTypeDetail = reviewTypeDetail;
+		this.avgScore = avgScore;
 	}
 
 	public int getReviewNo() {
@@ -141,6 +143,14 @@ public class Review {
 
 	public void setReviewTypeDetail(String reviewTypeDetail) {
 		this.reviewTypeDetail = reviewTypeDetail;
+	}
+
+	public int getAvgScore() {
+		return avgScore;
+	}
+
+	public void setAvgScore(int avgScore) {
+		this.avgScore = avgScore;
 	}
 
 	@Override

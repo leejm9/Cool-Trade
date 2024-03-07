@@ -44,6 +44,10 @@ public class MemberMyPageController extends HttpServlet {
 		
 		int reviewCount = new MemberService().reviewCount(uno);
 		request.setAttribute("reviewCount", reviewCount);
+		
+		// 찜한상품 카운트
+		int likePoCount = new MemberService().likeProductCount(uno);
+		request.setAttribute("likePoCount", likePoCount);
 
 		request.getRequestDispatcher("views/myPage/myPage.jsp").forward(request, response);
 		

@@ -475,7 +475,6 @@
 		 WHERE PRODUCT_NO = ?
 	</entry>
 	
-	
-	
+
 	
 </properties>

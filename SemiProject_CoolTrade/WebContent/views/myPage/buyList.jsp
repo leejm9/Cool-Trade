@@ -5,7 +5,7 @@
 	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String word = (String)request.getAttribute("word");
-	//int result = (int)request.getAttribute("result");
+// 	int result = (int)request.getAttribute("result");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -358,7 +358,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -380,7 +380,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -516,25 +516,14 @@
 											    		    location.reload();
 											    		});
 											    		
-<%-- 								                    	$("#divBlock<%= i %>").click(function(){ --%>
-// 								                    		var hReviewDiv = document.getElementById("h-review-div");
-// 								    					    hReviewDiv.style.display = "block";
-// 								                    	})
-								                    	/*
-								                    	function openDiv(){
-// 								                    		var hReviewDiv = document.getElementById("h-review-div"+e);
-// 								    					    hReviewDiv.style.display = "block";
+								                    	function openDiv(e){
 															console.log("오냐?");
-															$("#h-review-div").css("display", "block");
-								    					    //document.getElementById("h-review-div").style.display = "block";
+															console.log($(e).siblings("#h-review-div"));
+															$(e).siblings("#h-review-div").css("display", "block");
+// 															$(".h-review-div").css("display", "block"); // 이것도됨
+															
 								                    	}
-								                    	*/
-								                    	$(".divBlock").click(function(){
-															console.log("여긴오냐?");
-								                    		var hReviewDiv = document.getElementsByClassName("h-review-div");
-								    					    hReviewDiv.style.display = "block";
-								                    	})
-											    		
+								                    	
 											    	</script>
 												      	<!-- Modal Header -->
 												     	<div class="modal-header" align="center">
@@ -551,7 +540,7 @@
 												        		<input type="hidden" name="cpage" value="1">
 												        
 											                	<div class="mo-h4"><h4 style="margin:0px;"><%= list.get(i).getNickname() %>과의 거래에 만족하셨나요?</h4></div>
-											                	<div class="rating mo-h4" onclick="openDiv();" class="divBlokc">
+											                	<div class="rating mo-h4 divBlokc" onclick="openDiv(this);">
 																	<h4 style="margin:0px;">
 																		<fieldset class="rate">
 											                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
@@ -594,7 +583,7 @@
 							                                            <label for="image" id="mo-la">
 							                                            	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
 							                                            </label>
-							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();" required>
+							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg(this);" required>
 							                                            <div id="mo-img-div">
 							                                            	<img id="mo-img" src="#">
 							                                            </div>
@@ -667,11 +656,13 @@
                         }
                     }
                     
+                    // 이미지 클릭 시 input 클릭
                     function chooseFile(){
 						$("#mo-img-input").click();
 					}
 					
-					function loadImg(){
+					function loadImg(el){
+						console.log(el);
 						const reader = new FileReader();
 						const file = $("#mo-img-input")[0].files[0];
 						

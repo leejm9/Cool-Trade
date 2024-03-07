@@ -3,6 +3,7 @@
 <%
 	int count = (int)request.getAttribute("count");
 	int reviewCount = (int)request.getAttribute("reviewCount");
+	int likePoCount = (int)request.getAttribute("likePoCount");
 %>
 <!DOCTYPE html>
 <html>
@@ -229,7 +230,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -297,7 +298,7 @@
                             <li>
                                 <div>찜한상품</div>
                                 <div>
-                                    <a href="#">3</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>"><%= likePoCount %></a>
                                 </div>
                             </li>
                         </ul>

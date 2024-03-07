@@ -1543,7 +1543,7 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				r.setScore(rset.getInt("score"));
-				r.setReviewType(rset.getString("avg"));
+				r.setAvgScore(rset.getInt("avg"));
 			}
 			
 		} catch (SQLException e) {
@@ -1554,6 +1554,58 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return r;
+	}
+	
+	public int likeProductCount(Connection conn, int uno) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likeProductCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int likePoCount(Connection conn, String userId) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likePoCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
    
 }

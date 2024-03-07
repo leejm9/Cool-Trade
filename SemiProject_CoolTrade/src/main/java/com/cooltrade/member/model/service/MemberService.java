@@ -453,4 +453,20 @@ public class MemberService {
 		return r;
 	}
 	
+	public int likeProductCount(int uno) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likeProductCount(conn, uno);
+		
+		close(conn);
+		return count;
+	}
+	
+	public int likePoCount(String userId) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likePoCount(conn, userId);
+		
+		close(conn);
+		return count;
+	}
+	
 }

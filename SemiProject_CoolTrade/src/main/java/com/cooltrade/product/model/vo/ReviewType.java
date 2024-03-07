@@ -5,14 +5,16 @@ public class ReviewType {
 	private int reviewNo;
 	private String reviewType;
 	private int count;
+	private String reviewTypeDetail;
 	
 	public ReviewType() {}
 
-	public ReviewType(int reviewNo, String reviewType, int count) {
+	public ReviewType(int reviewNo, String reviewType, int count, String reviewTypeDetail) {
 		super();
 		this.reviewNo = reviewNo;
 		this.reviewType = reviewType;
 		this.count = count;
+		this.reviewTypeDetail = reviewTypeDetail;
 	}
 
 	public int getReviewNo() {
@@ -37,6 +39,14 @@ public class ReviewType {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+	public String getReviewTypeDetail() {
+		return reviewTypeDetail;
+	}
+
+	public void setReviewTypeDetail(String reviewTypeDetail) {
+		this.reviewTypeDetail = reviewTypeDetail;
 	}
 
 	@Override

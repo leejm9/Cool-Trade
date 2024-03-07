@@ -90,19 +90,21 @@
     }
 
     #right-content-wrap>div {
-        padding: 10px 0px;
+        /* padding: 10px 0px; */
     }
 
     #right-content-title {
         font-size: 18px;
         font-weight: 700;
         width: 100%;
+        padding: 10px 0px;
     }
 
     #trade-review-count {
         font-size: 16px;
         /* border-bottom: 1px solid #e6e6e6; */
         width: 100%;
+        padding: 10px 0px;
     }
 
     #trade-review-count>span {
@@ -114,6 +116,7 @@
         justify-content: space-evenly;
         border: 1px solid #e6e6e6;
         border-radius: 5px;
+        padding: 10px 0px;
     }
 
     #trade-review-total>div {
@@ -147,6 +150,7 @@
 
     #review-list-area {
         border-bottom: 1px solid #e6e6e6;
+        height: 210px;
     }
 
     #review-list-area>div {
@@ -160,11 +164,12 @@
     #review-content {
         width: 90%;
         font-size: 14px;
-        /* display: flex; */
+        display: flex;
+        justify-content: space-between;
     }
 
     #review-content>div {
-        height: 30px;
+        height: 100%;
         align-items: center;
     }
 
@@ -188,7 +193,7 @@
         height: 30px;
         width: auto;
         padding: 5px 10px;
-        background-color: white;
+        background-color: transparent;
     }
 
     #product-title-btn>img {
@@ -248,12 +253,43 @@
 	   color: #dabd18b2;
 	   transition: filter linear .3s;
 	}
-	/*
-	.rating__star:hover {
-	   filter: drop-shadow(1px 1px 4px gold);
-	}
+
+    #review-content-left>div {
+        padding: 5px 0px;
+    }
+
+    #review-content-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    #review-detail-div {
+        width: 400px;
+        height: 60px;
+        border: 1px solid #e6e6e6;
+    }
+
+    #review-detail-div>div {
+        padding: 0px 5px;
+    }
+    
+    #review-load-btn {
+    	cursor: pointer;
+    }
+    /*
+    .load-div {
+    	display: none;
+    }
+    
+    .load-div.active {
+    	display: block;
+    }
+    
+    .load-div.after {
+    	display: none;
+    }
 	*/
-	
 </style>
 </head>
 <body>
@@ -266,7 +302,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -288,7 +324,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -319,7 +355,7 @@
                         <div id="avgStar"></div>
                     </div>
                     <div>
-                        <div><%= avg.getReviewType() %></div>
+                        <div><%= avg.getAvgScore() %>%</div>
                         <div><small>만족후기</small></div>
                     </div>
                 </div>
@@ -346,7 +382,7 @@
 	              	
 				</script>
 
-                <div>
+                <div style="padding: 10px 0px;">
                     <div id="review-select-section-top">
                         <div class="flex-class">
                             <div class="flex-class">
@@ -432,83 +468,111 @@
                     }
                     
                 </script>
-				<% for(Review r : rList) { %>
-                <div id="review-list-area" class="flex-class">
-                    <div id="buyer-profile-img">
-                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
-                    </div>
-                    <div id="review-content">
-                        <div class="flex-class" id="review-content-buyer-name">
-                            <div><%= r.getNickName() %></div>
-                            <div>1개월 전</div>
-                        </div>
-                        <div class="flex-class">
-                            <div id="starScore">
-                            	<input type="text" id="starInput" value="<%= r.getScore() %>">
-                           	</div>
-                        </div>
-                        <div class="flex-class">
-                            <div>
-                                <button type="button" id="product-title-btn">
-                                    <%= r.getProductName() %>
-                                    <img src="resources/images/greater than.png" alt="" width="7" height="10">
-                                </button>
-                            </div>
-                        </div>
-                        <div class="flex-class" id="reviewImgDiv" style="height:5px;">
-                            <div>
-                                <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
-                            </div>    
-                        </div>
-                        <div class="flex-class">
-                            <div><%= r.getReviewDetail() %></div>
-                        </div>
-                        <div class="flex-class">
-                            	<div>친절해요.</div>
-                        </div>
-                        <div class="flex-class">
-                            <div>
-                                <button type="button" id="review-report-btn">신고하기</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				
-				<script>
-						//const starClassActive = "rating__star fas fa-star"; // 텅빈별
-		              	//const starClassInactive = "rating__star far fa-star"; // 색칠한별
-		              	var starScoreList = document.querySelectorAll("#starScore");
-						starScoreList.forEach(function(starScoreElement) {
-						    var stars = starScoreElement.querySelectorAll("#starInput").value;
-						    var star = '';
-						    console.log(stars);
-						
-						    for (var i = 1; i <= 5; i++) {
-						        if (i <= parseInt(stars)) {
-						            star += '<span class="rating__star fas fa-star"></span>';
-						        } else {
-						            star += '<span class="rating__star far fa-star"></span>';
-						        }
-						    }
-						
-						    starScoreElement.innerHTML = star;
-						});
-	              	
-				</script>
-				<% } %>
-				
+                <div id="review-list-area-wrap">
+					<% for(Review r : rList) { %>
+	                <div id="review-list-area" class="flex-class load-div">
+	                    <div id="buyer-profile-img">
+	                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
+	                    </div>
+	                    <div id="review-content">
+	                        <div id="review-content-left">
+	                            <div class="flex-class" id="review-content-buyer-name">
+	                                <div><%= r.getNickName() %></div>
+	                            </div>
+	                            <div class="flex-class">
+	                                <div class="starScoreClass">
+	                                    <input type="hidden" class="starInput" value="<%= r.getScore() %>">
+	                                    <img src="resources/images/greater than.png" alt="" width="7" height="10">
+	                                </div>
+	                            </div>
+	                            <div class="flex-class">
+	                                <div>
+	                                    <button type="button" id="product-title-btn">
+	                                        <%= r.getProductName() %>&nbsp;&gt;
+	                                    </button>
+	                                </div>
+	                            </div>
+	                            <div class="flex-class" id="review-detail-div">
+	                                <div><%= r.getReviewDetail() %></div>
+	                            </div>
+	                            <div class="flex-class">
+	                                    <div>친절해요.</div>
+	                            </div>                         
+	                        </div>
+	                        <div id="review-content-right">
+	                            <div>1개월 전</div>
+	                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
+	                                <div>
+	                                    <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
+	                                </div>    
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+					<% } %>
+				</div>
                 <div id="moreBtn-area">
                     <div id="moreBtn" class="flex-class">
                         <div>
                             <img src="resources/images/moreBtn.png" alt="더보기 아이콘" width="20" height="20" style="opacity: 0.3;">
                         </div>
-                        <div>받은 후기 더보기</div>
+                        <div id="review-load-btn">받은 후기 더보기</div>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
+    
+    	<script>
+				$(function(){
+					//const starClassActive = "rating__star fas fa-star"; // 텅빈별
+	              	//const starClassInactive = "rating__star far fa-star"; // 색칠한별
+	              	var starScoreList = document.querySelectorAll(".starScoreClass");
+	              	console.log(starScoreList)
+					starScoreList.forEach(function(starScoreElement) {
+					    console.log($(starScoreElement).children().eq(0).val()); // 내가 저장한 점수
+					    var stars = $(starScoreElement).children().eq(0).val();
+					    var star = '';
+					
+					    for (var i = 1; i <= 5; i++) {
+					        if (i <= parseInt(stars)) {
+					            star += '<span class="rating__star fas fa-star"></span>';
+					        } else {
+					            star += '<span class="rating__star far fa-star"></span>';
+					        }
+					    }	
+						
+					   $(starScoreElement).html(star);
+					    
+					});
+				})
+				/*
+				// 페이지를 로드하면 리뷰리스트어리어를 1개만 로드
+				$(window).on('load', function () {
+					console.log("여기들어오냐?");
+					load('#review-list-area-wrap', '1');
+				
+					$("#review-load-btn").on("click", function () {
+						load('#review-list-area-wrap', '1', '#review-load-btn');
+						console.log("여기들어온다고?");
+					})
+				});
+				
+				function load(id, cnt, btn) {
+					var reivew_list = id + " .load-div:not(.active)";
+					var review_length = $(review_list).length;
+					var review_total_cnt;
+					if (cnt < review_length) {
+						review_total_cnt = cnt;
+					} else {
+						review_total_cnt = review_length;
+						$(btn).hide();
+					}
+					$(review_list + ":lt(" + review_total_cnt + ")").addClass("active");
+				}
+	            */
+		</script>
 
 
 	<%@ include file = "../common/footer.jsp" %>

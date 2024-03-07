@@ -165,7 +165,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -187,7 +187,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>

@@ -12,7 +12,8 @@
     
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String alertMsg = (String)session.getAttribute("alertMsg");
-	
+	int headerCo = (int)session.getAttribute("headerCo");
+
 	
 %>
 <!DOCTYPE html>
@@ -238,9 +239,16 @@
                     <div id="jjimText-ds" class="flex-ds">
                         관심상품
                     </div>
+                    <% if(loginUser == null) { %>
                     <a href="" id="jjimLink-ds" class="flex-ds">
                         <img src="resources/images/좋아요.png" width="25" height="25" style="padding: 5px;" alt="좋아요 이미지">
                     </a>
+                    <% } else { %>
+                    <a href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>" id="jjimLink-ds" class="flex-ds" style="vertical-align: middle;">
+                        <img src="resources/images/좋아요.png" width="25" height="25" style="padding: 5px;" alt="좋아요 이미지">
+						<div style="padding-top: 3px;"><%= headerCo %></div>
+                    </a>
+                    <% } %>
                 </div>
                 <div id="recentProduct-ds">
                     <div id="recentTitle-ds">최근본상품</div>

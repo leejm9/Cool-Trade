@@ -726,13 +726,25 @@
 			             WHEN SCORE = 3 THEN 60 
 			             WHEN SCORE = 2 THEN 40 
 			             WHEN SCORE = 1 THEN 20 
-			             ELSE 0 END) / (COUNT(*) * 100)) * 100 || '%' AS AVG
+			             ELSE 0 END) / (COUNT(*) * 100)) * 100 AS AVG
 			FROM 
 			    REVIEW
 			JOIN PRODUCT USING (PRODUCT_NO)
 			WHERE SELLER_NO = ?
 	</entry>
 	
+	<entry key="likeProductCount">
+		SELECT COUNT(USER_NO) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="likePoCount">
+ 		SELECT COUNT(USER_NO) COUNT
+		  FROM LIKE_PRODUCT
+          JOIN MEMBER USING (USER_NO)
+		 WHERE USER_ID = ?
+	</entry>
 	
 	
 	
