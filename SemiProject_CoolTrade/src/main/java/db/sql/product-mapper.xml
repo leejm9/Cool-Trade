@@ -185,7 +185,7 @@
 	
 	<entry key="selectMonthSales">
 		SELECT
-		       TO_CHAR(TRADE_DATE,'YY/MM') trade_date
+		       TO_CHAR(TRADE_DATE,'YY/MM') TRADE_DATE
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)
@@ -381,7 +381,7 @@
 	
 	<entry key="selectDaySales">
 		SELECT
-		       TO_CHAR(TRADE_DATE,'MM/DD') trade_date
+		       TO_CHAR(TRADE_DATE,'MM/DD') TRADE_DATE
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)

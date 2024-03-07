@@ -309,7 +309,9 @@ body{
     border: 1px solid rgb(204, 204, 204);
     background: rgb(249, 249, 249);
     margin-bottom: 6px;
-    display: block;
+    display: flex;
+    flex-direction:column;
+    position:relative;
 }
 #recentTitle-ds{
     width: 68px;
@@ -322,12 +324,10 @@ body{
     justify-content: center;
 }
 #recentDotContainer-ds{
-    height: 2px;
     justify-content: center;
 }
 #recentDottedBorder-ds{
     width: 38px;
-    height: 2px;
     border-bottom: 2px dotted rgb(136, 136, 136);
 }
 #recentSeenProduct-ds{
@@ -335,9 +335,14 @@ body{
     justify-content: center;
     align-items: center;
 }
-#seenEye-ds, #seenText-ds{
-    justify-content: center;
+#seenEye-ds, #seenText-ds, #seenImg-ds{
     text-align: center;
+}
+#seenImg-ds button{
+	border: none;
+	height: 20px; 
+	background-color: rgb(249, 249, 249);
+	border: 1px solid rgb(204, 204, 204);
 }
 #seenEye-ds{
     font-size: 25px;

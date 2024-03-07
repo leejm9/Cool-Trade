@@ -1,4 +1,5 @@
-<%@page import="com.cooltrade.product.model.vo.Search"%>
+<%-- <%@page import="com.cooltrade.product.model.vo.Search"%> --%>
+<%@page import="com.cooltrade.product.model.vo.RecentProducts"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
 <%@page import="com.cooltrade.product.model.vo.Product"%>
 <%@page import="com.cooltrade.product.model.vo.Category"%>
@@ -15,6 +16,8 @@
 	int headerCo = (int)session.getAttribute("headerCo");
 
 	
+	
+	ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>)session.getAttribute("rlist");
 %>
 <!DOCTYPE html>
 <html>
@@ -252,8 +255,9 @@
                 </div>
                 <div id="recentProduct-ds">
                     <div id="recentTitle-ds">최근본상품</div>
-                    <div id="recentDotContainer-ds" class="flex-ds">
-                        <div id="recentDottedBorder-ds"></div>
+                    <%if(rlist == null) {%>
+                    <div id="recentDotContainer-ds" class="flex-ds" style="margin-bottom: 10px">
+                        <div id="recentDottedBorder-ds" ></div>
                     </div>
                     <div id="recentSeenProduct-ds">
                         <div id="seenText-ds">
@@ -261,6 +265,20 @@
                             상품이<br>
                             없습니다.
                         </div>
+					<%}else{ %>
+                    <div id="recentDotContainer-ds" class="flex-ds" style="margin-bottom: 10px; align-items:center;">
+                       	<div id="recentDottedBorder-ds" align="center"><%=rlist.size() %></div>
+                    </div>
+                    <div id="recentSeenProduct-ds">
+					<div id="seenImg-ds">
+						<div style="margin-bottom: 5px;">
+								<img src="<%=rlist.get(0).getImgPath()+rlist.get(0).getChangeName()%>" width="66" height="66" style="border: 1px solid rgb(204, 204, 204);">
+						</div>
+						<button><</button>
+						<button>></button>
+					</div>
+<!-- 					<div style="height:50px; width:50px; background-color:white; border: 1px solid black;"></div> -->
+					<%} %>
                     </div>
                 </div>
                 <div id="topContainer-ds">
