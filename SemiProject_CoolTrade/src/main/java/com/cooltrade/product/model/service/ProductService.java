@@ -10,6 +10,7 @@ import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
+import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -255,6 +256,18 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+	public int likeInsert(int uno, int pno) {
+		Connection conn = getConnection();
+		int result = new ProductDao().likeInsert(conn, uno, pno);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 	
 	public int insertPopularSearch(String[] s) {
 		Connection conn = getConnection();
@@ -441,4 +454,13 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
+}
+	public int selectLikeCount(int pno) {
+		Connection conn = getConnection();
+		int likeCount = new ProductDao().selectLikeCount(conn, pno);
+		
+		close(conn);
+		return likeCount;
+	}
+   
 }

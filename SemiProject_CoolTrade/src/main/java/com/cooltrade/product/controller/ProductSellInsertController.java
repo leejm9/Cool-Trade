@@ -58,6 +58,8 @@ public class ProductSellInsertController extends HttpServlet {
 				trade = 2;
 			}
 			
+			
+			
 			// String으로 넘어온 price, pieces int로 변환
 			String priceStr = multiRequest.getParameter("price");
 			String priceStrCommas = priceStr.replaceAll(",", "");
@@ -66,6 +68,10 @@ public class ProductSellInsertController extends HttpServlet {
 			String piecesStr = multiRequest.getParameter("pieces");
 			String piecesStrCommas = piecesStr.replaceAll(",", "");
 			int pieces = Integer.parseInt(piecesStrCommas);
+			
+//			String category = multiRequest.getContentType("category");
+//			System.out.println(category);
+//			System.out.println(piecesStr);
 			
 			Product p = new Product(multiRequest.getParameter("category"),
 									multiRequest.getParameter("seller"),
@@ -78,6 +84,7 @@ public class ProductSellInsertController extends HttpServlet {
 									Integer.parseInt(multiRequest.getParameter("deliveryCharge")), 
 									pieces);
 			
+			System.out.println("상품수정아니고등록 카테고리" + multiRequest.getParameter("category"));
 			ArrayList<Images> list = new ArrayList<Images>();
 			
 			for(int i=1; i<=5; i++) {

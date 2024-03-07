@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cooltrade.member.model.service.MemberService;
+
 /**
  * Servlet implementation class MemberLikeListController
  */
@@ -27,7 +29,10 @@ public class MemberLikeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		int uno = Integer.parseInt(request.getParameter("uno"));
 		
+		int likePoCount = new MemberService().likeProductCount(uno);
+		request.setAttribute("likePoCount", likePoCount);
 		
 		
 		

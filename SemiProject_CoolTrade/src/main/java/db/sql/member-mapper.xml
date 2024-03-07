@@ -260,7 +260,7 @@
 						  AND UPLOAD_TYPE = 'Y'
 						ORDER 
 						   BY UPLOAD_DATE DESC
-							, PRODUCT_NO DESC 
+							, PRODUCT_NO DESC
 		                   ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
@@ -680,14 +680,6 @@
 		  FROM MEMBER
 		 WHERE USER_NO = ?
 	</entry>
-		TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
-		, COUNT(*) count
-		FROM MEMBER
-		GROUP
-		BY TO_CHAR(ENROLL_DATE,'YY-MM')
-		ORDER
-		BY 1
-	</entry>
 
 	<entry key="saveBankAccount">
 		MERGE INTO BANK_ACCOUNT tgt USING (SELECT ? AS USER_NO, ? AS BANK, ? AS
@@ -707,4 +699,76 @@
 		WHERE USER_NO = ?
 	</entry>
 
+	
+	<entry key="reviewCount">
+		SELECT COUNT(*) COUNT
+		  FROM REVIEW
+		  JOIN PRODUCT USING (PRODUCT_NO)
+		 WHERE SELLER_NO = ?
+	</entry>
+	
+	<entry key="reviewTypeCount">
+		SELECT 
+			   RC.REVIEW_TYPE
+			 , COUNT(RT.REVIEW_TYPE) AS COUNT
+		  FROM REVIEW_CONTENT RC
+		  LEFT JOIN REVIEW_TYPE RT ON (RT.REVIEW_TYPE = RC.REVIEW_TYPE)
+		  LEFT JOIN REVIEW R ON (R.REVIEW_NO = RT.REVIEW_NO)
+		  LEFT JOIN PRODUCT PD USING (PRODUCT_NO)
+		 WHERE PD.SELLER_NO = ?
+			OR PD.SELLER_NO IS NULL
+		 GROUP 
+		    BY RC.REVIEW_TYPE
+		 ORDER
+		    BY 1
+	</entry>
+	
+	<entry key="reviewList">
+		SELECT
+		       REVIEW_NO
+		     , M.USER_NO
+		     , NICKNAME
+		     , SCORE
+		     , P.PRODUCT_NO
+		     , PRODUCT_NAME
+		     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+		     , REVIEW_DETAIL
+		     , REVIEW_DATE
+		  FROM REVIEW R
+		  JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
+		  JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
+		  JOIN IMAGES I ON (REVIEW_NO = REF_RNO)
+		 WHERE SELLER_NO = ?
+	</entry>
+	
+	<entry key="starAvg">
+		SELECT 
+			    AVG(SCORE) SCORE,
+			    (SUM(CASE WHEN SCORE = 5 THEN 100 
+			             WHEN SCORE = 4 THEN 80 
+			             WHEN SCORE = 3 THEN 60 
+			             WHEN SCORE = 2 THEN 40 
+			             WHEN SCORE = 1 THEN 20 
+			             ELSE 0 END) / (COUNT(*) * 100)) * 100 AS AVG
+			FROM 
+			    REVIEW
+			JOIN PRODUCT USING (PRODUCT_NO)
+			WHERE SELLER_NO = ?
+	</entry>
+	
+	<entry key="likeProductCount">
+		SELECT COUNT(USER_NO) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="likePoCount">
+ 		SELECT COUNT(USER_NO) COUNT
+		  FROM LIKE_PRODUCT
+          JOIN MEMBER USING (USER_NO)
+		 WHERE USER_ID = ?
+	</entry>
+	
+	
+	
 </properties>

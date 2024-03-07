@@ -459,17 +459,29 @@
 	</entry>
 	
 	<entry key="deleteProductSellImage">
-		 UPDATE
+		 DELETE
 		        IMAGES
-		    SET IMG_STATUS = 'N'
-		 WHERE REF_PNO = ?
+		  WHERE REF_PNO = ?
+	</entry>
+	
+	<entry key="likeInsert">
+		INSERT
+		  INTO LIKE_PRODUCT
+		VALUES
+		    (
+		      ?
+		    , ?
+		    , DEFAULT
+		    )
+	</entry>
+
+	<entry key="selectLikeCount">
+		SELECT COUNT(*) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE PRODUCT_NO = ?
 	</entry>
 	
 
-
-	
-	
-	
 	
 	<entry key="searchByCategory">
 			  SELECT PRODUCT_NO

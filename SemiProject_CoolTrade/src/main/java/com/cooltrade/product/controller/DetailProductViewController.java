@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.product.model.service.ProductService;
 import com.cooltrade.product.model.vo.Images;
+import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Product;
 
 /**
@@ -35,6 +36,8 @@ public class DetailProductViewController extends HttpServlet {
 		
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		
+		int likeCount = new ProductService().selectLikeCount(pno);
+		
 		// 1. 조회수 증가
 		int result = new ProductService().increaseCount(pno);
 		
@@ -47,6 +50,7 @@ public class DetailProductViewController extends HttpServlet {
 			request.setAttribute("imglist",	imglist);
 			String uploadType = p.getUploadType();
 			System.out.println(uploadType);
+			request.setAttribute("likeCount", likeCount);
 			
 			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
 		}

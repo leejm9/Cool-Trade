@@ -1,12 +1,11 @@
 <%@page import="com.cooltrade.product.model.vo.Trade"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%  
 	ArrayList<Trade> list = (ArrayList<Trade>)request.getAttribute("list");
 	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String word = (String)request.getAttribute("word");
-	//int result = (int)request.getAttribute("result");
+// 	int result = (int)request.getAttribute("result");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -359,7 +358,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -372,7 +371,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -381,7 +380,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -452,32 +451,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                        	<% for(Trade t : list) { %>
+                        	<% for(int i=0; i<list.size(); i++) { %>
 	                            <tr>
-	                                <td id="td-date"><%= t.getTradeDate() %></td>
+	                                <td id="td-date"><%= list.get(i).getTradeDate() %></td>
 	                                <td id="td-po">
 	                                    <div>
-	                                    	<% if(t.getUploadType().equals("Y")) { %>
+	                                    	<% if(list.get(i).getUploadType().equals("Y")) { %>
 		                                    	<div>
-			                                        <% if(t.getTitleImg() != null) { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= t.getTitleImg() %>"></a>
+			                                        <% if(list.get(i).getTitleImg() != null) { %>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a href="<%= contextPath %>/detail.po?pno=<%= t.getProductNo() %>"><%= t.getProductName() %></a>
+			                                        <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } else { %>
 	                                    		<div>
-			                                        <% if(t.getTitleImg() != null) { %>
-		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="<%= contextPath %>/<%= t.getTitleImg() %>"></a>
+			                                        <% if(list.get(i).getTitleImg() != null) { %>
+		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
 		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a class="deletePo" href="#" onclick="deletePo(this);"><%= t.getProductName() %></a>
+			                                        <a class="deletePo" href="#" onclick="deletePo(this);"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } %>
 	                                    	
@@ -493,23 +492,39 @@
 	                                    </div>
 	                                </td>
 	                                
-	                                <td><%= t.getStrPrice() %>원</td>
+	                                <td><%= list.get(i).getStrPrice() %>원</td>
 	                                <td>
-	                                    <div class="deliver-status"><%= t.getDeliveryStatus() %></div>
+	                                    <div class="deliver-status"><%= list.get(i).getDeliveryStatus() %></div>
 	                                    <button type="button" class="list-select-btn">배송조회</button>
 	                                </td>
 	                                <td>
 <%-- 	                                	<% if((int)request.getAttribute("result") > 0) { %> --%>
 <!-- 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button> -->
-<%-- 	                                	<% } else { %> --%>
-	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal">후기남기기</button>
+<%--                                 		<% } else { %> --%>
+                                   			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal<%= i %>">후기남기기</button>
 <%-- 	                                	<% } %> --%>
 
-			                                <!-- 이용후기 모달 -->
-						               		<div class="modal" id="reviewModal">
+											<!-- 이용후기 모달 -->
+							           		<div class="modal" id="reviewModal<%= i %>">
 											  	<div class="modal-dialog modal-dialog-centered">
 											    	<div class="modal-content">
-											
+											    	
+											    	<script>
+											    		
+											    		// 모달이 닫히면 새로고침
+											    		$('#reviewModal<%= i %>').on('hidden.bs.modal', function (e) {
+											    		    location.reload();
+											    		});
+											    		
+								                    	function openDiv(e){
+															console.log("오냐?");
+															console.log($(e).siblings("#h-review-div"));
+															$(e).siblings("#h-review-div").css("display", "block");
+// 															$(".h-review-div").css("display", "block"); // 이것도됨
+															
+								                    	}
+								                    	
+											    	</script>
 												      	<!-- Modal Header -->
 												     	<div class="modal-header" align="center">
 												        	<h4 class="modal-title">후기 남기기</h4>
@@ -520,12 +535,12 @@
 												      	<div class="modal-body" align="center">
 												        
 												        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
-												        		<input type="hidden" name="pno" value="<%= t.getProductNo() %>">
+												        		<input type="hidden" name="pno" value="<%= list.get(i).getProductNo() %>">
 												        		<input type="hidden" name="uno" value="<%= userNo %>">
 												        		<input type="hidden" name="cpage" value="1">
 												        
-											                	<div class="mo-h4"><h4 style="margin:0px;"><%= t.getNickname() %>과의 거래에 만족하셨나요?</h4></div>
-											                	<div class="rating mo-h4" onclick="divBlock();">
+											                	<div class="mo-h4"><h4 style="margin:0px;"><%= list.get(i).getNickname() %>과의 거래에 만족하셨나요?</h4></div>
+											                	<div class="rating mo-h4 divBlokc" onclick="openDiv(this);">
 																	<h4 style="margin:0px;">
 																		<fieldset class="rate">
 											                                <input class="rating__star far fa-star" type="radio" id="rating5" name="rating" value="1"><label for="rating5"></label>
@@ -533,20 +548,14 @@
 											                                <input class="rating__star far fa-star" type="radio" id="rating3" name="rating" value="3"><label for="rating3"></label>
 											                                <input class="rating__star far fa-star" type="radio" id="rating2" name="rating" value="4"><label for="rating2"></label>
 											                                <input class="rating__star far fa-star" type="radio" id="rating1" name="rating" value="5"><label for="rating1"></label>
-		                                                                    <input type="hidden" id="hidden-input-stars" value="">
+							                                                <input type="hidden" id="hidden-input-stars" value="">
 											                            </fieldset>
 																	</h4>
 																</div>
-																<script>
-																	function divBlock(){
-																		document.getElementById('h-review-div').style.display = 'block';
-																	}
-																	
-																</script>
 																
-																<div id="h-review-div">	
+																<div id="h-review-div" class="h-review-div" style="display:none">	
 																	<div id="mo-co2">
-																		<div><%= t.getNickname() %> 에게 후기를 남겨주세요.</div>
+																		<div><%=list.get(i).getNickname() %> 에게 후기를 남겨주세요.</div>
 																		<div><small>해당하는 항목을 모두 골라주세요.</small></div>
 																	</div>
 																	<div id="se-review">
@@ -569,17 +578,17 @@
 																			<input type="checkbox" id="checkbox-input6" name="R6" value="R6">배송이 빨라요.
 																		</div>
 																	</div>
-		
-		                                                            <div id="mo-img-input-area">
-		                                                                <label for="image" id="mo-la">
-		                                                                	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
-		                                                                </label>
-		                                                                <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg();" required>
-		                                                                <div id="mo-img-div">
-		                                                                	<img id="mo-img" src="#">
-		                                                                </div>
-		                                                            </div>
-		                                                            
+								
+							                                        <div id="mo-img-input-area">
+							                                            <label for="image" id="mo-la">
+							                                            	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
+							                                            </label>
+							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg(this);" required>
+							                                            <div id="mo-img-div">
+							                                            	<img id="mo-img" src="#">
+							                                            </div>
+							                                        </div>
+								                                                      
 																	<div>
 																		<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요."></textarea>
 																	</div>
@@ -600,6 +609,8 @@
                     </table>
                 </div>
                 
+
+                
                 <script>
 										      	
                     const ratingStars = [...document.getElementsByClassName("rating__star")];
@@ -607,8 +618,8 @@
                     const selectedStarsInput = document.getElementById("selectedStars");
                     
                     function executeRating(stars) {
-                      	const starClassActive = "rating__star fas fa-star";
-                      	const starClassInactive = "rating__star far fa-star";
+                      	const starClassActive = "rating__star fas fa-star"; // 텅빈별
+                      	const starClassInactive = "rating__star far fa-star"; // 색칠한별
                       	const starsLength = stars.length;
                       	let i;
                       
@@ -628,24 +639,6 @@
 
                     executeRating(ratingStars);
                     
-                    // 선택 div 색 바꾸기
-                    /*
-                    function changeColor(element) {
-
-                        var currentColor = element.style.backgroundColor;
-                        var input = element.querySelector('input[type="checkbox"]');
-
-                        if(currentColor != "rgb(44, 44, 44)") {
-                            element.style.backgroundColor = "rgb(44, 44, 44)";
-                            element.style.color = "white";
-                   	        input.click();
-                        } else if(element.style.backgroundColor == "rgb(44, 44, 44)") {
-                            element.style.backgroundColor = "";
-                            element.style.color = "black";
-                            input.click(false);
-                        }                 
-                    }
-                    */
                     function changeColor(element) {
                         var input = element.querySelector('input[type="checkbox"]');
                         
@@ -663,11 +656,13 @@
                         }
                     }
                     
+                    // 이미지 클릭 시 input 클릭
                     function chooseFile(){
 						$("#mo-img-input").click();
 					}
 					
-					function loadImg(){
+					function loadImg(el){
+						console.log(el);
 						const reader = new FileReader();
 						const file = $("#mo-img-input")[0].files[0];
 						
@@ -679,7 +674,7 @@
 					    }
 						
 					}
-                    
+					
                     </script>  
                 
                 <div class="paging-area" align="center">

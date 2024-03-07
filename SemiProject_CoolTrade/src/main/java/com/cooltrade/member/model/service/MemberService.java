@@ -108,6 +108,7 @@ public class MemberService {
          rollback(conn);
       }
       
+      close(conn);
       return result;
    }
    
@@ -165,6 +166,7 @@ public class MemberService {
          rollback(conn);
       }
       
+      close(conn);
       return result;
    }
    
@@ -178,9 +180,10 @@ public class MemberService {
       }else {
          rollback(conn);
       }
-      
+      close(conn);
       return result;
    }
+   
    public ArrayList<Member> selectEnrollMonth(){
       Connection conn = getConnection();
       
@@ -438,7 +441,7 @@ public class MemberService {
 	} 
 	
 	public ArrayList<Product> sellListSearch(PageInfo pi, int userNo, String word) {
-		System.out.println("서비스에 키워드오나?" + word);
+		// System.out.println("서비스에 키워드오나?" + word);
 		Connection conn = getConnection();
 		ArrayList<Product> list = new MemberDao().sellListSearch(conn, pi, userNo, word);
 		
@@ -555,4 +558,54 @@ public class MemberService {
     close(conn);
     return bankAccount;
   }
+}
+	
+	public int reviewCount(int uno) {
+		Connection conn = getConnection();
+		int result = new MemberDao().reviewCount(conn, uno);
+		
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<ReviewType> reviewTypeCount(int uno) {
+		Connection conn = getConnection();
+		ArrayList<ReviewType> list = new MemberDao().reviewTypeCount(conn, uno);
+		
+		close(conn);
+		return list;
+	}
+   
+	public ArrayList<Review> reviewList(int uno) {
+		Connection conn = getConnection();
+		ArrayList<Review> list = new MemberDao().reviewList(conn, uno);
+		
+		close(conn);
+		return list;
+	}
+	
+	public Review starAvg(int uno) {
+		Connection conn = getConnection();
+		Review r = new MemberDao().starAvg(conn, uno);
+		
+		close(conn);
+		return r;
+	}
+	
+	public int likeProductCount(int uno) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likeProductCount(conn, uno);
+		
+		close(conn);
+		return count;
+	}
+	
+	public int likePoCount(String userId) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likePoCount(conn, userId);
+		
+		close(conn);
+		return count;
+	}
+	
 }

@@ -1070,8 +1070,101 @@ public class ProductDao {
    public int deleteBoard(Connection conn ,int pno) {
 		int result = 0;
 		PreparedStatement pstmt = null;
+<<<<<<< HEAD
 		try{
 		String sql = prop.getProperty("deleteBoard");
+=======
+		String sql = prop.getProperty("updateProductSell");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getCategoryNo());
+			pstmt.setString(2, p.getProductName());
+			pstmt.setInt(3, p.getPrice());
+			pstmt.setString(4, p.getProductDesc());
+			pstmt.setInt(5, p.getPieces());
+			pstmt.setString(6, p.getZone());
+			pstmt.setString(7, p.getProductStatus());
+			pstmt.setInt(8, p.getDeliveryCharge());
+			pstmt.setInt(9, p.getTradeType());
+			pstmt.setInt(10, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		System.out.println("상품수정 다오" + result);
+		return result;
+	}
+	
+	public int updateImagesList(Connection conn, ArrayList<Images> list) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateImagesList");
+		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, img.getImgLevel());
+				pstmt.setString(2, img.getOriginName());
+				pstmt.setString(3, img.getChangeName());
+				pstmt.setString(4, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertNewImagesList(Connection conn, ArrayList<Images> list, int pno, int userNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertNewImagesList");
+		
+		try {
+			
+			for(Images img : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setInt(1, pno);
+				pstmt.setInt(2, userNo);
+				pstmt.setInt(3, img.getImgLevel());
+				pstmt.setString(4, img.getOriginName());
+				pstmt.setString(5, img.getChangeName());
+				pstmt.setString(6, img.getImgPath());
+				
+				result = pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deleteProductSellImage(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProductSellImage");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+>>>>>>> cr
 			pstmt.setInt(1, pno);
 			
 			result = pstmt.executeUpdate();
@@ -1084,6 +1177,7 @@ public class ProductDao {
 		return result;
 	}
 	
+<<<<<<< HEAD
 	public String getCategoryName(Connection conn, String cno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1093,10 +1187,43 @@ public class ProductDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, cno);
+=======
+	public int likeInsert(Connection conn, int uno, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("likeInsert");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectLikeCount(Connection conn, int pno) {
+		int likeCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLikeCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+>>>>>>> cr
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
+<<<<<<< HEAD
 				CategoryName = rset.getString("category_name");
 			}
 		} catch (SQLException e) {
@@ -1333,4 +1460,19 @@ public class ProductDao {
 		}
 		return list;
 	}
+=======
+				likeCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return likeCount;
+	}
+
+>>>>>>> cr
 }

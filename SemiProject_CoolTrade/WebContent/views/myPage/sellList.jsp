@@ -255,7 +255,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -268,7 +268,7 @@
                                     <a href="">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -277,7 +277,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -364,7 +364,7 @@
 	                                    		<% if(p.getTitleImg() != null) { %>
 	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>"></a>
 	                                    		<% } else { %>
-	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
+	                                    			<a href="#"><img class="titleImg" src="resources/images/no_img.png"></a>
                                     			<% } %>
 	                                    	</div>
 	                                    	<div>
@@ -502,13 +502,6 @@
 		        
 
                 <script>
-                
-                
-                
-                
-                
-                
-                
 
                     $(document).ready(function() {
                         // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
@@ -524,23 +517,23 @@
                     
                     // 삭제하기 버튼 이벤트
                     function deleteBtn(num){
-                    	$.ajax({
-                			url:"ajaxselldelete.me",
-                			data:{
-                					pno:num,
-                			},
-                			type:"post",
-                			success:function(result){
-                				if(!confirm("상품을 삭제하시겠습니까?")){
-                					console.log("취소")
-                				}else{
-                					alert("상품이 삭제되었습니다.");
-                					document.location.href = document.location.href;
-                				}
-                			}
-                		});
-
-                    }
+                    	console.log("d");
+                    	if(confirm("상품을 삭제하시겠습니까?")){
+	                    	$.ajax({
+	                			url:"ajaxselldelete.me",
+	                			data:{
+	                					pno:num,
+	                			},
+	                			type:"post",
+	                			success:function(result){
+	                				alert("상품이 삭제되었습니다.");
+	                				location.reload();
+	                			}	
+                			})
+                		} else{
+                			console.log("취소");
+                		}
+                   	}
                     
                 </script>
 		        

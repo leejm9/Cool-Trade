@@ -255,16 +255,17 @@
         border-radius: 10px;
     }
 
-    li>input {
+    li>div {
         border: none;
         background-color: transparent;
         width: 100%;
         height: 30px;
         text-align: justify;
         padding: 0px 15px;
+        cursor: pointer;
     }
 
-    li>input:hover {
+    li>div:hover {
         background-color: #e3e3e3;
     }
 
@@ -685,16 +686,17 @@
 
                                 <div id="sell-section-category" class="flex-class">
                                     <div id="sell-section-category-title">
+                                    	<input type="hidden" id="categoryTest" name="category">
                                         카테고리
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="sell-section-category-select">
-                                        <div id="sell-section-category-select-list">
+                                        <div id="sell-section-category-select-list" value="category">
                                             <ul>
                                                 <% for(Category c : list) { %>
                                                     <li>
-                                                        <input type="button" id="select-category" value="<%= c.getCategoryName() %>" required>
-                                                        <input type="hidden" name="category" value="<%= c.getCategoryNo() %>">
+                                                        <div class="test"><%= c.getCategoryName() %></div>
+                                                        <input type="hidden" id="select-category"  value="<%= c.getCategoryNo() %>" required>
                                                     </li>
                                                 <% } %>
                                             </ul>
@@ -707,17 +709,68 @@
                                 </div>
 
                                 <script>  
-                                    
-                                    // 카테고리 선택 input 요소에 대한 클릭 이벤트 처리
-                                    document.querySelectorAll('#sell-section-category-select-list input[type="button"]').forEach(item => {
+                                    /*
+                                    // 카테고리 선택 요소에 대한 클릭 이벤트 처리
+                                    document.querySelectorAll('#sell-section-category-select-list div').forEach(item => {
                                         item.addEventListener('click', event => {
                                             // 선택한 카테고리의 이름을 가져와서 표시
+                                            $("#select-category").click();
+
                                             var categoryName = event.target.value;
                                             document.getElementById('select-category-name').textContent = categoryName;
+                                           
                                             
-                                            // 선택한 카테고리의 카테고리 번호를 hidden input에 설정 (선택한 카테고리를 서버로 제출할 때 사용할 수 있음)
-                                            var categoryNo = event.target.nextElementSibling.value;
-                                            document.querySelector('#sell-section-category input[name="category"]').value = categoryNo;
+                                        });
+                                    });
+
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        // 각 카테고리 이름 div 요소들을 선택합니다.
+                                        var categoryNameDivs = document.querySelectorAll("#sell-section-category-select-list div");
+
+                                        // 각 div 요소에 클릭 이벤트를 추가합니다.
+                                        categoryNameDivs.forEach(function(div) {
+                                            div.addEventListener("click", function() {
+                                                // 해당 div의 값을 가져옵니다.
+                                                var categoryName = div.textContent;
+                                                // 해당 div의 상위 요소인 li에서 input을 찾아서 클릭합니다.
+                                                var input = div.parentElement.querySelector("input[type='hidden']");
+                                                input.click();
+                                                
+                                                // 선택한 카테고리의 이름을 표시합니다.
+                                                var selectCategoryNameElement = document.getElementById("select-category-name");
+                                                selectCategoryNameElement.textContent = categoryName;
+                                            });
+                                        });
+                                    });
+                                    */
+                                    
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                    	
+                                        var selectButtons = document.querySelectorAll('.test');
+                                        var categoryNameDisplay = document.getElementById('select-category-name');
+                                        var categoryVal = document.getElementById("select-category").value;
+                                        var categoryTest = document.getElementById("categoryTest");
+                                        
+                                        // 각 버튼에 클릭 이벤트 리스너 추가
+                                        selectButtons.forEach(function(button) {
+                                            button.addEventListener('click', function() {
+                                            	console.log("zz")
+                                            	console.log(this.nextElementSibling.value)
+                                            	categoryTest.value = this.nextElementSibling.value;
+                                            	console.log(categoryTest);
+                                                var categoryName = this.innerHTML; // 클릭된 버튼의 값(카테고리 닉네임)
+                                                var categoryNoInput = this.nextElementSibling; // 클릭된 버튼 다음에 있는 숨겨진 input 요소
+                                                var categoryNo = categoryNoInput.value; // 숨겨진 input 요소의 값(카테고리 번호)
+                                                
+                                                
+                                                // 선택한 카테고리 닉네임을 select-category-name div에 표시
+                                                console.log(categoryNo);
+                                                console.log(categoryName);
+                                                categoryVal.value = categoryNo;
+                                                console.log(categoryVal.value);
+                                                categoryNameDisplay.textContent = categoryName;
+                                                
+                                            });
                                         });
                                     });
                                     
