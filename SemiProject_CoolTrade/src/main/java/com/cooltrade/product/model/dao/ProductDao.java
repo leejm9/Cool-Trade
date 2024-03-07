@@ -630,7 +630,6 @@ public class ProductDao {
          result = pstmt.executeUpdate();
          
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
       } finally {
          close(pstmt);
@@ -659,7 +658,6 @@ public class ProductDao {
          }
          
       } catch (SQLException e) {
-         // TODO Auto-generated catch block
          e.printStackTrace();
       } finally {
          close(pstmt);
@@ -722,6 +720,9 @@ public class ProductDao {
       try {
          pstmt = conn.prepareStatement(sql);
          pstmt.setInt(1, pno);
+         
+         rset = pstmt.executeQuery();
+         
          while(rset.next()) {
          Product p = new Product();
                p.setProductNo(rset.getInt("product_no"));
@@ -734,7 +735,6 @@ public class ProductDao {
       }finally {
          close(rset);
          close(pstmt);
-         // TODO Auto-generated catch block
       }
       return plist;
    }
@@ -772,7 +772,6 @@ public class ProductDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);
@@ -803,7 +802,6 @@ public class ProductDao {
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -830,7 +828,6 @@ public class ProductDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -859,7 +856,6 @@ public class ProductDao {
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(pstmt);
@@ -879,7 +875,6 @@ public class ProductDao {
 			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
          e.printStackTrace();
 		}finally{
          close(pstmt);
@@ -909,7 +904,6 @@ public class ProductDao {
 		} finally {
 			close(pstmt);
 		}
-		System.out.println("딜리트다오리절트 : " + result);
 		return result;
 	}
 
@@ -969,7 +963,7 @@ public class ProductDao {
 			
 			while(rset.next()) {
 				list.add(new Product(rset.getInt("price"),
-									 rset.getString("sell_date")
+									 rset.getString("trade_date")
 									 ));
 			}
 			

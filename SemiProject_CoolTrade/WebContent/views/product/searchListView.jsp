@@ -100,7 +100,7 @@
 			
 		</script>
 
-
+		
 		<%if(searchList.size() != 0) {%>
 		<!-- 검색결과가 있는 경우-->
 		<div id="search_content-ds">
