@@ -121,7 +121,7 @@
 
       
     <div class="left">
-        <img src="resources/images/쿨거래 logo.png" width="170px;" alt="쿨거래 로고" height="" width="">
+        <img src="resources/images/logo.png" width="170px;" alt="쿨거래 로고" height="" width="">
         
     </div>
     <div class="right">

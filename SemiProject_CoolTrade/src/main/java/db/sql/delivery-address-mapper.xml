@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+  <entry key="selectList">
+    SELECT DELIVERY_ADDRESS_NO,
+					 USER_NO,
+					 ADDRESS,
+					 DETAIL,
+					 POSTCODE,
+					 TITLE,
+					 NAME,
+					 PHONE,
+					 MAIN_YN
+      FROM DELIVERY_ADDRESS
+     WHERE USER_NO = ?
+     ORDER BY MAIN_YN DESC, DELIVERY_ADDRESS_NO
+  </entry>
+  
+  <entry key="selectMainOne">
+    SELECT DELIVERY_ADDRESS_NO,
+           USER_NO,
+           ADDRESS,
+           DETAIL,
+           POSTCODE,
+           TITLE,
+           NAME,
+           PHONE,
+           MAIN_YN
+      FROM DELIVERY_ADDRESS
+     WHERE USER_NO = ?
+       AND MAIN_YN = 'Y'
+  </entry>
+  
+  <entry key="insert">
+    INSERT INTO DELIVERY_ADDRESS (
+           DELIVERY_ADDRESS_NO,
+           USER_NO,
+           ADDRESS,
+           DETAIL,
+           POSTCODE,
+           TITLE,
+           NAME,
+           PHONE,
+           MAIN_YN )
+    VALUES (SEQ_DELIVERY_ADDRESS.NEXTVAL, ?, ?, ?, ?, ? ,? ,? ,?)
+  </entry>
+  
+  <entry key="delete">
+    DELETE FROM DELIVERY_ADDRESS
+     WHERE DELIVERY_ADDRESS_NO = ?
+       AND USER_NO = ?
+  </entry>
+  
+  <entry key="updateMain">
+    UPDATE DELIVERY_ADDRESS
+       SET MAIN_YN = CASE WHEN DELIVERY_ADDRESS_NO = ? THEN 'Y' ELSE 'N' END
+     WHERE USER_NO = ?
+  </entry>
+</properties>

@@ -204,7 +204,7 @@ button {
       <input type="text" id="email" name="email" placeholder="이메일 주소"required>
       <button type="button" id="getVerifyCode" onclick="sendVerifyCode();">인증번호받기</button>
      </div>
-     <br>
+     
    </div>
    
    
@@ -213,7 +213,7 @@ button {
       <input type="text" id="verifyCode"  placeholder="인증번호" required>
       <button type="button" id="getVerifyCode" onclick="checkVerifyCode();">인증번호확인</button>
      </div>
-     <br>
+     
    </div>
 
 
@@ -236,11 +236,9 @@ button {
 </div>
 <details id="personalInfoDetails1">
   <summary></summary>
-  <p style="font-size: 12px;">개인정보 이용약관 내용... Lorem ipsum dolor
-     sit amet consectetur, adipisicing elit. Molestiae reprehenderit
-     veritatis quas, in nihil culpa eligendi ratione assumenda fugiat
-     omnis ab deleniti. Ab eos sint nostrum ullam libero odit
-     reiciendis.</p>
+  <p style="font-size: 12px;">개인정보 수집 이용 동의(필수)
+쿨거래는 이용자의 권익 및 개인정보 보호에 만전을 기하고자 관계법령의 규정을 반영하여 쿨거래에 회원가입을 신청하시는 이용자분들께 
+아래와 같이 개인정보의 수집 및 이용 목적, 개인정보의 항목, 개인정보의 보유 및 이용기간을 안내해 드립니다.</p>
 </details>
 
 
@@ -275,11 +273,9 @@ button {
 </div>
 <details id="tradeInfoDetails">
   <summary></summary>
-  <p style="font-size: 12px;">쿨거래 개인정보수집 내용... Lorem ipsum dolor
-     sit amet consectetur, adipisicing elit. Molestiae reprehenderit
-     veritatis quas, in nihil culpa eligendi ratione assumenda fugiat
-     omnis ab deleniti. Ab eos sint nostrum ullam libero odit
-     reiciendis.</p>
+  <p style="font-size: 12px;">개인정보 수집 이용 동의(필수)
+쿨거래는 이용자의 권익 및 개인정보 보호에 만전을 기하고자 관계법령의 규정을 반영하여 쿨거래에 회원가입을 신청하시는 이용자분들께 
+아래와 같이 개인정보의 수집 및 이용 목적, 개인정보의 항목, 개인정보의 보유 및 이용기간을 안내해 드립니다.</p>
 </details>
 
   </div>
@@ -504,6 +500,7 @@ button {
         }
       });
     }
+ 
   </script>
 </body>
 </html>
