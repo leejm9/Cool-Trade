@@ -247,6 +247,7 @@
                     <a href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>" id="jjimLink-ds" class="flex-ds" style="vertical-align: middle;">
                         <img src="resources/images/좋아요.png" width="25" height="25" style="padding: 5px;" alt="좋아요 이미지">
 						<div style="padding-top: 3px;"><%= headerCo %></div>
+						<% System.out.println(headerCo); %>
                     </a>
                     <% } %>
                 </div>

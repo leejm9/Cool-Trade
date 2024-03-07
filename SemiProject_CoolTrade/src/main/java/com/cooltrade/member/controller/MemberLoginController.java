@@ -47,6 +47,7 @@ public class MemberLoginController extends HttpServlet {
 			}
 			session.removeAttribute("headerCo");
 			session.setAttribute("headerCo", headerCo);
+			System.out.println(headerCo);
 			
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", loginUser.getUserName()+"님 로그인 되었습니다.");

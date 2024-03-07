@@ -769,6 +769,44 @@
 		 WHERE USER_ID = ?
 	</entry>
 	
+	<entry key="buyListPriceSelectCo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM TRADE
+		  JOIN PRODUCT USING (PRODUCT_NO)
+		 WHERE BUYER_NO = ?
+		 ORDER
+		    BY PRICE ASC
+	</entry>
+		
+	<entry key="buyListPriceSelectPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     TRADE_NO
+						   , PRODUCT_NO
+						   , SELLER_NO
+						   , M.NICKNAME
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+					       , DELIVERY_STATUS
+				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+				           , UPLOAD_TYPE
+						FROM TRADE T
+						JOIN PRODUCT P USING (PRODUCT_NO)
+						JOIN MEMBER M ON (SELLER_NO = USER_NO)
+				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+					   WHERE BUYER_NO = ?
+					   ORDER
+						  BY PRICE ASC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
 	
 	
 </properties>

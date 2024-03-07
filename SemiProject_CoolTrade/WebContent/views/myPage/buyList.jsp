@@ -405,10 +405,10 @@
                         <input id="buysearchInput" type="text" id="search-input" placeholder="상품명을 입력해주세요." maxlength="20">
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(1, <%= userNo %>);">거래순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>);">거래순</button>
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(2, <%= userNo %>);">가격순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>);">가격순</button>
                     </div>
                     
               	<script>
@@ -428,11 +428,15 @@
 				        }
 				    });
                 
-                	// 구매 내용별 조회
-                	function selectBtn(num, uno){
-                		console.log(num);
+                	// 거래순 조회
+                	function selectBtn(uno){
                 		console.log(uno);
                 		location.href = "<%= contextPath %>/buyListselect.me?&uno="+uno+"&cpage=1";
+                	}
+                	
+                	// 가격순 조회
+                	function selectPriceBtn(uno){
+                		location.href = "<%= contextPath %>/buyListpriceselect.me?&uno="+uno+"&cpage=1";
                 	}
                 	
                 </script>	
@@ -524,6 +528,41 @@
 															
 								                    	}
 								                    	
+								                        // 이미지 클릭 시 input 클릭
+								                        function chooseFile(){
+								    						$("#mo-img-input").click();
+								    						console.log("왜안되냐?");
+								    					}
+								    					// file type의 input에 onchange=loadImg 
+								    					function loadImg(el){
+								    						console.log(el);
+								    						console.log($(el).siblings(1));
+								    						// 파일을 읽어들이는 파일리더 객체 생성
+								    						const reader = new FileReader();
+								    						// id가 mo-img-input인 요소의 파일의 첫번째 파일
+								    						const file = el.files[0];
+								    						// 파일을 data URL로 반환
+								    						reader.readAsDataURL(file);
+								    						
+								    						reader.onload = function(e) {
+								    							// 파일 객체의 url 생성
+								    							const imageUrl = URL.createObjectURL(file);
+								    							console.log($(el).next().children().eq(0).attr("src"));
+								    							//$(el).next().children().eq(0).attr("src", imageUrl);
+								    							//$("#mo-img").attr("src", imageUrl);
+								    							//$("#mo-img").attr("src", e.target.result);
+								    							//$(".mo-img-cl").attr("src", e.target.result); // 얜 값 안들어감
+								    							//$(el).next().children().eq(0).attr("src", e.target.result);
+								    							//document.getElementById("mo-img").src = e.target.result;
+								    							document.getElementById("mo-img").src = imageUrl;
+								    							console.log($(el).next().children().eq(0).attr("src"));
+								    							console.log($("#mo-img").attr("src"));
+								    							$(el).next().css("display", "block");
+								    							console.log($("#mo-img-div").css("display"));
+								    					    }
+								    						
+								    					}
+								                    	
 											    	</script>
 												      	<!-- Modal Header -->
 												     	<div class="modal-header" align="center">
@@ -584,8 +623,8 @@
 							                                            	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
 							                                            </label>
 							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg(this);" required>
-							                                            <div id="mo-img-div">
-							                                            	<img id="mo-img" src="#">
+							                                            <div id="mo-img-div" class="mo-img-div-cl">
+							                                            	<img id="mo-img" id="mo-img-cl" src="#">
 							                                            </div>
 							                                        </div>
 								                                                      
@@ -656,24 +695,7 @@
                         }
                     }
                     
-                    // 이미지 클릭 시 input 클릭
-                    function chooseFile(){
-						$("#mo-img-input").click();
-					}
-					
-					function loadImg(el){
-						console.log(el);
-						const reader = new FileReader();
-						const file = $("#mo-img-input")[0].files[0];
-						
-						reader.readAsDataURL(file);
-						
-						reader.onload = function(e) {
-					        $("#mo-img").attr("src", e.target.result);
-					        $("#mo-img-div").css("display", "block");
-					    }
-						
-					}
+
 					
                     </script>  
                 
@@ -699,22 +721,21 @@
 	                        <% } %>
 	                        
                         <% } else { %>
-                        	<% if(currentPage != 1) { %>
-	                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-	                        <% } %>
-	                        
-	                        <% for(int p=startPage; p<=endPage; p++) { %>
-	                            <% if(p == currentPage) { %>
-	                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-	                            <% } else { %>
-	                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-	                            <% } %>
-	                        <% } %>
-	                        
-	                        <% if(currentPage != maxPage) { %>
-	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-	                        <% } %>
-	                        
+	                        	<% if(currentPage != 1) { %>
+		                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            <% if(p == currentPage) { %>
+		                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+		                            <% } else { %>
+		                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+		                            <% } %>
+		                        <% } %>
+		                        
+		                        <% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
 	                    <% } %>
                         
                         

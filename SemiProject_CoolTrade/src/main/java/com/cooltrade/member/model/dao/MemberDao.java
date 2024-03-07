@@ -1572,7 +1572,7 @@ public class MemberDao {
 			if(rset.next()) {
 				count = rset.getInt("count");
 			}
-			
+			System.out.println(count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1583,5 +1583,74 @@ public class MemberDao {
 		return count;
 	}
    
+	public int buyListPriceSelectCo(Connection conn, int userNo) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListPriceSelectCo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+		
+	}
+	
+	public ArrayList<Trade> buyListPriceSelectPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListPriceSelectPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Trade t = new Trade();
+				t.setTradeNo(rset.getInt("trade_no"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 	
 }

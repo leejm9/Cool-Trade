@@ -625,7 +625,7 @@
                                     
                                     $("#fileImg").click(function() {
                                     	$("#fileInput" + index).click();
-                                    	index++;
+                                    	//index++;
                                     });
                                     
                                     // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
@@ -640,8 +640,11 @@
 	                                            previews[i].src = target.result;
 	                                            $($previewsDiv[i]).css('display', 'block');
 	                                            count++;
+	                                            index++;
 	                                            
 	                                            $("#imgCount").html("(" + count + "/5)");
+	                                            console.log("미리보기카운트+ " + count);
+	                                            console.log("FileInput" + index);
 	                                            
 	                                        };
 	                                        reader.readAsDataURL(fileDOM.files[0]);
@@ -650,10 +653,25 @@
 
                                     function deleteBtn(btn){
                                         const closeBtn = btn;                                        
-                                        $(closeBtn).parent().css('display', 'none');                                       
+                                        const $prevImg = $(closeBtn).prev('.hidden-img');
+    									const $previewDiv = $(closeBtn).parent();
+                                        $prevImg.attr('src', '');
+                                        $(closeBtn).parent().css('display', 'none');
+                                        //$previewDiv.find('.hidden-img').attr('src', '#');
                                         count--;
+                                        index--;
                                         
                                         $("#imgCount").html("(" + count + "/5)");
+                                        
+                                        console.log("미리보기카운트- " + count);
+                                        console.log("FileInput" + index);
+                                        
+										console.log($("#fileInput1").siblings(0).attr("src"));                                        
+										console.log($("#fileInput2").siblings(0).attr("src"));                                        
+										console.log($("#fileInput3").siblings(0).attr("src"));                                        
+										console.log($("#fileInput4").siblings(0).attr("src"));                                        
+										console.log($("#fileInput5").siblings(0).attr("src"));                                        
+                                        
                                     };
                                     
                                 </script>

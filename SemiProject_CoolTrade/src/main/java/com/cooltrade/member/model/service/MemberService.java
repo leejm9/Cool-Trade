@@ -492,4 +492,20 @@ public class MemberService {
 		return count;
 	}
 	
+	public int buyListPriceSelectCo(int userNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().buyListPriceSelectCo(conn, userNo);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Trade> buyListPriceSelectPo(PageInfo pi, int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().buyListPriceSelectPo(conn, pi, userNo);
+		close(conn);
+		return list;
+				
+	}
+	
 }
