@@ -442,6 +442,8 @@ public class ProductService {
 		close(conn);
 		
 		return list;
+	}
+	
 	public int deleteBoard(int pno) {
 		Connection conn = getConnection();
 		
@@ -454,7 +456,7 @@ public class ProductService {
 		close(conn);
 		return result;
 	}
-}
+
 	public int selectLikeCount(int pno) {
 		Connection conn = getConnection();
 		int likeCount = new ProductDao().selectLikeCount(conn, pno);
