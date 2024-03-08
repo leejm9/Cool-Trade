@@ -9,77 +9,100 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.outer{
-        background-color: white;
-        color: gray;
-        width: 1000px;
-        height: 1200px;
-        margin: auto;
-        margin-top: 50px;
-        
-    }
-    .outer *{
-    	border-left:0px;
-    	border-right:0px;
-    }
-    .outer table{
-    	width :700px;
-    	height: 500px;
-    }
+	 #meminfo{
+            width: 600px;
+            height: 800px;
+        }
+        #meminfo table{ 
+            width: 600px;
+            height: 700px;
+            margin: auto;
+            border-left: 0px;
+            border-right: 0px;
+        }
+        #meminfo th{
+       	    text-align: center;
+    	    width: 30%;
+            border-left: 0px;
+            border-top:1px solid black;
+            border-bottom: 1px solid black;
+            border-right:1px solid black;
+        }
+        #meminfo td{
+            text-align: center;
+            border-right: 0px;
+            border-top:1px solid black;
+            border-bottom: 1px solid black;
+        }
+        .outer{
+            background-color: white;
+            padding-top:25px;
+        }
+    
 </style>
 
 </head>
 <body>
 	<%@ include file = "../common/managerMenubar.jsp" %>
 	<div class="outer" align="center">
-	       <br>
-	       <h2 align="left" style="margin-left:150px;">회원상세정보</h2>
-	       <br>
-	   
-	
-	   <table id="detail-area" border="1">
-	       <tr>
-	           <th>이름</th>
-	           <td><%= m.getUserName() %></td>
-	           <th>회원번호</td>
-	           <td><%= m.getUserNo() %></td>
-	           <th>닉네임</th>
-	           <td><%= m.getNickName() %></td>
-	       </tr>
-	       <tr>
-	           <th>아이디</th>
-	           <td><%= m.getUserId() %></td>
-	           <th>비밀번호</th>
-	           <td><%= m.getUserPwd() %></td>
-	           <th>회원등급</th>
-	           <td><% if(m.getUserLevel().equals("U")){ %>
+	<div id="meminfo">
+            <h3 style="margin-right: 220px;">회원상세조회</h3>
+            <table>
+                <tr>
+                    <th>이름</th>
+                    <td><%= m.getUserName() %></td>
+                </tr>
+                <tr>
+                    <th>회원번호</th>
+                    <td><%= m.getUserNo() %></td>
+                </tr>
+                <tr>
+                    <th>닉네임</th>
+                    <td><%= m.getNickName() %></td>
+                </tr>
+                 <tr>
+                    <th>아이디</th>
+                    <td><%= m.getUserId() %></td>
+                </tr>
+                <tr>
+                    <th>비밀번호</th>
+                    <td><%= m.getUserPwd() %></td>
+                </tr>
+                <tr>
+                    <th>회원등급</th>
+                    <td><% if(m.getUserLevel().equals("U")){ %>
 	           		일반
 	           		<%}else if(m.getUserLevel().equals("B")){ %>
 	           		블랙리스트
 	           		<%}else if(m.getUserLevel().equals("C")){ %>
 	           		쿨거래사용자
 	           		<%} %>
-	           </td>
-	       </tr>
-	       <tr>
-	       		<th colspan="2">이메일</th>
-	       		<td><%= m.getEmail() %></td>
-	       		<th>회원상태</th>
-	           	<td><% if(m.getUserStatus().equals("Y")){ %>
+	           		</td>
+                </tr>
+                <tr>
+                    <th>이메일</th>
+                    <td><%= m.getEmail() %></td>
+                </tr>
+                <tr>
+                    <th>회원상태</th>
+                    <td><% if(m.getUserStatus().equals("Y")){ %>
 	           		회원
 	           		<%}else{ %>
 	           		탈퇴
 	           		<%} %>
-	           </td>
-	       </tr>
-	       <tr>
-	           <td colspan="4" style="vertical-align: top;">
-	               <p style="height: 150px; margin-top:20px;" ></p>
-	           </td>
-	       </tr>
-	   </table>
-	   <br><br>
-	
+	           		</td>
+                </tr>
+                <tr>
+                    <th>ONDO</th>
+                    <td><%= m.getOndo() %>도</td>
+                </tr>
+                <tr>
+                    <th>경고</th>
+                    <td><%= m.getCaution() %>회</td>
+                </tr>
+            </table>
+        </div>
+        
 	   <div>
 	       <a href="<%= contextPath %>/member.in?cpage=1&dropDownValue=1"  class="btn btn-sm btn-secondary">목록가기</a>
 	       <a href="<%= contextPath %>/delete.detail?uno=<%= m.getUserNo() %>" class="btn btn-sm btn-danger">추방하기</a>

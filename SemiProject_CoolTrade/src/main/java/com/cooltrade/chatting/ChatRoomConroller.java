@@ -1,4 +1,4 @@
-package com.cooltrade.member.controller;
+package com.cooltrade.chatting;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cooltrade.member.model.service.MemberService;
+import com.cooltrade.member.model.vo.Member;
+
 /**
- * Servlet implementation class MemberReviewCountController
+ * Servlet implementation class ChatRoomConroller
  */
-@WebServlet("/reviewCount.me")
-public class MemberReviewCountController extends HttpServlet {
+@WebServlet("/chatroom.in")
+public class ChatRoomConroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberReviewCountController() {
+    public ChatRoomConroller() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,9 +29,13 @@ public class MemberReviewCountController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	
 		
+		String pno = request.getParameter("pno");
+		
+		request.setAttribute("pno", pno);
+		
+		
+		request.getRequestDispatcher("views/chat/chatWindow.jsp").forward(request, response);
 	}
 
 	/**

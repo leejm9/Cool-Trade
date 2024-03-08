@@ -154,12 +154,12 @@
 		<div class="row">
 
 			<!-- Area Chart -->
-			<div class="card shadow mb-4" style="width:875px; height:415px; margin-left:12px;">
+			<div class="card shadow mb-4" style="width:1030px; height:700px; margin-left:12px;">
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">최근 일주일 판매실적</h6>
 				</div>
 				<div class="card-body">
-					<div class="chart-area">
+					<div class="chart-area" style="width:100%; height:100%;">
 						<canvas id="myAreaChart"></canvas>
 					</div>
 				</div>
@@ -295,7 +295,7 @@
 
 			<!-- Pie Chart -->
 			<div class="col-xl-4 col-lg-5" >
-				<div class="card shadow mb-4" style="width:750px; height:415px;">
+				<div class="card shadow mb-4" style="width:750px; height:450px;">
 					<!-- Card Header - Dropdown -->
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

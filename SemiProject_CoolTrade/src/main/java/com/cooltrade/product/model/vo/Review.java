@@ -10,6 +10,11 @@ public class Review {
 	private int score;
 	private String reviewDate;
 	private String reviewType;
+	private String nickName;
+	private String productName;
+	private String titleImg;
+	private String reviewTypeDetail;
+	private int avgScore;
 	
 	public Review() {}
 
@@ -24,6 +29,24 @@ public class Review {
 		this.score = score;
 		this.reviewDate = reviewDate;
 		this.reviewType = reviewType;
+	}
+
+	public Review(int reviewNo, int productNo, int userNo, int imgNo, String reviewDetail, int score, String reviewDate,
+			String reviewType, String nickName, String productName, String titleImg, String reviewTypeDetail, int avgScore) {
+		super();
+		this.reviewNo = reviewNo;
+		this.productNo = productNo;
+		this.userNo = userNo;
+		this.imgNo = imgNo;
+		this.reviewDetail = reviewDetail;
+		this.score = score;
+		this.reviewDate = reviewDate;
+		this.reviewType = reviewType;
+		this.nickName = nickName;
+		this.productName = productName;
+		this.titleImg = titleImg;
+		this.reviewTypeDetail = reviewTypeDetail;
+		this.avgScore = avgScore;
 	}
 
 	public int getReviewNo() {
@@ -88,6 +111,46 @@ public class Review {
 
 	public void setReviewType(String reviewType) {
 		this.reviewType = reviewType;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getTitleImg() {
+		return titleImg;
+	}
+
+	public void setTitleImg(String titleImg) {
+		this.titleImg = titleImg;
+	}
+
+	public String getReviewTypeDetail() {
+		return reviewTypeDetail;
+	}
+
+	public void setReviewTypeDetail(String reviewTypeDetail) {
+		this.reviewTypeDetail = reviewTypeDetail;
+	}
+
+	public int getAvgScore() {
+		return avgScore;
+	}
+
+	public void setAvgScore(int avgScore) {
+		this.avgScore = avgScore;
 	}
 
 	@Override

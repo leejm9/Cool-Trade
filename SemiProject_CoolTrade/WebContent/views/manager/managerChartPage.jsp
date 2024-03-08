@@ -68,9 +68,14 @@
 									    success: function(data) {
 									        console.log(data);
 									        
+									        
 									        var value = [];
+									        var value2= [];
 									        for(var i = 0; i < data.length; i++){
 									            value.push(data[i].price);
+									        }
+									        for(var i = 0; i < data.length; i++){
+									            value2.push(data[i].monthSales);
 									        }
 									        
 									        console.log(value);
@@ -79,7 +84,7 @@
 									        var myLineChart = new Chart(ctx, {
 									            type: 'line',
 									            data: {
-									                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+									                labels: value2,
 									                datasets: [{
 									                    label: "Earnings",
 									                    lineTension: 0.3,
@@ -190,15 +195,17 @@
 	                            method: 'GET',
 	                            success: function(data) {
 	                            	var value = [];
+	                            	var value2 = [];
 							        for(var i = 0; i < data.length; i++){
 							            value.push(data[i].count);
+							            value2.push(data[i].monthEnroll);
 							        }
 	                            	
 	                            	var ctx = document.getElementById("myBarChart");
 	                            	var myBarChart = new Chart(ctx, {
 	                            	  type: 'bar',
 	                            	  data: {
-	                            	    labels: ["January", "February", "March", "April", "May", "June"],
+	                            	    labels: value2,
 	                            	    datasets: [{
 	                            	      label: "Revenue",
 	                            	      backgroundColor: "#4e73df",

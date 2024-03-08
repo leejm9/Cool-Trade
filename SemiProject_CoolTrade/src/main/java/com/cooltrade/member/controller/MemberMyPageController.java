@@ -31,12 +31,23 @@ public class MemberMyPageController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// 쿨거래 카운트
 		HttpSession session = request.getSession();
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		int count = new MemberService().selectTradeTypeCount(m);
 		
 		request.setAttribute("count", count);
+		
+		// 받은후기 카운트
+		int uno = Integer.parseInt(request.getParameter("uno"));
+		
+		int reviewCount = new MemberService().reviewCount(uno);
+		request.setAttribute("reviewCount", reviewCount);
+		
+		// 찜한상품 카운트
+		int likePoCount = new MemberService().likeProductCount(uno);
+		request.setAttribute("likePoCount", likePoCount);
 
 		request.getRequestDispatcher("views/myPage/myPage.jsp").forward(request, response);
 		

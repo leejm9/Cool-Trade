@@ -6,6 +6,7 @@
  	Product p = (Product)request.getAttribute("p");
  	ArrayList<Images> imglist = (ArrayList<Images>)request.getAttribute("imglist");
  	double ondo = p.getOndo();
+ 	int likeCount = (int)request.getAttribute("likeCount");
  %>
 <!DOCTYPE html>
 <html>
@@ -16,6 +17,7 @@
 <body>
 	
 	<%@ include file="../common/header.jsp" %>
+	<% int userNo = loginUser.getUserNo(); %>
 	<div id="content-ds">
         <div id="category_path-ds">
             <div id="category_selection-ds" class="flex-ds" style="flex-direction:row; align-items:top;">
@@ -50,7 +52,10 @@
                     </div>
                     <div id="like_view_report-ds" class="flex-ds">
                         <div id="like_view_time-ds" class="flex-ds">
-                            <div class="need_line_after-ds">❤️198237</div>
+                            <div class="need_line_after-ds">
+                            	❤️
+                            	<span id="like-span"><%= likeCount %></span>
+                           	</div>
                             <div class="need_line_after-ds">👁️‍🗨️<%=p.getCount() %></div>
                             <div >🕗 <%=p.getTimeDiff()%></div>
                         </div>
@@ -84,12 +89,36 @@
                     </div>
                 </div>
                 <div id="like_chat_buy-ds" class="flex-ds">
-                    <button class="btn btn-lg btn-secondary">❤️찜<span>89</span></button>
-                    <button class="btn btn-lg btn-warning">💬 채팅하기</button>
+                    <button class="btn btn-lg btn-secondary" onclick="likeBtn(<%= userNo %>, <%= p.getProductNo() %>);">❤️찜<span><%= likeCount %></span></button>
+                    <button class="btn btn-lg btn-warning" onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>'">💬 채팅하기</button>
                     <button class="btn btn-lg btn-danger">바로사버리기</button>
                 </div>
             </div>
         </div>
+        
+        <script>
+        	// 찜하기
+        	function likeBtn(userNo, pNo){
+        		console.log("찜버튼클릭함");
+       			if(confirm("관심상품으로 등록하시겠습니까?")){
+	        		$.ajax({
+	        			url:"ajaxlike.po",
+	        			data:{
+	        				uno:userNo,
+	        				pno:pNo
+	        			},
+	        			type:"post",
+	        			success:function(result){
+	        				alert("관심상품으로 등록되었습니다.");
+            				location.reload();
+	        			}
+	        		})
+       			} else {
+       				console.log("취소");
+       			}
+        	}
+        
+        </script>
         
         <div id="related_products-ds">
 	        <button class="prev-ds"> &lt; </button>

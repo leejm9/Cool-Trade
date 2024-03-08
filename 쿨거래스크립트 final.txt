@@ -78,6 +78,8 @@ FOR EACH ROW
 BEGIN
     IF :NEW.CAUTION >= 3 THEN
         :NEW.USER_LEVEL := 'B';
+        :NEW.ONDO := 40;
+        UPDATE PRODUCT SET UPLOAD_TYPE = 'N' WHERE SELLER_NO = :NEW.USER_NO;
     END IF;
 END;
 /
@@ -353,38 +355,7 @@ INSERT
      );
 
 
---------------------------------------------------------------------------------
--------------------------------------이미지--------------------------------------
---------------------------------------------------------------------------------
 
-CREATE
-       TABLE IMAGES
-     (
-       IMG_NO NUMBER CONSTRAINT PK_IMAGES PRIMARY KEY
-     , REF_PNO NUMBER CONSTRAINT FK_IMAGES_01 REFERENCES PRODUCT
-     , REF_UNO NUMBER CONSTRAINT FK_IMAGES_02 REFERENCES MEMBER
-     , REF_RNO NUMBER CONSTRAINT FK_IMAGES_03 REFERENCES REVIEW
-     , IMG_LEVEL NUMBER NOT NULL CHECK(IMG_LEVEL IN(1,2))
-     , ORIGIN_NAME VARCHAR2(255) NOT NULL
-     , CHANGE_NAME VARCHAR2(255) NOT NULL
-     , IMG_PATH VARCHAR2(4000) NOT NULL
-     , UPLOAD_DATE DATE DEFAULT SYSDATE NOT NULL
-     , IMG_STATUS VARCHAR2(1) DEFAULT 'Y' CHECK(IMG_STATUS IN('Y','N'))
-     );
-     
-COMMENT ON COLUMN IMAGES.IMG_NO IS '이미지 구분번호';
-COMMENT ON COLUMN IMAGES.REF_PNO IS '상품번호';
-COMMENT ON COLUMN IMAGES.REF_UNO IS '회원번호';
-COMMENT ON COLUMN IMAGES.REF_RNO IS '리뷰번호';
-COMMENT ON COLUMN IMAGES.IMG_LEVEL IS '이미지 구분'; -- 1:대표이미지(썸네일) 2:상세이미지
-COMMENT ON COLUMN IMAGES.ORIGIN_NAME IS '이미지 원본 파일명';
-COMMENT ON COLUMN IMAGES.CHANGE_NAME IS '이미지 변경 파일명';
-COMMENT ON COLUMN IMAGES.IMG_PATH IS '이미지 경로';
-COMMENT ON COLUMN IMAGES.UPLOAD_DATE IS '업로드 날짜'; -- SYSDATE DEFAULT
-COMMENT ON COLUMN IMAGES.IMG_STATUS IS '이미지 상태'; -- 'Y' OR 'N'
-
-CREATE SEQUENCE SEQ_IMG
-NOCACHE;
 
 
 ---------------------------------------------------------------- 관심상품 테이블
@@ -807,6 +778,39 @@ INSERT
         , 'N'
         , '24/02/16'
      );
+
+--------------------------------------------------------------------------------
+-------------------------------------이미지--------------------------------------
+--------------------------------------------------------------------------------
+
+CREATE
+       TABLE IMAGES
+     (
+       IMG_NO NUMBER CONSTRAINT PK_IMAGES PRIMARY KEY
+     , REF_PNO NUMBER CONSTRAINT FK_IMAGES_01 REFERENCES PRODUCT
+     , REF_UNO NUMBER CONSTRAINT FK_IMAGES_02 REFERENCES MEMBER
+     , REF_RNO NUMBER CONSTRAINT FK_IMAGES_03 REFERENCES REVIEW
+     , IMG_LEVEL NUMBER NOT NULL CHECK(IMG_LEVEL IN(1,2))
+     , ORIGIN_NAME VARCHAR2(255) NOT NULL
+     , CHANGE_NAME VARCHAR2(255) NOT NULL
+     , IMG_PATH VARCHAR2(4000) NOT NULL
+     , UPLOAD_DATE DATE DEFAULT SYSDATE NOT NULL
+     , IMG_STATUS VARCHAR2(1) DEFAULT 'Y' CHECK(IMG_STATUS IN('Y','N'))
+     );
+     
+COMMENT ON COLUMN IMAGES.IMG_NO IS '이미지 구분번호';
+COMMENT ON COLUMN IMAGES.REF_PNO IS '상품번호';
+COMMENT ON COLUMN IMAGES.REF_UNO IS '회원번호';
+COMMENT ON COLUMN IMAGES.REF_RNO IS '리뷰번호';
+COMMENT ON COLUMN IMAGES.IMG_LEVEL IS '이미지 구분'; -- 1:대표이미지(썸네일) 2:상세이미지
+COMMENT ON COLUMN IMAGES.ORIGIN_NAME IS '이미지 원본 파일명';
+COMMENT ON COLUMN IMAGES.CHANGE_NAME IS '이미지 변경 파일명';
+COMMENT ON COLUMN IMAGES.IMG_PATH IS '이미지 경로';
+COMMENT ON COLUMN IMAGES.UPLOAD_DATE IS '업로드 날짜'; -- SYSDATE DEFAULT
+COMMENT ON COLUMN IMAGES.IMG_STATUS IS '이미지 상태'; -- 'Y' OR 'N'
+
+CREATE SEQUENCE SEQ_IMG
+NOCACHE;
 
 ------------------------------------- 리뷰타입 테이블
 CREATE 

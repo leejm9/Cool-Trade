@@ -55,14 +55,12 @@ public class ManagerMemberInfoPageController extends HttpServlet {
 		int endPage;	 
 		
 		if(search == null) {
-			System.out.println("!!!");
 			switch (value) {
 			case 1: listCount = new MemberService().selectListCount(); break;
 			case 2: listCount = new MemberService().countOndoList(); break;
 			case 3: listCount = new MemberService().countCbtnList(); break;
 			}
 		}else {
-			System.out.println("!!!2");
 			listCount = new MemberService().countSearchList(search); 
 		}
 			

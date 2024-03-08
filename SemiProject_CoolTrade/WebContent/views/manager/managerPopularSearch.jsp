@@ -34,30 +34,43 @@
     
     
     <style>
+    	.outouter th{
+    		background-Color:rgb(208, 208, 208);
+    	}
     	#searchRank{
-    		width:500px;
+    		width:975px;
     		height:700px;
     	}
     	.div>div{
     		width:100%;
     	}
     	.div{ height:8%;}
-    	.div_2{ height:92%;}
-    	.div_1>div{
-    		height:100%;
-    		float:left;
+    	.outer>div{
+    		width:500px;
     	}
-    	#div_1_1{width:50%}
-    	
+    	.outer2{
+    		width:1000px;
+    		height:700px;
+    	}
+		.outer2 tr{
+			width:100%;
+		}    	
+		.outer{
+			width:100%;
+		}
     </style>
     
     
 </head>
 <body>
 	<%@ include file = "../common/managerMenubar.jsp" %>
-
+	<div class="outouter">
+	<div class="outer" style="margin-left:420px;">
 	<div class="div">
-	<button onclick="fn_chkAdd();">추가</button>
+	<h3>DB검색화면</h3>
+	<div text-align="left">
+	<button onclick="fn_chkAdd();" class="btn btn-warning" style="margin-bottom:5px;">추가</button>
+	</div>
 		<table id="searchRank" class="table table-bordered">
 			<colgroup>
 				<col style="width: 55px;">
@@ -86,31 +99,31 @@
 			</tbody>
 		</table>
 	</div>
-
-	</div>
+	<div>
 	<div class="text-center dataTables_paginate paging_simple_numbers"
 		id="example1_paginate">
-		<ul class="pagination">
+		<ul class="pagination justify-content-end">
 			<c:forEach varStatus="status" begin="1"
 				end="${endValue}">
-				<button id="page${status.count}" class="paginate_button"><a
-					href="#none" onclick="goPage(${status.count-1})">${status.count}</a></button>
+				<button id="page${status.count}" class="paginate_button"><a	href="#none" onclick="goPage(${status.count-1})">${status.count}</a></button>
 			</c:forEach>
 		</ul>
 	</div>
+	</div>
+	</div>
 
 	
 	
 	
 	
-	
+	<div class="outer2">
 	<form action="show.popw">
-	<div class="col-sm-12" style="width: 50%">
+	<div class="col-sm-12" style="margin-left:407px;">
 		<div class="tbl-top-area">
 			<div class="tit">
 				<h4 class="box-title">사용자 화면 검색 순위</h4>
 			</div>
-			<div class="btn">
+			<div class="btn" text-align="left">
 				<button type="button" class="btn btn-warning" onclick="fn_chkDel()">삭제</button>
 			</div>
 		</div>
@@ -162,10 +175,11 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<button type="submit" onclick="return dsave();">저장</button>
+		<button type="submit" class="btn btn-primary" onclick="return dsave();">저장</button>
 	</div>
 	</form>
-	
+	</div>
+	</div>
 	
 	<script>
 		
@@ -409,7 +423,10 @@
 		}
 		
 	</script>
-
+	
+	
+	
+	
 
 </body>
 </html>

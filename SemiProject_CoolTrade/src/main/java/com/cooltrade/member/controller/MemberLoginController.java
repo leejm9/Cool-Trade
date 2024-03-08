@@ -35,17 +35,25 @@ public class MemberLoginController extends HttpServlet {
 		Member loginUser = new MemberService().loginMember(userId, userPwd);
 
 		
-		
 		if(loginUser == null) {
 			
 			request.setAttribute("errorMsg", "로그인 실패했습니다!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}else {
 			HttpSession session =  request.getSession();
+			int headerCo = new MemberService().likePoCount(userId);
+			if(String.valueOf(headerCo) == null) {
+				headerCo = 0;
+			}
+			session.removeAttribute("headerCo");
+			session.setAttribute("headerCo", headerCo);
+			
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", loginUser.getUserName()+"님 로그인 되었습니다.");
 			response.sendRedirect(request.getContextPath());
 		}
+		
+		//request.getRequestDispatcher("views/common/header.jsp").forward(request, response);
 	}
 
 	/**

@@ -168,6 +168,7 @@ public class MemberService {
          rollback(conn);
       }
       
+      close(conn);
       return result;
    }
    
@@ -225,6 +226,7 @@ public class MemberService {
          rollback(conn);
       }
       
+      close(conn);
       return result;
    }
    
@@ -238,9 +240,10 @@ public class MemberService {
       }else {
          rollback(conn);
       }
-      
+      close(conn);
       return result;
    }
+   
    public ArrayList<Member> selectEnrollMonth(){
       Connection conn = getConnection();
       
@@ -369,135 +372,185 @@ public class MemberService {
       return m;
    }
 
-    public int updateSellStatus(int pNo, String sellStatus) {
-      Connection conn = getConnection();
-      int result = new MemberDao().updateSellStatus(conn, pNo, sellStatus);
-      
-      if(result > 0) {
-         commit(conn);
-      } else {
-         rollback(conn);
-      }
-      close(conn);
-      return result;
-   }
    
-   public int deleteProductSell(int pno) {
+		public int updateSellStatus(int pNo, String sellStatus) {
       Connection conn = getConnection();
-      int result = new MemberDao().deleteProductSell(conn, pno);
-      
-      if(result > 0) {
-         commit(conn);
-      } else {
-         rollback(conn);
-      }
-      close(conn);
-      return result;
-   }
-   
-   public int sellListStatusCo(int userNo, String sellStatus) {
-      Connection conn = getConnection();
-      int listCount = new MemberDao().sellListStatusCo(conn, userNo, sellStatus);
-      
-      close(conn);
-      return listCount;
-      
-   }
-   
-   public ArrayList<Product> sellListStatusPo(PageInfo pi, int userNo, String sellStatus) {
-      Connection conn = getConnection();
-      ArrayList<Product> list = new MemberDao().sellListStatusPo(conn, pi, userNo, sellStatus);
-      
-      close(conn);
-      return list;
-            
-   } 
-   
-   public ArrayList<Product> sellListSearch(PageInfo pi, int userNo, String word) {
-      System.out.println("서비스에 키워드오나?" + word);
-      Connection conn = getConnection();
-      ArrayList<Product> list = new MemberDao().sellListSearch(conn, pi, userNo, word);
-      
-      close(conn);
-      return list;
-            
-   } 
-   
-   public int sellListSearchCount(int userNo, String word) {
-      Connection conn = getConnection();
-      int listCount = new MemberDao().sellListSearchCount(conn, userNo, word);
-      
-      close(conn);
-      return listCount;
-      
-   }
-   
-   public int buyListSelectCo(int userNo) {
-      Connection conn = getConnection();
-      int listCount = new MemberDao().buyListSelectCo(conn, userNo);
-      
+		int result = new MemberDao().updateSellStatus(conn, pNo, sellStatus);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int deleteProductSell(int pno) {
+		Connection conn = getConnection();
+		int result = new MemberDao().deleteProductSell(conn, pno);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int sellListStatusCo(int userNo, String sellStatus) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().sellListStatusCo(conn, userNo, sellStatus);
+		
+		close(conn);
+		return listCount;
+		
+	}
+	
+	public ArrayList<Product> sellListStatusPo(PageInfo pi, int userNo, String sellStatus) {
+		Connection conn = getConnection();
+		ArrayList<Product> list = new MemberDao().sellListStatusPo(conn, pi, userNo, sellStatus);
+		
+		close(conn);
+		return list;
+	}
+	
+	public ArrayList<Product> sellListSearch(PageInfo pi, int userNo, String word) {
+		// System.out.println("서비스에 키워드오나?" + word);
+		Connection conn = getConnection();
+		ArrayList<Product> list = new MemberDao().sellListSearch(conn, pi, userNo, word);
+		
+		close(conn);
+		return list;
+				
+	} 
+	
+	public int sellListSearchCount(int userNo, String word) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().sellListSearchCount(conn, userNo, word);
+		
       close(conn);
       return listCount;
-   }
-   
-   public ArrayList<Trade> buyListSelectPo(PageInfo pi, int userNo) {
-      Connection conn = getConnection();
-      ArrayList<Trade> list = new MemberDao().buyListSelectPo(conn, pi, userNo);
-      close(conn);
-      return list;
-            
-   }
-   
-   public int buyListSearchCount(int userNo, String word) {
-      Connection conn = getConnection();
-      int listCount = new MemberDao().buyListSearchCount(conn, userNo, word);
-      
-      close(conn);
-      return listCount;
-   }
-   
-   public ArrayList<Trade> buyListSearchPo(PageInfo pi, int userNo, String word) {
-      Connection conn = getConnection();
-      ArrayList<Trade> list = new MemberDao().buyListSearchPo(conn, pi, userNo, word);
-      close(conn);
-      return list;
-            
-   }
-   
-   public int insertReview(Review r, ArrayList<ReviewType> list, Images img, int uno, int pno) {
-      Connection conn = getConnection();
-      int result1 = new MemberDao().insertReview(conn, r, uno, pno);
-      int result2 = new MemberDao().insertReviewType(conn, list);
-      int result3 = new MemberDao().insertReviewImg(conn, img);
-      
-      if(result1 > 0 && result2 > 0 && result3 > 0) {
-         commit(conn);
-      } else {
-         rollback(conn);
-      }
-      close(conn);
-      return result1 * result2 * result3;
-   }
-   
-   public int saveBankAccount(int userNo, String bank, String account) {
+		
+	}
+	
+	public int buyListSelectCo(int userNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().buyListSelectCo(conn, userNo);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Trade> buyListSelectPo(PageInfo pi, int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().buyListSelectPo(conn, pi, userNo);
+		close(conn);
+		return list;
+				
+	}
+	
+	public int buyListSearchCount(int userNo, String word) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().buyListSearchCount(conn, userNo, word);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Trade> buyListSearchPo(PageInfo pi, int userNo, String word) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().buyListSearchPo(conn, pi, userNo, word);
+		close(conn);
+		return list;
+				
+	}
+	
+	public int insertReview(Review r, ArrayList<ReviewType> list, Images img, int uno, int pno) {
+		Connection conn = getConnection();
+		int result1 = new MemberDao().insertReview(conn, r, uno, pno);
+		int result2 = new MemberDao().insertReviewType(conn, list);
+		int result3 = new MemberDao().insertReviewImg(conn, img);
+		
+		if(result1 > 0 && result2 > 0 && result3 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2 * result3;
+	}
+	
+    public int saveBankAccount(int userNo, String bank, String account) {
 	    Connection conn = getConnection();
-
+	
 	    int result = new MemberDao().saveBankAccount(conn, userNo, bank, account);
-
+	
 	    if (result > 0) {
 	      commit(conn);
 	    } else {
 	      rollback(conn);
 	    }
-
+	    close(conn);
 	    return result;
-	  }
+   }
 
-	  public BankAccount selectBankAccount(int userNo) {
+	public BankAccount selectBankAccount(int userNo) {
 	    Connection conn = getConnection();
-
+	
 	    BankAccount bankAccount = new MemberDao().selectBankAccount(conn, userNo);
 	    close(conn);
 	    return bankAccount;
-	  }
+	}
+
+	
+	public int reviewCount(int uno) {
+		Connection conn = getConnection();
+		int result = new MemberDao().reviewCount(conn, uno);
+		
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<ReviewType> reviewTypeCount(int uno) {
+		Connection conn = getConnection();
+		ArrayList<ReviewType> list = new MemberDao().reviewTypeCount(conn, uno);
+		
+		close(conn);
+		return list;
+	}
+   
+	public ArrayList<Review> reviewList(int uno) {
+		Connection conn = getConnection();
+		ArrayList<Review> list = new MemberDao().reviewList(conn, uno);
+		
+		close(conn);
+		return list;
+	}
+	
+	public Review starAvg(int uno) {
+		Connection conn = getConnection();
+		Review r = new MemberDao().starAvg(conn, uno);
+		
+		close(conn);
+		return r;
+	}
+	
+	public int likeProductCount(int uno) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likeProductCount(conn, uno);
+		
+		close(conn);
+		return count;
+	}
+	
+	public int likePoCount(String userId) {
+		Connection conn = getConnection();
+		int count = new MemberDao().likePoCount(conn, userId);
+		
+		close(conn);
+		return count;
+	}
+	
 }

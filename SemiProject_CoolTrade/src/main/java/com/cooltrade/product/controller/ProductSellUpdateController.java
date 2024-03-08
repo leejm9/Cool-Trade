@@ -70,9 +70,12 @@ public class ProductSellUpdateController extends HttpServlet {
 			String piecesStrCommas = piecesStr.replaceAll(",", "");
 			int pieces = Integer.parseInt(piecesStrCommas);
 			
+			String category = multiRequest.getParameter("category");
+			System.out.println("카테고리 : " + category);
+			
 			Product p = new Product();
 			p.setProductNo(pno);
-			p.setCategoryNo(multiRequest.getParameter("category"));
+			p.setCategoryNo(category);
 			p.setSellerNo(multiRequest.getParameter("seller"));
 			p.setProductName(multiRequest.getParameter("title"));
 			p.setPrice(price);

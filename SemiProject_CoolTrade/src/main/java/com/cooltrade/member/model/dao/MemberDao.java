@@ -184,32 +184,7 @@ public class MemberDao {
       }
       return m;
    }
-//   public int insertMember(Connection conn, Member m) {
-//      int result = 0;
-//      PreparedStatement pstmt = null;
-//      
-//      String sql = prop.getProperty("insertMember");
-//      try {
-//         pstmt = conn.prepareStatement(sql);
-//         
-//         pstmt.setString(1, m.getmId());
-//         pstmt.setString(2, m.getmPw());
-//         pstmt.setString(3, m.getmName());
-//         pstmt.setString(4, m.getPhone());
-//         pstmt.setString(5, m.getEmail());
-//
-//         
-//         result = pstmt.executeUpdate();
-//      } catch (SQLException e) {
-//         e.printStackTrace();
-//      }finally {
-//         close(pstmt);
-//      }
-//      
-//      return result;
-//   }
-   
-   
+
    
    public int insertMember(Connection conn, Member m) {
       int result = 0;
@@ -544,7 +519,7 @@ public class MemberDao {
 							   rset.getInt("caution"));
 			}
 			
-			System.out.println(m);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -554,7 +529,12 @@ public class MemberDao {
 		}
 		return m;
 	}
-   
+	
+	
+	
+	
+	
+	
    public Member searchPwd(Connection conn, String userId, String name, String email) {
 		Member m = null;
 		PreparedStatement pstmt = null;
@@ -569,11 +549,12 @@ public class MemberDao {
 			pstmt.setString(1, userId);
 			pstmt.setString(2, name);
 			pstmt.setString(3, email);
-			
-			rset = pstmt.executeQuery();
+         
+         rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getInt("user_no"),
+
+         			m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -597,130 +578,13 @@ public class MemberDao {
 		}
 		return m;
 	}
-   
-   
-   public int changePwd(Connection conn, String id, String password) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("changePwd");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, password);
-			pstmt.setString(2, id);
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(pstmt);
-		}
-		
-		return result;
-	}
-   
-   public int changePhone(Connection conn, String id, String phone) {
-	    int result = 0;
-	    PreparedStatement pstmt = null;
-	    
-	    String sql = prop.getProperty("changePhone");
-	    try {
-	      pstmt = conn.prepareStatement(sql);
-	      
-	      pstmt.setString(1, phone);
-	      pstmt.setString(2, id);
-	      
-	      result = pstmt.executeUpdate();
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }finally {
-	      close(pstmt);
-	    }
-	    
-	    return result;
-	  }
-		
+      
 
-	  public int changeEmail(Connection conn, String id, String email) {
-	    int result = 0;
-	    PreparedStatement pstmt = null;
-	    
-	    String sql = prop.getProperty("changeEmail");
-	    try {
-	      pstmt = conn.prepareStatement(sql);
-	      
-	      pstmt.setString(1, email);
-	      pstmt.setString(2, id);
-	      
-	      result = pstmt.executeUpdate();
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }finally {
-	      close(pstmt);
-	    }
-	    
-	    return result;
-	  }
-	  
-	  public int saveBankAccount(Connection conn, int userNo, String bank, String account) {
-	    int result = 0;
-	    PreparedStatement pstmt = null;
-	    
-	    String sql = prop.getProperty("saveBankAccount");
-	    try {
-	      pstmt = conn.prepareStatement(sql);
-	      
-	      pstmt.setInt(1, userNo);
-	      pstmt.setString(2, bank);
-	      pstmt.setString(3, account);
-	      
-	      result = pstmt.executeUpdate();
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }finally {
-	      close(pstmt);
-	    }
-	    
-	    return result;
-	  }
 
-	  public BankAccount selectBankAccount(Connection conn, int userNo) {
-	    BankAccount bankAccount = null;
-	    PreparedStatement pstmt = null;
-	    ResultSet rset = null;
-	    
-	    String sql = prop.getProperty("selectBankAccount");
-	    
-	    try {
-	      
-	      pstmt = conn.prepareStatement(sql);
-	      
-	      pstmt.setInt(1, userNo);
-	      
-	      rset = pstmt.executeQuery();
-	      
-	      if(rset.next()) {
-	        bankAccount = new BankAccount();
-	        bankAccount.setBankaccountNo(rset.getInt("bankaccount_no"));
-	        bankAccount.setUserNo(rset.getInt("user_no"));
-	        bankAccount.setBank(rset.getString("bank"));
-	        bankAccount.setAccount(rset.getString("account"));
-	      }
-	      
-	      System.out.println(bankAccount);
-	      
-	    } catch (SQLException e) {
-	      e.printStackTrace();
-	    }finally {
-	      close(rset);    
-	      close(pstmt);
-	    }
-	    return bankAccount;
-	  }
-	  
-   
-   
+
+  
+  
+ 
    
    public int sellListCountPo(Connection conn, int userNo) {
       int listCount = 0;
@@ -772,7 +636,7 @@ public class MemberDao {
             Product p = new Product();
             p.setProductNo(rset.getInt("product_no"));
             p.setProductName(rset.getString("product_name"));
-            p.setPrice(rset.getInt("price"));
+            p.setStrPrice(rset.getString("price"));
             p.setTradeType(rset.getInt("trade_type"));
             p.setSellStatus(rset.getString("sell_status"));
             p.setTitleImg(rset.getString("titleimg"));
@@ -841,20 +705,20 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
         while(rset.next()) {
-            Trade t = new Trade();
-            t.setTradeNo(rset.getInt("trade_no"));
-            t.setProductNo(rset.getInt("product_no"));
-            t.setSellerNo(rset.getInt("seller_no"));
-            t.setNickname(rset.getString("nickname"));
-            t.setProductName(rset.getString("product_name"));
-            t.setStrPrice(rset.getString("price"));
-            t.setDeliveryStatus(rset.getString("delivery_status"));
-            t.setTradeDate(rset.getString("trade_date"));
-            t.setTitleImg(rset.getString("titleimg"));
-            t.setUploadType(rset.getString("upload_type"));
-            
-            list.add(t);
-            System.out.println(t);
+				Trade t = new Trade();
+				t.setTradeNo(rset.getInt("trade_no"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
+				
+				list.add(t);
+				System.out.println(t);
          }
          
       } catch (SQLException e) {
@@ -1243,74 +1107,195 @@ public class MemberDao {
    }
 
     public int updateSellStatus(Connection conn, int pNo, String sellStatus) {
-      int result = 0;
-      PreparedStatement pstmt = null;
-      String sql = prop.getProperty("updateSellStatus");
-      
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setString(1, sellStatus);
-         pstmt.setInt(2, pNo);
-         
-         result = pstmt.executeUpdate();
-         
-      } catch (SQLException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      } finally {
-         close(pstmt);
-      }
-      return result;
-   }
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateSellStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sellStatus);
+			pstmt.setInt(2, pNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+    
+	public int deleteProductSell(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteProductSell");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int sellListStatusCo(Connection conn, int userNo, String sellStatus) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("sellListStatusCo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			pstmt.setString(2, sellStatus);
+         				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+
+   public int changePwd(Connection conn, String id, String password) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("changePwd");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, password);
+			pstmt.setString(2, id);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
    
-   public int deleteProductSell(Connection conn, int pno) {
-      int result = 0;
-      PreparedStatement pstmt = null;
-      String sql = prop.getProperty("deleteProductSell");
-      
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setInt(1, pno);
-         
-         result = pstmt.executeUpdate();
-         
-      } catch (SQLException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      } finally {
-         close(pstmt);
-      }
-      return result;
-   }
+   public int changePhone(Connection conn, String id, String phone) {
+	    int result = 0;
+	    PreparedStatement pstmt = null;
+	    
+	    String sql = prop.getProperty("changePhone");
+	    try {
+	      pstmt = conn.prepareStatement(sql);
+	      
+	      pstmt.setString(1, phone);
+	      pstmt.setString(2, id);
+	      
+	      result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }finally {
+	      close(pstmt);
+	    }
+	    
+	    return result;
+	  }
+		
+
+	  public int changeEmail(Connection conn, String id, String email) {
+	    int result = 0;
+	    PreparedStatement pstmt = null;
+	    
+	    String sql = prop.getProperty("changeEmail");
+	    try {
+	      pstmt = conn.prepareStatement(sql);
+	      
+	      pstmt.setString(1, email);
+	      pstmt.setString(2, id);
+	      
+	      result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }finally {
+	      close(pstmt);
+	    }
+	    
+	    return result;
+	  }
+	  
+	  public int saveBankAccount(Connection conn, int userNo, String bank, String account) {
+	    int result = 0;
+	    PreparedStatement pstmt = null;
+	    
+	    String sql = prop.getProperty("saveBankAccount");
+	    try {
+	      pstmt = conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1, userNo);
+	      pstmt.setString(2, bank);
+	      pstmt.setString(3, account);
+	      
+	      result = pstmt.executeUpdate();
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }finally {
+	      close(pstmt);
+	    }
+	    
+	    return result;
+	  }
+
+	  public BankAccount selectBankAccount(Connection conn, int userNo) {
+	    BankAccount bankAccount = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rset = null;
+	    
+	    String sql = prop.getProperty("selectBankAccount");
+	    
+	    try {
+	      
+	      pstmt = conn.prepareStatement(sql);
+	      
+	      pstmt.setInt(1, userNo);
+	      
+	      rset = pstmt.executeQuery();
+	      
+	      if(rset.next()) {
+	        bankAccount = new BankAccount();
+	        bankAccount.setBankaccountNo(rset.getInt("bankaccount_no"));
+	        bankAccount.setUserNo(rset.getInt("user_no"));
+	        bankAccount.setBank(rset.getString("bank"));
+	        bankAccount.setAccount(rset.getString("account"));
+	      }
+	      
+	      System.out.println(bankAccount);
+	      
+	    } catch (SQLException e) {
+	      e.printStackTrace();
+	    }finally {
+	      close(rset);    
+	      close(pstmt);
+	    }
+	    return bankAccount;
+	  }
+	  
    
-   public int sellListStatusCo(Connection conn, int userNo, String sellStatus) {
-      int listCount = 0;
-      PreparedStatement pstmt = null;
-      ResultSet rset = null;
-      String sql = prop.getProperty("sellListStatusCo");
-      
-      try {
-         pstmt = conn.prepareStatement(sql);
-         pstmt.setInt(1, userNo);
-         pstmt.setString(2, sellStatus);
-         
-         rset = pstmt.executeQuery();
-         
-         if(rset.next()) {
-            listCount = rset.getInt("count");
-         }
-         
-      } catch (SQLException e) {
-         // TODO Auto-generated catch block
-         e.printStackTrace();
-      } finally {
-         close(rset);
-         close(pstmt);
-      }
-      
-      return listCount;
-      
-   }
+   
+   
+ 
    
    public ArrayList<Product> sellListStatusPo(Connection conn, PageInfo pi, int userNo, String sellStatus) {
       ArrayList<Product> list = new ArrayList<Product>();
@@ -1644,4 +1629,180 @@ public class MemberDao {
       return result;
    }   
    
+
+	public int reviewCount(Connection conn, int uno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<ReviewType> reviewTypeCount(Connection conn, int uno) {
+		ArrayList<ReviewType> list = new ArrayList<ReviewType>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewTypeCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ReviewType rt = new ReviewType();
+				rt.setReviewType(rset.getString("review_type"));
+				rt.setCount(rset.getInt("count"));
+				
+				list.add(rt);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Review> reviewList(Connection conn, int uno) {
+		ArrayList<Review> list = new ArrayList<Review>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Review r = new Review();
+				r.setReviewNo(rset.getInt("review_no"));
+				r.setUserNo(rset.getInt("user_no"));
+				r.setNickName(rset.getString("nickname"));
+				r.setScore(rset.getInt("score"));
+				r.setProductNo(rset.getInt("product_no"));
+				r.setProductName(rset.getString("product_name"));
+				r.setTitleImg(rset.getString("titleimg"));
+				r.setReviewDetail(rset.getString("review_detail"));
+				r.setReviewDate(rset.getString("review_date"));
+				
+				list.add(r);
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Review starAvg(Connection conn, int uno) {
+		Review r = new Review();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("starAvg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				r.setScore(rset.getInt("score"));
+				r.setAvgScore(rset.getInt("avg"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return r;
+	}
+	
+	public int likeProductCount(Connection conn, int uno) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likeProductCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int likePoCount(Connection conn, String userId) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likePoCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
+	}
+   
+	
 }
