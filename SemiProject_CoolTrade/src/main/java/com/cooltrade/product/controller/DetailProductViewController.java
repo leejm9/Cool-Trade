@@ -62,7 +62,7 @@ public class DetailProductViewController extends HttpServlet {
 				recent.setImgPath("resources/images/");
 				recent.setChangeName("noImage.png");
 			}else {
-				recent = new RecentProducts(p.getProductNo(), p.getProductName(), p.getPrice(), imglist.get(0).getImgPath(), imglist.get(0).getChangeName());
+				recent = new RecentProducts(p.getProductNo(), p.getProductName(), p.getPrice(), imglist.get(0).getRefPno(), imglist.get(0).getImgPath(), imglist.get(0).getChangeName());
 			}
 			HttpSession session = request.getSession();
 			

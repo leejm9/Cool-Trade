@@ -17,7 +17,7 @@
 <body>
 	
 	<%@ include file="../common/header.jsp" %>
-	<% int userNo = loginUser.getUserNo(); %>
+	
 	<div id="content-ds">
         <div id="category_path-ds">
             <div id="category_selection-ds" class="flex-ds" style="flex-direction:row; align-items:top;">
@@ -89,7 +89,11 @@
                     </div>
                 </div>
                 <div id="like_chat_buy-ds" class="flex-ds">
-                    <button class="btn btn-lg btn-secondary" onclick="likeBtn(<%= userNo %>, <%= p.getProductNo() %>);">❤️찜<span><%= likeCount %></span></button>
+                <% if(loginUser != null){%>
+                    <button class="btn btn-lg btn-secondary" onclick="likeBtn(<%= loginUser.getUserNo() %>, <%= p.getProductNo() %>);">❤️찜<span><%= likeCount %></span></button>
+                <%}else{ %>    
+                    <button class="btn btn-lg btn-secondary" onclick="location.href='<%=contextPath%>/loginForm.me';">❤️찜<span><%= likeCount %></span></button>
+                <%} %>
                     <button class="btn btn-lg btn-warning" onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>'">💬 채팅하기</button>
                     <button class="btn btn-lg btn-danger">바로사버리기</button>
                 </div>
@@ -207,7 +211,7 @@
                     maxPage = Math.ceil(allData.plist.length / itemsPerPage) - 1; // 최대 페이지 인덱스 계산
                     if (currentPage < maxPage) {
                         currentPage += 1; // 다음 페이지로 이동
-                    }else if(currentPage = maxPage){
+                    }else if(currentPage == maxPage){
                     	currentPage = 0
                     }
                     	

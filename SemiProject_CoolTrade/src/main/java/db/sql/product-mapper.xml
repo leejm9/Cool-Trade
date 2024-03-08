@@ -217,7 +217,8 @@
 	
 	<entry key="selectImages">
 		SELECT 
-		       IMG_NO
+			   REF_PNO
+		     , IMG_NO
 		     , ORIGIN_NAME  
 		     , CHANGE_NAME
 		     , IMG_PATH

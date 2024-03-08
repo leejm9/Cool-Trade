@@ -1,26 +1,28 @@
-package com.cooltrade.manager;
+package com.cooltrade.product.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.RecentProducts;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class MangerMemInfoDetailController
+ * Servlet implementation class AjaxRecentSeenProductController
  */
-@WebServlet("/memInfo.detail")
-public class MangerMemInfoDetailController extends HttpServlet {
+@WebServlet("/ajax.recentSeen")
+public class AjaxRecentSeenProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MangerMemInfoDetailController() {
+    public AjaxRecentSeenProductController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,26 +31,11 @@ public class MangerMemInfoDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cpage = 1;
-		String cpageParam = request.getParameter("cpage");
-		if (cpageParam != null) {
-		    cpage = Integer.parseInt(cpageParam);
-		}
 		
+		ArrayList<RecentProducts> rlist =  (ArrayList<RecentProducts>)request.getSession().getAttribute("rlist");
 		
-		
-		
-		int uno = Integer.parseInt(request.getParameter("uno"));
-		
-		Member m = new MemberService().selectMember(uno);
-		
-		request.setAttribute("m", m);
-		if(cpage == 1) {
-			request.getRequestDispatcher("views/manager/managerMemberDetail.jsp").forward(request, response);
-		}else {
-			request.getRequestDispatcher("views/manager/managerBlackDetail.jsp").forward(request, response);
-		}
-		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(rlist, response.getWriter());
 		
 		
 	}

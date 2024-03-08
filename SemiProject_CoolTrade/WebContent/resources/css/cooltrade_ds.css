@@ -331,18 +331,70 @@ body{
     border-bottom: 2px dotted rgb(136, 136, 136);
 }
 #recentSeenProduct-ds{
-    display: block;
-    justify-content: center;
-    align-items: center;
+	text-align:center;
+    display:flex;
+	justify-content: space-around;
+	flex-direction: column;
 }
 #seenEye-ds, #seenText-ds, #seenImg-ds{
     text-align: center;
 }
-#seenImg-ds button{
+.recentBtnWrap{
+	margin-top: 76px;
+}
+.recentBtnWrap button{
 	border: none;
 	height: 20px; 
+	color: rgb(136, 136, 136);
 	background-color: rgb(249, 249, 249);
-	border: 1px solid rgb(204, 204, 204);
+}
+.recentBtnWrap button:hover{
+	background-color:gray;
+}
+.hiding-text{
+	display:none;
+	height:68px;
+	width:150px; 
+	background-color:white; 
+	border: 1px solid black;
+	position: absolute; 
+	top:0px;
+	right: 66px;
+	border-right: none;
+}
+.hiding-text div{
+	text-align: left;
+	white-space: nowrap; /* 텍스트를 한 줄로 만듦 */
+	overflow: hidden; /* 오버플로우된 텍스트를 숨김 */
+	text-overflow: ellipsis; /* 오버플로우된 텍스트의 끝에 '...'을 표시 */
+}
+#seenImg-ds{
+	height:auto;
+	width:auto;
+	position: absolute;
+}
+#seenImg-ds>div:hover>.hiding-text{
+	display:block;
+}
+#seenImg-ds>div:hover{
+	cursor:pointer;
+}
+#seenImg-ds img{
+	border: 1px solid transparent;
+	background-color:white;
+}
+#seenImg-ds>div:hover>img{
+	border: 1px solid black;
+}
+.hiding-text:hover+div>img{
+	border: 1px solid black;
+}
+.hiding-text:hover+div:hover>img{
+	border:1px solid black;
+}
+.hiding-text:hover{
+	display:block;
+	cursor:pointer;
 }
 #seenEye-ds{
     font-size: 25px;
@@ -370,10 +422,9 @@ body{
 }
 #content-ds{
     box-sizing: content-box;
-    margin-top: 175px;
+    margin-top: 210px;
     width: 1000px;
     height: auto;
-/*     flex:1; */
 }
     
 /* 푸터 시작 */

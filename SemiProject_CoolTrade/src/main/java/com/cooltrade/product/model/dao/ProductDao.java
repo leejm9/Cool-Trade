@@ -459,6 +459,7 @@ public class ProductDao {
             
             while(rset.next()) {
                Images img = new Images();
+               img.setRefPno(rset.getInt("ref_pno"));
                img.setImgNo(rset.getInt("img_no"));
                img.setOriginName(rset.getString("origin_name"));
                img.setChangeName(rset.getString("change_name"));
@@ -718,6 +719,7 @@ public class ProductDao {
       try {
          pstmt = conn.prepareStatement(sql);
          pstmt.setInt(1, pno);
+         rset = pstmt.executeQuery();
          while(rset.next()) {
             Product p = new Product();
              p.setProductNo(rset.getInt("product_no"));

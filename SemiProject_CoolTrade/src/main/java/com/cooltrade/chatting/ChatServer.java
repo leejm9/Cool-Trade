@@ -21,12 +21,10 @@ public class ChatServer {
 	@OnOpen // 클라이언트 접속 시 실행
 	public void onOpen(Session session) {
 		clients.add(session); // 세션 추가
-		System.out.println("웹소켓 연결: " + session.getId());
 	}
 
 	@OnMessage // 메시지를 받으면 실행
 	public void onMessage(String message, Session session) throws IOException {
-		System.out.println("메시지 전송: " + session.getId() + ": " + message);
 		synchronized (clients) {
 			for (Session client : clients) { // 모든 클라이언트에게 메시지 전달
 				if (!client.equals(session)) {
@@ -40,12 +38,10 @@ public class ChatServer {
 	@OnClose // 클라이언트와의 연결이 끊기면 실행
 	public void onClose(Session session) {
 		clients.remove(session);
-		System.out.println("웹소켓 종료: " + session.getId());
 	}
 
 	@OnError
 	public void onError(Throwable e) {
-		System.out.println("에러 발생");
 		e.printStackTrace();
 	}
 }

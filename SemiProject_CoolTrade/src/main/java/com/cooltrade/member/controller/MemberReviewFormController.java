@@ -60,8 +60,6 @@ public class MemberReviewFormController extends HttpServlet {
 			String content = multiRequest.getParameter("reviewContent");
 			// String[] reviewType = multiRequest.getParameterValues("reviewType");
 			
-			System.out.println("별점2 : "+ score);
-			System.out.println("콘텐츠 : "+ content);
 			
 			/*
 			for(int i=0; i<reviewType.length; i++) {
@@ -81,13 +79,11 @@ public class MemberReviewFormController extends HttpServlet {
 			
 			for(int i=1; i<=6; i++) {
 				String key = "R" + i;
-				System.out.println("포문 들어옴" + key);
 				if(multiRequest.getParameter(key) != null) {
 					ReviewType reType = new ReviewType();
 					reType.setReviewType(key);
 					
 					list.add(reType);
-					System.out.println("이프문안에 리스트" + list);
 				}
 			}
 			
@@ -103,7 +99,6 @@ public class MemberReviewFormController extends HttpServlet {
 					img.setChangeName(multiRequest.getFilesystemName(imgKey));
 					img.setImgPath("resources/images_upfiles/");
 					
-					System.out.println(img);
 				}
 			}
 			
@@ -116,10 +111,7 @@ public class MemberReviewFormController extends HttpServlet {
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "후기를 전달했어요");
 				response.sendRedirect(request.getContextPath() + "/buylist.me?uno="+uno+"&cpage="+cpage);
-			} else {
-				System.out.println("실패");
-			}
-			
+			} 
 		}
 		
 	}

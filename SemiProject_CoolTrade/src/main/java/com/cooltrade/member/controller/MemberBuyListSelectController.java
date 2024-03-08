@@ -60,8 +60,6 @@ public class MemberBuyListSelectController extends HttpServlet {
 		
 		ArrayList<Trade> list = new MemberService().buyListSelectPo(pi, userNo);
 		
-		System.out.println(pi);
-		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
