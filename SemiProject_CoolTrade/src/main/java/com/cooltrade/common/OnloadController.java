@@ -27,7 +27,6 @@ public class OnloadController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getSession().setAttribute("headerCo", 0);
 		request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
 	
 	}

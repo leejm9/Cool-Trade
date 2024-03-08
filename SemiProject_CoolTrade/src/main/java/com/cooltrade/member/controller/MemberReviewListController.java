@@ -52,12 +52,11 @@ public class MemberReviewListController extends HttpServlet {
 		Review avg = new MemberService().starAvg(uno);
 		request.setAttribute("avg", avg);
 		
-		// 리뷰 타입 내용
-		
-		request.getRequestDispatcher("views/myPage/reviewList.jsp").forward(request, response);
-		
-		
+		// 선택리뷰 내용
+		ArrayList<ReviewType> reviewTypeDetail = new MemberService().reviewTypeDetail(uno);
+		request.setAttribute("reviewTypeDetail", reviewTypeDetail);
 	
+		request.getRequestDispatcher("views/myPage/reviewList.jsp").forward(request, response);
 	}
 
 	/**

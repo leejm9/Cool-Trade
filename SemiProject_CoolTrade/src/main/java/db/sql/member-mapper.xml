@@ -739,6 +739,8 @@
 		  JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
 		  JOIN IMAGES I ON (REVIEW_NO = REF_RNO)
 		 WHERE SELLER_NO = ?
+		 ORDER
+		    BY REVIEW_DATE DESC
 	</entry>
 	
 	<entry key="starAvg">
@@ -805,6 +807,15 @@
 		                   ) A
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+		SELECT REVIEW_NO, REVIEW_CON
+		  FROM REVIEW_CONTENT RC
+		  JOIN REVIEW_TYPE RT USING (REVIEW_TYPE)
+		  JOIN REVIEW R USING (REVIEW_NO)
+		  JOIN PRODUCT P USING (PRODUCT_NO)
+		 WHERE SELLER_NO = ?
+	<entry key="reviewTypeDetail">
+	
 	</entry>
 	
 	

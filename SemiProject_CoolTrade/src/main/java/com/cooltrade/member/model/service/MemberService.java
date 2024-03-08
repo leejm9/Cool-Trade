@@ -508,4 +508,12 @@ public class MemberService {
 				
 	}
 	
+	public ArrayList<ReviewType> reviewTypeDetail(int userNo) {
+		Connection conn = getConnection();
+		ArrayList<ReviewType> reviewTypeDetail = new MemberDao().reviewTypeDetail(conn, userNo);
+		
+		close(conn);
+		return reviewTypeDetail;
+	}
+	
 }

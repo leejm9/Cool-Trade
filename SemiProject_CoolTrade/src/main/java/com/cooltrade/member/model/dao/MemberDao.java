@@ -1653,4 +1653,34 @@ public class MemberDao {
 		return list;
 	}
 	
+	public ArrayList<ReviewType> reviewTypeDetail(Connection conn, int userNo) {
+		ArrayList<ReviewType> reviewTypeDetail = new ArrayList<ReviewType>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewTypeDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ReviewType rt = new ReviewType();
+				rt.setReviewNo(rset.getInt("review_no"));
+				rt.setReviewTypeDetail(rset.getString("review_con"));
+				
+				reviewTypeDetail.add(rt);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reviewTypeDetail;
+	}
+	
 }
