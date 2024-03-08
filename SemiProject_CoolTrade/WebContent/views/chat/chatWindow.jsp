@@ -1,12 +1,17 @@
+<%@page import="com.cooltrade.chatting.controller.model.vo.Chat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%
 	String pno = (String)request.getAttribute("pno");
+	ArrayList<Chat> message = (ArrayList<Chat>)request.getAttribute("message");
+	int chatRoomNo = (int)request.getAttribute("chatRoomNo");
+	
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -113,30 +118,24 @@ pageEncoding="UTF-8"%>
 	<h2>?번채팅방(구매자:? 판매자:?)</h2>
 	<div class="outer">
 	<div class="wrap">
-		
-        <div class="chat ch1">
-            <div class="icon"><i class="fa-solid fa-user"><%= pno %></i></div>
-            <div class="textbox">안녕하세요. 반갑습니다.</div>
-            
-        </div>
-        <div class="chat ch2">
-            <div class="icon"><i class="fa-solid fa-user"><%= loginUser.getUserId() %></i></div>
-            <div class="textbox">안녕하세요. 친절한효자손입니다. 그동안 잘 지내셨어요?</div>
-            <div class="timestamp"></div>
-        </div>
-        <div class="chat ch1">
-            <div class="icon"><i class="fa-solid fa-user"><%= pno %></i></div>
-            <div class="textbox">아유~ 너무요너무요! 요즘 어떻게 지내세요?</div>
-        </div>
-        <div class="chat ch2">
-            <div class="icon"><i class="fa-solid fa-user"><%= loginUser.getUserId() %></i></div>
-            <div class="textbox">뭐~ 늘 똑같은 하루 하루를 보내는 중이에요. 코로나가 다시 극성이어서 모이지도 못하구 있군요 ㅠㅠ 얼른 좀 잠잠해졌으면 좋겠습니다요!</div>
-        </div>
-        <div class="chat ch1">
-            <div class="icon"><i class="fa-solid fa-user"><%= pno %></i></div>
-            <div class="textbox">아유~ 너무요너무요! 요즘 어떻게 지내세요?</div>
-        </div>
+		<% for(Chat c : message){ %>
+			<% if(c.getSender().equals(loginUser.getUserId())){ %>
+				<div class="chat ch2">
+		            <div class="icon"><i class="fa-solid fa-user"><%= loginUser.getUserId() %></i></div>
+		            <div class="textbox"><%= c.getMessage() %></div>
+		        </div>
+	        <% } else{ %>
+		        <div class="chat ch1">
+		            <div class="icon"><i class="fa-solid fa-user"><%= pno %></i></div>
+		            <div class="textbox"><%= c.getMessage() %></div>
+	            <div class="timestamp"></div>
+	            </div>
+	        <% } %>
+		<% } %>
         
+        
+        
+      
     </div>
     <div align="right">
     <form id="messageForm">
@@ -145,6 +144,7 @@ pageEncoding="UTF-8"%>
 	</form>
 	</div>
 	</div>
+	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
     
     <script>
 	$(document).ready(function() {
@@ -154,18 +154,29 @@ pageEncoding="UTF-8"%>
         var messageText = $('#messageInput').val().trim(); // 입력된 메시지
         if (messageText === '') return; // 입력된 메시지가 없으면 종료
         
-        var chatDiv = $('<div>').addClass('chat ch2');
-        var iconDiv = $('<div>').addClass('icon');
-        var userIcon = $('<i>').addClass('fa-solid fa-user').text('<%= loginUser.getUserId() %>');
-        iconDiv.append(userIcon);
-        var textboxDiv = $('<div>').addClass('textbox').text(messageText);
-        var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime());
-        chatDiv.append(iconDiv, textboxDiv, timestampDiv);
-        
-        $('.wrap').append(chatDiv); // 채팅창에 메시지 추가
-        console.log(chatDiv);
-        $('#messageInput').val(''); // 입력 필드 초기화
-        scrollToBottom(); // 스크롤을 항상 아래로 이동
+        $.ajax({
+        	url:"message.insert",
+        	data:{userId:$("#loginUser").val(),
+        		  message:messageText,
+        		  chatRoomNo:<%=chatRoomNo%>},
+            success:function(messageText){
+            	 var chatDiv = $('<div>').addClass('chat ch2');
+                 var iconDiv = $('<div>').addClass('icon');
+                 var userIcon = $('<i>').addClass('fa-solid fa-user').text('<%= loginUser.getUserId() %>');
+                 iconDiv.append(userIcon);
+                 var textboxDiv = $('<div>').addClass('textbox').text(messageText);
+                 var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime());
+                 chatDiv.append(iconDiv, textboxDiv, timestampDiv);
+                 
+                 $('.wrap').append(chatDiv); // 채팅창에 메시지 추가
+                 console.log(chatDiv);
+                 $('#messageInput').val(''); // 입력 필드 초기화
+                 scrollToBottom(); // 스크롤을 항상 아래로 이동
+            },error:function(a){
+            	console.log("오류");
+            }
+        })
+       
     });
     
     function getCurrentTime() {

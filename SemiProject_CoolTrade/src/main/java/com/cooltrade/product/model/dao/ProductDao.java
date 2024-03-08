@@ -15,7 +15,7 @@ import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
-import com.cooltrade.product.model.vo.LikeProduct;
+//import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Search;
 
@@ -723,6 +723,9 @@ public class ProductDao {
       try {
          pstmt = conn.prepareStatement(sql);
          pstmt.setInt(1, pno);
+         
+         rset= pstmt.executeQuery();
+         
          while(rset.next()) {
             Product p = new Product();
              p.setProductNo(rset.getInt("product_no"));

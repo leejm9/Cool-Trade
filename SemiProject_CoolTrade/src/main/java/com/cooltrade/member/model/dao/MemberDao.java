@@ -160,7 +160,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member(rset.getString("user_no"),
+				m = new Member(rset.getInt("user_no"),
 							   rset.getString("user_id"),
 							   rset.getString("user_pwd"),
 							   rset.getString("user_name"),
@@ -635,7 +635,7 @@ public class MemberDao {
 			while(rset.next()) {
 				Trade t = new Trade();
 				t.setTradeNo(rset.getInt("trade_no"));
-				t.setProductNo(rset.getString("product_name"));
+				t.setProductName(rset.getString("product_name")); ;
 				t.setPrice(rset.getInt("price"));
 				t.setTradeDate(rset.getString("trade_date"));
 				t.setDeliveryStatus(rset.getString("deliver_status"));

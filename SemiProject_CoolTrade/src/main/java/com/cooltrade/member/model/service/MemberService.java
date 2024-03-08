@@ -45,91 +45,6 @@ public class MemberService {
       return list;
    }
    
-   public Member idMember(String userId) {
-      Connection conn = getConnection();
-      
-      Member m = new MemberDao().idMember(conn, userId);
-      
-      close(conn);
-      
-      return m;
-      
-   }
-   
-   
-//   public int insertMember(Member m) {
-//      Connection conn = getConnection();
-//      
-//      int result = new MemberDao().insertMember(conn, m);
-//      
-//      if(result >0) {
-//         commit(conn);
-//      }else {
-//         rollback(conn);
-//      }
-//      
-//      close(conn);
-//      return result;
-//   }
-   
-   
-   public int insertMember(Member m) {
-      Connection conn = getConnection();
-      
-      int result = new MemberDao().insertMember(conn, m);
-      
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      
-      close(conn);
-      return result;
-   }
-   
-   
-   public Member countMember() {
-      Connection conn = getConnection();
-      
-      Member m = new MemberDao().countMember(conn);
-      close(conn);
-      return m;
-   }
-   
-   public int updateUserLevel(int userNo) {
-      Connection conn = getConnection();
-      
-      int result = new MemberDao().updateUserLevel(conn, userNo);
-      
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      
-      return result;
-   }
-   
-   public int selectBlackListCount() {
-      Connection conn = getConnection();
-      
-      int result = new MemberDao().selectBlackListCount(conn);
-      
-      close(conn);
-      return result;
-   }
-   
-   public ArrayList<Member> selectBlackList(PageInfo pi){
-      Connection conn = getConnection();
-      
-      ArrayList<Member> list = new MemberDao().selectBlackList(conn, pi);
-      
-      close(conn);
-      return list;
-      
-   }
-   
    public int selectTradeTypeCount(Member m) {
       Connection conn = getConnection();
       int count = new MemberDao().selectTradeTypeCount(conn, m);
@@ -166,36 +81,6 @@ public class MemberService {
       }
       
       return result;
-   }
-   
-   public int recoveryMember(int userNo) {
-      Connection conn = getConnection();
-      
-      int result = new MemberDao().recoveryMember(conn,userNo);
-      
-      if(result > 0) {
-         commit(conn);
-      }else {
-         rollback(conn);
-      }
-      
-      return result;
-   }
-   public ArrayList<Member> selectEnrollMonth(){
-      Connection conn = getConnection();
-      
-      ArrayList<Member> list = new MemberDao().selectEnrollMonth(conn);
-      close(conn);
-      return list;
-   }   
-   
-   public int sellListCountPo(int userNo) {
-      Connection conn = getConnection();
-      int listCount = new MemberDao().sellListCountPo(conn, userNo);
-      
-      close(conn);
-      return listCount;
-      
    }
    
    public ArrayList<Product> sellListPo(PageInfo pi, int userNo) {

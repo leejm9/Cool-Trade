@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="countChatRoom">
+		SELECT COUNT(*) count
+		  FROM CHATROOM
+		 WHERE USER_ID = ?
+		   AND SELLER_ID = ?
+	</entry>
+	
+	<entry key="createChatRoom">
+	INSERT 
+	  INTO CHATROOM
+	VALUES 
+	      (
+	       SEQ_CHATROOM.NEXTVAL
+	     , 'A'
+	     , 'Y'
+	     , ?
+	     , ?
+     	)
+	</entry>
+	
+	<entry key="getChatRoomNo">
+		SELECT CHATROOM_NO
+		  FROM CHATROOM
+		 WHERE USER_ID = ?
+		   AND SELLER_ID = ?
+	</entry>
+	
+	<entry key="getMessage">
+		SELECT 
+		       MESSAGE_NO
+		     , MESSAGE
+		     , MESSAGE_DATE
+		     , READ_YN
+		     , CHATROOM_NO
+		     , SENDER
+		  FROM MESSAGE
+		 WHERE CHATROOM_NO = ?
+	</entry>
+	
+	<entry key="insertMessage">
+		INSERT
+		  INTO 
+		  	   MESSAGE
+		  	   (MESSAGE_NO
+		  	  , MESSAGE
+		  	  , MESSAGE_DATE
+		  	  , READ_YN
+		  	  , CHATROOM_NO
+		  	  , SENDER
+		  	   
+		  	   )
+		  	   
+		VALUES
+		      (
+		       SEQ_MSG.NEXTVAL
+		     , ?
+		     , SYSDATE
+		     , 'N'
+		     , ?
+		     , ?
+		      )
+	</entry>
+	<entry key="getChatRoomList">
+		SELECT 
+		       CHATROOM_NO
+		     , CHATROOM_TITLE
+		     , CHATROOM_STATUS
+		     , USER_ID
+		     , SELLER_ID
+		  FROM CHATROOM
+	
+	</entry>
+	
+</properties>

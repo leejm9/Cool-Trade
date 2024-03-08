@@ -360,6 +360,7 @@
 		 WHERE 
 		       RNUM &lt;= 20
 	</entry>
+	
 	<entry key="countUserPopwList">
 			    SELECT COUNT(user_popw_word) count
 			    FROM t_user_popular_word

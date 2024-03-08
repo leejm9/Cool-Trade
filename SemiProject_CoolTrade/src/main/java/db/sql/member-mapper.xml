@@ -679,14 +679,8 @@
 		      *
 		  FROM MEMBER
 		 WHERE USER_NO = ?
-	</entry>
-		TO_CHAR(ENROLL_DATE,'YY-MM') enrolldate
-		, COUNT(*) count
-		FROM MEMBER
-		GROUP
-		BY TO_CHAR(ENROLL_DATE,'YY-MM')
-		ORDER
-		BY 1
+
+		
 	</entry>
 
 	<entry key="saveBankAccount">

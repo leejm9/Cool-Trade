@@ -187,7 +187,7 @@
                     </div>
                     <div id="chatSell-ds" class="flex-ds">
                         <div id="chatContainer-ds">
-                            <a href="" id="chat-ds">
+                            <a href="<%= contextPath %>/chatRoom.list" id="chat-ds">
                                 <img src="resources/images/말풍선.png" alt="말풍선 이미지">
                                 채팅하기
                             </a>
