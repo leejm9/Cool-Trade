@@ -84,15 +84,15 @@
         }
     td,th{
         border: 1px solid black;
-        width: 325px;
+        width: 350px;
         height: 45px;
  
     }
     
     th{
-        width: 80px;
+        width: 130px;
         background-color: lightgray ;
-        font-display: center;
+        text-align: center !important;
     }
 
     
@@ -101,20 +101,20 @@
    .inputbox{
 
       width: 240px;
-      height: 20px;
-      margin-right: 6px;
+      height: 30px;
+      margin-right: 20px;
     }
     .inputbox1{
 
-    width: 150px;
-    height: 20px;
-    margin-right: 6px;
+    width: 145px;
+    height: 30px;
+    margin-right: 20px;
        
     }
 
 
     .bank{
-        height: 25px;
+        height: 30px;
         width: 85px;
     }
   
@@ -196,35 +196,35 @@
        
             <tr>
                 <th>이름</th>
-                <td><%=name %></td>  
+                <td>&nbsp;<%=name %></td>  
             </tr>
       
             <tr>
                 <th>아이디</th>
-                <td><%=id %></td>
+                <td>&nbsp;<%=id %></td>
                 
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td><input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()">변경</button></td>
+                <td>&nbsp;<input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()">변경</button></td>
                
             </tr>
             <tr>
                 <th>휴대폰번호</th>
-                <td><input type="tel" class="inputbox" id="phone" value="<%= phone %>"><button onclick="btnChangePhone()">변경</button></td>
+                <td>&nbsp;<input type="tel" class="inputbox" id="phone" maxlength='13' value="<%= phone %>"><button onclick="btnChangePhone()">변경</button></td>
             </tr>
             <tr>
                 <th>이메일</th>
-                <td><input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE">변경</button></td>
+                <td>&nbsp;<input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE">변경</button></td>
             </tr>
             <tr>
                 <th>주소</th>
-                <td><div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 6px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();">선택</button></td>
+                <td>&nbsp;<div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 20px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();">선택</button></td>
             </tr>
             <tr>
                 <div>
                 <th>계좌번호</th>
-                <td> 
+                <td>&nbsp; 
                       <select class="bank" id="bank">
                         <option value="국민은행" <%= "국민은행".equals(bankAccount.getBank())?"selected":"" %>>국민은행</option>
                         <option value="농협은행" <%= "농협은행".equals(bankAccount.getBank())?"selected":"" %>>농협은행</option>
@@ -741,6 +741,29 @@
    	    $("#delivery-address-postcode").val(zonecode);
    	    $("#delivery-address-address").val(data.roadAddress); // 설치 주소1 (도로명 주소) (roadAddress)
    	  }
+      
+      document.getElementById('phone').addEventListener('input', function (e) {
+    	  var value = e.target.value.replace(/\D/g, ""); // 숫자가 아닌 문자는 제거
+    	  var formattedValue = "";
+
+    	  // 첫 번째 그룹(최대 3자리)
+    	  if (value.length > 3) {
+    	    formattedValue += value.substr(0, 3) + "-";
+    	    value = value.substr(3);
+    	  }
+
+    	  // 두 번째 그룹(최대 4자리)
+    	  if (value.length > 4) {
+    	    formattedValue += value.substr(0, 4) + "-";
+    	    value = value.substr(4);
+    	  }
+
+    	  // 나머지 숫자 추가
+    	  formattedValue += value;
+
+    	  e.target.value = formattedValue; // 형식이 지정된 문자열로 값 업데이트
+    	});
+
     </script>
 
 </body>
