@@ -1147,6 +1147,7 @@ public class MemberDao {
 		return result;
 	}
 	
+
 	public int sellListStatusCo(Connection conn, int userNo, String sellStatus) {
 		int listCount = 0;
 		PreparedStatement pstmt = null;
@@ -1157,7 +1158,11 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, userNo);
 			pstmt.setString(2, sellStatus);
-         				listCount = rset.getInt("count");
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
 			}
 			
 		} catch (SQLException e) {
