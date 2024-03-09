@@ -808,15 +808,18 @@
 		        )
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
+	
+	<entry key="reviewTypeDetail">
 		SELECT REVIEW_NO, REVIEW_CON
 		  FROM REVIEW_CONTENT RC
 		  JOIN REVIEW_TYPE RT USING (REVIEW_TYPE)
 		  JOIN REVIEW R USING (REVIEW_NO)
 		  JOIN PRODUCT P USING (PRODUCT_NO)
 		 WHERE SELLER_NO = ?
-	<entry key="reviewTypeDetail">
-	
 	</entry>
+	
+		 
+		 
 	
 	
 	

@@ -12,7 +12,7 @@
     
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String alertMsg = (String)session.getAttribute("alertMsg");
-	int headerCo = (int)session.getAttribute("headerCo");
+	//int headerCo = (int)session.getAttribute("headerCo");
 
 	
 %>
@@ -246,8 +246,8 @@
                     <% } else { %>
                     <a href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>" id="jjimLink-ds" class="flex-ds" style="vertical-align: middle;">
                         <img src="resources/images/좋아요.png" width="25" height="25" style="padding: 5px;" alt="좋아요 이미지">
-						<div style="padding-top: 3px;"><%= headerCo %></div>
-						<% System.out.println(headerCo); %>
+						<div style="padding-top: 3px;"></div>
+						<% System.out.println(); %>
                     </a>
                     <% } %>
                 </div>
