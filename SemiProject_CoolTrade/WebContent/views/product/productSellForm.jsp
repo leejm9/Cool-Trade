@@ -660,18 +660,11 @@
                                         //$previewDiv.find('.hidden-img').attr('src', '#');
                                         count--;
                                         index--;
-                                        
+                                        $("#fileInput" + index).val("");
                                         $("#imgCount").html("(" + count + "/5)");
                                         
                                         console.log("미리보기카운트- " + count);
                                         console.log("FileInput" + index);
-                                        
-										console.log($("#fileInput1").siblings(0).attr("src"));                                        
-										console.log($("#fileInput2").siblings(0).attr("src"));                                        
-										console.log($("#fileInput3").siblings(0).attr("src"));                                        
-										console.log($("#fileInput4").siblings(0).attr("src"));                                        
-										console.log($("#fileInput5").siblings(0).attr("src"));                                        
-                                        
                                     };
                                     
                                 </script>

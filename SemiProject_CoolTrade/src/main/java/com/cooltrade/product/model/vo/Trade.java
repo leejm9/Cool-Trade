@@ -14,6 +14,7 @@ public class Trade {
 	private int sellerNo;
 	private String nickname;
 	private String strPrice;
+	private String reviewStatus;
 	
 	public Trade() {}
 
@@ -50,7 +51,8 @@ public class Trade {
 	}
 
 	public Trade(int tradeNo, int productNo, int buyerNo, String tradeDate, int price, String deliveryStatus,
-			String titleImg, String productName, String uploadType, int sellerNo, String nickname, String strPrice) {
+			String titleImg, String productName, String uploadType, int sellerNo, String nickname, String strPrice,
+			String reviewStatus) {
 		super();
 		this.tradeNo = tradeNo;
 		this.productNo = productNo;
@@ -64,6 +66,7 @@ public class Trade {
 		this.sellerNo = sellerNo;
 		this.nickname = nickname;
 		this.strPrice = strPrice;
+		this.reviewStatus = reviewStatus;
 	}
 
 	public int getTradeNo() {
@@ -160,6 +163,14 @@ public class Trade {
 
 	public void setStrPrice(String strPrice) {
 		this.strPrice = strPrice;
+	}
+
+	public String getReviewStatus() {
+		return reviewStatus;
+	}
+
+	public void setReviewStatus(String reviewStatus) {
+		this.reviewStatus = reviewStatus;
 	}
 
 	@Override

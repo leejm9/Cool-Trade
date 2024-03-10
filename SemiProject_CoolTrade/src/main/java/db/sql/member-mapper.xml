@@ -289,6 +289,7 @@
 				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
 				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
 				           , UPLOAD_TYPE
+				           , REVIEW_STATUS
 						FROM TRADE T
 						JOIN PRODUCT P USING (PRODUCT_NO)
 						JOIN MEMBER M ON (SELLER_NO = USER_NO)
@@ -416,6 +417,7 @@
 				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
 				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
 				           , UPLOAD_TYPE
+				           , REVIEW_STATUS
 						FROM TRADE T
 						JOIN PRODUCT P USING (PRODUCT_NO)
 						JOIN MEMBER M ON (SELLER_NO = USER_NO)
@@ -455,6 +457,7 @@
 				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
 				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
 				           , UPLOAD_TYPE
+				           , REVIEW_STATUS
 						FROM TRADE T
 						JOIN PRODUCT P USING (PRODUCT_NO)
 						JOIN MEMBER M ON (SELLER_NO = USER_NO)
@@ -737,7 +740,7 @@
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
 		  JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
-		  JOIN IMAGES I ON (REVIEW_NO = REF_RNO)
+		  LEFT JOIN IMAGES I ON (REVIEW_NO = REF_RNO)
 		 WHERE SELLER_NO = ?
 		 ORDER
 		    BY REVIEW_DATE DESC
@@ -797,6 +800,7 @@
 				           , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
 				           , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
 				           , UPLOAD_TYPE
+				           , REVIEW_STATUS
 						FROM TRADE T
 						JOIN PRODUCT P USING (PRODUCT_NO)
 						JOIN MEMBER M ON (SELLER_NO = USER_NO)
@@ -816,6 +820,43 @@
 		  JOIN REVIEW R USING (REVIEW_NO)
 		  JOIN PRODUCT P USING (PRODUCT_NO)
 		 WHERE SELLER_NO = ?
+	</entry>
+	
+	<entry key="updateReviewStatus">
+		UPDATE TRADE
+		   SET REVIEW_STATUS = 'Y'
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="likeListCountPo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE USER_NO = ?
+	</entry>
+		
+	<entry key="likeListPo">
+		SELECT *
+		  FROM (
+		       SELECT ROWNUM RNUM, A.*
+		         FROM (
+		              SELECT
+						     USER_NO
+						   , PRODUCT_NO
+						   , PRODUCT_NAME
+						   , TO_CHAR(PRICE, '999,999,999') PRICE
+						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+					       , NVL(IMG_PATH || CHANGE_NAME, '') TITLEIMG
+						FROM LIKE_PRODUCT L
+						JOIN PRODUCT P USING(PRODUCT_NO)
+				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
+						 AND IMG_LEVEL = '1'
+					   WHERE USER_NO = ?
+					   ORDER
+						  BY LIKEDATE DESC
+		                   ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 		 

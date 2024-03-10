@@ -290,6 +290,16 @@
     .load-div.after {
     	display: none;
     }
+
+    .review-type-detail-div {
+        background-color: #5678e6;
+        /* border: 1px solid #e6e6e6; */
+        color: #ffffff;
+        margin-right: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 3px 5px;
+    }
 	
 </style>
 </head>
@@ -325,7 +335,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=1">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -499,15 +509,22 @@
 			                                <div><%= r.getReviewDetail() %></div>
 			                            </div>
 			                            <div class="flex-class">
-			                            	for(Review)
-			                                    <div>친절해요.</div>
+			                            	<% for(ReviewType rt : rtdList) { %>
+			                            		<% if(r.getReviewNo() == rt.getReviewNo()) { %>
+			                                    	<div class="review-type-detail-div"><%= rt.getReviewTypeDetail() %></div>
+		                                    	<% } %>
+			                                <% } %>
 			                            </div>                         
 			                        </div>
 			                        <div id="review-content-right">
 			                            <div>1개월 전</div>
 			                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
 			                                <div>
-			                                    <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
+                                                <% if(r.getTitleImg() != null) { %>
+			                                        <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
+                                                <% } else { %>
+			                                        <img src="resources/images/no_img.png" id="reviewImg">
+                                                <% } %>
 			                                </div>    
 			                            </div>
 			                        </div>
