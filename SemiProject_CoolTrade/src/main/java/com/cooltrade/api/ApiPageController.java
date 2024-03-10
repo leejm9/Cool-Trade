@@ -1,4 +1,4 @@
-package com.cooltrade.chatting.controller;
+package com.cooltrade.api;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.chatting.controller.model.Service.ChatService;
-
 /**
- * Servlet implementation class ChatInsertMessageController
+ * Servlet implementation class ApiPageController
  */
-@WebServlet("/message.insert")
-public class ChatInsertMessageController extends HttpServlet {
+@WebServlet("/apipage.in")
+public class ApiPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatInsertMessageController() {
+    public ApiPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,16 +26,7 @@ public class ChatInsertMessageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("userId");
-		String message = request.getParameter("message");
-		int chatRoomNo = Integer.parseInt(request.getParameter("chatRoomNo"));
-		
-		int result = new ChatService().insertMessage(userId,message,chatRoomNo);
-		
-		
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().print(message);
-		
+		request.getRequestDispatcher("views/api/deliveryApi.jsp").forward(request, response);
 	}
 
 	/**

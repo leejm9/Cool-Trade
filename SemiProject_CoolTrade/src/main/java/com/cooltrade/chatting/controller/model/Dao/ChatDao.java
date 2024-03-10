@@ -60,10 +60,8 @@ public class ChatDao {
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("createChatRoom");
-		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, pno);
 			
@@ -147,7 +145,6 @@ public class ChatDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			
 			pstmt.setString(1, message);
 			pstmt.setInt(2, chatRoomNo);
 			pstmt.setString(3, userId);
@@ -193,5 +190,32 @@ public class ChatDao {
 		}
 		return list;
 		
+	}
+	
+	public String[] getChatRoomInfo(Connection conn,int chatRoomNo) {
+		String[] userInfo = new String[2];
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getChatRoomInfo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, chatRoomNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				userInfo[0] = rset.getString("user_id");
+				userInfo[1] = rset.getString("seller_id");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return userInfo;
 	}
 }

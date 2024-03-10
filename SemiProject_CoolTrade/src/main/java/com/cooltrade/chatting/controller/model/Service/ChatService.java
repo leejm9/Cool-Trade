@@ -64,4 +64,13 @@ public class ChatService {
 		close(conn);
 		return list;
 	}
+	public String[] getChatRoomInfo(int chatRoomNo) {
+		Connection conn = getConnection();
+		
+		String[] user = new ChatDao().getChatRoomInfo(conn,chatRoomNo);
+		
+		close(conn);
+		return user;
+	}
+	
 }

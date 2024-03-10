@@ -11,6 +11,13 @@
 	<entry key="createChatRoom">
 	INSERT 
 	  INTO CHATROOM
+	  	  (
+	  	   CHATROOM_NO
+	  	 , CHATROOM_TITLE
+	  	 , CHATROOM_STATUS
+	  	 , USER_ID
+	  	 , SELLER_ID
+	  	  )
 	VALUES 
 	      (
 	       SEQ_CHATROOM.NEXTVAL
@@ -38,6 +45,8 @@
 		     , SENDER
 		  FROM MESSAGE
 		 WHERE CHATROOM_NO = ?
+		 ORDER
+		    BY MESSAGE_DATE
 	</entry>
 	
 	<entry key="insertMessage">
@@ -74,4 +83,11 @@
 	
 	</entry>
 	
+	<entry key="getChatRoomInfo">
+		SELECT 
+		       USER_ID
+		     , SELLER_ID
+		  FROM CHATROOM
+		 WHERE CHATROOM_NO = ?
+	</entry>
 </properties>

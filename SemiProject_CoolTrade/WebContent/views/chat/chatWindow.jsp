@@ -2,10 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%
-	String pno = (String)request.getAttribute("pno");
-	ArrayList<Chat> message = (ArrayList<Chat>)request.getAttribute("message");
-	int chatRoomNo = (int)request.getAttribute("chatRoomNo");
-	
+	String user = (String)request.getAttribute("userId");
+	String seller = (String)request.getAttribute("seller");
 %>
 <!DOCTYPE html>
 <html>
@@ -115,69 +113,95 @@ pageEncoding="UTF-8"%>
 	<br><br><br><br>
 	<br><br><br><br>
 	<br><br>
-	<h2>?번채팅방(구매자:? 판매자:?)</h2>
+	<h2><%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%= (String)request.getAttribute("userId") %> 판매자:<%= (String)request.getAttribute("seller") %> )</h2>
 	<div class="outer">
 	<div class="wrap">
-		<% for(Chat c : message){ %>
-			<% if(c.getSender().equals(loginUser.getUserId())){ %>
-				<div class="chat ch2">
-		            <div class="icon"><i class="fa-solid fa-user"><%= loginUser.getUserId() %></i></div>
-		            <div class="textbox"><%= c.getMessage() %></div>
-		        </div>
-	        <% } else{ %>
-		        <div class="chat ch1">
-		            <div class="icon"><i class="fa-solid fa-user"><%= pno %></i></div>
-		            <div class="textbox"><%= c.getMessage() %></div>
-	            <div class="timestamp"></div>
-	            </div>
-	        <% } %>
-		<% } %>
+		
         
         
         
       
     </div>
     <div align="right">
-    <form id="messageForm">
     <input type="text" id="messageInput" style="width:600px;">
-    <button type="submit">전송</button>
-	</form>
+    <button type="submit" onclick="insertReply();">전송</button>
 	</div>
 	</div>
 	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
-    
+	<input type="hidden" id="user" value="<%= user %>">
+	<input type="hidden" id="seller" value="<%= seller %>">
+	
+	<button onclick="location.href='<%= contextPath %>/apipage.in'">택배배송?</button>
+	
+	
     <script>
-	$(document).ready(function() {
-    $('#messageForm').submit(function(event) {
-        event.preventDefault(); // 기본 이벤트 동작 방지
-        
-        var messageText = $('#messageInput').val().trim(); // 입력된 메시지
-        if (messageText === '') return; // 입력된 메시지가 없으면 종료
-        
+    $(function(){
+    	getMessage();
+    	setInterval(getMessage, 1000)
+    })
+    
+    function getMessage(){
+    		var userId = $("#loginUser").val();
+    		var user = $("#user").val();        // 구매자     
+    		var pno = $("#seller").val();		// 판매자
+            		$.ajax({
+            			url:"message.in",
+            			data:{userId: user,
+            				  pno:pno},
+            			success:function(list){
+            				let value = ""
+            				for(let i=0; i<list.length; i++){
+            					if(list[i].sender == userId){
+            						value += '<div class="chat ch2">' 
+		            				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
+		            				      +  '<div class="textbox">' + list[i].message + '</div>' 
+		            				      +  '</div>';
+            					}else{
+            						value += '<div class="chat ch1">' 
+		            				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
+		            				      +  '<div class="textbox">' + list[i].message + '</div>' 
+		            				      +  '</div>';	
+            					}  
+            							 
+            				}
+            				$(".wrap").html(value);
+            			},error:function(){
+            				console.log("ajax 통신 실패");
+            			}
+            		});
+            	}
+    
+    function insertReply(){
+        var message = $('#messageInput').val().trim(); // 입력된 메시지
+        if (message === '') return; // 입력된 메시지가 없으면 종료
+
+        var userId = $("#loginUser").val();
+        var chatRoomNo = '<%= (int)request.getAttribute("chatRoomNo")%>'; // 채팅방 번호를 올바른 값으로 대체해야 합니다.
+
         $.ajax({
-        	url:"message.insert",
-        	data:{userId:$("#loginUser").val(),
-        		  message:messageText,
-        		  chatRoomNo:<%=chatRoomNo%>},
-            success:function(messageText){
-            	 var chatDiv = $('<div>').addClass('chat ch2');
-                 var iconDiv = $('<div>').addClass('icon');
-                 var userIcon = $('<i>').addClass('fa-solid fa-user').text('<%= loginUser.getUserId() %>');
-                 iconDiv.append(userIcon);
-                 var textboxDiv = $('<div>').addClass('textbox').text(messageText);
-                 var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime());
-                 chatDiv.append(iconDiv, textboxDiv, timestampDiv);
-                 
-                 $('.wrap').append(chatDiv); // 채팅창에 메시지 추가
-                 console.log(chatDiv);
-                 $('#messageInput').val(''); // 입력 필드 초기화
-                 scrollToBottom(); // 스크롤을 항상 아래로 이동
-            },error:function(a){
-            	console.log("오류");
+            url:"message.insert",
+            data:{userId: userId,
+                  message: message,
+                  chatRoomNo: chatRoomNo},
+            success:function(response){
+                var chatDiv = $('<div>').addClass('chat ch2');
+                var iconDiv = $('<div>').addClass('icon');
+                var userIcon = $('<i>').addClass('fa-solid fa-user').text(userId); // 유저 아이콘은 userId로 설정
+                iconDiv.append(userIcon);
+                var textboxDiv = $('<div>').addClass('textbox').text(response.message); 
+                var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime()); 
+                chatDiv.append(iconDiv, textboxDiv, timestampDiv);
+
+                $('.wrap').append(chatDiv); // 채팅창에 메시지 추가
+                console.log(chatDiv);
+                $('#messageInput').val(''); // 입력 필드 초기화
+                scrollToBottom(); // 스크롤을 항상 아래로 이동
+            },
+            error:function(response){
+                console.log("오류");
             }
-        })
-       
-    });
+        });
+    }
     
     function getCurrentTime() {
         var now = new Date();
@@ -190,7 +214,7 @@ pageEncoding="UTF-8"%>
         var wrap = $('.wrap')[0];
         wrap.scrollTop = wrap.scrollHeight;
     }
-	});
+	
 	</script>
     
     <%@ include file="../common/footer.jsp"%>

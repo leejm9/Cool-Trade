@@ -35,8 +35,6 @@ public class ChatRoomListController extends HttpServlet {
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/chat/chatRoom.jsp").forward(request, response);
-	
-		
 	}
 
 	/**

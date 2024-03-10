@@ -101,7 +101,7 @@
     $(function(){
     	$(".list-area>tbody>tr").click(function(){
     		const num = $(this).children().eq(0).text();
-    		location.href = "<%= contextPath %>/chatroom.in?userId=<%= loginUser.getUserId() %>&pno=" + $(this).children().eq(3).text();
+    		location.href = "<%= contextPath %>/chatroom.in?userId=" + $(this).children().eq(2).text() + "&pno=" + $(this).children().eq(3).text();
     	}); 
     })
     </script>

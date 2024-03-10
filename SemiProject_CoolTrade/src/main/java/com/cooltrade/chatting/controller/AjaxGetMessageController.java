@@ -11,20 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.chatting.controller.model.Service.ChatService;
 import com.cooltrade.chatting.controller.model.vo.Chat;
-import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
+import com.google.gson.Gson;
 
 /**
- * Servlet implementation class ChatRoomConroller
+ * Servlet implementation class AjaxGetMessageController
  */
-@WebServlet("/chatroom.in")
-public class ChatRoomConroller extends HttpServlet {
+@WebServlet("/message.in")
+public class AjaxGetMessageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatRoomConroller() {
+    public AjaxGetMessageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,23 +34,11 @@ public class ChatRoomConroller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");
 		String pno = request.getParameter("pno");
-		int check = new ChatService().countChatRoom(userId,pno);
-		int result = 0;
-		int chatRoomNo = 0;
+		int chatRoomNo = new ChatService().getChatRoomNo(userId,pno); // 채팅방 번호 가져와서
+		ArrayList<Chat> list = new ChatService().getMessage(chatRoomNo);
 		
-		
-		ArrayList<Chat> message = new ArrayList<Chat>();
-		if(check == 0) {
-			result = new ChatService().createChatRoom(userId,pno);
-		}
-		chatRoomNo = new ChatService().getChatRoomNo(userId,pno); // 채팅방 번호 가져와서
-		
-		String[] user = new ChatService().getChatRoomInfo(chatRoomNo);
-		request.setAttribute("userId", user[0]); // 만든사람의 로그인 아이디, 즉 구매자 << 이걸 보내는 이유는 chatWindow에서 session에 있는 로그인 유저 아이디는 계속 바뀌기때문에 쓰면안됨
-		request.setAttribute("seller", user[1]);
-		request.setAttribute("chatRoomNo", chatRoomNo);
-		request.getRequestDispatcher("views/chat/chatWindow.jsp").forward(request, response);
-		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list,response.getWriter());
 	}
 
 	/**

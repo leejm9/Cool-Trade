@@ -441,7 +441,8 @@ INSERT INTO REVIEW VALUES( SEQ_REVIEW.NEXTVAL, '5', '5', '묵이 뭉개졌어요
 ------------------------------------------------------------------------ 채팅룸 테이블
 CREATE TABLE CHATROOM(
           CHATROOM_NO NUMBER PRIMARY KEY,
-              USER_NO NUMBER NOT NULL REFERENCES MEMBER,
+              USER_ID VARCHAR2(40) NOT NULL ,
+	SELLER_ID VARCHAR2(40) NOT NULL,
        CHATROOM_TITLE VARCHAR2(90) NOT NULL,
       CHATROOM_STATUS CHAR(1) NOT NULL 
 );
@@ -460,7 +461,7 @@ COMMENT ON COLUMN CHATROOM.CHATROOM_STATUS IS '채팅방상태/Y:채팅방참여
 ------------------------------------------------------------------------메세지 테이블
 CREATE TABLE MESSAGE(
           MESSAGE_NO NUMBER PRIMARY KEY,
-              SENDER NUMBER REFERENCES MEMBER,
+              SENDER VARCHAR2(40) ,
              MESSAGE VARCHAR2(4000) NOT NULL,
         MESSAGE_DATE DATE NOT NULL,
              READ_YN CHAR(1) DEFAULT 'N' CHECK(READ_YN IN ('Y','N')),
