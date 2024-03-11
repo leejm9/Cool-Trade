@@ -2,8 +2,10 @@
     pageEncoding="UTF-8"%>
 <%
 	int count = (int)request.getAttribute("count");
-  Member sessionMember = (Member)session.getAttribute("loginUser");
-  Integer uno = sessionMember.getUserNo();
+	int reviewCount = (int)request.getAttribute("reviewCount");
+	int likePoCount = (int)request.getAttribute("likePoCount");
+	Member sessionMember = (Member)session.getAttribute("loginUser");
+	Integer uno = sessionMember.getUserNo();
 %>
 <!DOCTYPE html>
 <html>
@@ -199,6 +201,7 @@
 	<%
 		String nickname = loginUser.getNickName();
 		double ondo = loginUser.getOndo();
+		int userNo = loginUser.getUserNo();
 	%>
 
 
@@ -207,7 +210,7 @@
         <div id="left-content">
             <div id="mypage-tit">
                 <h2 id="tit">
-                	<a href="<%= contextPath %>/mypage.me">마이페이지</a>
+                	<a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>">마이페이지</a>
                 </h2>
             </div>
             <div>
@@ -220,22 +223,22 @@
                                     <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
-
+                        
                         <li class="sub-title-li">
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -248,7 +251,7 @@
                 <div id="right-content-top">
                     <div id="profile-div">
                         <div>
-                            <img style="width:40px; border-radius: 50%;"
+                      <img style="width:40px; border-radius: 50%;"
                             src="downloadprofileimage.do?uno=<%=uno%>"
 								            onerror="$(this).attr('src', 'resources/images/free-icon-user-847969.png')"
 								             alt="회원 프로필 사진 이미지">
@@ -288,19 +291,19 @@
                             <li>
                                 <div>쿨거래</div>
                                 <div>
-                                    <a href="#"><%= count %></a>
+                                    <div><%= count %></div>
                                 </div>
                             </li>
                             <li>
-                                <div>이용후기</div>
+                                <div>받은후기</div>
                                 <div>
-                                    <a href="#">127</a>
+                                    <a href="<%= contextPath %>/mypage.me?uno=<%= userNo %>"><%= reviewCount %></a>
                                 </div>
                             </li>
                             <li>
                                 <div>찜한상품</div>
                                 <div>
-                                    <a href="#">3</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>"><%= likePoCount %></a>
                                 </div>
                             </li>
                         </ul>
@@ -310,7 +313,7 @@
             </div>
         </div>
     </div>
-
+    
     <%@ include file = "../common/footer.jsp" %>
 
 </body>
