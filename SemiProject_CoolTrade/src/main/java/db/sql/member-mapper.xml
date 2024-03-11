@@ -1194,6 +1194,8 @@
 		      *
 		  FROM MEMBER
 		 WHERE USER_NO = ?
+
+		
 	</entry>
 
 	<entry key="saveBankAccount">

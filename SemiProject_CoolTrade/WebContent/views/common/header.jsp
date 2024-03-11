@@ -135,13 +135,112 @@ ArrayList<RecentProducts>
           </div>
           <div id="header2-ds" class="flex-ds">
             <div id="header2-1-ds">
-              <div id="headerSearch-ds" class="flex-ds">
-                <div id="logo-ds">
-                  <img
-                    src="resources/images/logo.png"
-                    alt="쿨거래 로고"
-                    onclick="location.href='<%=contextPath%>/onload.page'"
-                  />
+                <div id="headerSearch-ds" class="flex-ds">
+                    <div id="logo-ds">
+                        <img src="resources/images/logo.png" alt="쿨거래 로고" onclick="location.href='<%=contextPath%>/onload.page'">
+                    </div>
+                    <div id="searchBar-ds">
+                        <div id="searchContainer-ds" class="flex-ds">
+                        <form id="searchForm-ds" class="flex-ds" action="<%=contextPath%>/search.po">
+                            <input type="text" id="search-ds" name="search" placeholder="상품명을 입력해주세요" maxlength="40">
+                            <button type="submit" style="border:none;" id="searchImgContainer-ds" class="flex-ds">
+                                <img id="searchImg-ds" src="resources/images/돋보기.png" alt="돋보기 이미지">
+                            </button>
+                        </form>
+                        </div>
+                        <div id="div1">
+		                <div>
+		                <button id="popbtn1" onclick="popbtn(1);">&lt;</button>
+		                <button id="popbtn2" onclick="popbtn(2)">&gt;</button>
+		                </div>
+			                <div>
+			                    <table style="width:400px;">
+			                        <tr>
+			                            <td>&nbsp;1.고기&nbsp;</td>
+			                            <td>2.햄버거&nbsp;</td>
+			                            <td>3.피자&nbsp;</td>
+			                            <td>4.핸드폰&nbsp;</td>
+			                            <td>5.전자레인지</td>
+			                        </tr>
+			                    </table>
+			                </div>
+           				</div>
+			            <script>
+			            $(function(){
+			                var cbtn = 1;
+			                function fetchData() {
+			                    $.ajax({
+			                        url: "popw.page",
+			                        data: { cbtn: cbtn },
+			                        success: function(result) {
+			                            $("#div1 td").remove();
+			                            let value = "";
+			                            for (let i = 0; i < result.length; i++) {
+			                                if ((result[i].count) % 5 == 1) {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                } else {
+			                                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+			                                }
+			                            }
+			                            $("#div1 tr").html(value);
+			                            if (cbtn == 1) {
+			                                cbtn = 2;
+			                            } else {
+			                                cbtn = 1;
+			                            }
+			                            setTimeout(fetchData, 5000);
+			                        },
+			                        error: function() {
+			                            console.log("ajax 통신 실패");
+			                            setTimeout(fetchData, 5000);
+			                        }
+			                    });
+			                }
+			                fetchData();
+			            });
+			            
+		               	function popbtn(cbtn){
+		               		$.ajax({
+		           				url:"popw.page",
+		           				data:{cbtn:cbtn},
+		           				success:function(result){ 
+	           						let value = "";
+		           					for(let i =0; i<result.length; i++){
+		           						if((result[i].count)%5 == 1) {
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+		           		                } else {
+		           		                    value += "<th>" + result[i].count + ".<a href='<%= contextPath %>/search.po?search=" + result[i].popwWord + "'>" + result[i].popwWord  + "</a></th>";
+		           		                }
+		           					}
+		           					$("#div1 tr").html(value);
+		           				}, error:function(){
+		           					console.log("ajax 통신 실패");
+		           				}
+		           			});
+		               	}
+		               </script>
+                    </div>
+                    <div id="chatSell-ds" class="flex-ds">
+                        <div id="chatContainer-ds">
+                            <a href="<%= contextPath %>/chatRoom.list" id="chat-ds">
+                                <img src="resources/images/말풍선.png" alt="말풍선 이미지">
+                                채팅하기
+                            </a>
+                        </div>
+                        <div id="sellContainer-ds">
+							<% if(loginUser == null) { %>
+								<a href="<%=contextPath%>/loginForm.me" class="sell-ds">
+									<img src="resources/images/sell.png" alt="판매하기 이미지">
+	                                판매하기
+								</a>
+							<% } else { %>                        
+	                            <a href="<%= contextPath %>/sellForm.po" class="sell-ds">
+	                                <img src="resources/images/sell.png" alt="판매하기 이미지">
+	                                판매하기
+	                            </a>
+	                        <% } %>
+                        </div>
+                    </div>
                 </div>
                 <div id="searchBar-ds">
                   <div id="searchContainer-ds" class="flex-ds">

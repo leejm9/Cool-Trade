@@ -443,7 +443,6 @@ public class ProductService {
 		
 		return list;
 	}
-	
 	public int deleteBoard(int pno) {
 		Connection conn = getConnection();
 		

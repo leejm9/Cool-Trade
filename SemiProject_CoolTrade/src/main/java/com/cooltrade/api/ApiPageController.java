@@ -1,4 +1,4 @@
-package com.cooltrade.chatting;
+package com.cooltrade.api;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
-
 /**
- * Servlet implementation class ChatRoomConroller
+ * Servlet implementation class ApiPageController
  */
-@WebServlet("/chatroom.in")
-public class ChatRoomConroller extends HttpServlet {
+@WebServlet("/apipage.in")
+public class ApiPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChatRoomConroller() {
+    public ApiPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,13 +26,7 @@ public class ChatRoomConroller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String pno = request.getParameter("pno");
-		
-		request.setAttribute("pno", pno);
-		
-		
-		request.getRequestDispatcher("views/chat/chatWindow.jsp").forward(request, response);
+		request.getRequestDispatcher("views/api/deliveryApi.jsp").forward(request, response);
 	}
 
 	/**
