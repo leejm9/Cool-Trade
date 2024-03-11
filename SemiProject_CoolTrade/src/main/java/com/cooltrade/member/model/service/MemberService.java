@@ -10,6 +10,7 @@ import com.cooltrade.member.model.dao.MemberDao;
 import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.Member;
 import com.cooltrade.product.model.vo.Images;
+import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Review;
 import com.cooltrade.product.model.vo.ReviewType;
@@ -472,6 +473,7 @@ public class MemberService {
 		int result1 = new MemberDao().insertReview(conn, r, uno, pno);
 		int result2 = new MemberDao().insertReviewType(conn, list);
 		int result3 = new MemberDao().insertReviewImg(conn, img);
+		int result4 = new MemberDao().updateReviewStatus(conn, pno);
 		
 		if(result1 > 0 && result2 > 0 && result3 > 0) {
 			commit(conn);
@@ -553,4 +555,44 @@ public class MemberService {
 		return count;
 	}
 	
+	public int buyListPriceSelectCo(int userNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().buyListPriceSelectCo(conn, userNo);
+		
+		close(conn);
+		return listCount;
+	}
+	
+	public ArrayList<Trade> buyListPriceSelectPo(PageInfo pi, int userNo) {
+		Connection conn = getConnection();
+		ArrayList<Trade> list = new MemberDao().buyListPriceSelectPo(conn, pi, userNo);
+		close(conn);
+		return list;
+				
+	}
+	
+	public ArrayList<ReviewType> reviewTypeDetail(int userNo) {
+		Connection conn = getConnection();
+		ArrayList<ReviewType> reviewTypeDetail = new MemberDao().reviewTypeDetail(conn, userNo);
+		
+		close(conn);
+		return reviewTypeDetail;
+	}
+	
+	public int likeListCountPo(int userNo) {
+		Connection conn = getConnection();
+		int listCount = new MemberDao().likeListCountPo(conn, userNo);
+			      
+		close(conn);
+		return listCount;
+	}
+	   
+	public ArrayList<LikeProduct> likeListPo(PageInfo pi, int userNo) {
+		Connection conn = getConnection();
+		ArrayList<LikeProduct> list = new MemberDao().likeListPo(conn, pi, userNo);
+		      
+		close(conn);
+		return list;
+	}
+
 }

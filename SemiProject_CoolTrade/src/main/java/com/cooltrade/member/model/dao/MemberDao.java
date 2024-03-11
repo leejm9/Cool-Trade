@@ -17,6 +17,7 @@ import com.cooltrade.member.model.vo.Member;
 import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.product.model.vo.Trade;
 import com.cooltrade.product.model.vo.Images;
+import com.cooltrade.product.model.vo.LikeProduct;
 import com.cooltrade.product.model.vo.Review;
 import com.cooltrade.product.model.vo.ReviewType;
 
@@ -716,6 +717,7 @@ public class MemberDao {
 				t.setTradeDate(rset.getString("trade_date"));
 				t.setTitleImg(rset.getString("titleimg"));
 				t.setUploadType(rset.getString("upload_type"));
+				t.setReviewStatus(rset.getString("review_status"));
 				
 				list.add(t);
 				System.out.println(t);
@@ -1147,7 +1149,6 @@ public class MemberDao {
 		return result;
 	}
 	
-
 	public int sellListStatusCo(Connection conn, int userNo, String sellStatus) {
 		int listCount = 0;
 		PreparedStatement pstmt = null;
@@ -1798,7 +1799,7 @@ public class MemberDao {
 			if(rset.next()) {
 				count = rset.getInt("count");
 			}
-			
+			System.out.println(count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1809,5 +1810,196 @@ public class MemberDao {
 		return count;
 	}
    
+	public int buyListPriceSelectCo(Connection conn, int userNo) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListPriceSelectCo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return listCount;
+		
+	}
+	
+	public ArrayList<Trade> buyListPriceSelectPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<Trade> list = new ArrayList<Trade>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("buyListPriceSelectPo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() -1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Trade t = new Trade();
+				t.setTradeNo(rset.getInt("trade_no"));
+				t.setProductNo(rset.getInt("product_no"));
+				t.setSellerNo(rset.getInt("seller_no"));
+				t.setNickname(rset.getString("nickname"));
+				t.setProductName(rset.getString("product_name"));
+				t.setStrPrice(rset.getString("price"));
+				t.setDeliveryStatus(rset.getString("delivery_status"));
+				t.setTradeDate(rset.getString("trade_date"));
+				t.setTitleImg(rset.getString("titleimg"));
+				t.setUploadType(rset.getString("upload_type"));
+				t.setReviewStatus(rset.getString("reviewStatus"));
+				
+				list.add(t);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<ReviewType> reviewTypeDetail(Connection conn, int userNo) {
+		ArrayList<ReviewType> reviewTypeDetail = new ArrayList<ReviewType>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("reviewTypeDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				ReviewType rt = new ReviewType();
+				rt.setReviewNo(rset.getInt("review_no"));
+				rt.setReviewTypeDetail(rset.getString("review_con"));
+				
+				reviewTypeDetail.add(rt);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reviewTypeDetail;
+	}
+	
+	public int updateReviewStatus(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateReviewStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int likeListCountPo(Connection conn, int userNo) {
+		int listCount = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likeListCountPo");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, userNo);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				listCount = rset.getInt("count");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return listCount;
+
+	}
+
+	public ArrayList<LikeProduct> likeListPo(Connection conn, PageInfo pi, int userNo) {
+		ArrayList<LikeProduct> list = new ArrayList<LikeProduct>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("likeListPo");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+
+			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				LikeProduct lp = new LikeProduct();
+				lp.setUserNo(rset.getInt("user_no"));
+				lp.setProductNo(rset.getInt("product_no"));
+				lp.setProductName(rset.getString("product_name"));
+				lp.setStrPrice(rset.getString("price"));
+				lp.setUploadDate(rset.getString("upload_date"));
+				lp.setTitleImg(rset.getString("titleimg"));
+				
+				list.add(lp);
+				//System.out.println(lp);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+
+	}
 	
 }

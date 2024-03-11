@@ -5,6 +5,7 @@
 <%
 	int reviewCount = (int)request.getAttribute("reviewCount");
 	ArrayList<ReviewType> rtList = (ArrayList<ReviewType>)request.getAttribute("reviewTypeCount");
+	ArrayList<ReviewType> rtdList = (ArrayList<ReviewType>)request.getAttribute("reviewTypeDetail");
 	ArrayList<Review> rList = (ArrayList<Review>)request.getAttribute("reviewList");
 	Review avg = (Review)request.getAttribute("avg");
 %>
@@ -277,7 +278,7 @@
     #review-load-btn {
     	cursor: pointer;
     }
-    /*
+    
     .load-div {
     	display: none;
     }
@@ -289,7 +290,17 @@
     .load-div.after {
     	display: none;
     }
-	*/
+
+    .review-type-detail-div {
+        background-color: #5678e6;
+        /* border: 1px solid #e6e6e6; */
+        color: #ffffff;
+        margin-right: 5px;
+        border-radius: 5px;
+        font-size: 12px;
+        padding: 3px 5px;
+    }
+	
 </style>
 </head>
 <body>
@@ -324,7 +335,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=1">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -468,48 +479,60 @@
                     }
                     
                 </script>
-                <div id="review-list-area-wrap">
+                <div id="review-list-area-wrap-wrap">
+	                <div id="review-list-area-wrap">
 					<% for(Review r : rList) { %>
-	                <div id="review-list-area" class="flex-class load-div">
-	                    <div id="buyer-profile-img">
-	                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
-	                    </div>
-	                    <div id="review-content">
-	                        <div id="review-content-left">
-	                            <div class="flex-class" id="review-content-buyer-name">
-	                                <div><%= r.getNickName() %></div>
-	                            </div>
-	                            <div class="flex-class">
-	                                <div class="starScoreClass">
-	                                    <input type="hidden" class="starInput" value="<%= r.getScore() %>">
-	                                    <img src="resources/images/greater than.png" alt="" width="7" height="10">
-	                                </div>
-	                            </div>
-	                            <div class="flex-class">
-	                                <div>
-	                                    <button type="button" id="product-title-btn">
-	                                        <%= r.getProductName() %>&nbsp;&gt;
-	                                    </button>
-	                                </div>
-	                            </div>
-	                            <div class="flex-class" id="review-detail-div">
-	                                <div><%= r.getReviewDetail() %></div>
-	                            </div>
-	                            <div class="flex-class">
-	                                    <div>친절해요.</div>
-	                            </div>                         
-	                        </div>
-	                        <div id="review-content-right">
-	                            <div>1개월 전</div>
-	                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
-	                                <div>
-	                                    <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
-	                                </div>    
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
+						<div class="load-div">
+			                <div id="review-list-area" class="flex-class">
+			                    <div id="buyer-profile-img">
+			                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
+			                    </div>
+			                    <div id="review-content">
+			                        <div id="review-content-left">
+			                            <div class="flex-class" id="review-content-buyer-name">
+			                                <div><%= r.getNickName() %></div>
+			                            </div>
+			                            <div class="flex-class">
+			                                <div class="starScoreClass">
+			                                    <input type="hidden" class="starInput" value="<%= r.getScore() %>">
+			                                    <img src="resources/images/greater than.png" alt="" width="7" height="10">
+			                                </div>
+			                            </div>
+			                            <div class="flex-class">
+			                                <div>
+			                                    <button type="button" id="product-title-btn">
+			                                        <%= r.getProductName() %>&nbsp;&gt;
+			                                    </button>
+			                                </div>
+			                            </div>
+			                            <div class="flex-class" id="review-detail-div">
+			                                <div><%= r.getReviewDetail() %></div>
+			                            </div>
+			                            <div class="flex-class">
+			                            	<% for(ReviewType rt : rtdList) { %>
+			                            		<% if(r.getReviewNo() == rt.getReviewNo()) { %>
+			                                    	<div class="review-type-detail-div"><%= rt.getReviewTypeDetail() %></div>
+		                                    	<% } %>
+			                                <% } %>
+			                            </div>                         
+			                        </div>
+			                        <div id="review-content-right">
+			                            <div>1개월 전</div>
+			                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
+			                                <div>
+                                                <% if(r.getTitleImg() != null) { %>
+			                                        <img src="<%= contextPath %>/<%= r.getTitleImg() %>" id="reviewImg">
+                                                <% } else { %>
+			                                        <img src="resources/images/no_img.png" id="reviewImg">
+                                                <% } %>
+			                                </div>    
+			                            </div>
+			                        </div>
+			                    </div>
+			                </div>
+			        	</div>      
 					<% } %>
+					</div>
 				</div>
                 <div id="moreBtn-area">
                     <div id="moreBtn" class="flex-class">
@@ -547,31 +570,34 @@
 					    
 					});
 				})
-				/*
+				
 				// 페이지를 로드하면 리뷰리스트어리어를 1개만 로드
 				$(window).on('load', function () {
 					console.log("여기들어오냐?");
-					load('#review-list-area-wrap', '1');
-				
+					load('#review-list-area-wrap', '2');
+					//$($reviewListArea).css("display", "flex");
+					
 					$("#review-load-btn").on("click", function () {
-						load('#review-list-area-wrap', '1', '#review-load-btn');
+						load('#review-list-area-wrap', '2', '#review-load-btn');
+						
+						//$("#review-list-area").css("display", "flex");
 						console.log("여기들어온다고?");
-					})
+					}) 
 				});
 				
 				function load(id, cnt, btn) {
-					var reivew_list = id + " .load-div:not(.active)";
-					var review_length = $(review_list).length;
-					var review_total_cnt;
-					if (cnt < review_length) {
-						review_total_cnt = cnt;
+					var reviewList = id + " .load-div:not(.active)";
+					var reviewLength = $(reviewList).length;
+					var reviewTotalCnt;
+					if (cnt < reviewLength) {
+						reviewTotalCnt = cnt;
 					} else {
-						review_total_cnt = review_length;
+						reviewTotalCnt = reviewLength;
 						$(btn).hide();
 					}
-					$(review_list + ":lt(" + review_total_cnt + ")").addClass("active");
+					$(reviewList + ":lt(" + reviewTotalCnt + ")").addClass("active");
 				}
-	            */
+	            
 		</script>
 
 

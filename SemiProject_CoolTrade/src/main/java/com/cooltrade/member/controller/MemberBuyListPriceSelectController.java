@@ -8,24 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.product.model.vo.Trade;
 
 /**
- * Servlet implementation class MemberSellListController
+ * Servlet implementation class MemberBuyListPriceSelectController
  */
-@WebServlet("/selllist.me")
-public class MemberSellListController extends HttpServlet {
+@WebServlet("/buyListpriceselect.me")
+public class MemberBuyListPriceSelectController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemberSellListController() {
+    public MemberBuyListPriceSelectController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -46,7 +44,7 @@ public class MemberSellListController extends HttpServlet {
 		int startPage;
 		int endPage;
 		
-		listCount = new MemberService().sellListCountPo(userNo); // 회원이 등록한 판매 상품 개수
+		listCount = new MemberService().buyListPriceSelectCo(userNo);
 		currentPage = Integer.parseInt(request.getParameter("cpage"));
 		pageLimit = 5;
 		boardLimit = 5;
@@ -60,17 +58,15 @@ public class MemberSellListController extends HttpServlet {
 
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Product> list = new MemberService().sellListPo(pi, userNo);
+		ArrayList<Trade> list = new MemberService().buyListPriceSelectPo(pi, userNo);
 		
-//		System.out.println(pi);
+		System.out.println(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		
-		System.out.println("sell리스트" + list);
-		
-		request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
-		
+		request.getRequestDispatcher("views/myPage/buyList.jsp").forward(request, response);
+	
 	}
 
 	/**

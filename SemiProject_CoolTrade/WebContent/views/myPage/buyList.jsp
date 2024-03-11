@@ -345,6 +345,13 @@
 			display: none;
 		}
 		
+		button:disabled {
+			color: #ffffff;
+			background: #ebebeb;
+			cursor: default;
+			border: none
+		}
+		
 
 </style>
 </head>
@@ -380,7 +387,7 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=1">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
@@ -405,10 +412,10 @@
                         <input id="buysearchInput" type="text" id="search-input" placeholder="상품명을 입력해주세요." maxlength="20">
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(1, <%= userNo %>);">거래순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>);">거래순</button>
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(2, <%= userNo %>);">가격순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>);">가격순</button>
                     </div>
                     
               	<script>
@@ -428,11 +435,15 @@
 				        }
 				    });
                 
-                	// 구매 내용별 조회
-                	function selectBtn(num, uno){
-                		console.log(num);
+                	// 거래순 조회
+                	function selectBtn(uno){
                 		console.log(uno);
                 		location.href = "<%= contextPath %>/buyListselect.me?&uno="+uno+"&cpage=1";
+                	}
+                	
+                	// 가격순 조회
+                	function selectPriceBtn(uno){
+                		location.href = "<%= contextPath %>/buyListpriceselect.me?&uno="+uno+"&cpage=1";
                 	}
                 	
                 </script>	
@@ -498,11 +509,11 @@
 	                                    <button type="button" class="list-select-btn">배송조회</button>
 	                                </td>
 	                                <td>
-<%-- 	                                	<% if((int)request.getAttribute("result") > 0) { %> --%>
-<!-- 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button> -->
-<%--                                 		<% } else { %> --%>
+	                                	<% if(list.get(i).getReviewStatus().equals("Y")) { %>
+	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button>
+                                		<% } else { %>
                                    			<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal<%= i %>">후기남기기</button>
-<%-- 	                                	<% } %> --%>
+	                                	<% } %>
 
 											<!-- 이용후기 모달 -->
 							           		<div class="modal" id="reviewModal<%= i %>">
@@ -517,12 +528,38 @@
 											    		});
 											    		
 								                    	function openDiv(e){
-															console.log("오냐?");
-															console.log($(e).siblings("#h-review-div"));
+															//console.log("오냐?");
+															//console.log($(e).siblings("#h-review-div"));
 															$(e).siblings("#h-review-div").css("display", "block");
-// 															$(".h-review-div").css("display", "block"); // 이것도됨
+ 															//$(".h-review-div").css("display", "block"); // 이것도됨
 															
 								                    	}
+								                    	
+								                        // 이미지 클릭 시 input 클릭
+								                        function chooseFile(ele){
+								    						//console.log($(ele).parent().siblings().eq(0));
+								    						$(ele).parent().siblings().eq(0).click();
+								    					}
+								                        
+								    					// file type의 input에 onchange=loadImg 
+								    					function loadImg(el){
+								    						//console.log($(el).siblings().eq(1)); // img의 div
+								    						// 파일을 읽어들이는 파일리더 객체 생성
+								    						const reader = new FileReader();
+								    						// id가 mo-img-input인 요소의 파일의 첫번째 파일
+								    						const file = el.files[0];
+								    						// 파일을 data URL로 반환
+								    						reader.readAsDataURL(file);
+								    						
+								    						reader.onload = function(e) {
+								    							// 파일 객체의 url 생성
+								    							const imageUrl = URL.createObjectURL(file);
+								    							console.log($(el).siblings().eq(1).children());
+								    							$(".mo-img-div-cl").css("display", "block");
+								    							$(el).siblings().eq(1).children().attr("src", e.target.result);
+								    					    }
+								    						
+								    					}
 								                    	
 											    	</script>
 												      	<!-- Modal Header -->
@@ -581,20 +618,20 @@
 								
 							                                        <div id="mo-img-input-area">
 							                                            <label for="image" id="mo-la">
-							                                            	<div class="btn-upload" onclick="chooseFile();">사진 올리기</div>
+							                                            	<div class="btn-upload" onclick="chooseFile(this);">사진 올리기</div>
 							                                            </label>
-							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg(this);" required>
-							                                            <div id="mo-img-div">
-							                                            	<img id="mo-img" src="#">
+							                                            <input type="file" name="reviewImage" id="mo-img-input" onchange="loadImg(this);" value="#" required>
+							                                            <div id="mo-img-div" class="mo-img-div-cl">
+							                                            	<img id="mo-img" id="mo-img-cl" src="#">
 							                                            </div>
 							                                        </div>
 								                                                      
 																	<div>
-																		<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요."></textarea>
+																		<textarea id="mo-text" name="reviewContent" cols="40" rows="5" style="resize: none;" placeholder="소중한 후기를 남겨주세요." required></textarea>
 																	</div>
 											                	
 											                		<div>
-												                		<button type="submit" class="btn btn-sm btn-danger">후기 보내기</button>
+												                		<button type="submit" class="btn btn-sm btn-danger" onclick="reviewForm(this);">후기 보내기</button>
 											                		</div>
 											                	</div>
 											      			</form>
@@ -656,24 +693,24 @@
                         }
                     }
                     
-                    // 이미지 클릭 시 input 클릭
-                    function chooseFile(){
-						$("#mo-img-input").click();
-					}
-					
-					function loadImg(el){
-						console.log(el);
-						const reader = new FileReader();
-						const file = $("#mo-img-input")[0].files[0];
-						
-						reader.readAsDataURL(file);
-						
-						reader.onload = function(e) {
-					        $("#mo-img").attr("src", e.target.result);
-					        $("#mo-img-div").css("display", "block");
-					    }
-						
-					}
+                    function reviewForm(e){
+                    	console.log($(e).parent().siblings().eq(2).children().eq(1));
+                    	const moImgInput = $(e).parent().siblings().eq(2).children().eq(1);
+                    	const moText = $(e).parent().siblings().eq(3).children();
+                    	// checkValidity()는 required를 만족하는지 체크하는 메소드
+                    	// input의 required가 만족하지않으면
+                    	if(!moImgInput[0].files.length){
+                    		alert("이미지를 등록해주세요.");
+                    		return false;
+                    	}  
+                    	
+                    	if(!moText.val().trim()){
+                    		alert("후기를 입력해주세요.");
+                    		return false;
+                    	}
+                    }
+                    
+
 					
                     </script>  
                 
@@ -699,22 +736,21 @@
 	                        <% } %>
 	                        
                         <% } else { %>
-                        	<% if(currentPage != 1) { %>
-	                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-	                        <% } %>
-	                        
-	                        <% for(int p=startPage; p<=endPage; p++) { %>
-	                            <% if(p == currentPage) { %>
-	                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-	                            <% } else { %>
-	                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-	                            <% } %>
-	                        <% } %>
-	                        
-	                        <% if(currentPage != maxPage) { %>
-	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-	                        <% } %>
-	                        
+	                        	<% if(currentPage != 1) { %>
+		                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+		                        <% } %>
+		                        
+		                        <% for(int p=startPage; p<=endPage; p++) { %>
+		                            <% if(p == currentPage) { %>
+		                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
+		                            <% } else { %>
+		                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+		                            <% } %>
+		                        <% } %>
+		                        
+		                        <% if(currentPage != maxPage) { %>
+		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+		                        <% } %>
 	                    <% } %>
                         
                         
