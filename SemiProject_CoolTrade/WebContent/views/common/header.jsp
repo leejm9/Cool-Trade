@@ -1,4 +1,4 @@
-<%-- <%@page import="com.cooltrade.product.model.vo.Search"%> --%>
+<%@page import="com.cooltrade.product.model.vo.Search"%>
 <%@page import="com.cooltrade.product.model.vo.RecentProducts"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
 <%@page import="com.cooltrade.product.model.vo.Product"%>
@@ -10,12 +10,14 @@
     
 <%
 	String contextPath = request.getContextPath();
-    
+    int headerCo;
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	String alertMsg = (String)session.getAttribute("alertMsg");
-	int headerCo = (int)session.getAttribute("headerCo");
-
-	
+	if(session.getAttribute("headerCo") == null){
+		headerCo = 0;
+	}else{
+		headerCo = (int)session.getAttribute("headerCo");
+	}
 	
 	ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>)session.getAttribute("rlist");
 %>
@@ -257,39 +259,123 @@
                     <div id="recentTitle-ds">최근본상품</div>
                     <%if(rlist == null) {%>
                     <div id="recentDotContainer-ds" class="flex-ds" style="margin-bottom: 10px">
-                        <div id="recentDottedBorder-ds" ></div>
-                    </div>
-                    <div id="recentSeenProduct-ds">
-                        <div id="seenText-ds">
-                            최근 본<br>
-                            상품이<br>
-                            없습니다.
-                        </div>
+                    	<div id="recentDottedBorder-ds" ></div>
+                	</div>
+	                <div id="recentSeenProduct-ds">
+	                    <div id="seenText-ds">
+	                        최근 본<br>
+	                        상품이<br>
+	                        없습니다.
+	                    </div>
+                	</div>
 					<%}else{ %>
-                    <div id="recentDotContainer-ds" class="flex-ds" style="margin-bottom: 10px; align-items:center;">
-                       	<div id="recentDottedBorder-ds" align="center"><%=rlist.size() %></div>
-                    </div>
-                    <div id="recentSeenProduct-ds">
-					<div id="seenImg-ds">
-						<div style="margin-bottom: 5px;">
-								<img src="<%=rlist.get(0).getImgPath()+rlist.get(0).getChangeName()%>" width="66" height="66" style="border: 1px solid rgb(204, 204, 204);">
+	                    <div id="recentDotContainer-ds" class="flex-ds" style="margin-bottom: 10px; align-items:center;">
+	                       	<div id="recentDottedBorder-ds" align="center" style="color:#04b4fc;"><%=rlist.size() %></div>
+	                    </div>
+	                    <div id="recentSeenProduct-ds">
+							
+	                    </div>
+									<div class="flex-ds recentBtnWrap" style=" justify-content: space-between;">
+										<button id="recent_prev"><</button>
+										<div id="recentPages" style="font-size: 12px; color: rgb(136, 136, 136); line-height: 22px;"></div>
+										<button id="recent_next">></button>
+									</div>
+						<%} %>
 						</div>
-						<button><</button>
-						<button>></button>
-					</div>
-<!-- 					<div style="height:50px; width:50px; background-color:white; border: 1px solid black;"></div> -->
-					<%} %>
-                    </div>
-                </div>
                 <div id="topContainer-ds">
                     <button type="button" id="topBtn-ds">TOP</button>
                 </div>
                 <script>
                 	$("#topBtn-ds").click(function(){
-                		$('html, body').animate({scrollTop:0}, "fast");
-                	})
+                		$('html, body').animate({scrollTop:0}, 300);
+                	});
+                	
+                	$(document).ready(function() {
+                		let currentPage = 0;
+                		const itemsPerPage = 1;
+                		let maxPage;
+                		let rlist = [];
+                		function renderSlider(data){
+                			const slider = $("#recentSeenProduct-ds");
+                			slider.empty();
+                			
+                			const startIndex = currentPage * itemsPerPage;
+                			
+                			const endIndex = startIndex+ itemsPerPage;
+                			
+                			let slicedData = data.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+                			slicedData.forEach(function(recentProducts){
+	                			let img = recentProducts.refPno
+	                			let imgPath = img != 0 ? recentProducts.imgPath + recentProducts.changeName : "resource/images/noImage.png";
+                				let recentProductHTML= '<a href="detail.po?pno=' + recentProducts.productNo + '" style="padding:none;margin:none;">'
+                									 + '<div id="seenImg-ds">'
+                									 + '<div style="margin-bottom: 5px;">'
+                									 + '<img src="' + imgPath + '" width="68" height="68">'
+                									 + '<div class="hiding-text">'
+                									 + '<div style="padding: 10px;">'
+                									 + '<div>'
+                									 + recentProducts.productName
+                									 + '</div>'
+                									 + '<div style="color: #04b4fc;">'
+                									 + recentProducts.price + '<span>원</span>'
+                									 + '</div>'
+                									 + '</div>'
+                									 + '</div>'
+                									 + '</div>'
+                									 + '</div>'
+                									 + '</a>';
+                				slider.append(recentProductHTML);
+                			});
+                			maxPage = rlist.length;
+                			if(maxPage == -1){
+                				currentPage = -1;
+                			}
+                			$("#recentPages").text((currentPage +1 ) + "/" + (maxPage));
+                			console.log(maxPage)
+                		}
+                		
+                		function fetchSliderData() {
+                		    if (rlist.length == 0) {
+                		        $.ajax({
+                		            url: "ajax.recentSeen",
+                		            dataType: "json",
+                		            success: function(response) {
+                		                if(response != null){
+                		                	rlist = response;
+                		                	renderSlider(rlist);
+                		                }
+                		            },
+                		            error: function() {
+                		                console.error("failed to load data");
+                		            }
+                		        });
+                		    } else {
+                		        renderSlider(rlist);
+                		    }
+                		}
+                		
+                		$("#recent_prev").click(function() {
+                		    if (currentPage > 0) { 
+                		        currentPage -= 1;
+                		    } else if (currentPage == 0) { 
+                		        currentPage = maxPage;
+                		    }
+                		    renderSlider(rlist);
+                		});
+                		
+                		$("#recent_next").click(function() {
+                		    if (currentPage < maxPage - 1) {
+                		        currentPage += 1;
+                		    } else if (currentPage == maxPage - 1) {
+                		        currentPage = 0; 
+                		    }
+                		    renderSlider(rlist);
+                		});
+                		
+                		fetchSliderData();
+               		});
                 </script>
-            </div>
+	        </div>
         </div>
     </div>
 </body>

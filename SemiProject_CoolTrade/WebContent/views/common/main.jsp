@@ -15,12 +15,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-<!-- 	<script> -->
-// 		$(document).ready(function({
-			
-// 		}))
-<!-- 	</script> -->
+<body class="flex-ds" style="align-items: center;">
+
 	<div id="content-ds">
         <div id="banner1-ds"><h1>banner1</h1></div>
         <div id="banner2-ds" style="margin-bottom: 20px;"><h1>banner2</h1></div>
@@ -62,7 +58,7 @@
 			                '<img src="' + imagePath + '" alt="" class="product_thumbnail_main-ds">' +
 			                '</div>' +
 			                '<div class="search_title_price_main-ds">' +
-			                '<div class="search_ptitle_main-ds">' + product.productName + '</div>' +
+			                '<div class="search_ptitle_main-ds" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + product.productName + '</div>' +
 			                '<div class="search_price_time_main-ds flex-ds" style="justify-content: space-between;">' +
 			                '<div class="search_price_main-ds">' + product.price + '</div>' +
 			                '<div id="search_time_main-ds">' + product.timeDiff + '</div>' +
@@ -165,7 +161,7 @@
 			                '<img src="' + imagePath2 + '" alt="" class="product_thumbnail_main-ds">' +
 			                '</div>' +
 			                '<div class="search_title_price_main-ds">' +
-			                '<div class="search_ptitle_main-ds">' + product.productName + '</div>' +
+			                '<div class="search_ptitle_main-ds" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + product.productName + '</div>' +
 			                '<div class="search_price_time_main-ds flex-ds" style="justify-content: space-between;">' +
 			                '<div class="search_price_main-ds">' + product.price + '</div>' +
 			                '<div id="search_time_main-ds">' + product.timeDiff + '</div>' +
