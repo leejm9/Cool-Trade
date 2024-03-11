@@ -4,6 +4,7 @@
  <% 
 	Member member = (Member) request.getAttribute("member"); 
 	String id = member.getUserId();
+	Integer uno = member.getUserNo();
 	String name = member.getUserName();
 	String password = member.getUserPwd();
 	String phone = member.getPhone();
@@ -148,6 +149,8 @@
 <body>
 <%@ include file = "../common/header.jsp" %>
 
+<% int userNo = loginUser.getUserNo(); %>
+
     <div id="mypage-wrap">
         <div id="left-content">
             <div id="mypage-tit">
@@ -165,7 +168,7 @@
                                     <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/review.me">거래 후기</a>
+                                    <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
@@ -174,13 +177,13 @@
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/likelist.me">찜한 상품</a>
+                                    <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>">찜한 상품</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/buylist.me">구매 내역</a>
+                                    <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
                                 <li class="sub-title-list">
-                                    <a href="<%= contextPath %>/selllist.me">판매 내역</a>
+                                    <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
                         </li>
@@ -191,6 +194,19 @@
     
     
     <div class="outer">
+    
+    <div style="text-align: center;">
+			      <img style="width:200px;margin-bottom:10px;" id="profile"
+			      src="downloadprofileimage.do?uno=<%=uno%>"
+			      onerror="$(this).attr('src', 'resources/images/free-icon-user-847969.png')"
+			      alt="회원 프로필 사진 이미지">
+
+				    <div id="bottombtn" align="center">
+				        <button type="button" onclick="$('#profileImage').click();">선택</button>
+				        <button type="button" onclick="uploadProfileImage();">변경</button>
+				        <input type="file" id="profileImage" onchange="changeProfileImage();" style="display:none;"/>
+				    </div>
+			  </div>
     
        <table id="table">
        
@@ -742,6 +758,27 @@
    	    $("#delivery-address-address").val(data.roadAddress); // 설치 주소1 (도로명 주소) (roadAddress)
    	  }
       
+      function changeProfileImage() {
+    	  $("#profile").attr("src", URL.createObjectURL($('#profileImage')[0].files[0]));
+      }
+      function uploadProfileImage() {
+        var formData = new FormData();
+        formData.append('file', $('#profileImage')[0].files[0]);
+         $.ajax({
+             url: 'uploadprofileimage.do', // 서버 측 업로드 스크립트 URL
+             type: 'POST',
+             data: formData,
+             processData: false, // 필수 옵션: FormData를 사용할 때 false로 설정
+             contentType: false, // 필수 옵션: FormData를 사용할 때 false로 설정
+             success: function(data) {
+               alert("프로필 사진이 변경 되었습니다.");
+             },
+             error: function(xhr, status, error) {
+               alert("프로필 사진 변경에 실패 하였습니다.");
+             }
+         });
+      }
+      
       document.getElementById('phone').addEventListener('input', function (e) {
     	  var value = e.target.value.replace(/\D/g, ""); // 숫자가 아닌 문자는 제거
     	  var formattedValue = "";
@@ -763,6 +800,8 @@
 
     	  e.target.value = formattedValue; // 형식이 지정된 문자열로 값 업데이트
     	});
+      
+      
 
     </script>
 

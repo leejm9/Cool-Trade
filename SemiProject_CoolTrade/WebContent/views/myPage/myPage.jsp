@@ -4,6 +4,8 @@
 	int count = (int)request.getAttribute("count");
 	int reviewCount = (int)request.getAttribute("reviewCount");
 	int likePoCount = (int)request.getAttribute("likePoCount");
+	Member sessionMember = (Member)session.getAttribute("loginUser");
+	Integer uno = sessionMember.getUserNo();
 %>
 <!DOCTYPE html>
 <html>
@@ -249,7 +251,10 @@
                 <div id="right-content-top">
                     <div id="profile-div">
                         <div>
-                            <img src="resources/images/user-icon.png" alt="회원 프로필 사진 이미지">
+                      <img style="width:40px; border-radius: 50%;"
+                            src="downloadprofileimage.do?uno=<%=uno%>"
+								            onerror="$(this).attr('src', 'resources/images/free-icon-user-847969.png')"
+								             alt="회원 프로필 사진 이미지">
                         </div>
                         <div>
                             <b><%= nickname %>님</b> 환영합니다!
