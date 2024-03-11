@@ -53,5 +53,30 @@ public class ReportDao {
 		return list;
 		
 	}
+	
+	public int insertReport(Connection conn,int pno,String reporter,int reportCate,String reportContent) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			pstmt.setString(2, reporter);
+			pstmt.setInt(3, reportCate);
+			pstmt.setString(4, reportContent);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
 
 }

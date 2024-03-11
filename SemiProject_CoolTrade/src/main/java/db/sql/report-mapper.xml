@@ -22,4 +22,26 @@
 		 WHERE RNUM BETWEEN 1 AND 5
 	</entry>
 
+	<entry key="insertReport">
+		INSERT
+		  INTO REPORT
+		  	  (
+		  	  REPORT_NO
+			, PRODUCT_NO
+			, REPORTER
+			, REPORT_TYPE_NO
+			, REPORT_CONTENT
+			, REPORT_DATE
+		  	  )
+		VALUES
+		      (
+		       SEQ_REPORT.NEXTVAL
+		     , ?
+		     , ?
+		     , ?
+		     , ?
+		     , SYSDATE
+		      )
+	</entry>
+
 </properties>

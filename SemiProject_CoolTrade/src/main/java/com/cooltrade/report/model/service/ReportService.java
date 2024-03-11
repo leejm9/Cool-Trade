@@ -17,4 +17,18 @@ public class ReportService {
 		close(conn);
 		return list;
 	}
+	
+	public int insertReport(int pno, String reporter, int reportCate, String reportContent) {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().insertReport(conn, pno,reporter,reportCate,reportContent);
+		
+		if(result >0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

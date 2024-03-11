@@ -68,7 +68,43 @@ Product p = (Product)request.getAttribute("p"); ArrayList<Images>
                     <div class="need_line_after-ds">👁️‍🗨️<%=p.getCount() %></div>
                     <div>🕗 <%=p.getTimeDiff()%></div>
                   </div>
-                  <div id="go_report-ds">🚨신고하기</div>
+                  
+                  <!-- Button to Open the Modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+					  🚨신고하기
+					</button>
+					
+					<!-- The Modal -->
+					<div class="modal" id="myModal">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+					      <!-- Modal body -->
+					      <div class="modal-body">
+					        <form action="report.prod" method="post">
+
+						        <fieldset>
+						            <legend>신고하기</legend>
+						            상품이름 : <input type="text" name="prodName" value="<%= p.getProductName() %>" readonly> <br> <br>
+						            신고자&nbsp; : &nbsp; <input type="text" name="reporter" value="<%= loginUser.getUserId() %>" readonly> <br> <br>
+						            신고형태 : <select name="reportCate">
+										        <option value="10">광고성 콘텐츠</option>
+										        <option value="20">상품정보 불일치</option>
+										        <option value="30">사기</option>
+										        <option value="40">기타</option>
+										      </select>
+										      <br /><br />
+						            <div> 신고내용 : <textarea name="reportContent" rows="10" cols="35" style="resize: none;"></textarea></div> <br>
+						            <input type="hidden" name="pno" value="<%= p.getProductNo() %>">
+						        </fieldset>
+						        <div align="right">
+						        <input type="submit" value="신고하기">
+						        <input type="reset">
+						        </div>
+						    </form>
+					      </div>
+					    </div>
+					  </div>
+					</div>
                 </div>
                 <div id="product_stats-ds">
                   <div id="current_status-ds" class="flex-ds">
