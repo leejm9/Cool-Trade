@@ -5,15 +5,20 @@ import="com.cooltrade.product.model.vo.Product"%> <%@page
 import="com.cooltrade.product.model.vo.Category"%> <%@page
 import="java.util.ArrayList"%> <%@page
 import="com.cooltrade.member.model.vo.Member"%> <%@ page language="java"
-contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <% String
-contextPath = request.getContextPath(); int headerCo; Member loginUser =
-(Member)session.getAttribute("loginUser"); String alertMsg =
-(String)session.getAttribute("alertMsg"); if(session.getAttribute("headerCo") ==
-null){ headerCo = 0; }else{ headerCo = (int)session.getAttribute("headerCo"); }
-ArrayList<RecentProducts>
-  rlist = (ArrayList<RecentProducts
-    >)session.getAttribute("rlist"); %>
-    <!DOCTYPE html>
+contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+	String contextPath = request.getContextPath();
+	int headerCo;
+	Member loginUser = (Member) session.getAttribute("loginUser");
+	String alertMsg = (String) session.getAttribute("alertMsg");
+	if (session.getAttribute("headerCo") == null) {
+		headerCo = 0;
+	} else {
+		headerCo = (int) session.getAttribute("headerCo");
+	}
+	ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist");
+%>
+<!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8" />
