@@ -54,7 +54,7 @@ public class ReportDao {
 		
 	}
 	
-	public int insertReport(Connection conn,int pno,String reporter,int reportCate,String reportContent) {
+	public int insertReport(Connection conn,int pno,int reporterNo,int reportCate,String reportContent) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
@@ -64,7 +64,7 @@ public class ReportDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setInt(1, pno);
-			pstmt.setString(2, reporter);
+			pstmt.setInt(2, reporterNo);
 			pstmt.setInt(3, reportCate);
 			pstmt.setString(4, reportContent);
 			
@@ -77,6 +77,32 @@ public class ReportDao {
 		}
 		return result;
 		
+	}
+	
+	public int checkReport(Connection conn, int reporterNo,int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("checkReport");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, reporterNo);
+			pstmt.setInt(2, pno);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

@@ -43,5 +43,11 @@
 		     , SYSDATE
 		      )
 	</entry>
-
+	
+	<entry key="checkReport">
+		SELECT COUNT(REPORT_NO) count
+		  FROM REPORT
+		 WHERE REPORTER = ?
+		   AND PRODUCT_NO = ?
+	</entry>
 </properties>

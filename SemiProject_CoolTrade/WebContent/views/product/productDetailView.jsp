@@ -95,6 +95,7 @@ Product p = (Product)request.getAttribute("p"); ArrayList<Images>
 										      <br /><br />
 						            <div> 신고내용 : <textarea name="reportContent" rows="10" cols="35" style="resize: none;"></textarea></div> <br>
 						            <input type="hidden" name="pno" value="<%= p.getProductNo() %>">
+						            <input type="hidden" name="reporterNo" value="<%= loginUser.getUserNo()%>">
 						        </fieldset>
 						        <div align="right">
 						        <input type="submit" value="신고하기">

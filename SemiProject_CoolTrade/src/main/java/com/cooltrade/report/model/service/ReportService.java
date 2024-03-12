@@ -18,16 +18,23 @@ public class ReportService {
 		return list;
 	}
 	
-	public int insertReport(int pno, String reporter, int reportCate, String reportContent) {
+	public int insertReport(int pno, int reporterNo, int reportCate, String reportContent) {
 		Connection conn = getConnection();
 		
-		int result = new ReportDao().insertReport(conn, pno,reporter,reportCate,reportContent);
+		int result = new ReportDao().insertReport(conn, pno,reporterNo,reportCate,reportContent);
 		
 		if(result >0) {
 			commit(conn);
 		}else {
 			rollback(conn);
 		}
+		close(conn);
+		return result;
+	}
+	public int checkReport(int reporterNo,int pno) {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().checkReport(conn,reporterNo,pno);
 		close(conn);
 		return result;
 	}
