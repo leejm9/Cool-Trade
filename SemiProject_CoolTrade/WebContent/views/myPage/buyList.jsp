@@ -412,10 +412,10 @@
                         <input id="buysearchInput" type="text" id="search-input" placeholder="상품명을 입력해주세요." maxlength="20">
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>);">거래순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>, 1);">거래순</button>
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>);">가격순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>, 2);">가격순</button>
                     </div>
                     
               	<script>
@@ -436,14 +436,14 @@
 				    });
                 
                 	// 거래순 조회
-                	function selectBtn(uno){
+                	function selectBtn(uno, num){
                 		console.log(uno);
-                		location.href = "<%= contextPath %>/buyListselect.me?&uno="+uno+"&cpage=1";
+                		location.href = "<%= contextPath %>/buyListselect.me?&uno="+uno+"&cpage=1&check="+num;
                 	}
                 	
                 	// 가격순 조회
-                	function selectPriceBtn(uno){
-                		location.href = "<%= contextPath %>/buyListpriceselect.me?&uno="+uno+"&cpage=1";
+                	function selectPriceBtn(uno, num){
+                		location.href = "<%= contextPath %>/buyListpriceselect.me?&uno="+uno+"&cpage=1&check="+num;
                 	}
                 	
                 </script>	

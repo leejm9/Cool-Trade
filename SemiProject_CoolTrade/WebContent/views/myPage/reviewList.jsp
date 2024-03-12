@@ -517,7 +517,7 @@
 			                            </div>                         
 			                        </div>
 			                        <div id="review-content-right">
-			                            <div>1개월 전</div>
+			                            <div><%= r.getTimeDiff() %></div>
 			                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
 			                                <div>
                                                 <% if(r.getTitleImg() != null) { %>
@@ -593,7 +593,7 @@
 						reviewTotalCnt = cnt;
 					} else {
 						reviewTotalCnt = reviewLength;
-						$(btn).hide();
+						//$(btn).hide();
 					}
 					$(reviewList + ":lt(" + reviewTotalCnt + ")").addClass("active");
 				}

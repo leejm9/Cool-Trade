@@ -1478,6 +1478,7 @@ public class MemberDao {
             t.setTradeDate(rset.getString("trade_date"));
             t.setTitleImg(rset.getString("titleimg"));
             t.setUploadType(rset.getString("upload_type"));
+            t.setReviewStatus(rset.getString("review_status"));
             
             list.add(t);
          }
@@ -1550,6 +1551,7 @@ public class MemberDao {
             t.setTradeDate(rset.getString("trade_date"));
             t.setTitleImg(rset.getString("titleimg"));
             t.setUploadType(rset.getString("upload_type"));
+            t.setReviewStatus(rset.getString("review_status"));
             
             list.add(t);
          }
@@ -1583,7 +1585,6 @@ public class MemberDao {
       } finally {
          close(pstmt);
       }
-      System.out.println("리뷰 : " + result);
       return result;
    }
    
@@ -1607,7 +1608,6 @@ public class MemberDao {
       } finally {
          close(pstmt);
       }
-      System.out.println("리뷰타입 : " + result);
       return result;
    }
    
@@ -1630,7 +1630,6 @@ public class MemberDao {
       } finally {
          close(pstmt);
       }
-      System.out.println("리뷰이미지 : " + result);
       return result;
    }   
    
@@ -1715,11 +1714,12 @@ public class MemberDao {
 				r.setTitleImg(rset.getString("titleimg"));
 				r.setReviewDetail(rset.getString("review_detail"));
 				r.setReviewDate(rset.getString("review_date"));
+				r.setTimeDiff(rset.getString("time_diff"));
 				
 				list.add(r);
 				
 			}
-			
+			System.out.println("리뷰리스트:"+list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1866,7 +1866,7 @@ public class MemberDao {
 				t.setTradeDate(rset.getString("trade_date"));
 				t.setTitleImg(rset.getString("titleimg"));
 				t.setUploadType(rset.getString("upload_type"));
-				t.setReviewStatus(rset.getString("reviewStatus"));
+				t.setReviewStatus(rset.getString("review_status"));
 				
 				list.add(t);
 			}
@@ -1982,11 +1982,11 @@ public class MemberDao {
 				lp.setProductNo(rset.getInt("product_no"));
 				lp.setProductName(rset.getString("product_name"));
 				lp.setStrPrice(rset.getString("price"));
-				lp.setUploadDate(rset.getString("upload_date"));
+				lp.setTimeDiff(rset.getString("time_diff"));
 				lp.setTitleImg(rset.getString("titleimg"));
 				
 				list.add(lp);
-				//System.out.println(lp);
+				System.out.println(lp);
 			}
 
 		} catch (SQLException e) {

@@ -346,9 +346,9 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
             <div id="sidebarWrap-ds">
               <div id="jjimWrap-ds">
-                <div id="jjimText-ds" class="flex-ds">관심상품</div>
+                <div id="jjimText-ds" class="flex-ds">찜한상품</div>
                 <% if(loginUser == null) { %>
-                <a href="" id="jjimLink-ds" class="flex-ds">
+                <a href="#" id="jjimLink-ds" class="flex-ds">
                   <img
                     src="resources/images/좋아요.png"
                     width="25"
@@ -359,7 +359,7 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 </a>
                 <% } else { %>
                 <a
-                  href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>"
+                  href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>&cpage=1"
                   id="jjimLink-ds"
                   class="flex-ds"
                   style="vertical-align: middle"
@@ -533,6 +533,4 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           </div>
         </div>
       </body>
-    </html></RecentProducts
-  ></RecentProducts
->
+    </html>

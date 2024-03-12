@@ -22,6 +22,7 @@ public class Member {
 	private Date uploadDate;
 	private String productName;
 	private String productStatus;
+	private String timeDiff;
 	
 	public Member() {}
 	
@@ -173,6 +174,33 @@ public class Member {
 		this.productNo = productNo;
 		this.monthEnroll = monthEnroll;
 		this.uploadDate = uploadDate;
+	}
+
+	public Member(int userNo, String userId, String userPwd, String userName, String nickName, String phone,
+			String email, Date enrollDate, double ondo, String userLevel, String userStatus, int caution, int count,
+			String productTitle, int productNo, String monthEnroll, Date uploadDate, String productName,
+			String productStatus, String timeDiff) {
+		super();
+		this.userNo = userNo;
+		this.userId = userId;
+		this.userPwd = userPwd;
+		this.userName = userName;
+		this.nickName = nickName;
+		this.phone = phone;
+		this.email = email;
+		this.enrollDate = enrollDate;
+		this.ondo = ondo;
+		this.userLevel = userLevel;
+		this.userStatus = userStatus;
+		this.caution = caution;
+		this.count = count;
+		this.productTitle = productTitle;
+		this.productNo = productNo;
+		this.monthEnroll = monthEnroll;
+		this.uploadDate = uploadDate;
+		this.productName = productName;
+		this.productStatus = productStatus;
+		this.timeDiff = timeDiff;
 	}
 
 	public int getUserNo() {
@@ -329,6 +357,14 @@ public class Member {
 
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
+	}
+
+	public String getTimeDiff() {
+		return timeDiff;
+	}
+
+	public void setTimeDiff(String timeDiff) {
+		this.timeDiff = timeDiff;
 	}
 
 	@Override

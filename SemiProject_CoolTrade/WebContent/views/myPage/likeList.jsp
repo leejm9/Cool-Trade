@@ -325,7 +325,7 @@
                                             <div>원</div>
                                         </div>
                                         <div>
-                                            1분전
+                                            <%= lp.getTimeDiff() %>
                                         </div>
                                     </div>
                                 </a>
@@ -334,53 +334,36 @@
                         </div>
                     </div>
                 </div>
+               	<div class="paging-area" align="center">
+					<div>
+						<% if(currentPage != 1) { %>
+							<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+						<% } %>
+			
+						<% for(int p=startPage; p<=endPage; p++) { %>
+							<% if(p == currentPage) { %>
+								<button id="pageBtn_<%= p %>" disabled><%= p %></button>
+							<% } else { %>
+								<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+							<% } %>
+						<% } %>
+			
+						<% if(currentPage != maxPage) { %>
+							<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+						<% } %>
+			
+					</div>
+				</div>
+			
+				<script>
+			        $(document).ready(function() {
+			            // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
+			            $('#pageBtn_<%= currentPage %>').addClass('active-page');
+			        });
+			    </script>
             </div>
         </div>
     </div>
-    <script>
-        const checkbox = document.querySelector('.like-checkbox');
-
-        checkbox.addEventListener('click', function() {
-            if (this.classList.contains('like-checkbox-checked')) {
-                // checkbox가 선택된 상태에서 해제될 때
-                this.classList.remove('like-checkbox-checked');
-            } else {
-                // checkbox가 선택되지 않은 상태에서 선택될 때
-                this.classList.add('like-checkbox-checked');
-            }
-        });
-
-        checkbox.classList.remove('like-checkbox-checked');
-    </script>
-
-	<div class="paging-area" align="center">
-		<div>
-			<% if(currentPage != 1) { %>
-				<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-			<% } %>
-
-			<% for(int p=startPage; p<=endPage; p++) { %>
-				<% if(p == currentPage) { %>
-					<button id="pageBtn_<%= p %>" disabled><%= p %></button>
-				<% } else { %>
-					<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-				<% } %>
-			<% } %>
-
-			<% if(currentPage != maxPage) { %>
-				<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-			<% } %>
-
-		</div>
-	</div>
-
-	<script>
-        $(document).ready(function() {
-            // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
-            $('#pageBtn_<%= currentPage %>').addClass('active-page');
-        });
-    </script>
-
 
 	<%@ include file = "../common/footer.jsp" %>
 
