@@ -1,9 +1,11 @@
 <%@page import="com.cooltrade.product.model.vo.Images"%> <%@ page
-language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%
-Product p = (Product)request.getAttribute("p"); ArrayList<Images>
-  imglist = (ArrayList<Images
-    >)request.getAttribute("imglist"); double ondo = p.getOndo(); int likeCount
-    = (int)request.getAttribute("likeCount"); %>
+language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%
+	Product p = (Product)request.getAttribute("p"); 
+	ArrayList<Images> imglist = (ArrayList<Images>)request.getAttribute("imglist"); 
+	double ondo = p.getOndo(); 
+	int likeCount = (int)request.getAttribute("likeCount"); 
+%>
     <!DOCTYPE html>
     <html>
       <head>
@@ -116,7 +118,7 @@ Product p = (Product)request.getAttribute("p"); ArrayList<Images>
             // 찜하기
             function likeBtn(userNo, pNo) {
               console.log("찜버튼클릭함");
-              if (confirm("관심상품으로 등록하시겠습니까?")) {
+              if (confirm("상품을 관심상품으로 등록/해제 하시겠습니까?")) {
                 $.ajax({
                   url: "ajaxlike.po",
                   data: {
@@ -125,7 +127,8 @@ Product p = (Product)request.getAttribute("p"); ArrayList<Images>
                   },
                   type: "post",
                   success: function (result) {
-                    alert("관심상품으로 등록되었습니다.");
+                    console.log(userNo, pNo)
+                    alert("성공적으로 반영되었습니다.");
                     location.reload();
                   },
                 });

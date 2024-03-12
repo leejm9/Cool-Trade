@@ -468,19 +468,23 @@
 	
 	<entry key="likeInsert">
 		INSERT
-		  INTO LIKE_PRODUCT
-		VALUES
-		    (
-		      ?
-		    , ?
-		    , DEFAULT
-		    )
+		       INTO LIKE_PRODUCT
+		     (
+		       USER_NO
+		     , PRODUCT_NO
+		     )	  
+		       VALUES
+		     (
+			   ?
+			 , ?
+			 )
 	</entry>
 
 	<entry key="selectLikeCount">
 		SELECT COUNT(*) COUNT
 		  FROM LIKE_PRODUCT
 		 WHERE PRODUCT_NO = ?
+		   AND LIKE_STATUS = 'Y'
 	</entry>
 	
 
@@ -659,5 +663,33 @@
             OR PRODUCT_DESC LIKE '%' || ? || '%'
          ORDER
             BY PRICE ASC
+	</entry>
+	
+	<entry key="checkLike">
+		SELECT LIKE_STATUS
+		  FROM LIKE_PRODUCT
+		 WHERE USER_NO = ?
+		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="checkYn">
+		SELECT LIKE_STATUS
+		  FROM LIKE_PRODUCT
+		 WHERE USER_NO = ?
+		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="updateYesLike">
+		UPDATE LIKE_PRODUCT
+		   SET LIKE_STATUS = 'Y'
+		 WHERE USER_NO = ?
+		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="updateNoLike">
+		UPDATE LIKE_PRODUCT
+		   SET LIKE_STATUS = 'N'
+		 WHERE USER_NO = ?
+		   AND PRODUCT_NO = ?
 	</entry>
 </properties>

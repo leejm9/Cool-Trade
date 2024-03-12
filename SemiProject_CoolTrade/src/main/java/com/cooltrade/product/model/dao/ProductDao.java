@@ -1330,4 +1330,96 @@ public class ProductDao {
 		return list;
 	}
 	
+	public boolean checkLike(Connection conn, int uno, int pno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		boolean checkFlag = false;
+		
+		String sql = prop.getProperty("checkLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				checkFlag = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return checkFlag;
+	}
+	
+	public String checkYn(Connection conn, int uno, int pno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String yn = "";
+		String sql = prop.getProperty("checkYn");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				yn = rset.getString("like_status");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return yn;
+	}
+	
+	public int updateYesLike(Connection conn, int uno, int pno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateYesLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateNoLike(Connection conn, int uno, int pno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateNoLike");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, pno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
