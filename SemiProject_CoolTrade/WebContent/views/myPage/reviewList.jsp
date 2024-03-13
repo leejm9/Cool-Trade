@@ -402,7 +402,9 @@
                                 </div>
                                 <div>친절하고 배려가 넘쳐요.</div>
                             </div>
-                            <div><%= rtList.get(0).getCount() %></div>
+                            <div>
+                            	<%= rtList.get(0).getCount() %>
+                            </div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
