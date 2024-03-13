@@ -2,8 +2,8 @@
 <%@page import="com.cooltrade.product.model.vo.Product"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+	pageEncoding="UTF-8"%>
+
 <%
 	ArrayList<Product> recentList = (ArrayList<Product>)request.getAttribute("recentList");	
 
@@ -18,18 +18,71 @@
 <body class="flex-ds" style="align-items: center;">
 
 	<div id="content-ds">
-        <div id="banner1-ds"><h1>banner1</h1></div>
-        <div id="banner2-ds" style="margin-bottom: 20px;"><h1>banner2</h1></div>
-        <div class="flex-ds" style="justify-content: space-between;">
-        <h2>오늘의 상품추천</h2><span style="color:gray" id="cpi"></span>
-        </div>
-        <div class="buttonContainer">
-        <button id="prevButton"><</button>
-        <div id="search_content_main-ds"> 
-        
-        </div>
-        <button id="nextButton">></button>
-        </div>
+		<div style="position: relative;">
+			<button id="banner-prev" onclick="prevBanner()"><</button>
+			<div id="banner1-ds" class="flex-ds"
+				style="justify-content: space-around; overflow: hidden;">
+				<img id="bannerImg" style="width: 100%;"
+					src="resources/images/banner_image_1.jpg">
+			</div>
+			<button id="banner-next" onclick="nextBanner()">></button>
+		</div>
+		<script>
+			function nextBanner(){
+				let currentImg= $("#bannerImg").attr('src');
+				let nextImg;
+				
+				switch(currentImg){
+					case "resources/images/banner_image_1.jpg":
+			            nextImg = "resources/images/banner_watch.jpg";
+			            break;
+			        case "resources/images/banner_watch.jpg":
+			            nextImg = "resources/images/electronics_banner_cooltrade.jpg";
+			            break;
+			        case "resources/images/electronics_banner_cooltrade.jpg":
+			        	nextImg = "resources/images/luxurious_watch_banner.jpg";
+			        	break;
+			        case "resources/images/luxurious_watch_banner.jpg":
+			        	nextImg = "resources/images/shoes_cooltrade_banner.jpg";
+			        	break;
+			        case "resources/images/shoes_cooltrade_banner.jpg":
+			        	nextImg = "resources/images/clothes_model_cooltrade.jpg";
+			        	break;
+			        default:
+			            nextImg = "resources/images/banner_image_1.jpg";
+				}
+				
+				$("#bannerImg").attr('src', nextImg)
+			}
+			
+			function prevBanner(){
+				if($("#bannerImg").attr('src') == "resources/images/banner_image_1.jpg"){
+					$("#bannerImg").attr('src',"resources/images/clothes_model_cooltrade.jpg");
+				}else if($("#bannerImg").attr('src') == "resources/images/clothes_model_cooltrade.jpg"){
+					$("#bannerImg").attr('src',"resources/images/shoes_cooltrade_banner.jpg");
+				}else if($("#bannerImg").attr('src') == "resources/images/shoes_cooltrade_banner.jpg"){
+					$("#bannerImg").attr('src',"resources/images/luxurious_watch_banner.jpg");
+				}else if($("#bannerImg").attr('src') == "resources/images/luxurious_watch_banner.jpg"){
+					$("#bannerImg").attr('src',"resources/images/electronics_banner_cooltrade.jpg");
+				}else if($("#bannerImg").attr('src') == "resources/images/electronics_banner_cooltrade.jpg"){
+					$("#bannerImg").attr('src',"resources/images/banner_watch.jpg") ;
+				}else if($("#bannerImg").attr('src') == "resources/images/banner_watch.jpg"){
+					$("#bannerImg").attr('src',"resources/images/banner_image_1.jpg");
+				}
+			}
+		</script>
+		<div id="banner2-ds" style="margin-bottom: 20px;">
+			<h1>banner2</h1>
+		</div>
+		<div class="flex-ds" style="justify-content: space-between;">
+			<h2>오늘의 상품추천</h2>
+			<span style="color: gray" id="cpi"></span>
+		</div>
+		<div class="buttonContainer">
+			<button id="prevButton"><</button>
+			<div id="search_content_main-ds"></div>
+			<button id="nextButton">></button>
+		</div>
 		<script>
 			$(document).ready(function() {
 			    let currentPage = 0; // 현재 페이지 인덱스
@@ -122,18 +175,17 @@
 			});
 		
 		</script>
-		
+
 		<div class="flex-ds" style="justify-content: space-between;">
-        <h2>최신 등록 상품</h2><span style="color: gray" id="cpi2"></span>
-        </div>
-        <div class= buttonContainer>
-        <button id="prevButton2"><</button>
-        <div class="search_content_main2-ds"> 
-        	
-        </div>
-        <button id="nextButton2">></button>
-        </div>
-        <script>
+			<h2>최신 등록 상품</h2>
+			<span style="color: gray" id="cpi2"></span>
+		</div>
+		<div class=buttonContainer>
+			<button id="prevButton2"><</button>
+			<div class="search_content_main2-ds"></div>
+			<button id="nextButton2">></button>
+		</div>
+		<script>
 			$(document).ready(function() {
 			    let currentPage2 = 0; // 현재 페이지 인덱스
 			    const itemsPerPage2 = 10; // 페이지 당 아이템 수
@@ -222,6 +274,6 @@
 			});
 		
 		</script>
-    </div>
+	</div>
 </body>
 </html>
