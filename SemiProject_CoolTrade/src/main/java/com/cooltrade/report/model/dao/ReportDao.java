@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import static com.cooltrade.common.JDBCTemplate.*;
+
+import com.cooltrade.common.PageInfo;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.report.model.vo.Report;
 
@@ -103,6 +105,66 @@ public class ReportDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public int countReportList(Connection conn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("countReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<Report> selectReportList(Connection conn, PageInfo pi){
+		ArrayList<Report> list = new ArrayList<Report>();
+		Report r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReportList");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+	        int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Report(rset.getInt("report_no"),
+									rset.getString("product_name"),
+									rset.getString("user_name"),
+								    rset.getString("report_cate"),
+								    rset.getDate("report_date")
+								    ));
+			}
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }

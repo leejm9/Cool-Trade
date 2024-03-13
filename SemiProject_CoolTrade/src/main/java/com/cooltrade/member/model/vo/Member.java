@@ -61,6 +61,7 @@ public class Member {
 		this.userStatus = userStatus;
 		this.caution = caution;
 	}
+	
 
 	public Member(int userNo, String userName, int caution, String productTitle, Date uploadDate) {
 		super();
@@ -69,6 +70,20 @@ public class Member {
 		this.caution = caution;
 		this.productTitle = productTitle;
 		this.uploadDate = uploadDate;
+	}
+	
+	
+
+
+	public Member(int userNo, String userName, int caution, String productTitle, Date uploadDate,
+			String productStatus) {
+		super();
+		this.userNo = userNo;
+		this.userName = userName;
+		this.caution = caution;
+		this.productTitle = productTitle;
+		this.uploadDate = uploadDate;
+		this.productStatus = productStatus;
 	}
 
 	public Member(int userNo, String userId, String userName, int caution) {

@@ -50,4 +50,35 @@
 		 WHERE REPORTER = ?
 		   AND PRODUCT_NO = ?
 	</entry>
+	
+	<entry key="countReportList">
+		SELECT
+		       COUNT(*) count
+		  FROM REPORT
+		  JOIN REPORT_TYPE USING(REPORT_TYPE_NO)
+	</entry>
+	
+	<entry key="selectReportList">
+		SELECT *
+		  FROM(
+		        SELECT ROWNUM RNUM, A.*
+		          FROM (
+		                 SELECT 
+		                       REPORT_NO
+		                     , USER_NAME
+		                     , PRODUCT_NAME
+		                     , REPORT_CATE
+		                     , REPORT_DATE
+		                 FROM REPORT R
+		  				 JOIN REPORT_TYPE USING(REPORT_TYPE_NO)
+		  				 JOIN MEMBER M ON (R.REPORTER = M.USER_NO)
+		  				 JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
+		                 ORDER
+		                    BY 5 DESC
+		                    ) A
+		        )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	
 </properties>

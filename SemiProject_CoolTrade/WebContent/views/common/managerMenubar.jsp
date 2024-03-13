@@ -148,14 +148,21 @@
             <div class="sidebar-heading">
                 게시글 관리
             </div>
-
+			
             <!-- Nav Item - 게시판 조회 -->
             <li class="nav-item">
                 <a class="nav-link" href="<%= contextPath %>/board.in?cpage=1">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>게시판 조회</span></a>
             </li>
-
+            
+            <li class="nav-item">
+                <a class="nav-link" href="<%= contextPath %>/report.in?cpage=1">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>신고 조회</span></a>
+            </li>
+			
+			
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

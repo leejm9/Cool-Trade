@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Report {
 	private int reportNo;
 	private String productNo;
-	private int reporter;
+	private String reporter;
 	private String reportTypeNo;
 	private String reportContent;
 	private Date reportDate;
@@ -15,7 +15,7 @@ public class Report {
 	
 	public Report() {}
 
-	public Report(int reportNo, String productNo, int reporter, String reportTypeNo, String reportContent,
+	public Report(int reportNo, String productNo, String reporter, String reportTypeNo, String reportContent,
 			Date reportDate) {
 		super();
 		this.reportNo = reportNo;
@@ -26,10 +26,14 @@ public class Report {
 		this.reportDate = reportDate;
 	}
 	
-	
-	
-	
-	
+	public Report(int reportNo, String productNo, String reporter, String reportTypeNo, Date reportDate) {
+		super();
+		this.reportNo = reportNo;
+		this.productNo = productNo;
+		this.reporter = reporter;
+		this.reportTypeNo = reportTypeNo;
+		this.reportDate = reportDate;
+	}
 
 	public Report(String reportTypeNo, Date reportDate, String seller, String productTitle) {
 		super();
@@ -39,7 +43,7 @@ public class Report {
 		this.productTitle = productTitle;
 	}
 
-	public Report(String productNo, int reporter, String reportTypeNo, String productTitle) {
+	public Report(String productNo, String reporter, String reportTypeNo, String productTitle) {
 		super();
 		this.productNo = productNo;
 		this.reporter = reporter;
@@ -47,7 +51,7 @@ public class Report {
 		this.productTitle = productTitle;
 	}
 
-	public Report(int reportNo, String productNo, int reporter, String reportTypeNo, String reportContent,
+	public Report(int reportNo, String productNo, String reporter, String reportTypeNo, String reportContent,
 			Date reportDate, String productTitle) {
 		super();
 		this.reportNo = reportNo;
@@ -75,11 +79,11 @@ public class Report {
 		this.productNo = productNo;
 	}
 
-	public int getReporter() {
+	public String getReporter() {
 		return reporter;
 	}
 
-	public void setReporter(int reporter) {
+	public void setReporter(String reporter) {
 		this.reporter = reporter;
 	}
 

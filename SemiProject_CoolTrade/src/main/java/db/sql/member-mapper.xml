@@ -237,10 +237,11 @@
                 FROM (
                         SELECT 
                              PRODUCT_NAME
-                           , USER_NO
+                           , PRODUCT_NO
                            , USER_NAME
                            , CAUTION
                            , UPLOAD_DATE
+                           , PRODUCT_STATUS
                         FROM PRODUCT P
                         JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
                        ORDER
@@ -701,26 +702,7 @@
 		FROM PRODUCT
 	</entry>
 
-	<entry key="selectBoardList">
-		SELECT *
-		  FROM(
-		        SELECT ROWNUM RNUM, A.*
-		          FROM (
-		                  SELECT 
-		                       PRODUCT_NAME
-		                     , PRODUCT_NO
-		                     , USER_NAME
-		                     , CAUTION
-		                     , UPLOAD_DATE
-		                     , UPLOAD_TYPE
-		                  FROM PRODUCT P
-		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
-		                 ORDER
-		                    BY UPLOAD_DATE DESC
-		                    ) A
-		        )
-		 WHERE RNUM BETWEEN ? AND ?
-	</entry>
+	
 
 	<entry key="deleteMember">
 		UPDATE MEMBER
@@ -1173,11 +1155,12 @@
 		        SELECT ROWNUM RNUM, A.*
 		          FROM (
 		                  SELECT 
-		                       USER_NO
+		                       PRODUCT_NO
 		                     , USER_NAME
 		                     , CAUTION
 		                     , PRODUCT_NAME
 		                     , UPLOAD_DATE
+		                     , PRODUCT_STATUS
 		                  FROM PRODUCT P
 		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
 		                 WHERE (PRODUCT_NAME LIKE '%' || ? || '%'

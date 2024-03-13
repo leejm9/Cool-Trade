@@ -32,7 +32,8 @@ public class ManagerDeleteBoardController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		
+		System.out.println("진짜 pno");
+		System.out.println(pno);
 		int result = new ProductService().deleteBoard(pno);
 		
 		if(result >0) {

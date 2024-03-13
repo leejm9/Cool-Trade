@@ -396,11 +396,13 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
          while(rset.next()) {
-            list.add(new Member(rset.getInt("user_no"),
+            list.add(new Member(
                            rset.getString("user_name"),
                            rset.getInt("caution"),
+                           rset.getInt("product_no"),
+                           rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getDate("upload_date")
+                           rset.getString("product_status")
                            ));
          }
          
@@ -1052,11 +1054,13 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
          while(rset.next()) {
-            list.add(new Member(rset.getInt("user_no"),
+            list.add(new Member(
                            rset.getString("user_name"),
                            rset.getInt("caution"),
+                           rset.getInt("product_no"),
+                           rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getDate("upload_date")
+                           rset.getString("product_status")
                            ));
          }
       } catch (SQLException e) {

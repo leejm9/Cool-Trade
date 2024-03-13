@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import static com.cooltrade.common.JDBCTemplate.*;
 
+import com.cooltrade.common.PageInfo;
 import com.cooltrade.report.model.dao.ReportDao;
 import com.cooltrade.report.model.vo.Report;
 
@@ -37,5 +38,20 @@ public class ReportService {
 		int result = new ReportDao().checkReport(conn,reporterNo,pno);
 		close(conn);
 		return result;
+	}
+	public int countReportList() {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().countReportList(conn);
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Report> selectReportList(PageInfo pi){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new ReportDao().selectReportList(conn,pi);
+		close(conn);
+		return list;
 	}
 }

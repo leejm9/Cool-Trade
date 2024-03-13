@@ -1067,10 +1067,11 @@ public class ProductDao {
    public int deleteBoard(Connection conn ,int pno) {
 	      int result = 0;
 	      PreparedStatement pstmt = null;
-	      try{
 	      String sql = prop.getProperty("deleteBoard");
+	      try{
+	      pstmt= conn.prepareStatement(sql);
 	         pstmt.setInt(1, pno);
-	         
+	         System.out.println(pno);
 	         result = pstmt.executeUpdate();
 	         
 	      } catch (SQLException e) {
