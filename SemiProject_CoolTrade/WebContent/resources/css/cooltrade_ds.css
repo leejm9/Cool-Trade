@@ -749,7 +749,12 @@ div[id^="banner"] {
 	align-items: center;
 	border: none;
 }
-
+.carousel-item>img{
+	height:420px;
+	width:1000px;
+}
+.carousel-item{
+}
 #product_category_selected-ds>div {
 	padding: 0px 10px 0 10px;
 	justify-content: space-between;

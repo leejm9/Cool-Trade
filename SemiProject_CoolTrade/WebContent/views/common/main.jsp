@@ -18,60 +18,43 @@
 <body class="flex-ds" style="align-items: center;">
 
 	<div id="content-ds">
-		<div style="position: relative;">
-			<button id="banner-prev" onclick="prevBanner()"><</button>
-			<div id="banner1-ds" class="flex-ds"
-				style="justify-content: space-around; overflow: hidden;">
-				<img id="bannerImg" style="width: 100%;"
-					src="resources/images/banner_image_1.jpg">
-			</div>
-			<button id="banner-next" onclick="nextBanner()">></button>
-		</div>
-		<script>
-			function nextBanner(){
-				let currentImg= $("#bannerImg").attr('src');
-				let nextImg;
-				
-				switch(currentImg){
-					case "resources/images/banner_image_1.jpg":
-			            nextImg = "resources/images/banner_watch.jpg";
-			            break;
-			        case "resources/images/banner_watch.jpg":
-			            nextImg = "resources/images/electronics_banner_cooltrade.jpg";
-			            break;
-			        case "resources/images/electronics_banner_cooltrade.jpg":
-			        	nextImg = "resources/images/luxurious_watch_banner.jpg";
-			        	break;
-			        case "resources/images/luxurious_watch_banner.jpg":
-			        	nextImg = "resources/images/shoes_cooltrade_banner.jpg";
-			        	break;
-			        case "resources/images/shoes_cooltrade_banner.jpg":
-			        	nextImg = "resources/images/clothes_model_cooltrade.jpg";
-			        	break;
-			        default:
-			            nextImg = "resources/images/banner_image_1.jpg";
-				}
-				
-				$("#bannerImg").attr('src', nextImg)
-			}
+		<div id="demo" class="carousel slide" data-ride="carousel"
+			style="height: 400px;">
 			
-			function prevBanner(){
-				if($("#bannerImg").attr('src') == "resources/images/banner_image_1.jpg"){
-					$("#bannerImg").attr('src',"resources/images/clothes_model_cooltrade.jpg");
-				}else if($("#bannerImg").attr('src') == "resources/images/clothes_model_cooltrade.jpg"){
-					$("#bannerImg").attr('src',"resources/images/shoes_cooltrade_banner.jpg");
-				}else if($("#bannerImg").attr('src') == "resources/images/shoes_cooltrade_banner.jpg"){
-					$("#bannerImg").attr('src',"resources/images/luxurious_watch_banner.jpg");
-				}else if($("#bannerImg").attr('src') == "resources/images/luxurious_watch_banner.jpg"){
-					$("#bannerImg").attr('src',"resources/images/electronics_banner_cooltrade.jpg");
-				}else if($("#bannerImg").attr('src') == "resources/images/electronics_banner_cooltrade.jpg"){
-					$("#bannerImg").attr('src',"resources/images/banner_watch.jpg") ;
-				}else if($("#bannerImg").attr('src') == "resources/images/banner_watch.jpg"){
-					$("#bannerImg").attr('src',"resources/images/banner_image_1.jpg");
-				}
-			}
-		</script>
-		<div id="banner2-ds" style="margin-bottom: 20px;">
+			<ul class="carousel-indicators">
+				<li data-target="#demo" data-slide-to="0" class="active"></li>
+				<li data-target="#demo" data-slide-to="1"></li>
+				<li data-target="#demo" data-slide-to="2"></li>
+				<li data-target="#demo" data-slide-to="3"></li>
+				<li data-target="#demo" data-slide-to="4"></li>
+			</ul>
+
+			<div class="carousel-inner">
+				<div class="carousel-item active" align="center">
+					<img src="resources/images/banner1.jpg">
+				</div>
+				<div class="carousel-item" align="center">
+					<img src="resources/images/banner2.jpg">
+				</div>
+				<div class="carousel-item" align="center">
+					<img src="resources/images/banner3.jpg">
+				</div>
+				<div class="carousel-item" align="center">
+					<img src="resources/images/banner4.jpg">
+				</div>
+				<div class="carousel-item" align="center">
+					<img src="resources/images/banner5.jpg">
+				</div>
+			</div>
+
+			<a class="carousel-control-prev" href="#demo" data-slide="prev">
+				<span class="carousel-control-prev-icon"></span>
+			</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+				<span class="carousel-control-next-icon"></span>
+			</a>
+
+		</div>
+		<div id="banner2-ds" style="margin-bottom: 20px; margin-top: 30px;">
 			<h1>banner2</h1>
 		</div>
 		<div class="flex-ds" style="justify-content: space-between;">
