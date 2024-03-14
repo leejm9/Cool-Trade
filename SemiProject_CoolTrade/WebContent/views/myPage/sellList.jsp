@@ -265,7 +265,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>

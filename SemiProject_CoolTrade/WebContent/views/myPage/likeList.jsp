@@ -4,6 +4,7 @@
 <%
 	int likePoCount = (int)request.getAttribute("likePoCount");
 	ArrayList<LikeProduct> list = (ArrayList<LikeProduct>)request.getAttribute("list");
+	// 로그인한 회원번호, 좋아요한 상품 번호, 상품 이름, 가격, 시간, 이미지
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
@@ -134,8 +135,8 @@
     .like-list-div {
         border: 1px solid #e6e6e6;
         width: 100%;
-        height: 150px;
-        padding: 10px;
+        height: auto;
+        /*padding: 10px;*/
         display: flex;
         align-items: center;
         position: relative;
@@ -148,7 +149,7 @@
     }
 
     .like-list-a>div {
-        padding: 0px 10px;
+        /*padding: 0px 10px;*/
     }
 
     .like-list-area-wrap {
@@ -250,6 +251,25 @@
 		left: 7px;
 		top: 3px;
 	}
+	
+	.won {
+		font-size: 14px;
+    	line-height: 27px;
+    	margin-left: 3px;
+	}
+	
+	.timeDiff {
+		font-size: 14px;
+    	color: lightgray;
+	}
+	
+	.like-po-detail {
+		padding-left: 10px;
+	}
+	
+	.like-po-image {
+		border-right: 1px solid #e6e6e6;
+	}
 
 </style>
 </head>
@@ -273,7 +293,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
@@ -314,33 +334,33 @@
                     <div class="like-list-area">
                         <div id="like-delete-select-box">
                             <div>
-                                <button>선택삭제</button>
-                                <button>전체삭제</button>
+                                <button type="button" onclick="checkDelete();">선택삭제</button>
+                                <button type="button" onclick="allDelete();">전체삭제</button>
                             </div>
                         </div>
                     </div>
                     <div id="like-list-area-container">
                         <div class="like-list-area-wrap">
-                    	<% for(LikeProduct lp : list) { %>
+                    	<% for(int i=0; i<list.size(); i++) { %>
                             <div class="like-list-div">
                                 <div class="like-list-checkbox-div">
-                                    <label for="deleteCheck" class="checkbox-label">
-                                    	<input type="checkbox" id="deleteCheck" checked="checked">
+                                    <label for="deleteCheck<%= i %>" class="checkbox-label">
+                                    	<input type="checkbox" id="deleteCheck<%= i %>" onclick="likePoCheckbox(this, <%= list.get(i).getProductNo() %>);">
                                     	<span class="on"></span>
                                     </label>
                                 </div>
-                                <a href="<%= contextPath %>/detail.po?pno=<%= lp.getProductNo() %>" class="like-list-a">
-                                    <div>
-                                        <img src="<%= contextPath %>/<%= lp.getTitleImg() %>" alt="상품 대표이미지" width="120" height="120">
+                                <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>" class="like-list-a">
+                                    <div class="like-po-image">
+                                        <img src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>" alt="상품 대표이미지" width="120" height="120">
                                     </div>
-                                    <div>
-                                        <div><%= lp.getProductName() %></div>
+                                    <div class="like-po-detail">
+                                        <div><%= list.get(i).getProductName() %></div>
                                         <div class="like-product-price">
-                                            <div><%= lp.getStrPrice() %></div>
-                                            <div>원</div>
+                                            <div><b><%= list.get(i).getStrPrice() %></b></div>
+                                            <div class="won">원</div>
                                         </div>
-                                        <div>
-                                            <%= lp.getTimeDiff() %>
+                                        <div class="timeDiff">
+                                            <%= list.get(i).getTimeDiff() %>
                                         </div>
                                     </div>
                                 </a>
@@ -349,6 +369,68 @@
                         </div>
                     </div>
                 </div>
+                
+                <script>
+                
+               	let checkedBox = [];
+               	
+               	// 선택한 요소 배열에 담기
+                function likePoCheckbox(e, pno){
+                	//console.log(e.checked);
+                	
+               		if(e.checked) {
+               			checkedBox.push(pno);
+               		} else {
+               			let index = checkedBox.indexOf(pno);
+               			if(index !== -1) {
+               				checkedBox.splice(index, 1);
+               			}
+               		}
+					//console.log(checkedBox);
+					//return checkedBox;
+				}
+				
+                // 선택삭제 이벤트
+                function checkDelete(){
+                	console.log(checkedBox);
+                	if(confirm("찜을 해제하시겠습니까?")){
+	                	$.ajax({
+                			url:"어쩌구",
+                			data:{
+                				찜번호키값:찜번호밸류값,
+                			},
+                			type:"post",
+                			success:function(result){
+                				alert("찜이 해제되었습니다.");
+                				location.reload();
+                			}
+                		})
+                	} else {
+                		console.log("취소");
+                	}
+                }
+                
+                // 전체삭제 이벤트
+                function allDelete(){
+                	if(confirm("모든 찜을 해제하시겠습니까?")){
+                		$.ajax({
+                			url:"어쩌구",
+                			data:{
+                				찜번호키값:찜번호밸류값,
+                			},
+                			type:"post",
+                			success:function(result){
+                				alert("모든 찜이 해제되었습니다.");
+                				location.reload();
+                			}
+                		})
+                	} else {
+                		console.log("취소");
+                	}
+                }
+                
+                </script>
+                
                	<div class="paging-area" align="center">
 					<div>
 						<% if(currentPage != 1) { %>

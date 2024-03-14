@@ -371,7 +371,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
@@ -682,8 +682,9 @@
                     
                     
                     function changeColor(element) {
-                        var input = element.querySelector('input[type="checkbox"]');
-                        
+                        let input = element.querySelector('input[type="checkbox"]');
+                        let checkboxVal = input.value;
+                        console.log(checkboxVal);
                         // 체크박스의 선택 여부에 따라 처리
                         if (!input.checked) {
                             // 체크되지 않은 경우
