@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.member.model.service.MemberService;
-import com.cooltrade.member.model.vo.Member;
 
 /**
- * Servlet implementation class MangerMemInfoDetailController
+ * Servlet implementation class ManagerReportCheckController
  */
-@WebServlet("/memInfo.detail")
-public class MangerMemInfoDetailController extends HttpServlet {
+@WebServlet("/report.check")
+public class ManagerReportCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MangerMemInfoDetailController() {
+    public ManagerReportCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +28,10 @@ public class MangerMemInfoDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cpage = 1;
-		String cpageParam = request.getParameter("cpage");
-		if (cpageParam != null) {
-		    cpage = Integer.parseInt(cpageParam);
-		}
-		int uno = Integer.parseInt(request.getParameter("uno"));
+		int pno = Integer.parseInt(request.getParameter("pno"));
 		
-		Member m = new MemberService().selectMember(uno);
-		
-		request.setAttribute("m", m);
-		if(cpage == 1) {
-			request.getRequestDispatcher("views/manager/managerMemberDetail.jsp").forward(request, response);
-		}else {
-			request.getRequestDispatcher("views/manager/managerBlackDetail.jsp").forward(request, response);
-		}
-		
+		int userNo = new MemberService().selectUserNo(pno);
+		int result = new MemberService().updateMemReportCount(userNo);
 		
 		
 	}

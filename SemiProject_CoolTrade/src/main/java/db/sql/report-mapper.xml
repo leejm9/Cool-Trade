@@ -69,6 +69,7 @@
 		                     , PRODUCT_NAME
 		                     , REPORT_CATE
 		                     , REPORT_DATE
+		                     , P.PRODUCT_NO
 		                 FROM REPORT R
 		  				 JOIN REPORT_TYPE USING(REPORT_TYPE_NO)
 		  				 JOIN MEMBER M ON (R.REPORTER = M.USER_NO)

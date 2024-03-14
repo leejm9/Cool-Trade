@@ -150,10 +150,11 @@ public class ReportDao {
 			
 			while(rset.next()) {
 				list.add(new Report(rset.getInt("report_no"),
-									rset.getString("product_name"),
+									rset.getInt("product_no"),
 									rset.getString("user_name"),
 								    rset.getString("report_cate"),
-								    rset.getDate("report_date")
+								    rset.getDate("report_date"),
+								    rset.getString("product_name")
 								    ));
 			}
 	        

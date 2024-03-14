@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class Report {
 	private int reportNo;
+	private int prodNo;
 	private String productNo;
 	private String reporter;
 	private String reportTypeNo;
@@ -33,6 +34,18 @@ public class Report {
 		this.reporter = reporter;
 		this.reportTypeNo = reportTypeNo;
 		this.reportDate = reportDate;
+	}
+	
+
+	public Report(int reportNo, int prodNo, String reporter, String reportTypeNo, Date reportDate,
+			String productTitle) {
+		super();
+		this.reportNo = reportNo;
+		this.prodNo = prodNo;
+		this.reporter = reporter;
+		this.reportTypeNo = reportTypeNo;
+		this.reportDate = reportDate;
+		this.productTitle = productTitle;
 	}
 
 	public Report(String reportTypeNo, Date reportDate, String seller, String productTitle) {
@@ -97,6 +110,14 @@ public class Report {
 
 	public String getReportContent() {
 		return reportContent;
+	}
+
+	public int getProdNo() {
+		return prodNo;
+	}
+
+	public void setProdNo(int prodNo) {
+		this.prodNo = prodNo;
 	}
 
 	public void setReportContent(String reportContent) {

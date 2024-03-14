@@ -30,7 +30,7 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">블랙리스트 조회</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">신고 조회</h6>
                         </div>
                         <div class="card-body">
 	                        <div id="searchBtn">
@@ -52,7 +52,6 @@
                                             <th>신고유형</th>
                                             <th>신고날짜</th>
                                             <th></th>
-                                            
                                         </tr>
                                     </thead>
                                     
@@ -65,47 +64,30 @@
 	                                    	<% for(Report r : list){ %>
 		                                        <tr>
 		                                            <td><%= r.getReportNo() %></td>
-		                                            <td><a href=""><%= r.getReporter() %></a></td>
-		                                            <td><a href=""><%= r.getProductNo() %></a></td>
+		                                            <td><%= r.getReporter() %></td>
+		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= r.getProdNo()%>"><%= r.getProductTitle() %></a></td>
 		                                            <td><%= r.getReportTypeNo() %></td>
 		                                            <td><%= r.getReportDate() %></td>
-		                                            <td><input type="button" class="btn btn-danger" value="신고처리"></td>
+		                                            <td><input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리"></td>
 		                                        </tr>
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
                                 <script>
-							        function btn1(userNo){
+							        function Report(pno){
 							                $.ajax({
-							                	url:"delete.me",
-							                	data:{uno:userNo},
+							                	url:"report.check",
+							                	data:{uno:pno},
 							                	success:function(result){
-							                		$(this).css("backgroundColor","rgb(86, 190, 234)");
-									                $(this).html("복구");
-									                $(this).attr("onclick","btn2(" +userNo + ");");
-									                location.reload();
-							                	},error:function(){
+							                		alert("신고처리되었습니다");
+							                	},error:function(result){
 							                		console.log("ajax 통신 실패");
 							                	}
 							                })
 							        }
-							        function btn2(userNo){
-							            	$.ajax({
-							                	url:"recovery.me",
-							                	data:{uno:userNo},
-							                	success:function(result){
-							                		$(this).css("backgroundColor","rgb(203, 22, 22)");
-							                		$(this).html("추방") ;
-							                		$(this).attr("onclick","btn1(" +userNo + ");");
-							                		location.reload();
-							                	},error:function(){
-							                		console.log("ajax 통신 실패");
-							                	}
-							                })
-							        }        
+							      
 							    </script>
-                                
                                 
                                 <div id="btn" align="center">
 	                                <% if(startPage!=1){ %>
