@@ -151,7 +151,7 @@
 
     #review-list-area {
         border-bottom: 1px solid #e6e6e6;
-        height: 210px;
+        height: auto;
     }
 
     #review-list-area>div {
@@ -299,6 +299,12 @@
         border-radius: 5px;
         font-size: 12px;
         padding: 3px 5px;
+    }
+    
+    .review-type-content {
+    	display: grid;
+	    grid-template-columns: repeat(2, 1fr);
+	    gap: 5px;
     }
 	
 </style>
@@ -510,7 +516,7 @@
 			                            <div class="flex-class" id="review-detail-div">
 			                                <div><%= r.getReviewDetail() %></div>
 			                            </div>
-			                            <div class="flex-class">
+			                            <div class="flex-class review-type-content">
 			                            	<% for(ReviewType rt : rtdList) { %>
 			                            		<% if(r.getReviewNo() == rt.getReviewNo()) { %>
 			                                    	<div class="review-type-detail-div"><%= rt.getReviewTypeDetail() %></div>

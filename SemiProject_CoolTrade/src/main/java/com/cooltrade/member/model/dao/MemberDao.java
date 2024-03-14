@@ -1662,6 +1662,7 @@ public class MemberDao {
 	
 	public ArrayList<ReviewType> reviewTypeCount(Connection conn, int uno) {
 		ArrayList<ReviewType> list = new ArrayList<ReviewType>();
+		ArrayList<ReviewType> newList = new ArrayList<ReviewType>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("reviewTypeCount");
@@ -1678,9 +1679,24 @@ public class MemberDao {
 				rt.setCount(rset.getInt("count"));
 				
 				list.add(rt);
+			}
+
+			for(int i=1; i<=6; i++) {
+				ReviewType rt2 = new ReviewType();
+				rt2.setReviewType("R"+i);
 				
+				newList.add(rt2);
 			}
 			
+			for(int i=0; i<list.size(); i++) {
+				for(int j=0; j<newList.size(); j++) {
+					if(list.get(i).getReviewType().equals(newList.get(j).getReviewType())) {
+						newList.get(j).setCount(list.get(i).getCount());
+						break;
+					}
+				}
+			}
+			System.out.println("뉴리스트" + newList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1688,7 +1704,7 @@ public class MemberDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return newList;
 	}
 	
 	public ArrayList<Review> reviewList(Connection conn, int uno) {

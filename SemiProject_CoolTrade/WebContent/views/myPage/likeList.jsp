@@ -178,48 +178,6 @@
         right: 5px;
         top: -5px;
     }
-
-    .like-checkbox-checked {
-        position: relative;
-        width: 25px;
-        height: 25px;
-        border: solid 1px #e6e6e6;
-        cursor: pointer;
-        right: 5px;
-        top: -5px;
-        background: rgb(247, 47, 51);
-        border: 1px solid rgb(247, 47, 51);
-        transition: border 0.2s ease 0s, background-color 0.2s ease 0s;
-    }
-
-    .like-checkbox::before {
-        content: "";
-        position: absolute;
-        bottom: 5px;
-        left: 2px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: transparent rgb(204, 204, 204) rgb(204, 204, 204) transparent;
-        width: 8px;
-        height: 14px;
-        transform: rotate(40deg);
-        transform-origin: 100% 100%;
-    }
-
-    .like-checkbox::after {
-        content: "";
-        position: absolute;
-        bottom: 5px;
-        left: 2px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: transparent;
-        width: 0px;
-        height: 0px;
-        transform: rotate(40deg);
-        transform-origin: 100% 100%;
-        transition: width 0.1s ease-out 0s, height 0.1s ease-out 0.1s;
-    }
     
     .paging-area {
         height: 80px;
@@ -238,6 +196,60 @@
         color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
     }
 
+	.checkbox-label {
+		display: block;
+		position: relative;
+		padding-left: 25px;
+		margins-bottom: 10px;
+		-webkit-user-select: none; 
+		-moz-user-select: none; 
+		-ms-user-select: none; 
+		user-select: none;
+		cursor: pointer;
+	}
+	
+	/* 기본 체크박스 숨기기 */
+	.checkbox-label input[type="checkbox"] {
+		display: none;
+	}
+	
+	/* 클릭안한 체크박스 스타일 */
+	.on {
+		width: 20px;
+		height: 20px;
+		background: #ddd;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	
+	/* 클릭한 체크박스 스타일 */
+	.checkbox-label input[type="checkbox"]:checked + .on {
+		background: #f86480;
+	}
+	
+	.on::after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+	
+	.checkbox-label input[type="checkbox"]:checked + .on::after {
+		display: block;
+	}
+	
+	.on::after {
+		width: 6px;
+		height: 10px;
+		border: solid #fff;
+		border-width: 0 2px 2px 0;
+		-webkit-transform: rotate(45deg);
+		-ms-transform:rotate(45deg);
+		transform: rotate(45deg);
+		position: absolute;
+		left: 7px;
+		top: 3px;
+	}
 
 </style>
 </head>
@@ -312,7 +324,10 @@
                     	<% for(LikeProduct lp : list) { %>
                             <div class="like-list-div">
                                 <div class="like-list-checkbox-div">
-                                    <div class="like-checkbox like-checkbox-checked"></div>
+                                    <label for="deleteCheck" class="checkbox-label">
+                                    	<input type="checkbox" id="deleteCheck" checked="checked">
+                                    	<span class="on"></span>
+                                    </label>
                                 </div>
                                 <a href="<%= contextPath %>/detail.po?pno=<%= lp.getProductNo() %>" class="like-list-a">
                                     <div>
