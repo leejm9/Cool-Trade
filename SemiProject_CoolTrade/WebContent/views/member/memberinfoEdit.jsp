@@ -150,8 +150,6 @@
 <%@ include file = "../common/header.jsp" %>
 <% int userNo = loginUser.getUserNo(); %>
 
-<% int userNo = loginUser.getUserNo(); %>
-
     <div id="mypage-wrap">
         <div id="left-content">
             <div id="mypage-tit">
