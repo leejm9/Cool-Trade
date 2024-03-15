@@ -2017,4 +2017,25 @@ public class MemberDao {
 
 	}
 	
+	public int checkDeleteLikePo(Connection conn, int uno, String pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("checkDeleteLikePo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			pstmt.setString(2, pno);
+				
+			System.out.println(sql);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

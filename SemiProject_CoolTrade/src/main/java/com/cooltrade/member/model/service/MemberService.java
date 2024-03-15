@@ -4,6 +4,7 @@ import static com.cooltrade.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
@@ -593,6 +594,19 @@ public class MemberService {
 		      
 		close(conn);
 		return list;
+	}
+	
+	public int checkDeleteLikePo(int uno, String pno) {
+		Connection conn = getConnection();
+		int result = new MemberDao().checkDeleteLikePo(conn, uno, pno);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
 	}
 
 }

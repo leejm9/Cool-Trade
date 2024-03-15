@@ -1288,6 +1288,7 @@
 		SELECT COUNT(USER_NO) COUNT
 		  FROM LIKE_PRODUCT
 		 WHERE USER_NO = ?
+		   AND LIKE_STATUS = 'Y'
 	</entry>
 	
 	<entry key="likePoCount">
@@ -1295,6 +1296,7 @@
 		  FROM LIKE_PRODUCT
           JOIN MEMBER USING (USER_NO)
 		 WHERE USER_ID = ?
+		   AND LIKE_STATUS = 'Y'
 	</entry>
 	
 	<entry key="buyListPriceSelectCo">
@@ -1383,6 +1385,7 @@
 				   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO)
 						 AND IMG_LEVEL = '1'
 					   WHERE USER_NO = ?
+					     AND LIKE_STATUS = 'Y'
 					   ORDER
 						  BY LIKE_DATE DESC
 		                   ) A
@@ -1390,7 +1393,12 @@
          WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
-		 
+	<entry key="checkDeleteLikePo">
+		UPDATE LIKE_PRODUCT
+		   SET LIKE_STATUS = 'N'
+		 WHERE USER_NO = ?
+		   AND PRODUCT_NO IN (?)
+	</entry>
 		 
 	
 	
