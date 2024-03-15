@@ -5,15 +5,20 @@ import="com.cooltrade.product.model.vo.Product"%> <%@page
 import="com.cooltrade.product.model.vo.Category"%> <%@page
 import="java.util.ArrayList"%> <%@page
 import="com.cooltrade.member.model.vo.Member"%> <%@ page language="java"
-contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <% String
-contextPath = request.getContextPath(); int headerCo; Member loginUser =
-(Member) session.getAttribute("loginUser"); String alertMsg = (String)
-session.getAttribute("alertMsg"); if (session.getAttribute("headerCo") == null)
-{ headerCo = 0; } else { headerCo = (int) session.getAttribute("headerCo"); }
-ArrayList<RecentProducts>
-  rlist = (ArrayList<RecentProducts
-    >) session.getAttribute("rlist"); %>
-    <!DOCTYPE html>
+contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+   String contextPath = request.getContextPath();
+   int headerCo;
+   Member loginUser = (Member) session.getAttribute("loginUser");
+   String alertMsg = (String) session.getAttribute("alertMsg");
+   if (session.getAttribute("headerCo") == null) {
+      headerCo = 0;
+   } else {
+      headerCo = (int) session.getAttribute("headerCo");
+   }
+   ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist");
+%>
+<!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8" />
@@ -343,9 +348,9 @@ ArrayList<RecentProducts>
 
             <div id="sidebarWrap-ds">
               <div id="jjimWrap-ds">
-                <div id="jjimText-ds" class="flex-ds">관심상품</div>
+                <div id="jjimText-ds" class="flex-ds">찜한상품</div>
                 <% if(loginUser == null) { %>
-                <a href="" id="jjimLink-ds" class="flex-ds">
+                <a href="#" id="jjimLink-ds" class="flex-ds">
                   <img
                     src="resources/images/좋아요.png"
                     width="25"
@@ -356,7 +361,7 @@ ArrayList<RecentProducts>
                 </a>
                 <% } else { %>
                 <a
-                  href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>"
+                  href="<%= contextPath %>/likelist.me?uno=<%= loginUser.getUserNo() %>&cpage=1"
                   id="jjimLink-ds"
                   class="flex-ds"
                   style="vertical-align: middle"
@@ -530,6 +535,10 @@ ArrayList<RecentProducts>
           </div>
         </div>
       </body>
+<<<<<<< HEAD
     </html>
   </RecentProducts></RecentProducts
 >
+=======
+    </html>
+>>>>>>> cr

@@ -15,6 +15,7 @@ public class Review {
 	private String titleImg;
 	private String reviewTypeDetail;
 	private int avgScore;
+	private String timeDiff;
 	
 	public Review() {}
 
@@ -32,7 +33,8 @@ public class Review {
 	}
 
 	public Review(int reviewNo, int productNo, int userNo, int imgNo, String reviewDetail, int score, String reviewDate,
-			String reviewType, String nickName, String productName, String titleImg, String reviewTypeDetail, int avgScore) {
+			String reviewType, String nickName, String productName, String titleImg, String reviewTypeDetail, int avgScore,
+			String timeDiff) {
 		super();
 		this.reviewNo = reviewNo;
 		this.productNo = productNo;
@@ -47,6 +49,7 @@ public class Review {
 		this.titleImg = titleImg;
 		this.reviewTypeDetail = reviewTypeDetail;
 		this.avgScore = avgScore;
+		this.timeDiff = timeDiff;
 	}
 
 	public int getReviewNo() {
@@ -151,6 +154,14 @@ public class Review {
 
 	public void setAvgScore(int avgScore) {
 		this.avgScore = avgScore;
+	}
+
+	public String getTimeDiff() {
+		return timeDiff;
+	}
+
+	public void setTimeDiff(String timeDiff) {
+		this.timeDiff = timeDiff;
 	}
 
 	@Override

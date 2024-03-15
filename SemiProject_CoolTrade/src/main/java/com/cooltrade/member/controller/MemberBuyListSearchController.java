@@ -60,10 +60,12 @@ public class MemberBuyListSearchController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
 		ArrayList<Trade> list = new MemberService().buyListSearchPo(pi, userNo, word);
-		
+		int checkNum = 2;
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
+		request.setAttribute("checkNum", checkNum);
+		System.out.println(checkNum);
 		
 		request.getRequestDispatcher("views/myPage/buyList.jsp").forward(request, response);
 	

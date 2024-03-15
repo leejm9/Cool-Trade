@@ -9,6 +9,7 @@ public class LikeProduct {
 	private String strPrice;
 	private String uploadDate;
 	private String titleImg;
+	private String timeDiff;
 	
 	public LikeProduct() {}
 
@@ -19,7 +20,7 @@ public class LikeProduct {
 	}
 
 	public LikeProduct(int productNo, int likeCount, int userNo, String productName, String strPrice, String uploadDate,
-			String titleImg) {
+			String titleImg, String timeDiff) {
 		super();
 		this.productNo = productNo;
 		this.likeCount = likeCount;
@@ -28,6 +29,7 @@ public class LikeProduct {
 		this.strPrice = strPrice;
 		this.uploadDate = uploadDate;
 		this.titleImg = titleImg;
+		this.timeDiff = timeDiff;
 	}
 
 	public int getProductNo() {
@@ -84,6 +86,14 @@ public class LikeProduct {
 
 	public void setTitleImg(String titleImg) {
 		this.titleImg = titleImg;
+	}
+
+	public String getTimeDiff() {
+		return timeDiff;
+	}
+
+	public void setTimeDiff(String timeDiff) {
+		this.timeDiff = timeDiff;
 	}
 
 	@Override

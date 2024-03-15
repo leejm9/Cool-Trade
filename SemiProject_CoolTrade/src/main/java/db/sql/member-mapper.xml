@@ -485,28 +485,29 @@
              SELECT ROWNUM RNUM, A.*
                FROM (
                     SELECT
-                       TRADE_NO
-                     , PRODUCT_NO
-                     , SELLER_NO
-                     , M.NICKNAME
-                     , PRODUCT_NAME
-                     , TO_CHAR(PRICE, '999,999,999') PRICE
-                      , DELIVERY_STATUS
-                       , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
-                       , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
-                       , UPLOAD_TYPE
-                  FROM TRADE T
-                  JOIN PRODUCT P USING (PRODUCT_NO)
-                  JOIN MEMBER M ON (SELLER_NO = USER_NO)
-               LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
-                  WHERE BUYER_NO = ?
-                    AND PRODUCT_NAME LIKE '%' || ? || '%'
-                  ORDER
-                    BY UPLOAD_TYPE DESC
-                     , PRODUCT_NO DESC
-                         ) A
-              )
-       WHERE RNUM BETWEEN ? AND ?
+                           TRADE_NO
+                         , PRODUCT_NO
+                         , SELLER_NO
+                         , M.NICKNAME
+                         , PRODUCT_NAME
+                         , TO_CHAR(PRICE, '999,999,999') PRICE
+                         , DELIVERY_STATUS
+                         , TO_CHAR(TRADE_DATE, 'YYYY-MM-DD') TRADE_DATE
+                         , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
+                         , UPLOAD_TYPE
+                         , REVIEW_STATUS
+	                  FROM TRADE T
+	                  JOIN PRODUCT P USING (PRODUCT_NO)
+	                  JOIN MEMBER M ON (SELLER_NO = USER_NO)
+	               LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
+	                  WHERE BUYER_NO = ?
+	                    AND PRODUCT_NAME LIKE '%' || ? || '%'
+	                  ORDER
+	                    BY UPLOAD_TYPE DESC
+	                     , PRODUCT_NO DESC
+	                         ) A
+	              )
+	       WHERE RNUM BETWEEN ? AND ?
    </entry>
    
    <entry key="insertReview">
@@ -1251,6 +1252,14 @@
 		     , NVL(IMG_PATH || CHANGE_NAME, '') "TITLEIMG"
 		     , REVIEW_DETAIL
 		     , REVIEW_DATE
+		     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(REVIEW_DATE)) &gt;= 7 
+		       	    		    THEN TO_CHAR(TRUNC(SYSDATE) - TRUNC(REVIEW_DATE)) || '일 전'
+		       	    	   WHEN TRUNC(SYSDATE) = TRUNC(REVIEW_DATE) 
+		       	    	   	    THEN 
+		       	    	   	    CASE WHEN (SYSDATE - REVIEW_DATE) * 24 &lt; 1 
+		       	    	   	    	 THEN TO_CHAR(FLOOR((SYSDATE - REVIEW_DATE) * 1440)) || '분 전' 
+		       	    	   	    ELSE TO_CHAR(FLOOR((SYSDATE - REVIEW_DATE) * 24)) || '시간 전' END 
+		       	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(REVIEW_DATE)) || '일 전' END AS TIME_DIFF
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.USER_NO = M.USER_NO)
 		  JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
@@ -1352,14 +1361,22 @@
 	<entry key="likeListPo">
 		SELECT *
 		  FROM (
-		       SELECT ROWNUM RNUM, A.*
+		       SELECT ROWNUM RNUM
+                    , A.*
 		         FROM (
 		              SELECT
 						     USER_NO
 						   , PRODUCT_NO
 						   , PRODUCT_NAME
 						   , TO_CHAR(PRICE, '999,999,999') PRICE
-						   , TO_CHAR(P.UPLOAD_DATE, 'YYYY-MM-DD') UPLOAD_DATE
+						   , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(P.UPLOAD_DATE)) &gt;= 7 
+		       	    		    THEN TO_CHAR(TRUNC(SYSDATE) - TRUNC(P.UPLOAD_DATE)) || '일 전' 
+					       	    	   WHEN TRUNC(SYSDATE) = TRUNC(P.UPLOAD_DATE) 
+					       	    	   	    THEN 
+					       	    	   	    CASE WHEN (SYSDATE - P.UPLOAD_DATE) * 24 &lt; 1 
+					       	    	   	    	 THEN TO_CHAR(FLOOR((SYSDATE - P.UPLOAD_DATE) * 1440)) || '분 전' 
+					       	    	   	    ELSE TO_CHAR(FLOOR((SYSDATE - P.UPLOAD_DATE) * 24)) || '시간 전' END 
+					       	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(P.UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
 					       , NVL(IMG_PATH || CHANGE_NAME, '') TITLEIMG
 						FROM LIKE_PRODUCT L
 						JOIN PRODUCT P USING(PRODUCT_NO)
@@ -1367,10 +1384,10 @@
 						 AND IMG_LEVEL = '1'
 					   WHERE USER_NO = ?
 					   ORDER
-						  BY LIKEDATE DESC
+						  BY LIKE_DATE DESC
 		                   ) A
 		        )
-		 WHERE RNUM BETWEEN ? AND ?
+         WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 		 

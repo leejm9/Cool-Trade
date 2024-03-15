@@ -584,49 +584,28 @@
                                         <div id="imgCount">(0/5)</div>
                                     </div>
                                     <div id="sell-fileInput-div">
+                                    
                                         <div id="fileInput-div">
-                                            <!-- <input type="file" id="fileInput" accept="image/*" name="files[]" multiple> -->
+                                            <input type="file" id="fileInput" accept="image/*" name="files" multiple>
                                             <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
                                         </div>
-                                        <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput1" name="image1" required>
-                                            <img src="" class="hidden-img">
-                                            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-                                        </div>
-                                        <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput2" name="image2">
-                                            <img src="" class="hidden-img">
-                                            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-                                        </div>
-                                        <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput3" name="image3">
-                                            <img src="" class="hidden-img">
-                                            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-                                        </div>
-                                        <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput4" name="image4">
-                                            <img src="" class="hidden-img">
-                                            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-                                        </div>
-                                        <div class="hidden-div">
-                                        	<input type="file" class="hidden-file-input" id="fileInput5" name="image5">
-                                            <img src="" class="hidden-img">
-                                            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-                                        </div>
+
                                     </div>
                                 </div>
 
                                 <script>
-                                    
-                                    let count = 0;
-                                    let index = 1;
 
                                     // 이미지 클릭 시 업로드창 열린다     
-                                    
                                     $("#fileImg").click(function() {
-                                    	$("#fileInput" + index).click();
+                                    	$("#fileInput").click();
                                     	//index++;
                                     });
+                                    
+                                    // 이미지를 담을 배열
+                                    let sel_files = [];
+                                    
+                                    
+                                    
                                     
                                     // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
                                     const fileDOMs = document.querySelectorAll(".hidden-file-input");

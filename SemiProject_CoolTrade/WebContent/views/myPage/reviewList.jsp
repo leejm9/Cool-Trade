@@ -151,7 +151,7 @@
 
     #review-list-area {
         border-bottom: 1px solid #e6e6e6;
-        height: 210px;
+        height: auto;
     }
 
     #review-list-area>div {
@@ -300,6 +300,12 @@
         font-size: 12px;
         padding: 3px 5px;
     }
+    
+    .review-type-content {
+    	display: grid;
+	    grid-template-columns: repeat(2, 1fr);
+	    gap: 5px;
+    }
 	
 </style>
 </head>
@@ -323,7 +329,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
@@ -402,7 +408,9 @@
                                 </div>
                                 <div>친절하고 배려가 넘쳐요.</div>
                             </div>
-                            <div><%= rtList.get(0).getCount() %></div>
+                            <div>
+                            	<%= rtList.get(0).getCount() %>
+                            </div>
                         </div>
                         <div class="flex-class">
                             <div class="flex-class">
@@ -508,7 +516,7 @@
 			                            <div class="flex-class" id="review-detail-div">
 			                                <div><%= r.getReviewDetail() %></div>
 			                            </div>
-			                            <div class="flex-class">
+			                            <div class="flex-class review-type-content">
 			                            	<% for(ReviewType rt : rtdList) { %>
 			                            		<% if(r.getReviewNo() == rt.getReviewNo()) { %>
 			                                    	<div class="review-type-detail-div"><%= rt.getReviewTypeDetail() %></div>
@@ -517,7 +525,7 @@
 			                            </div>                         
 			                        </div>
 			                        <div id="review-content-right">
-			                            <div>1개월 전</div>
+			                            <div><%= r.getTimeDiff() %></div>
 			                            <div class="flex-class" id="reviewImgDiv" style="height:5px;">
 			                                <div>
                                                 <% if(r.getTitleImg() != null) { %>
@@ -593,7 +601,7 @@
 						reviewTotalCnt = cnt;
 					} else {
 						reviewTotalCnt = reviewLength;
-						$(btn).hide();
+						//$(btn).hide();
 					}
 					$(reviewList + ":lt(" + reviewTotalCnt + ")").addClass("active");
 				}

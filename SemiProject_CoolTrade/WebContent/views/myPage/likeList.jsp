@@ -4,6 +4,7 @@
 <%
 	int likePoCount = (int)request.getAttribute("likePoCount");
 	ArrayList<LikeProduct> list = (ArrayList<LikeProduct>)request.getAttribute("list");
+	// 로그인한 회원번호, 좋아요한 상품 번호, 상품 이름, 가격, 시간, 이미지
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
@@ -134,8 +135,8 @@
     .like-list-div {
         border: 1px solid #e6e6e6;
         width: 100%;
-        height: 150px;
-        padding: 10px;
+        height: auto;
+        /*padding: 10px;*/
         display: flex;
         align-items: center;
         position: relative;
@@ -148,7 +149,7 @@
     }
 
     .like-list-a>div {
-        padding: 0px 10px;
+        /*padding: 0px 10px;*/
     }
 
     .like-list-area-wrap {
@@ -178,48 +179,6 @@
         right: 5px;
         top: -5px;
     }
-
-    .like-checkbox-checked {
-        position: relative;
-        width: 25px;
-        height: 25px;
-        border: solid 1px #e6e6e6;
-        cursor: pointer;
-        right: 5px;
-        top: -5px;
-        background: rgb(247, 47, 51);
-        border: 1px solid rgb(247, 47, 51);
-        transition: border 0.2s ease 0s, background-color 0.2s ease 0s;
-    }
-
-    .like-checkbox::before {
-        content: "";
-        position: absolute;
-        bottom: 5px;
-        left: 2px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: transparent rgb(204, 204, 204) rgb(204, 204, 204) transparent;
-        width: 8px;
-        height: 14px;
-        transform: rotate(40deg);
-        transform-origin: 100% 100%;
-    }
-
-    .like-checkbox::after {
-        content: "";
-        position: absolute;
-        bottom: 5px;
-        left: 2px;
-        border-width: 2px;
-        border-style: solid;
-        border-color: transparent;
-        width: 0px;
-        height: 0px;
-        transform: rotate(40deg);
-        transform-origin: 100% 100%;
-        transition: width 0.1s ease-out 0s, height 0.1s ease-out 0.1s;
-    }
     
     .paging-area {
         height: 80px;
@@ -238,6 +197,79 @@
         color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
     }
 
+	.checkbox-label {
+		display: block;
+		position: relative;
+		padding-left: 25px;
+		margins-bottom: 10px;
+		-webkit-user-select: none; 
+		-moz-user-select: none; 
+		-ms-user-select: none; 
+		user-select: none;
+		cursor: pointer;
+	}
+	
+	/* 기본 체크박스 숨기기 */
+	.checkbox-label input[type="checkbox"] {
+		display: none;
+	}
+	
+	/* 클릭안한 체크박스 스타일 */
+	.on {
+		width: 20px;
+		height: 20px;
+		background: #ddd;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	
+	/* 클릭한 체크박스 스타일 */
+	.checkbox-label input[type="checkbox"]:checked + .on {
+		background: #f86480;
+	}
+	
+	.on::after {
+		content: "";
+		position: absolute;
+		display: none;
+	}
+	
+	.checkbox-label input[type="checkbox"]:checked + .on::after {
+		display: block;
+	}
+	
+	.on::after {
+		width: 6px;
+		height: 10px;
+		border: solid #fff;
+		border-width: 0 2px 2px 0;
+		-webkit-transform: rotate(45deg);
+		-ms-transform:rotate(45deg);
+		transform: rotate(45deg);
+		position: absolute;
+		left: 7px;
+		top: 3px;
+	}
+	
+	.won {
+		font-size: 14px;
+    	line-height: 27px;
+    	margin-left: 3px;
+	}
+	
+	.timeDiff {
+		font-size: 14px;
+    	color: lightgray;
+	}
+	
+	.like-po-detail {
+		padding-left: 10px;
+	}
+	
+	.like-po-image {
+		border-right: 1px solid #e6e6e6;
+	}
 
 </style>
 </head>
@@ -261,7 +293,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
@@ -298,89 +330,138 @@
                     <span><%= likePoCount %></span>
                 </div>
 
+               	<% for(int i=0; i<list.size(); i++) { %>
                 <div>
                     <div class="like-list-area">
                         <div id="like-delete-select-box">
                             <div>
-                                <button>선택삭제</button>
-                                <button>전체삭제</button>
+                                <button type="button" onclick="checkDelete(<%= list.get(i).getUserNo() %>);">선택삭제</button>
+                                <button type="button" onclick="allDelete(<%= list.get(i).getUserNo() %>);">전체삭제</button>
                             </div>
                         </div>
                     </div>
                     <div id="like-list-area-container">
                         <div class="like-list-area-wrap">
-                    	<% for(LikeProduct lp : list) { %>
                             <div class="like-list-div">
                                 <div class="like-list-checkbox-div">
-                                    <div class="like-checkbox like-checkbox-checked"></div>
+                                    <label for="deleteCheck<%= i %>" class="checkbox-label">
+                                    	<input type="checkbox" id="deleteCheck<%= i %>" onclick="likePoCheckbox(this, <%= list.get(i).getProductNo() %>);">
+                                    	<span class="on"></span>
+                                    </label>
                                 </div>
-                                <a href="<%= contextPath %>/detail.po?pno=<%= lp.getProductNo() %>" class="like-list-a">
-                                    <div>
-                                        <img src="<%= contextPath %>/<%= lp.getTitleImg() %>" alt="상품 대표이미지" width="120" height="120">
+                                <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>" class="like-list-a">
+                                    <div class="like-po-image">
+                                        <img src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>" alt="상품 대표이미지" width="120" height="120">
                                     </div>
-                                    <div>
-                                        <div><%= lp.getProductName() %></div>
+                                    <div class="like-po-detail">
+                                        <div><%= list.get(i).getProductName() %></div>
                                         <div class="like-product-price">
-                                            <div><%= lp.getStrPrice() %></div>
-                                            <div>원</div>
+                                            <div><b><%= list.get(i).getStrPrice() %></b></div>
+                                            <div class="won">원</div>
                                         </div>
-                                        <div>
-                                            1분전
+                                        <div class="timeDiff">
+                                            <%= list.get(i).getTimeDiff() %>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                        <% } %>    
                         </div>
                     </div>
                 </div>
+                <% } %>    
+                
+                <script>
+                
+               	let checkedBox = [];
+               	
+               	// 선택한 요소 배열에 담기
+                function likePoCheckbox(e, pno){
+                	//console.log(e.checked);
+                	
+               		if(e.checked) {
+               			checkedBox.push(pno);
+               		} else {
+               			let index = checkedBox.indexOf(pno);
+               			if(index !== -1) {
+               				checkedBox.splice(index, 1);
+               			}
+               		}
+					//console.log(checkedBox);
+					//return checkedBox;
+				}
+				
+                // 선택삭제 이벤트
+                function checkDelete(num){
+                	console.log(checkedBox);
+                	if(confirm("찜을 해제하시겠습니까?")){
+	                	$.ajax({
+                			url:"ajaxCheckDelete.me",
+                			data:{
+                				uno:num,
+                				pno:checkedBox,
+                			},
+                			type:"post",
+                			success:function(result){
+                				alert("찜이 해제되었습니다.");
+                				location.reload();
+                			}
+                		})
+                	} else {
+                		console.log("취소");
+                	}
+                }
+                
+                // 전체삭제 이벤트
+                function allDelete(num){
+                	if(confirm("모든 찜을 해제하시겠습니까?")){
+                		$.ajax({
+                			url:"ajaxAllDelete.me",
+                			data:{
+                				uno:num,
+                			},
+                			type:"post",
+                			success:function(result){
+                				alert("모든 찜이 해제되었습니다.");
+                				location.reload();
+                			}
+                		})
+                	} else {
+                		console.log("취소");
+                	}
+                }
+                
+                </script>
+                
+               	<div class="paging-area" align="center">
+					<div>
+						<% if(currentPage != 1) { %>
+							<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+						<% } %>
+			
+						<% for(int p=startPage; p<=endPage; p++) { %>
+							<% if(p == currentPage) { %>
+								<button id="pageBtn_<%= p %>" disabled><%= p %></button>
+							<% } else { %>
+								<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+							<% } %>
+						<% } %>
+			
+						<% if(currentPage != maxPage) { %>
+							<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+						<% } %>
+			
+					</div>
+				</div>
+			
+				<script>
+			        $(document).ready(function() {
+			            // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
+			            $('#pageBtn_<%= currentPage %>').addClass('active-page');
+			        });
+			    </script>
             </div>
         </div>
     </div>
-    <script>
-        const checkbox = document.querySelector('.like-checkbox');
-
-        checkbox.addEventListener('click', function() {
-            if (this.classList.contains('like-checkbox-checked')) {
-                // checkbox가 선택된 상태에서 해제될 때
-                this.classList.remove('like-checkbox-checked');
-            } else {
-                // checkbox가 선택되지 않은 상태에서 선택될 때
-                this.classList.add('like-checkbox-checked');
-            }
-        });
-
-        checkbox.classList.remove('like-checkbox-checked');
-    </script>
-
-	<div class="paging-area" align="center">
-		<div>
-			<% if(currentPage != 1) { %>
-				<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-			<% } %>
-
-			<% for(int p=startPage; p<=endPage; p++) { %>
-				<% if(p == currentPage) { %>
-					<button id="pageBtn_<%= p %>" disabled><%= p %></button>
-				<% } else { %>
-					<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/likelist.me?&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-				<% } %>
-			<% } %>
-
-			<% if(currentPage != maxPage) { %>
-				<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-			<% } %>
-
-		</div>
-	</div>
-
-	<script>
-        $(document).ready(function() {
-            // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
-            $('#pageBtn_<%= currentPage %>').addClass('active-page');
-        });
-    </script>
-
 
 	<%@ include file = "../common/footer.jsp" %>
 

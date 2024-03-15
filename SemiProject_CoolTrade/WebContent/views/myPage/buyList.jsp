@@ -5,7 +5,7 @@
 	// 거래번호, 상품이름, 가격, 거래일자, 배송상태
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	String word = (String)request.getAttribute("word");
-// 	int result = (int)request.getAttribute("result");
+ 	int checkNum = (int)request.getAttribute("checkNum");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -207,10 +207,7 @@
 	        background-color: transparent;
 	        margin: 0px 5px;
 	    }
-	
-	    .active-page {
-	        color: rgb(4, 180, 252); /* 선택된 페이지의 글자색을 흰색으로 설정 */
-	    }
+
 	    
 	    #td-date {
 	    	width: 120px;
@@ -346,12 +343,11 @@
 		}
 		
 		button:disabled {
-			color: #ffffff;
-			background: #ebebeb;
+ 			color: #ffffff;
+ 			background: #ebebeb;
 			cursor: default;
 			border: none
 		}
-		
 
 </style>
 </head>
@@ -375,7 +371,7 @@
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
                                 <li class="sub-title-list">
-                                    <a href="">회원정보 수정</a>
+                                    <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
                                 <li class="sub-title-list">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
@@ -412,10 +408,10 @@
                         <input id="buysearchInput" type="text" id="search-input" placeholder="상품명을 입력해주세요." maxlength="20">
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>);">거래순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectBtn(<%= userNo %>, 1);">거래순</button>
                     </div>
                     <div>
-                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>);">가격순</button>
+                        <button type="button" class="buy-list-search-btn" onclick="selectPriceBtn(<%= userNo %>, 2);">가격순</button>
                     </div>
                     
               	<script>
@@ -436,13 +432,13 @@
 				    });
                 
                 	// 거래순 조회
-                	function selectBtn(uno){
+                	function selectBtn(uno, num){
                 		console.log(uno);
                 		location.href = "<%= contextPath %>/buyListselect.me?&uno="+uno+"&cpage=1";
                 	}
                 	
                 	// 가격순 조회
-                	function selectPriceBtn(uno){
+                	function selectPriceBtn(uno, num){
                 		location.href = "<%= contextPath %>/buyListpriceselect.me?&uno="+uno+"&cpage=1";
                 	}
                 	
@@ -676,9 +672,19 @@
 
                     executeRating(ratingStars);
                     
+                    // 별점 라디오 선택 값
+                    $(function(){
+                    	$("[name=rating]").click(function(){
+		                    let radioVal = $("[name=rating]:checked").val();
+		                    console.log(radioVal);
+                    	})
+                    })
+                    
+                    
                     function changeColor(element) {
-                        var input = element.querySelector('input[type="checkbox"]');
-                        
+                        let input = element.querySelector('input[type="checkbox"]');
+                        let checkboxVal = input.value;
+                        console.log(checkboxVal);
                         // 체크박스의 선택 여부에 따라 처리
                         if (!input.checked) {
                             // 체크되지 않은 경우
@@ -716,54 +722,83 @@
                 
                 <div class="paging-area" align="center">
                     <div>
-                    	<% System.out.println("검색어 : " + request.getParameter("search")); %>
-                    	<% if(request.getParameter("search") != null) { %>
-	                        <% if(currentPage != 1) { %>
-	                        	<% System.out.println("검색어가 널이 아니면 들어와야함"); %>
-	                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-	                        <% } %>
-	                        
-	                        <% for(int p=startPage; p<=endPage; p++) { %>
-	                            <% if(p == currentPage) { %>
-	                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-	                            <% } else { %>
-	                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-	                            <% } %>
-	                        <% } %>
-	                        
-	                        <% if(currentPage != maxPage) { %>
-	                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-	                        <% } %>
-	                        
-                        <% } else { %>
-	                        	<% if(currentPage != 1) { %>
-		                            <button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyllist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
-		                        <% } %>
-		                        
-		                        <% for(int p=startPage; p<=endPage; p++) { %>
-		                            <% if(p == currentPage) { %>
-		                                <button id="pageBtn_<%= p %>" disabled><%= p %></button>
-		                            <% } else { %>
-		                                <button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
-		                            <% } %>
-		                        <% } %>
-		                        
-		                        <% if(currentPage != maxPage) { %>
-		                            <button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
-		                        <% } %>
-	                    <% } %>
-                        
+	                    <% switch(checkNum) { 
+	                    case 1 : %>
+							<!-- 구매내역 리스트 -->
+							<% if(currentPage != 1) { %>
+								<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+							<% } %>
+	
+							<% for(int p=startPage; p<=endPage; p++) { %>
+								<% if(p == currentPage) { %>
+									<button id="pageBtn_<%= p %>" style="color: rgb(4, 180, 252); background: none;" disabled><%= p %></button>
+								<% } else { %>
+									<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+								<% } %>
+							<% } %>
+	
+							<% if(currentPage != maxPage) { %>
+								<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+							<% } %>
+							<% break; 
+						 case 2 : %>
+							<!-- 구매내역 검색 리스트 -->
+							<% if(currentPage != 1) { %>
+								<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+							<% } %>
+	
+							<% for(int p=startPage; p<=endPage; p++) { %>
+								<% if(p == currentPage) { %>
+									<button id="pageBtn_<%= p %>" style="color: rgb(4, 180, 252); background: none;" disabled><%= p %></button>
+								<% } else { %>
+									<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+								<% } %>
+							<% } %>
+	
+							<% if(currentPage != maxPage) { %>
+								<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buyListSearch.me?search=<%= request.getParameter("search") %>&uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+							<% } %>
+							<% break; 
+						 case 3 : %>
+							<!-- 구매내역 가격순 리스트 -->
+							<% if(currentPage != 1) { %>
+								<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyListpriceselect.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+							<% } %>
+	
+							<% for(int p=startPage; p<=endPage; p++) { %>
+								<% if(p == currentPage) { %>
+									<button id="pageBtn_<%= p %>" style="color: rgb(4, 180, 252); background: none;" disabled><%= p %></button>
+								<% } else { %>
+									<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buyListpriceselect.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+								<% } %>
+							<% } %>
+	
+							<% if(currentPage != maxPage) { %>
+								<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buyListpriceselect.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+							<% } %>
+							<% break; 
+						 case 4 : %>
+							<!-- 구매내액 거래순 리스트 -->
+							<% if(currentPage != 1) { %>
+								<button id="pageBtn_<%= currentPage-1 %>" onclick="location.href='<%= contextPath %>/buyListselect.me?uno=<%= userNo %>&cpage=<%= currentPage-1 %>'">&lt;</button>
+							<% } %>
+	
+							<% for(int p=startPage; p<=endPage; p++) { %>
+								<% if(p == currentPage) { %>
+									<button id="pageBtn_<%= p %>" style="color: rgb(4, 180, 252); background: none;" disabled><%= p %></button>
+								<% } else { %>
+									<button id="pageBtn_<%= p %>" onclick="location.href='<%= contextPath %>/buyListselect.me?uno=<%= userNo %>&cpage=<%= p %>'"><%= p %></button>
+								<% } %>
+							<% } %>
+	
+							<% if(currentPage != maxPage) { %>
+								<button id="pageBtn_<%= currentPage+1 %>" onclick="location.href='<%= contextPath %>/buyListselect.me?uno=<%= userNo %>&cpage=<%= currentPage+1 %>'">&gt;</button>
+							<% } %>
+							<% break; 
+						 } %>
                         
 					</div>
 		        </div>
-
-                <script>
-                    $(document).ready(function() {
-                        // 현재 페이지에 해당하는 버튼에 active-page 클래스 추가
-                        $('#pageBtn_<%= currentPage %>').addClass('active-page');
-                    });
-                </script>
-                
             </div>
         </div>
     </div>	
