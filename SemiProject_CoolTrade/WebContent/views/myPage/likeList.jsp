@@ -330,18 +330,18 @@
                     <span><%= likePoCount %></span>
                 </div>
 
+               	<% for(int i=0; i<list.size(); i++) { %>
                 <div>
                     <div class="like-list-area">
                         <div id="like-delete-select-box">
                             <div>
-                                <button type="button" onclick="checkDelete();">선택삭제</button>
-                                <button type="button" onclick="allDelete();">전체삭제</button>
+                                <button type="button" onclick="checkDelete(<%= list.get(i).getUserNo() %>);">선택삭제</button>
+                                <button type="button" onclick="allDelete(<%= list.get(i).getUserNo() %>);">전체삭제</button>
                             </div>
                         </div>
                     </div>
                     <div id="like-list-area-container">
                         <div class="like-list-area-wrap">
-                    	<% for(int i=0; i<list.size(); i++) { %>
                             <div class="like-list-div">
                                 <div class="like-list-checkbox-div">
                                     <label for="deleteCheck<%= i %>" class="checkbox-label">
@@ -365,10 +365,10 @@
                                     </div>
                                 </a>
                             </div>
-                        <% } %>    
                         </div>
                     </div>
                 </div>
+                <% } %>    
                 
                 <script>
                 
@@ -391,13 +391,14 @@
 				}
 				
                 // 선택삭제 이벤트
-                function checkDelete(){
+                function checkDelete(num){
                 	console.log(checkedBox);
                 	if(confirm("찜을 해제하시겠습니까?")){
 	                	$.ajax({
-                			url:"어쩌구",
+                			url:"ajaxCheckDelete.me",
                 			data:{
-                				찜번호키값:찜번호밸류값,
+                				uno:num,
+                				pno:checkedBox,
                 			},
                 			type:"post",
                 			success:function(result){
@@ -411,12 +412,12 @@
                 }
                 
                 // 전체삭제 이벤트
-                function allDelete(){
+                function allDelete(num){
                 	if(confirm("모든 찜을 해제하시겠습니까?")){
                 		$.ajax({
-                			url:"어쩌구",
+                			url:"ajaxAllDelete.me",
                 			data:{
-                				찜번호키값:찜번호밸류값,
+                				uno:num,
                 			},
                 			type:"post",
                 			success:function(result){
