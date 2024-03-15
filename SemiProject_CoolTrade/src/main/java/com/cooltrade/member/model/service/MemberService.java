@@ -594,9 +594,17 @@ public class MemberService {
 		close(conn);
 		return list;
 	}
-	public int updateMemReportCount(int pno) {
+	
+	public int selectUserNo(int pno) {
 		Connection conn = getConnection();
-		int result = new MemberService().updateMemReportCount(conn,pno);
+		int userNo = new MemberDao().selectUserNo(conn,pno);
+		close(conn);
+		return userNo;
+	}
+	
+	public int updateMemReportCount(int userNo) {
+		Connection conn = getConnection();
+		int result = new MemberDao().updateMemReportCount(conn,userNo);
 		if(result>0) {
 			commit(conn);
 		}else {
@@ -605,5 +613,5 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
-
+	
 }

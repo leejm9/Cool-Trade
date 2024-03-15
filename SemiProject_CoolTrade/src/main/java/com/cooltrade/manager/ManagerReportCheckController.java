@@ -28,12 +28,14 @@ public class ManagerReportCheckController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println(request.getParameter("pno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		
+		System.out.println(pno);
 		int userNo = new MemberService().selectUserNo(pno);
 		int result = new MemberService().updateMemReportCount(userNo);
 		
-		
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 	/**

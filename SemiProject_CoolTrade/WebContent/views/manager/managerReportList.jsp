@@ -15,8 +15,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
 	<%@ include file = "../common/managerMenubar.jsp" %>
@@ -78,9 +84,9 @@
 							        function Report(pno){
 							                $.ajax({
 							                	url:"report.check",
-							                	data:{uno:pno},
+							                	data:{pno:pno},
 							                	success:function(result){
-							                		alert("신고처리되었습니다");
+							                			alert("신고처리되었습니다");
 							                	},error:function(result){
 							                		console.log("ajax 통신 실패");
 							                	}
@@ -97,7 +103,7 @@
 				                    <%if(i == currentPage){ %>
 					                     <button disabled><%=i%></button>
 				                	<%}else{%>
-						            <button onclick="location.href='<%= contextPath %>/report.in?cpage=' + <%= i %>+'&bsearch=<%= request.getParameter("bsearch") %>';"><%= i %></button>
+						            <button onclick="location.href='<%= contextPath %>/report.in?cpage=' + <%= i %>;"><%= i %></button>
 						            <% } %>
 						            <% } %>
 						            <% if(endPage != maxPage) { %>

@@ -2005,4 +2005,54 @@ public class MemberDao {
 
 	}
 	
+	public int selectUserNo(Connection conn ,int pno) {
+		int userNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectUserNo(pno)");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				userNo = rset.getInt("seller_no");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return userNo;
+		
+	}
+	
+	public int updateMemReportCount(Connection conn , int userNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+
+		
+		String sql = prop.getProperty("updateMemReportCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

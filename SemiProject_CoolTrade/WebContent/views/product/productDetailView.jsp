@@ -140,7 +140,7 @@ Product p = (Product)request.getAttribute("p"); ArrayList<Images>
                 <%} %>
                 <button
                   class="btn btn-lg btn-warning"
-                  onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>'"
+                  onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>&userId=<%=loginUser.getUserId()  %>'"
                 >
                   💬 채팅하기
                 </button>

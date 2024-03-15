@@ -1356,8 +1356,17 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="selectUserNo">
+		SELECT
+		       SELLER_NO
+		  FROM PRODUCT
+		 WHERE PRODUCT_NO = ?
+	</entry>
 		 
-		 
-	
+	<entry key="updateMemReportCount">
+		UPDATE MEMBER
+		   SET CAUTION = CAUTION + 1
+		 WHERE USER_NO = ?
+	</entry>
 	
 </properties>

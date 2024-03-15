@@ -39,7 +39,7 @@ public class ChatDao {
 			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, pno);
-			
+			System.out.println(pno);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -64,7 +64,9 @@ public class ChatDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setString(2, pno);
-			
+			System.out.println("체크");
+			System.out.println(userId);
+			System.out.println(pno);
 			
 			result = pstmt.executeUpdate();
 			
