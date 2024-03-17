@@ -85,4 +85,13 @@ public class ChatService {
 		close(conn);
 		return result;
 	}
+	
+	public ArrayList<Chat> getAlarm(String loginUser){
+		Connection conn = getConnection();
+		
+		ArrayList<Chat> list = new ChatDao().getAlarm(conn, loginUser);
+		
+		close(conn);
+		return list;
+	}
 }

@@ -97,4 +97,17 @@
 		 WHERE SENDER != ?
 		   AND CHATROOM_NO = ?
 	</entry>
+	
+	<entry key="getAlarm">
+		SELECT C.MESSAGE_NO,C.CHATROOM_NO, C.MESSAGE , C.SENDER,C.READ_YN, C.MESSAGE_DATE
+		  FROM (
+		        SELECT MESSAGE_NO,CHATROOM_NO, MESSAGE , SENDER, MESSAGE_DATE,READ_YN, 
+		        	   ROW_NUMBER()OVER(PARTITION BY CHATROOM_NO ORDER BY MESSAGE_DATE DESC) AS RNK
+		          FROM CHATROOM
+		          JOIN MESSAGE USING (CHATROOM_NO)
+		         WHERE SENDER ^= ?
+		           AND READ_YN = 'N'
+		       ) C
+		 WHERE C.RNK = 1
+	</entry>
 </properties>

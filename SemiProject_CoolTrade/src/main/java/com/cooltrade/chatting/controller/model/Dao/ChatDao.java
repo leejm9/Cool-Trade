@@ -241,4 +241,38 @@ public class ChatDao {
 		}
 		return result;
 	}
+	public ArrayList<Chat> getAlarm(Connection conn, String loginUser){
+		ArrayList<Chat> list = new ArrayList<Chat>();
+		Chat c = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getAlarm");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, loginUser);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Chat(rset.getInt("message_no"),
+								  rset.getString("message"),
+								  rset.getDate("message_date"),
+								  rset.getString("read_yn"),
+								  rset.getInt("chatroom_no"),
+								  rset.getString("sender")
+								  ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+		
+	}
 }

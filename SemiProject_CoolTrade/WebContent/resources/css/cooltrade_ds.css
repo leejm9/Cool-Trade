@@ -128,7 +128,7 @@ body{
     align-items: center;
     flex-direction: column;
     background-color: rgb(249, 249, 249);
-    z-index: 20;
+    z-index: 10;
 }
 
 #header2-1-ds{

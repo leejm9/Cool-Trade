@@ -1,3 +1,4 @@
+<%@page import="com.cooltrade.chatting.controller.model.vo.Chat"%>
 <%@page import="com.cooltrade.product.model.vo.Search"%>
 <%@page import="com.cooltrade.product.model.vo.RecentProducts"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
@@ -64,6 +65,74 @@
 	text-align: center;
 	font-weight: 2;
 }
+.notification {
+    height: 200px;
+    width: 320px;
+    position: fixed;
+    background-color: #fdfdfd;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    z-index: 999;
+    display: none;
+    overflow: auto;
+    left:550px;
+}
+
+.notification.hidden {
+    display: none;
+}
+
+.notification.show {
+    display: block;
+}
+
+.content {
+    width: 294px;
+    height: 30px;
+    margin: 5px 3px 5px 3px;
+}
+.content>div{
+    line-height: 35px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 10px;
+}
+
+.content_1 {
+    width: 70%;
+    float: left;
+}
+
+.content_2, .content_3 {
+    text-align: center;
+    width: 15%;
+    float: left;
+    
+}
+
+.close-container {
+    text-align: right;
+}
+
+.close {
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 0px;
+    width: 100%;
+    height: 10%;
+}
+
+.close:hover {
+    color: #999;
+    cursor: pointer;
+}
+.notification .content_1:hover{
+	background-color:#ddd;
+	cursor:pointer;
+}
+
 
 </style>
 </head>
@@ -83,6 +152,7 @@
 						<img src="resources/images/즐겨찾기.png" width="25" height="25"
 							style="padding: 5px" alt="즐겨찾기 이미지" /> 즐겨찾기
 					</button>
+					
 				</div>
 				<div id="headerRight-ds" class="flex-ds">
 					<%if(loginUser==null){ %>
@@ -96,13 +166,55 @@
 					<%}else{ %>
 					<!-- case2. 로그인 후 -->
 					<div class="headerLogin-ds">
-						<button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238)" onclick="toggleNotification()">알림</button>
-						<button class="loginBtn-ds"
-							style="border-bottom: 1px solid rgb(238, 238, 238)"
-							onclick="location.href='<%=contextPath%>/logout.me'">
-							로그아웃</button>
-					</div>
+                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);" onclick="toggleNotification()">알림<div id="alarmCount" style="border:1px solid red;, border-radius: 30px;"></div> </button>
+                        <div id="notification" class="notification hidden" style="border:1px solid  #ddd; ">
+						    <div class="close-container"><span class="close" onclick="closeNotification()" style="line-height:20px" >×</span></div>
+						    <div class="content-container">
+						    	
+						    </div>
+						</div>
+                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);" onclick="location.href='<%=contextPath%>/logout.me'">로그아웃</button>
+                    </div>
+                    <input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
 					
+					<script>
+						$(function(){
+							getAlarm();
+							setInterval(getAlarm,2000);
+						})	
+						
+						function getAlarm(){
+							var userId = $("#loginUser").val();
+							$.ajax({
+		            			url:"alarm.in",
+		            			data:{loginUser:userId},
+		            			success: function(list) {
+		            			    let value = "";
+		            			    for(let i = 0; i < list.length; i++) {
+		            			        value += '<div class="content">' +
+		            			                    '<div class="content_1" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].message + '</div>' +
+		            			                    '<div class="content_2" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].messageDate + '</div>' +
+		            			                    '<div class="content_3" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].sender + '</div>' +
+		            			                 '</div>';
+		            			    }
+		            			    $(".content-container").html(value);
+		            			    $("#alarmCount").html(list.length);
+		            			},error:function(){
+		            				console.log("ajax 통신 실패");
+		            			}
+		            		});
+						}
+					
+						function toggleNotification() {
+						  var notification = document.getElementById("notification");
+						  notification.classList.toggle("show");
+						}
+						
+						function closeNotification() {
+						  var notification = document.getElementById("notification");
+						  notification.classList.remove("show");
+						}
+					</script>
 
 
 					<div id="headerStore-ds" class="flex-ds">
