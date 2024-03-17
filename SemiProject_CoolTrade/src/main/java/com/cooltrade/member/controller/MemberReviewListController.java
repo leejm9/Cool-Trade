@@ -46,7 +46,7 @@ public class MemberReviewListController extends HttpServlet {
 		// 리뷰내용
 		ArrayList<Review> reviewList = new MemberService().reviewList(uno);
 		request.setAttribute("reviewList", reviewList);
-		System.out.println(reviewList);
+		//System.out.println(reviewList);
 		
 		// 별점 평균
 		Review avg = new MemberService().starAvg(uno);

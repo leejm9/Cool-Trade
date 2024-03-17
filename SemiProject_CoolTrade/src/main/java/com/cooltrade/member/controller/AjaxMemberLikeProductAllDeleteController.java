@@ -31,6 +31,10 @@ public class AjaxMemberLikeProductAllDeleteController extends HttpServlet {
 
 		int uno = Integer.parseInt(request.getParameter("uno"));
 		int result = new MemberService().allDeleteLikePo(uno);
+		
+		if(result > 0) {
+			response.getWriter().print(result);
+		}
 	
 	}
 

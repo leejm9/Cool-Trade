@@ -38,6 +38,8 @@ public class ProductSellInsertController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		System.out.println("오냐?");
+		
 		request.setCharacterEncoding("UTF-8");
 		
 		if(ServletFileUpload.isMultipartContent(request)) {
@@ -58,8 +60,6 @@ public class ProductSellInsertController extends HttpServlet {
 				trade = 2;
 			}
 			
-			
-			
 			// String으로 넘어온 price, pieces int로 변환
 			String priceStr = multiRequest.getParameter("price");
 			String priceStrCommas = priceStr.replaceAll(",", "");
@@ -68,10 +68,6 @@ public class ProductSellInsertController extends HttpServlet {
 			String piecesStr = multiRequest.getParameter("pieces");
 			String piecesStrCommas = piecesStr.replaceAll(",", "");
 			int pieces = Integer.parseInt(piecesStrCommas);
-			
-//			String category = multiRequest.getContentType("category");
-//			System.out.println(category);
-//			System.out.println(piecesStr);
 			
 			Product p = new Product(multiRequest.getParameter("category"),
 									multiRequest.getParameter("seller"),
@@ -84,12 +80,11 @@ public class ProductSellInsertController extends HttpServlet {
 									Integer.parseInt(multiRequest.getParameter("deliveryCharge")), 
 									pieces);
 			
-			System.out.println("상품수정아니고등록 카테고리" + multiRequest.getParameter("category"));
 			ArrayList<Images> list = new ArrayList<Images>();
 			
 			for(int i=1; i<=5; i++) {
 				String key = "image" + i;
-				
+				System.out.println("새로넘어온이미지"+i+": "+multiRequest.getOriginalFileName(key));
 				if(multiRequest.getOriginalFileName(key) != null) {
 					Images img = new Images();
 					img.setOriginName(multiRequest.getOriginalFileName(key));
@@ -111,12 +106,11 @@ public class ProductSellInsertController extends HttpServlet {
 			int result = new ProductService().insertProductSell(p, list);
 			
 			if(result > 0) {
-				request.getSession().setAttribute("alertMsg", "상품이 성공적으로 등록 되었습니다.");
-				request.getRequestDispatcher("views/product/productSellSuccess.jsp").forward(request, response);
+				request.getSession().setAttribute("alertMsg", "상품이 등록되었습니다.");
+				response.getWriter().print(result);
 			} else {
 				System.out.println("실패");
 			}
-			
 		}
 		
 	}

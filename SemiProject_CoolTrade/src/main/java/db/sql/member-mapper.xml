@@ -1397,9 +1397,23 @@
 		UPDATE LIKE_PRODUCT
 		   SET LIKE_STATUS = 'N'
 		 WHERE USER_NO = ?
-		   AND PRODUCT_NO IN (?)
+		   AND PRODUCT_NO = ?
 	</entry>
 		 
+	<entry key="allDeleteLikePo">
+		UPDATE LIKE_PRODUCT
+		   SET LIKE_STATUS = 'N'
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="selectLikePo">
+		SELECT
+		       COUNT(*) COUNT
+		  FROM LIKE_PRODUCT
+		 WHERE PRODUCT_NO = ?
+		 GROUP
+		    BY PRODUCT_NO
+	</entry>
 	
 	
 </properties>

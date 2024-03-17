@@ -851,7 +851,8 @@ public class ProductDao {
          while(rset.next()) {
             Product p = new Product();
             p.setProductNo(rset.getInt("product_no"));
-            p.setCategoryNo(rset.getString("category_name"));
+            p.setCategoryNo(rset.getString("category_no"));
+            p.setCategoryName(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
             p.setPrice(rset.getInt("price"));
             p.setProductDesc(rset.getString("product_desc"));
@@ -873,7 +874,7 @@ public class ProductDao {
          close(rset);
          close(pstmt);
       }
-      System.out.println(pList);
+      //System.out.println(pList);
       return pList;
    }
    
@@ -960,6 +961,7 @@ public class ProductDao {
       } finally {
          close(pstmt);
       }
+      System.out.println("이미지수정다오:" + result);
       return result;
    }
    
@@ -980,7 +982,7 @@ public class ProductDao {
       } finally {
          close(pstmt);
       }
-      System.out.println("딜리트다오리절트 : " + result);
+      System.out.println("이미지삭제다오 : " + result);
       return result;
    }
    

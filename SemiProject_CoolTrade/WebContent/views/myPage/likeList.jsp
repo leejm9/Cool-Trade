@@ -386,30 +386,36 @@
                				checkedBox.splice(index, 1);
                			}
                		}
-					console.log(checkedBox);
+					//console.log(checkedBox);
+                	//console.log(checkedBox.join(','));
 					//return checkedBox;
 				}
 				
                 // 선택삭제 이벤트
                 function checkDelete(num){
                 	console.log(checkedBox);
-                	if(confirm("찜을 해제하시겠습니까?")){
-	                	$.ajax({
-                			url:"ajaxCheckDelete.me",
-                			data:{
-                				uno:num,
-                				pno:checkedBox,
-                			},
-                			type:"post",
-                			traditional: true,
-                			success:function(result){
-                				alert("찜이 해제되었습니다.");
-                				location.reload();
-                			}
-                		})
+                	if(checkedBox.length > 0){
+	                	if(confirm("찜을 해제하시겠습니까?")){
+		                	$.ajax({
+	                			url:"ajaxCheckDelete.me",
+	                			data:{
+	                				uno:num,
+	                				pno:checkedBox,
+	                			},
+	                			type:"post",
+	                			traditional: true,
+	                			success:function(result){
+	                				alert("찜이 해제되었습니다.");
+	                				location.reload();
+	                			}
+	                		})
+	                	} else {
+	                		console.log("취소");
+	                	}
                 	} else {
-                		console.log("취소");
+                		alert("선택한 상품이 없습니다.");
                 	}
+                	
                 }
                 
                 // 전체삭제 이벤트

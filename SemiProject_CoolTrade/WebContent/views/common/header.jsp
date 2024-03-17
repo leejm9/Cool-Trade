@@ -373,7 +373,7 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     style="padding: 5px"
                     alt="좋아요 이미지"
                   />
-                  <div style="padding-top: 3px"><%= headerCo %></div>
+                  <div style="padding-top: 3px" onchange="likePoCount(this);"><%= headerCo %></div>
                 </a>
                 <% } %>
               </div>
@@ -530,15 +530,10 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
                   fetchSliderData();
                 });
+                
               </script>
             </div>
           </div>
         </div>
       </body>
-<<<<<<< HEAD
     </html>
-  </RecentProducts></RecentProducts
->
-=======
-    </html>
->>>>>>> cr

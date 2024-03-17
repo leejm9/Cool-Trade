@@ -377,7 +377,7 @@
 	                                	<%= p.getStrPrice() %>원
 	                                </td>
 	                                
-	                                <td>3</td>
+	                                <td><%= p.getCount() %></td>
 	                                	<% if(p.getTradeType() == 1) { %>
 	                                		<td>X</td>
 	                                	<% } else { %>
@@ -426,9 +426,6 @@
                                     
 	                                </td>
 
-
-
-
 	                                <td>
 	                                    <div>
 	                                        <button type="button" class="func-btn" onclick="updateBtn(this, <%= p.getProductNo() %>);">수정</button>
@@ -437,8 +434,6 @@
 	                                        <button type="button" class="func-btn" onclick="deleteBtn(<%= p.getProductNo() %>);">삭제</button>
 	                                    </div>                                   
 	                                </td>
-	                                
-	                                
 	                                
                             	</tr>
                             <% } %>

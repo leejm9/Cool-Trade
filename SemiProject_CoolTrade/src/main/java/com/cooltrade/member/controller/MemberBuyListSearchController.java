@@ -65,7 +65,7 @@ public class MemberBuyListSearchController extends HttpServlet {
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		request.setAttribute("checkNum", checkNum);
-		System.out.println(checkNum);
+		//System.out.println(checkNum);
 		
 		request.getRequestDispatcher("views/myPage/buyList.jsp").forward(request, response);
 	

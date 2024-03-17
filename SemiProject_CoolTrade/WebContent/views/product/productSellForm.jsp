@@ -140,7 +140,7 @@
         width: 160px;
         height: 160px;
         /* border: 1px solid #cfcfcf; */
-        display: none;
+        display: block;
         position: relative;
     }
     
@@ -564,7 +564,7 @@
 	<% int userNo = loginUser.getUserNo(); %>
 	
 
-    <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
+    <%-- <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data"> --%>
     <input type="hidden" name="seller" value="<%= userNo %>">
         <div id="wrap" style="margin-top: 180px;">
             <div id="main-content" class="flex-class">
@@ -587,65 +587,79 @@
                                     
                                         <div id="fileInput-div">
                                             <input type="file" id="fileInput" accept="image/*" name="files" multiple>
-                                            <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+                                            <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg" onclick="uploadAction();">
                                         </div>
-
+										
                                     </div>
                                 </div>
 
                                 <script>
-
-                                    // 이미지 클릭 시 업로드창 열린다     
-                                    $("#fileImg").click(function() {
-                                    	$("#fileInput").click();
-                                    	//index++;
-                                    });
                                     
                                     // 이미지를 담을 배열
                                     let sel_files = [];
                                     
-                                    
-                                    
-                                    
-                                    // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
-                                    const fileDOMs = document.querySelectorAll(".hidden-file-input");
-                                    const previews = document.querySelectorAll('.hidden-img');
-                                    const $previewsDiv = $(".hidden-div");
-                            
-                                    fileDOMs.forEach((fileDOM, i) => {
-	                                    fileDOM.addEventListener('change', () => {
-	                                        const reader = new FileReader();
-	                                        reader.onload = ({ target }) => {
-	                                            previews[i].src = target.result;
-	                                            $($previewsDiv[i]).css('display', 'block');
-	                                            count++;
-	                                            index++;
-	                                            
-	                                            $("#imgCount").html("(" + count + "/5)");
-	                                            console.log("미리보기카운트+ " + count);
-	                                            console.log("FileInput" + index);
-	                                            
-	                                        };
-	                                        reader.readAsDataURL(fileDOM.files[0]);
-	                                    });
+                                    // 페이지가 시작되면 fileInput 요소에 Change 이벤트 설정
+                                    $(document).ready(function(){
+                                    	$("#fileInput").on("change", handleImgFileSelect);
                                     });
-
-                                    function deleteBtn(btn){
-                                        const closeBtn = btn;                                        
-                                        const $prevImg = $(closeBtn).prev('.hidden-img');
-    									const $previewDiv = $(closeBtn).parent();
-                                        $prevImg.attr('src', '');
-                                        $(closeBtn).parent().css('display', 'none');
-                                        //$previewDiv.find('.hidden-img').attr('src', '#');
-                                        count--;
-                                        index--;
-                                        $("#fileInput" + index).val("");
-                                        $("#imgCount").html("(" + count + "/5)");
-                                        
-                                        console.log("미리보기카운트- " + count);
-                                        console.log("FileInput" + index);
-                                    };
                                     
+                                    function uploadAction(){
+                                    	$("#fileInput").trigger("click");
+                                    }
+                                    
+                                    function handleImgFileSelect(e){
+                                    	// 이미지 정보 초기화
+                                    	//sel_files = [];
+                                    	let files = e.target.files;
+                                    	let filesArr = Array.prototype.slice.call(files);
+                                    	
+                                        // 현재 선택된 이미지 개수 확인
+                                        let currentImageCount = sel_files.length;
+                                        let remainingImageCount = 5 - currentImageCount;
+
+                                        // 파일 개수가 5개 이상인 경우 추가하지 않음
+                                        if (filesArr.length > remainingImageCount) {
+                                            alert("이미지는 최대 5개까지 업로드 가능합니다.");
+                                            return;
+                                        }
+                                    	
+                                    	filesArr.forEach(function(f){
+                                    	
+                                    		sel_files.push(f);
+                                    		console.log(sel_files);
+                                    		
+                                    		let reader = new FileReader();
+                                    		reader.onload = function(e){
+                                    			let index = sel_files.length;
+	                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+index+"\">"+
+			                                            		"<img src=\""+e.target.result+"\" class=\"hidden-img\">"+
+			                                            		"<button type=\"button\" class=\"hidden-btn\" onclick=\"deleteBtn(this, "+index+");\"></button>"+
+			                                        		"</div>";
+	                                   			$("#sell-fileInput-div").append(html);
+	                                   			$("#imgCount").html("(" + sel_files.length + "/5)");
+                                   			
+                                    		}
+											reader.readAsDataURL(f);                        		
+                                    	}) 
+                                    }
+                                    
+                                    function deleteBtn(e, index){
+                                    	//console.log(e);
+                                        
+                                        let $imgDiv = $(e).closest('.hidden-div'); // 현재 클릭된 이미지의 부모 div 요소를 선택
+                                        console.log("div인덱스 : " + $($imgDiv).index());
+                                        
+                                        // 배열에서 해당 인덱스의 이미지 제거
+									    let indexToRemove = $($imgDiv).index(); // div의 인덱스
+									    sel_files.splice(indexToRemove - 1, 1);
+									    
+									    // 선택한 div 삭제
+									    $imgDiv.remove();
+									    
+                                    	console.log(sel_files);
+                                    	$("#imgCount").html("(" + sel_files.length + "/5)");
+                                    }
+	                                    
                                 </script>
 
                                 <div id="sell-section-product-name" class="flex-class">
@@ -664,23 +678,27 @@
                                 </div>
                                 
                                 <script>
-                                	
+                                	let poName = null;	
+                                
 	                                $(function(){
 	                                    $("#titleInput").on("input", function() {
 	                                        var length = $(this).val().length;
 	                                        $("#sell-section-product-name-input-limit").text(length + "/40");
+			                                poName = $("#titleInput").val();
 	                                    });
 	                                });
-                                
+	                                
+	                                
+	                                
                                 </script>
 
                                 <div id="sell-section-category" class="flex-class">
                                     <div id="sell-section-category-title">
-                                    	<input type="hidden" id="categoryTest" name="category">
                                         카테고리
                                         <span class="redColor">*</span>
                                     </div>
                                     <div id="sell-section-category-select">
+                                    	<input type="hidden" id="categoryTest" name="category">
                                         <div id="sell-section-category-select-list" value="category">
                                             <ul>
                                                 <% for(Category c : list) { %>
@@ -699,40 +717,6 @@
                                 </div>
 
                                 <script>  
-                                    /*
-                                    // 카테고리 선택 요소에 대한 클릭 이벤트 처리
-                                    document.querySelectorAll('#sell-section-category-select-list div').forEach(item => {
-                                        item.addEventListener('click', event => {
-                                            // 선택한 카테고리의 이름을 가져와서 표시
-                                            $("#select-category").click();
-
-                                            var categoryName = event.target.value;
-                                            document.getElementById('select-category-name').textContent = categoryName;
-                                           
-                                            
-                                        });
-                                    });
-
-                                    document.addEventListener("DOMContentLoaded", function() {
-                                        // 각 카테고리 이름 div 요소들을 선택합니다.
-                                        var categoryNameDivs = document.querySelectorAll("#sell-section-category-select-list div");
-
-                                        // 각 div 요소에 클릭 이벤트를 추가합니다.
-                                        categoryNameDivs.forEach(function(div) {
-                                            div.addEventListener("click", function() {
-                                                // 해당 div의 값을 가져옵니다.
-                                                var categoryName = div.textContent;
-                                                // 해당 div의 상위 요소인 li에서 input을 찾아서 클릭합니다.
-                                                var input = div.parentElement.querySelector("input[type='hidden']");
-                                                input.click();
-                                                
-                                                // 선택한 카테고리의 이름을 표시합니다.
-                                                var selectCategoryNameElement = document.getElementById("select-category-name");
-                                                selectCategoryNameElement.textContent = categoryName;
-                                            });
-                                        });
-                                    });
-                                    */
                                     
                                     document.addEventListener('DOMContentLoaded', function() {
                                     	
@@ -744,20 +728,18 @@
                                         // 각 버튼에 클릭 이벤트 리스너 추가
                                         selectButtons.forEach(function(button) {
                                             button.addEventListener('click', function() {
-                                            	console.log("zz")
-                                            	console.log(this.nextElementSibling.value)
+                                            	//console.log(this.nextElementSibling.value)
                                             	categoryTest.value = this.nextElementSibling.value;
-                                            	console.log(categoryTest);
+                                            	//console.log(categoryTest);
                                                 var categoryName = this.innerHTML; // 클릭된 버튼의 값(카테고리 닉네임)
                                                 var categoryNoInput = this.nextElementSibling; // 클릭된 버튼 다음에 있는 숨겨진 input 요소
                                                 var categoryNo = categoryNoInput.value; // 숨겨진 input 요소의 값(카테고리 번호)
                                                 
                                                 
                                                 // 선택한 카테고리 닉네임을 select-category-name div에 표시
-                                                console.log(categoryNo);
-                                                console.log(categoryName);
+                                                //console.log(categoryNo);
+                                                //console.log(categoryName);
                                                 categoryVal.value = categoryNo;
-                                                console.log(categoryVal.value);
                                                 categoryNameDisplay.textContent = categoryName;
                                                 
                                             });
@@ -953,7 +935,7 @@
                             <div id="cool-trade-option-ex">
                                 <div class="flex-class" id="cool-trade-btn">
                                     <div>
-                                        <input type="checkbox" name="coolTrade" value="2">
+                                        <input type="checkbox" id="coolTrade" name="coolTrade" value="2">
                                     </div>
                                     <div id="cool-trade-btn-title">쿨거래</div>
                                 </div>
@@ -999,11 +981,80 @@
 
         <div id="footer-content-cr">
             <div id="footer-content-div">
-                <button type="button" id="save">임시저장</button>
-                <button type="submit" id="enroll">등록하기</button>
+                <button type="reset" id="save" onclick="testbtn();">초기화</button>
+                <button type="button" id="enroll" onclick="submit();">등록하기</button>
             </div>
         </div>
-    </form>
+    
+    <script>
+    
+    	// 상품상태
+    	let poStatus = null;
+    	
+       	$("[name=status]").click(function(){
+               poStatus = $("[name=status]:checked").val();
+       	})
+       	
+       	// 배송비
+       	let poDelivery = null;
+    	
+       	$("[name=deliveryCharge]").click(function(){
+       		poDelivery = $("[name=deliveryCharge]:checked").val();
+       	})
+       	
+	    function submit(){
+       		/*
+	    	console.log(sel_files); // 이미지가 담긴 배열
+	    	console.log(poName); // 상품명
+	    	console.log(categoryTest.value); // 카테고리
+	    	console.log(poStatus); // 상품상태
+	    	console.log($("#numberInput").val()); // 가격
+	    	console.log(poDelivery); // 배송비
+	    	console.log($("#contentInput").val()); // 설명
+	    	console.log($("#numberInput2").val()); // 수량
+	    	console.log($("#trade-zone").val()); // 거래지역
+	    	console.log($("#coolTrade").val()); // 쿨거래여부
+       		*/
+       	    // 이미지 파일을 FormData에 추가
+       	    let formData = new FormData();
+       	    for (let i = 0; i < sel_files.length; i++) {
+       	        formData.append('image'+(i+1), sel_files[i]);
+       	    }
+       	    
+       	    // value 추가
+       	    formData.append('title', poName);
+       	    formData.append('category', categoryTest.value);
+       	    formData.append('status', poStatus);
+       	    formData.append('price', $("#numberInput").val());
+       	    formData.append('deliveryCharge', poDelivery);
+       	    formData.append('content', $("#contentInput").val());
+       	    formData.append('pieces', $("#numberInput2").val());
+       	    formData.append('zone', $("#trade-zone").val());
+       	    formData.append('trade', $("#coolTrade").val());
+	    	formData.append('seller', <%= userNo %>);
+	    	
+	    	for (let pair of formData.entries()) {
+	    	    console.log(pair[0] + ', ' + pair[1]); // key, value 출력
+	    	}
+	    	
+			/*
+	    	$.ajax({
+	    		url:"sellinsert.po",
+	    		data:formData,
+	    		type:"POST",
+	    		processData: false,  // FormData를 바로 전송하기 위해 false로 설정
+	            contentType: false,	 // 컨텐츠 타입 설정
+	            success:function(result){
+	            	window.location.href = "insertSuccess.po";
+	            },
+	            error:function(){
+	            	console.log("실패");
+	            }
+	    	});*/
+			
+	    }
+    
+    </script>
     
     <%@ include file="../common/footer.jsp" %>
 

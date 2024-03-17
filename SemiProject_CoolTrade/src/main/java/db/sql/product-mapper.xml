@@ -404,6 +404,7 @@
 	<entry key="updateSellForm">
 		SELECT
 			   PRODUCT_NO
+			 , CATEGORY_NO
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
 		     , PRICE

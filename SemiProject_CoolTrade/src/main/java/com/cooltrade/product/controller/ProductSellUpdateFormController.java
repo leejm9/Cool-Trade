@@ -41,7 +41,7 @@ public class ProductSellUpdateFormController extends HttpServlet {
 		int pno = Integer.parseInt(request.getParameter("pno"));
 		ArrayList<Product> pList = new ProductService().updateSellForm(pno);
 		request.setAttribute("pList", pList);
-		System.out.println(pList);
+		//System.out.println(pList);
 		
 		ArrayList<Category> list = new ProductService().selectCategoryList();
 		request.setAttribute("list", list);

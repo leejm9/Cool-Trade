@@ -205,7 +205,7 @@ public class ProductService {
 
 	public ArrayList<Product> updateSellForm(int pno) {
 		Connection conn = getConnection();
-		System.out.println("서비스 pno : " + pno);
+		//System.out.println("서비스 pno : " + pno);
 		ArrayList<Product> pList = new ProductDao().updateSellForm(conn, pno);
 
 		close(conn);
@@ -221,7 +221,7 @@ public class ProductService {
 		} else {
 			rollback(conn);
 		}
-		System.out.println("딜리트서비스리절트 : " + result);
+		//System.out.println("딜리트서비스리절트 : " + result);
 		close(conn);
 		return result;
 	}

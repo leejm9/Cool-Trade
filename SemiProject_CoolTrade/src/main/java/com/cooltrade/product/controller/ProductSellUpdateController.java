@@ -88,15 +88,15 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			ArrayList<Images> list = new ArrayList<Images>();
 			
+			int del = new ProductService().deleteProductSellImage(pno);
+			
 			for(int i=0; i<5; i++) {
 				String key = "image" + (i + 1);
-				System.out.println(key);
+				//System.out.println(key+": "+multiRequest.getOriginalFileName(key));
 				
 				if(multiRequest.getOriginalFileName(key) != null) { // 새로넘어온 첨부파일이 있을 경우
 					
 					System.out.println("새로넘어온 첨부파일 있음");
-					
-					int del = new ProductService().deleteProductSellImage(pno);
 					
 					if(del > 0) { // 기존 첨부파일 삭제 성공
 						System.out.println("기존 이미지 삭제");
@@ -107,7 +107,7 @@ public class ProductSellUpdateController extends HttpServlet {
 						img.setChangeName(multiRequest.getFilesystemName(key));
 						img.setImgPath("resources/images_upfiles/");
 						
-						if(i == 1) {
+						if(i == 0) {
 							img.setImgLevel(1);
 						} else {
 							img.setImgLevel(2);
@@ -119,7 +119,6 @@ public class ProductSellUpdateController extends HttpServlet {
 						System.out.println("기존 이미지 삭제 실패");
 					}
 					
-					
 				} 
 			} 
 			
@@ -127,9 +126,9 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			if(result > 0) {
 				request.getSession().setAttribute("alertMsg", "상품이 수정되었습니다.");
-				request.getRequestDispatcher("views/product/productSellSuccess.jsp").forward(request, response);
+				response.getWriter().print(result);
 			} else {
-				System.out.println("실패");
+				System.out.println("업데이트실패");
 			}
 			
 		}

@@ -25,6 +25,7 @@ public class Product {
 	private String sellStatus;
 	private String titleImg;
 	private String strPrice;
+	private String categoryName;
 	
 	public Product() {}
 	
@@ -106,7 +107,7 @@ public class Product {
 	public Product(int productNo, String sellerNo, String categoryNo, String productName, int price, String productDesc,
 			String zone, int count, String productStatus, String uploadDate, String uploadType, double ondo,
 			String timeDiff, int salesRate, int tstockgoods, int reportedProduct, int tradeType, String monthSales,
-			int deliveryCharge, int pieces, String sellStatus, String titleImg, String strPrice) {
+			int deliveryCharge, int pieces, String sellStatus, String titleImg, String strPrice, String categoryName) {
 		super();
 		this.productNo = productNo;
 		this.sellerNo = sellerNo;
@@ -131,6 +132,7 @@ public class Product {
 		this.sellStatus = sellStatus;
 		this.titleImg = titleImg;
 		this.strPrice = strPrice;
+		this.categoryName = categoryName;
 	}
 
 	public int getProductNo() {
@@ -315,6 +317,14 @@ public class Product {
 
 	public void setStrPrice(String strPrice) {
 		this.strPrice = strPrice;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 	@Override
