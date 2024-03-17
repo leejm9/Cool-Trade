@@ -73,4 +73,16 @@ public class ChatService {
 		return user;
 	}
 	
+	public int updateReadCheck(String loginUser,int chatRoomNo) {
+		Connection conn = getConnection();
+		
+		int result = new ChatDao().updateReadCheck(conn,loginUser,chatRoomNo);
+		if(result >0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 }

@@ -64,6 +64,7 @@
 	text-align: center;
 	font-weight: 2;
 }
+
 </style>
 </head>
 <body>
@@ -95,14 +96,14 @@
 					<%}else{ %>
 					<!-- case2. 로그인 후 -->
 					<div class="headerLogin-ds">
-						<button class="loginBtn-ds"
-							style="border-bottom: 1px solid rgb(238, 238, 238)">
-							알림</button>
+						<button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238)" onclick="toggleNotification()">알림</button>
 						<button class="loginBtn-ds"
 							style="border-bottom: 1px solid rgb(238, 238, 238)"
 							onclick="location.href='<%=contextPath%>/logout.me'">
 							로그아웃</button>
 					</div>
+					
+
 
 					<div id="headerStore-ds" class="flex-ds">
 						<% if(loginUser.getUserName().equals("관리자")) { %>

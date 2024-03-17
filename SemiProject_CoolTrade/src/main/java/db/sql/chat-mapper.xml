@@ -90,4 +90,11 @@
 		  FROM CHATROOM
 		 WHERE CHATROOM_NO = ?
 	</entry>
+	
+	<entry key="updateReadCheck">
+		UPDATE MESSAGE
+		   SET READ_YN = 'Y'
+		 WHERE SENDER != ?
+		   AND CHATROOM_NO = ?
+	</entry>
 </properties>

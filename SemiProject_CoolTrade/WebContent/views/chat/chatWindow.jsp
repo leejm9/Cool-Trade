@@ -106,6 +106,19 @@ pageEncoding="UTF-8"%>
             background-color: #04b4fc;
             color: black;
         }
+        .info {
+            display: flex;
+            flex-direction : column;
+            margin-right: 5px;
+            margin-left: 5px;
+        }
+        .timestamp{
+		    white-space: nowrap;
+		    padding: 0px 5px 0px 0px;
+		}
+		.read-status{
+			padding: 0px 5px 0px 0px;
+		}
     </style>
 </head>
 <body>
@@ -146,21 +159,30 @@ pageEncoding="UTF-8"%>
     		var pno = $("#seller").val();		// 판매자
             		$.ajax({
             			url:"message.in",
-            			data:{userId: user,
+            			data:{loginUser:userId,
+            				  userId: user,
             				  pno:pno},
             			success:function(list){
             				let value = ""
             				for(let i=0; i<list.length; i++){
             					if(list[i].sender == userId){
             						value += '<div class="chat ch2">' 
-		            				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
-		            				      +  '<div class="textbox">' + list[i].message + '</div>' 
-		            				      +  '</div>';
+                    				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
+                    				      +  '<div class="textbox">' + list[i].message + '</div>' 
+                    				      +  '<div class="info">'
+                    				      +  '<div class="timestamp">' + getCurrentTime() + '</div>'
+                    				      +  '<div class="read-status" style="text-align: right;"><p style="color:yellow">' + (list[i].readYn == 'N' ? 1 : '') + '</p></div>' 
+                    				      +  '</div>'
+                    				      +  '</div>';	
             					}else{
             						value += '<div class="chat ch1">' 
-		            				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
-		            				      +  '<div class="textbox">' + list[i].message + '</div>' 
-		            				      +  '</div>';	
+                  				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
+                  				      +  '<div class="textbox">' + list[i].message + '</div>' 
+                  				      +  '<div class="info">'
+                  				      +  '<div class="timestamp">' + getCurrentTime() + '</div>'
+                  				      +  '<div class="read-status" style="text-align: left;"><p style="color:yellow">' + (list[i].readYn == 'N' ? 1 : '') + '</p></div>' 
+                  				      +  '</div>'
+                  				      +  '</div>';		
             					}  
             							 
             				}
@@ -189,8 +211,11 @@ pageEncoding="UTF-8"%>
                 var userIcon = $('<i>').addClass('fa-solid fa-user').text(userId); // 유저 아이콘은 userId로 설정
                 iconDiv.append(userIcon);
                 var textboxDiv = $('<div>').addClass('textbox').text(response.message); 
-                var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime()); 
-                chatDiv.append(iconDiv, textboxDiv, timestampDiv);
+                var timestampDiv = $('<div>').addClass('timestamp').text(getCurrentTime());
+                var readStatusDiv = $('<div>').addClass('read-status').text('1');
+                var infoDiv = $('<div>').addClass('info'); // 새로운 div 추가
+                infoDiv.append(timestampDiv, readStatusDiv);
+                chatDiv.append(iconDiv, textboxDiv, infoDiv);
 
                 $('.wrap').append(chatDiv); // 채팅창에 메시지 추가
                 console.log(chatDiv);
@@ -202,14 +227,19 @@ pageEncoding="UTF-8"%>
             }
         });
     }
-    
+	
     function getCurrentTime() {
         var now = new Date();
-        var hours = now.getHours().toString().padStart(2, '0');
-        var minutes = now.getMinutes().toString().padStart(2, '0');
-        return hours + ':' + minutes;
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var ampm = hours >= 12 ? '오후' : '오전';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 시간은 12시로 표시
+        minutes = minutes < 10 ? '0' + minutes : minutes; // 분이 한 자리 숫자인 경우 앞에 0을 추가
+        var timeString = ampm + ' ' + hours + ':' + minutes;
+        return timeString;
     }
-
+    
     function scrollToBottom() {
         var wrap = $('.wrap')[0];
         wrap.scrollTop = wrap.scrollHeight;

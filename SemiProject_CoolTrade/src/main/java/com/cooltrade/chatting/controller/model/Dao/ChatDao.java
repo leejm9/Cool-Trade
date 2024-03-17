@@ -220,4 +220,25 @@ public class ChatDao {
 		}
 		return userInfo;
 	}
+	
+	public int updateReadCheck(Connection conn, String loginUser, int chatRoomNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateReadCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, loginUser);
+			pstmt.setInt(2, chatRoomNo);
+			System.out.println(loginUser);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }
