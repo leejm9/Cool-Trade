@@ -42,10 +42,11 @@ public class ReportController extends HttpServlet {
 		int check = new ReportService().checkReport(reporterNo,pno);
 		if(check > 0) {
 			session.setAttribute("alertMsg", "이미 신고된 게시물입니다.");
-			int result = new ReportService().insertReport(pno,reporterNo,reportCate,reportContent);
+			
 			response.sendRedirect(request.getContextPath() + "/detail.po?pno=" + pno);
 		}else {
 			System.out.println("!!!");
+			int result = new ReportService().insertReport(pno,reporterNo,reportCate,reportContent);
 			session.setAttribute("alertMsg", "성공적으로 신고가 완료되었습니다.");
 			response.sendRedirect(request.getContextPath() + "/detail.po?pno=" + pno);
 		}

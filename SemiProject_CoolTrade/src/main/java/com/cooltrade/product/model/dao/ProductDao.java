@@ -1331,4 +1331,29 @@ public class ProductDao {
 		return list;
 	}
 	
+	public int getReportedUserNo(Connection conn, int pno) {
+		int userNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getReportedUserNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				userNo = rset.getInt("seller_no");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return userNo;
+	}
+	
 }

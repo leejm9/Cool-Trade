@@ -124,7 +124,7 @@ public class ChatDao {
 			while(rset.next()) {
 				list.add(new Chat(rset.getInt("message_no"),
 								  rset.getString("message"),
-								  rset.getDate("message_date"),
+								  rset.getString("message_date"),
 								  rset.getString("read_yn"),
 								  rset.getInt("chatroom_no"),
 								  rset.getString("sender")
@@ -253,16 +253,20 @@ public class ChatDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			pstmt.setString(1, loginUser);
+			pstmt.setString(2, loginUser);
+			pstmt.setString(3, loginUser);
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				list.add(new Chat(rset.getInt("message_no"),
 								  rset.getString("message"),
-								  rset.getDate("message_date"),
+								  rset.getString("message_date"),
 								  rset.getString("read_yn"),
 								  rset.getInt("chatroom_no"),
-								  rset.getString("sender")
+								  rset.getString("sender"),
+								  rset.getString("user_id"),
+								  rset.getString("seller_id")
 								  ));
 			}
 		} catch (SQLException e) {

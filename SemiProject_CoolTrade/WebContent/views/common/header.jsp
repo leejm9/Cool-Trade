@@ -75,7 +75,9 @@
     z-index: 999;
     display: none;
     overflow: auto;
-    left:550px;
+    left:850px;
+    top:40px;
+   
 }
 
 .notification.hidden {
@@ -98,15 +100,18 @@
     text-overflow: ellipsis;
     font-size: 10px;
 }
-
+.content_0{
+	width:10%;
+	float: left;
+}
 .content_1 {
-    width: 70%;
+    width: 50%;
     float: left;
 }
 
 .content_2, .content_3 {
     text-align: center;
-    width: 15%;
+    width: 20%;
     float: left;
     
 }
@@ -165,8 +170,8 @@
 					</div>
 					<%}else{ %>
 					<!-- case2. 로그인 후 -->
-					<div class="headerLogin-ds">
-                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);" onclick="toggleNotification()">알림<div id="alarmCount" style="border:1px solid red;, border-radius: 30px;"></div> </button>
+					<div class="headerLogin-ds" style="white-space:nowrap;" >
+                        <button class="loginBtn-ds" style="border-bottom: 1px solid rgb(238, 238, 238);" onclick="toggleNotification()">알림&nbsp;<div id="alarmCount" style="background-color:red; color:white; border: 1px solid red; border-radius: 50px; display: inline-block; padding: 0px 14px 0px 5px; width:15px;, height:0px; text-align:10px;">0</div> </button>
                         <div id="notification" class="notification hidden" style="border:1px solid  #ddd; ">
 						    <div class="close-container"><span class="close" onclick="closeNotification()" style="line-height:20px" >×</span></div>
 						    <div class="content-container">
@@ -181,6 +186,9 @@
 						$(function(){
 							getAlarm();
 							setInterval(getAlarm,2000);
+							
+								console.log("오냐");
+							
 						})	
 						
 						function getAlarm(){
@@ -190,14 +198,23 @@
 		            			data:{loginUser:userId},
 		            			success: function(list) {
 		            			    let value = "";
-		            			    for(let i = 0; i < list.length; i++) {
-		            			        value += '<div class="content">' +
-		            			                    '<div class="content_1" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].message + '</div>' +
-		            			                    '<div class="content_2" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].messageDate + '</div>' +
-		            			                    '<div class="content_3" style="border-top: 1px solid rgb(204, 203, 203);">' + list[i].sender + '</div>' +
-		            			                 '</div>';
+		            			    if(list.length !== 0){
+			            			    for(let i = 0; i < list.length; i++) {
+			            			        value += '<div class="content">' +
+			            			        			'<div class="content_0" style="border-top: 1px solid rgb(204, 203, 203); border-right: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203); ">' + (userId === list[i].userId ? '구매' : '판매') + '</div>' + 
+			            			                    '<div class="content_1" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);" onclick="goChatRoom();">&nbsp;' + list[i].message + '</div>' +
+			            			                    '<div class="content_2" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' + list[i].messageDate + '</div>' +
+			            			                    '<div class="content_3" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' + list[i].sender + '</div>' +
+			            			                    '<input type="hidden" id="chatRoomNo" value="' + list[i].chatRoomNo +'" >' +
+			            			                    '<input type="hidden" id="userId" value="' + list[i].userId +'" >' +
+			            			                    '<input type="hidden" id="sellerId" value="' + list[i].sellerId +'" >' +
+			            			                 '</div>';
+			            			    }
+		            			        $(".content-container").html(value);
+		            			    }else{
+		            			    	$(".content-container").html('받은 알림이 없습니다');
 		            			    }
-		            			    $(".content-container").html(value);
+		            			   
 		            			    $("#alarmCount").html(list.length);
 		            			},error:function(){
 		            				console.log("ajax 통신 실패");
@@ -214,15 +231,21 @@
 						  var notification = document.getElementById("notification");
 						  notification.classList.remove("show");
 						}
+						function goChatRoom(){
+				    		const num = $("#chatRoomNo").val();
+				    		const userId = $("#userId").val();
+				    		const sellerId = $("#sellerId").val();
+				    		location.href = '<%= contextPath %>/chatroom.in?userId=' + userId + '&pno=' + sellerId;
+				    	}; 
+						
 					</script>
 
-
-					<div id="headerStore-ds" class="flex-ds">
+					<div id="headerStore-ds" class="flex-ds" style="white-space:nowrap;">
 						<% if(loginUser.getUserName().equals("관리자")) { %>
 						<a href="<%= contextPath %>/manager.in" id="headerMyStore-ds"
 							class="flex-ds">마이페이지</a>
 						<% }else{ %>
-						<a
+						<a 
 							href="<%= contextPath %>/mypage.me?uno=<%= loginUser.getUserNo() %>"
 							id="headerMyStore-ds" class="flex-ds">마이페이지</a>
 						<% } %>

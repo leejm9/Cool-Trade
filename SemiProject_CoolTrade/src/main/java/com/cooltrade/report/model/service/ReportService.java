@@ -54,4 +54,16 @@ public class ReportService {
 		close(conn);
 		return list;
 	}
+	
+	public int updateReport(int pno) {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().updateReport(conn, pno);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 }

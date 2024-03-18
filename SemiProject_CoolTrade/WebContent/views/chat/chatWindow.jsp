@@ -170,7 +170,7 @@ pageEncoding="UTF-8"%>
                     				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
                     				      +  '<div class="textbox">' + list[i].message + '</div>' 
                     				      +  '<div class="info">'
-                    				      +  '<div class="timestamp">' + getCurrentTime() + '</div>'
+                    				      +  '<div class="timestamp">' + list[i].messageDate + '</div>'
                     				      +  '<div class="read-status" style="text-align: right;"><p style="color:yellow">' + (list[i].readYn == 'N' ? 1 : '') + '</p></div>' 
                     				      +  '</div>'
                     				      +  '</div>';	
@@ -179,7 +179,7 @@ pageEncoding="UTF-8"%>
                   				      +  '<div class="icon"><i class="fa-solid fa-user">' + list[i].sender + '</i></div>' 
                   				      +  '<div class="textbox">' + list[i].message + '</div>' 
                   				      +  '<div class="info">'
-                  				      +  '<div class="timestamp">' + getCurrentTime() + '</div>'
+                  				      +  '<div class="timestamp">' + list[i].messageDate + '</div>'
                   				      +  '<div class="read-status" style="text-align: left;"><p style="color:yellow">' + (list[i].readYn == 'N' ? 1 : '') + '</p></div>' 
                   				      +  '</div>'
                   				      +  '</div>';		

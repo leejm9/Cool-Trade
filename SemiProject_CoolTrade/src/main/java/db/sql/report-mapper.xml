@@ -45,7 +45,7 @@
 	</entry>
 	
 	<entry key="checkReport">
-		SELECT COUNT(REPORT_NO) count
+		SELECT COUNT(*) count
 		  FROM REPORT
 		 WHERE REPORTER = ?
 		   AND PRODUCT_NO = ?
@@ -56,6 +56,7 @@
 		       COUNT(*) count
 		  FROM REPORT
 		  JOIN REPORT_TYPE USING(REPORT_TYPE_NO)
+		 WHERE REPORT_STATUS = 'Y'
 	</entry>
 	
 	<entry key="selectReportList">
@@ -74,6 +75,7 @@
 		  				 JOIN REPORT_TYPE USING(REPORT_TYPE_NO)
 		  				 JOIN MEMBER M ON (R.REPORTER = M.USER_NO)
 		  				 JOIN PRODUCT P ON (R.PRODUCT_NO = P.PRODUCT_NO)
+		  				WHERE REPORT_STATUS = 'Y'
 		                 ORDER
 		                    BY 5 DESC
 		                    ) A
@@ -81,5 +83,17 @@
 		 WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+	<entry key="updateReport">
+		UPDATE MEMBER
+		   SET CAUTION = CAUTION + 1
+		 WEHRE USER_NO = ?
+	</entry>
+	
+	<entry key="getReportedUserNo">
+		SELECT
+		       SELLER_NO
+		  FROM PRODUCT
+		 WHERE PRODUCT_NO = ?
+	</entry>
 	
 </properties>

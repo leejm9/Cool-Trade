@@ -1,29 +1,27 @@
-package com.cooltrade.chatting.controller;
+package com.cooltrade.report.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.chatting.controller.model.Service.ChatService;
-import com.cooltrade.chatting.controller.model.vo.Chat;
-import com.google.gson.Gson;
+import com.cooltrade.product.model.service.ProductService;
+import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.report.model.service.ReportService;
 
 /**
- * Servlet implementation class AjaxGetAlarmController
+ * Servlet implementation class ReportCheckController
  */
-@WebServlet("/alarm.in")
-public class AjaxGetAlarmController extends HttpServlet {
+@WebServlet("/report.check")
+public class ReportCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AjaxGetAlarmController() {
+    public ReportCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,10 +30,12 @@ public class AjaxGetAlarmController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String loginUser = request.getParameter("loginUser");
-		ArrayList<Chat> list = new ChatService().getAlarm(loginUser);
-		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(list,response.getWriter());
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		int userNo = new ProductService().getReportedUserNo(pno);
+		
+		int result = new ReportService().updateReport(userNo);
+		
+		
 	}
 
 	/**
