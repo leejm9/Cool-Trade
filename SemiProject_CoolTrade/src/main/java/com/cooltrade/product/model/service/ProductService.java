@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
@@ -502,4 +503,13 @@ public class ProductService {
 		}
 		return result;
 	}
+	
+	public ArrayList<DeliveryAddress> getAddressList(int uno) {
+		Connection conn = getConnection();
+		ArrayList<DeliveryAddress> addressList = new ProductDao().getAddressList(conn, uno);
+		
+		close(conn);
+		return addressList;
+	}
+	
 }

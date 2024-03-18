@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cooltrade.member.model.vo.DeliveryAddress;
+import com.cooltrade.member.model.vo.Member;
 import com.cooltrade.product.model.service.ProductService;
 import com.cooltrade.product.model.vo.Images;
 import com.cooltrade.product.model.vo.LikeProduct;
@@ -81,6 +83,10 @@ public class DetailProductViewController extends HttpServlet {
 			if(rlist.size() > 20) {
 				rlist.remove(20);
 			}
+			
+			Member m = (Member)session.getAttribute("loginUser");
+			ArrayList<DeliveryAddress> addressList = new ProductService().getAddressList(m.getUserNo());
+			request.setAttribute("addressList", addressList);
 			
 			session.setAttribute("rlist", rlist);
 			

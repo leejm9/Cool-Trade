@@ -151,7 +151,9 @@ ArrayList<ChatRoom>
                   <div>존재하는 채팅방이 없습니다.</div>
                 </div>
                 <% } else { %> 
-                	<% for(ChatRoom c : list) { %> 
+                	<% for(ChatRoom c : list) { %>
+                	<input type="hidden" value="<%= c.getUserId() %>">
+                	<input type="hidden" value="<%= c.getSellerId() %>"> 
                 		<% if(c.getUserId().equals(loginUser.getUserId()) || c.getSellerId().equals(loginUser.getUserId())) { %>
 		                <div class="chat-list-div">
 		                  <% if(c.getUserId().equals(loginUser.getUserId())) { %>
@@ -193,6 +195,25 @@ ArrayList<ChatRoom>
                 $(this).children().eq(3).text();
             });
           });
+          
+          $(function () {
+        	    $(".chat-list-div").click(function () {
+        	        // 찾고자 하는 정보를 input 태그에서 읽어옴
+        	        const userId = $(this).siblings("input[type='hidden']").eq(0).val();
+        	        const sellerId = $(this).siblings("input[type='hidden']").eq(1).val();
+        	        
+        	        // 현재 페이지와 해당 유저 정보를 이용하여 채팅방 링크를 생성
+        	        let url = "<%= contextPath %>/chatroom.in?";
+        	        if (userId === "<%= loginUser.getUserId() %>") {
+        	            url += "userId=" + sellerId;
+        	        } else {
+        	            url += "userId=" + userId;
+        	        }
+        	        
+        	        // 생성된 URL로 이동
+        	        location.href = url;
+        	    });
+        	});
         </script>
 
         <%@ include file="../common/footer.jsp"%>

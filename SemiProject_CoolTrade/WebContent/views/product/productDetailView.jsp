@@ -1,10 +1,12 @@
+<%@page import="com.cooltrade.member.model.vo.DeliveryAddress"%>
 <%@page import="com.cooltrade.product.model.vo.Images"%> <%@ page
 language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%
 	Product p = (Product)request.getAttribute("p"); 
 	ArrayList<Images> imglist = (ArrayList<Images>)request.getAttribute("imglist"); 
 	double ondo = p.getOndo(); 
-	int likeCount = (int)request.getAttribute("likeCount"); 
+	int likeCount = (int)request.getAttribute("likeCount");
+	ArrayList<DeliveryAddress> addressList = (ArrayList<DeliveryAddress>)request.getAttribute("addressList");
 %>
     <!DOCTYPE html>
     <html>
@@ -109,10 +111,100 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 >
                   💬 채팅하기
                 </button>
-                <button class="btn btn-lg btn-danger">바로사버리기</button>
+                <% if(p.getTradeType() == 2 && loginUser.getOndo() <= 10.0) { %>
+                	<button class="btn btn-lg btn-danger coolbtn" style="background-color: rgb(4, 108, 250); border: none;">바로사버리기</button>
+                <% } else { %>
+                	<button class="btn btn-lg btn-danger" type="button"  style="background-color: rgb(4, 108, 250); border: none;" disabled>바로사버리기</button>
+                <% } %>
               </div>
             </div>
           </div>
+          
+          <!-- Modal -->
+			<div class="modal fade" id="myModal">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <!-- Modal Header -->
+			            <div class="modal-header">
+			                <h5 class="modal-title">판매자에게 전달할 배송지를 선택하세요</h4>
+			                <button type="button" class="close" data-dismiss="modal">&times;</button>
+			            </div>
+			            <!-- Modal body -->
+			            <div class="modal-body">
+			            <form action="#" method="post">
+			            <input type="hidden" value="<%= p.getProductNo() %>">
+			            <input type="hidden" value="<%= p.getProductName() %>">
+			            <input type="hidden" value="<%= p.getSellerNo() %>">
+							<div>
+								<% for(int i=0; i<addressList.size(); i++) { %>
+								<div class="flex-ds" style="padding: 10px 0px; align-items: center;">
+									<div style="padding: 0px 15px;">
+										<input type="radio" name="address" value="<%= addressList.get(i).getDeliveryAddressNo() %>">
+									</div>
+									<div>
+										<div class="flex-ds">
+											<div>배송지명</div>
+											<div><%= addressList.get(i).getTitle() %></div>
+										</div>
+										<div class="flex-ds">
+											<div>받는사람</div>
+											<div><%= addressList.get(i).getName() %></div>
+										</div>
+										<div class="flex-ds">
+											<div>주소</div>
+											<div><%= addressList.get(i).getAddress() %></div>
+											<div><%= addressList.get(i).getDetail() %></div>
+										</div>
+										<div class="flex-ds">
+											<div>핸드폰번호</div>
+											<div><%= addressList.get(i).getPhone() %></div>
+										</div>
+									</div>
+								</div>
+								<% } %>
+							</div>
+						</form>
+			            </div>
+			            <!-- Modal footer -->
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">전달</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="myModal-send">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+
+			            <!-- Modal body -->
+			            <div class="modal-body">
+			            <form action="#" method="post">
+			            <input type="hidden" value="<%= p.getProductNo() %>">
+			            <input type="hidden" value="<%= p.getProductName() %>">
+			            <input type="hidden" value="<%= p.getSellerNo() %>">
+							<div>
+								<div>
+									<h3>판매자에게 거래금액을 입금해주세요</h3>
+								</div>
+								<div>
+									<div>판매자 계좌번호</div>
+									<div>국민은행</div>
+									<div>1111-2222-3333</div>
+									<div>12,000원</div>
+								</div>
+							</div>
+						</form>
+			            </div>
+			            <!-- Modal footer -->
+			            <div class="modal-footer">
+			            	<div>입금 후 거래완료 버튼을 눌러야 거래가 완료돼요</div>
+			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">거래완료</button>
+			            </div>
+			        </div>
+			    </div>
+			</div>
 
           <script>
             // 찜하기
@@ -135,6 +227,18 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               } else {
                 console.log("취소");
               }
+            }
+            
+            $(".coolbtn").click(function(){
+            	if(confirm("정말 구매하시겠습니까?")){
+            		$("#myModal").modal("show");
+            	} else {
+            		console.log("취소");
+            	}
+            })
+            
+            function send(){
+            	$("#myModal-send").modal("show");
             }
           </script>
 
