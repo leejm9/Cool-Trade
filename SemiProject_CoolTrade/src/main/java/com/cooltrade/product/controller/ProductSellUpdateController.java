@@ -48,7 +48,7 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			// 전달 파일 업로드
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-		
+			/*
 			// 쿨거래 체크박스의 값이 널일 경우는 1:일반거래/ 널이 아닐경우 2:일반거래
 			int trade = 0;
 			if(multiRequest.getParameter("coolTrade") == null) {
@@ -56,7 +56,7 @@ public class ProductSellUpdateController extends HttpServlet {
 			} else {
 				trade = 2;
 			}
-			
+			*/
 			// 로그인한 회원 번호
 			int userNo = Integer.parseInt(multiRequest.getParameter("seller"));
 			int pno = Integer.parseInt(multiRequest.getParameter("pno"));
@@ -82,7 +82,7 @@ public class ProductSellUpdateController extends HttpServlet {
 			p.setProductDesc(multiRequest.getParameter("content"));
 			p.setZone(multiRequest.getParameter("zone"));
 			p.setProductStatus(multiRequest.getParameter("status"));
-			p.setTradeType(trade);
+			p.setTradeType(Integer.parseInt(multiRequest.getParameter("trade")));
 			p.setDeliveryCharge(Integer.parseInt(multiRequest.getParameter("deliveryCharge")));
 			p.setPieces(pieces);
 			
@@ -92,7 +92,7 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			for(int i=0; i<5; i++) {
 				String key = "image" + (i + 1);
-				//System.out.println(key+": "+multiRequest.getOriginalFileName(key));
+				System.out.println(key+": "+multiRequest.getOriginalFileName(key));
 				
 				if(multiRequest.getOriginalFileName(key) != null) { // 새로넘어온 첨부파일이 있을 경우
 					
@@ -107,7 +107,7 @@ public class ProductSellUpdateController extends HttpServlet {
 						img.setChangeName(multiRequest.getFilesystemName(key));
 						img.setImgPath("resources/images_upfiles/");
 						
-						if(i == 0) {
+						if((i+1) == 1) {
 							img.setImgLevel(1);
 						} else {
 							img.setImgLevel(2);

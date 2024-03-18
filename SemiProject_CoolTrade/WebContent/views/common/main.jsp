@@ -55,7 +55,7 @@
 
 		</div>
 		<div id="banner2-ds" style="margin-bottom: 20px; margin-top: 30px;">
-			<h1>banner2</h1>
+			<img src="resources/images/bannerImg2_1.png" width="1000" height="200">
 		</div>
 		<div class="flex-ds" style="justify-content: space-between;">
 			<h2>오늘의 상품추천</h2>

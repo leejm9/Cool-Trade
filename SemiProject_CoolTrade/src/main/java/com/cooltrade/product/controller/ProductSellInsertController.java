@@ -53,13 +53,14 @@ public class ProductSellInsertController extends HttpServlet {
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 		
 			// 쿨거래 체크박스의 값이 널일 경우는 1:일반거래/ 널이 아닐경우 2:일반거래
+			/*
 			int trade = 0;
 			if(multiRequest.getParameter("coolTrade") == null) {
 				trade = 1;
 			} else {
 				trade = 2;
 			}
-			
+			*/
 			// String으로 넘어온 price, pieces int로 변환
 			String priceStr = multiRequest.getParameter("price");
 			String priceStrCommas = priceStr.replaceAll(",", "");
@@ -76,7 +77,7 @@ public class ProductSellInsertController extends HttpServlet {
 									multiRequest.getParameter("content"), 
 									multiRequest.getParameter("zone"), 
 									multiRequest.getParameter("status"), 
-									trade, 
+									Integer.parseInt(multiRequest.getParameter("trade")), 
 									Integer.parseInt(multiRequest.getParameter("deliveryCharge")), 
 									pieces);
 			

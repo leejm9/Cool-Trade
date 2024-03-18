@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.chatting.controller.model.Service.ChatService;
 import com.cooltrade.chatting.controller.model.vo.ChatRoom;
+import com.cooltrade.product.model.vo.Images;
 
 /**
  * Servlet implementation class ChatRoomListController
@@ -32,6 +33,16 @@ public class ChatRoomListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<ChatRoom> list = new ChatService().getChatRoomList();
+		
+		for(ChatRoom c : list) {
+			Images img = new ChatService().getBuyerInfo(c.getUserId());
+			Images imgs = new ChatService().getSellerInfo(c.getSellerId());
+			c.setBuyerNickname(img.getBuyerNickname());
+			c.setBuyerTitleImg(img.getBuyerTitleImg());
+			c.setSellerNickname(imgs.getSellerNickname());
+			c.setSellerTitleImg(imgs.getSellerTitleImg());
+		}
+		System.out.println(list);
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/chat/chatRoom.jsp").forward(request, response);

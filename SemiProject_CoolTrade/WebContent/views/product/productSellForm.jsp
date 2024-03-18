@@ -586,7 +586,7 @@
                                     <div id="sell-fileInput-div">
                                     
                                         <div id="fileInput-div">
-                                            <input type="file" id="fileInput" accept="image/*" name="files" multiple>
+                                            <input type="file" id="fileInput" accept="image/*" name="files" multiple required>
                                             <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg" onclick="uploadAction();">
                                         </div>
 										
@@ -1003,6 +1003,14 @@
        	})
        	
 	    function submit(){
+       		
+       		console.log($("#fileInput"));
+       		let fileAlert = $("#fileInput");
+       		if(!fileAlert[0].files.length){
+        		alert("이미지를 등록해주세요.");
+        		return false;
+        	} 
+       		
        		/*
 	    	console.log(sel_files); // 이미지가 담긴 배열
 	    	console.log(poName); // 상품명
@@ -1037,7 +1045,6 @@
 	    	    console.log(pair[0] + ', ' + pair[1]); // key, value 출력
 	    	}
 	    	
-			/*
 	    	$.ajax({
 	    		url:"sellinsert.po",
 	    		data:formData,
@@ -1050,7 +1057,7 @@
 	            error:function(){
 	            	console.log("실패");
 	            }
-	    	});*/
+	    	});
 			
 	    }
     

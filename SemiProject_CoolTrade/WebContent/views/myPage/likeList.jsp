@@ -260,7 +260,7 @@
 	
 	.timeDiff {
 		font-size: 14px;
-    	color: lightgray;
+    	color: rgb(190, 190, 190);
 	}
 	
 	.like-po-detail {

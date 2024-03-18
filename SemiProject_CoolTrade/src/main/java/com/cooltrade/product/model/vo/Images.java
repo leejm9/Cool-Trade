@@ -12,11 +12,15 @@ public class Images {
 	private String imgPath;
 	private String uploadDate;
 	private String imgStatus;
+	private String buyerNickname;
+	private String sellerNickname;
+	private String buyerTitleImg;
+	private String sellerTitleImg;
 
 	public Images() {}
 
 	public Images(int imgNo, int refPno, int refUno, int refRno, int imgLevel, String originName, String changeName, String imgPath,
-			String uploadDate, String imgStatus) {
+			String uploadDate, String imgStatus, String buyerNickname, String sellerNickname, String buyerTitleImg, String sellerTitleImg) {
 		super();
 		this.imgNo = imgNo;
 		this.refPno = refPno;
@@ -28,6 +32,10 @@ public class Images {
 		this.imgPath = imgPath;
 		this.uploadDate = uploadDate;
 		this.imgStatus = imgStatus;
+		this.buyerNickname = buyerNickname;
+		this.sellerNickname = sellerNickname;
+		this.buyerTitleImg = buyerTitleImg;
+		this.sellerTitleImg = sellerTitleImg;
 	}
 
 	public int getImgNo() {
@@ -108,6 +116,38 @@ public class Images {
 
 	public void setImgStatus(String imgStatus) {
 		this.imgStatus = imgStatus;
+	}
+
+	public String getBuyerNickname() {
+		return buyerNickname;
+	}
+
+	public void setBuyerNickname(String buyerNickname) {
+		this.buyerNickname = buyerNickname;
+	}
+
+	public String getSellerNickname() {
+		return sellerNickname;
+	}
+
+	public void setSellerNickname(String sellerNickname) {
+		this.sellerNickname = sellerNickname;
+	}
+
+	public String getBuyerTitleImg() {
+		return buyerTitleImg;
+	}
+
+	public void setBuyerTitleImg(String buyerTitleImg) {
+		this.buyerTitleImg = buyerTitleImg;
+	}
+
+	public String getSellerTitleImg() {
+		return sellerTitleImg;
+	}
+
+	public void setSellerTitleImg(String sellerTitleImg) {
+		this.sellerTitleImg = sellerTitleImg;
 	}
 
 	@Override
