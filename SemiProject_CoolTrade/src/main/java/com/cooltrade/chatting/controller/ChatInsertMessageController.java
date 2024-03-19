@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.chatting.controller.model.Service.ChatService;
+import com.cooltrade.chatting.controller.model.vo.ChatRoom;
+import com.cooltrade.product.model.vo.Images;
 
 /**
  * Servlet implementation class ChatInsertMessageController

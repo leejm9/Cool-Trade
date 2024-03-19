@@ -124,6 +124,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			<div class="modal fade" id="myModal">
 			    <div class="modal-dialog">
 			        <div class="modal-content">
+			            <% if(addressList.size() > 0) { %>
 			            <!-- Modal Header -->
 			            <div class="modal-header">
 			                <h5 class="modal-title">판매자에게 전달할 배송지를 선택하세요</h4>
@@ -169,6 +170,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">전달</button>
 			            </div>
+						<% } else { %>
+						<!-- Modal body -->
+			            <div class="modal-body">
+							<div>배송지가 등록되어 있지 않습니다.</div>
+							<div>내정보에서 배송지를 먼저 등록해주세요.</div>
+						</div>
+						<!-- Modal footer -->
+			            <div class="modal-footer">
+			                <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
+			            </div>
+						<% } %>
 			        </div>
 			    </div>
 			</div>

@@ -42,7 +42,7 @@ public class ChatRoomListController extends HttpServlet {
 			c.setSellerNickname(imgs.getSellerNickname());
 			c.setSellerTitleImg(imgs.getSellerTitleImg());
 		}
-		System.out.println(list);
+		//System.out.println(list);
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/views/chat/chatRoom.jsp").forward(request, response);

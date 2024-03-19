@@ -10,7 +10,7 @@ ArrayList<ChatRoom>
         <title>Insert title here</title>
         <style>
           .outer {
-            background-color: none;
+            background-color: white;
             color: white;
             width: 1000px;
             height: 1200px;
@@ -48,7 +48,7 @@ ArrayList<ChatRoom>
             display: flex;
             align-items: center;
             /* width: 100%; */
-            height: 60px;
+            height: 80px;
           }
 
           .chat-list-div > div {
@@ -64,7 +64,6 @@ ArrayList<ChatRoom>
             border: 1px solid #e6e6e6;
             margin: auto;
             width: 500px;
-            background-color: white;
           }
 
           .chat-list-wrap > div {
@@ -81,10 +80,6 @@ ArrayList<ChatRoom>
           .chat-list-num {
             width: 50px;
             height: 100%;
-          }
-          
-          .chat-list-num img {
-          	margin-right: 10px;
           }
         </style>
       </head>
@@ -145,40 +140,28 @@ ArrayList<ChatRoom>
               <div class="chat-list-title">
                 <%= loginUser.getUserName() %>님의 채팅방
               </div>
+
               <div>
                 <% if(list.isEmpty()) { %>
                 <div>
                   <div>존재하는 채팅방이 없습니다.</div>
                 </div>
-                <% } else { %> 
-                	<% for(ChatRoom c : list) { %>
-                	<input type="hidden" value="<%= c.getUserId() %>">
-                	<input type="hidden" value="<%= c.getSellerId() %>"> 
-                		<% if(c.getUserId().equals(loginUser.getUserId()) || c.getSellerId().equals(loginUser.getUserId())) { %>
-		                <div class="chat-list-div">
-		                  <% if(c.getUserId().equals(loginUser.getUserId())) { %>
-			                  <div class="chat-list-num">
-			                  	<% if(c.getSellerTitleImg() == null) { %>
-			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
-			                  	<% } else { %>
-			                  	<div><%= c.getSellerTitleImg() %></div>
-			                  	<% } %>
-			                  </div>
-				              <div><%= c.getSellerNickname() %></div>
-			              <% } else if(c.getSellerId().equals(loginUser.getUserId())) {%>
-			              	  <div class="chat-list-num">
-           				        <% if(c.getBuyerTitleImg() == null) { %>
-			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
-			                  	<% } else { %>
-			                  	<div><%= c.getBuyerTitleImg() %></div>
-			                  	<% } %>
-			                  </div>
-			                  <div><%= c.getBuyerNickname() %></div>
-			              <% } %>
-                		</div>
-                		<% } %> 
-                	<% } %> 
-                <% } %>
+                <% } else { %> <% for(ChatRoom c : list) { %> <%
+                if(c.getUserId().equals(loginUser.getUserId()) ||
+                c.getSellerId().equals(loginUser.getUserId())) { %>
+                <div class="chat-list-div">
+                  <div class="chat-list-num">
+                    <div><%= c.getChatRoomNo() %></div>
+                  </div>
+                  <!-- <div><%= c.getChatRoomTitle() %></div> -->
+                  <% if(c.getUserId().equals(loginUser.getUserId())) { %>
+                  <div><%= c.getSellerId() %></div>
+                  <% } else if(c.getSellerId().equals(loginUser.getUserId())) {
+                  %>
+                  <div><%= c.getUserId() %></div>
+                  <% } %>
+                </div>
+                <% } %> <% } %> <% } %>
               </div>
             </div>
           </div>
@@ -195,25 +178,6 @@ ArrayList<ChatRoom>
                 $(this).children().eq(3).text();
             });
           });
-          
-          $(function () {
-        	    $(".chat-list-div").click(function () {
-        	        // 찾고자 하는 정보를 input 태그에서 읽어옴
-        	        const userId = $(this).siblings("input[type='hidden']").eq(0).val();
-        	        const sellerId = $(this).siblings("input[type='hidden']").eq(1).val();
-        	        
-        	        // 현재 페이지와 해당 유저 정보를 이용하여 채팅방 링크를 생성
-        	        let url = "<%= contextPath %>/chatroom.in?";
-        	        if (userId === "<%= loginUser.getUserId() %>") {
-        	            url += "userId=" + sellerId;
-        	        } else {
-        	            url += "userId=" + userId;
-        	        }
-        	        
-        	        // 생성된 URL로 이동
-        	        location.href = url;
-        	    });
-        	});
         </script>
 
         <%@ include file="../common/footer.jsp"%>
