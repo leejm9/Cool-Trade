@@ -83,14 +83,14 @@
             margin-top: 70px;
             
         }
-    td,th{
+    td,#table th{
         border: 1px solid black;
         width: 350px;
         height: 45px;
  
     }
     
-    th{
+    #table th{
         width: 130px;
         background-color: lightgray ;
         text-align: center !important;
@@ -192,12 +192,12 @@
         </div>
     
     
-    <div class="outer">
+    <div class="outer" style="margin-left:160px;">
     
     <div style="text-align: center;">
 			      <img style="width:200px;margin-bottom:10px;" id="profile"
 			      src="downloadprofileimage.do?uno=<%=uno%>"
-			      onerror="$(this).attr('src', 'resources/images/free-icon-user-847969.png')"
+			      onerror="$(this).attr('src', 'resources/images/user-icon.png')"
 			      alt="회원 프로필 사진 이미지">
 
 				    <div id="bottombtn" align="center">
@@ -294,7 +294,7 @@
 	  
 	        <!-- Modal body -->
 	        <div class="modal-body" align="center">
-	          <div style="text-align:right"><a href="javascript:showEditAddressModal();">편집하기</a></div>
+	          <div style="text-align:right"><a href="javascript:showEditAddressModal();">대표 배송지 설정하기</a></div>
             <table id="delivery-address-list" style="margin-top:0px; width:100%;">
             </table>
 	        <button onclick="showAddAddressModal();" style="width: 200px; margin-top:50px;" >+ 배송지 추가</button>
@@ -698,7 +698,7 @@
           },
           success : function(result) {
             if(result == 'success'){
-              alert("배송지가 삭제 되었습니다.");
+               alert("배송지가 삭제 되었습니다.");
               showAddressModal();
             } else {
               alert("배송지 삭제에 실패 하였습니다.");

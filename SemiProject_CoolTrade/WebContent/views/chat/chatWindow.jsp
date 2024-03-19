@@ -140,6 +140,14 @@ pageEncoding="UTF-8"%>
     	setInterval(getMessage, 1000)
     })
     
+    $(document).ready(function(){
+    	$("#messageInput").keydown(function(e){
+    		if(e.keyCode === 13 || e.key === "Enter"){
+    			$("#messageInput+button").click();
+    		}
+    	})
+    })
+    
     function getMessage(){
     		var userId = $("#loginUser").val();
     		var user = $("#user").val();        // 구매자     

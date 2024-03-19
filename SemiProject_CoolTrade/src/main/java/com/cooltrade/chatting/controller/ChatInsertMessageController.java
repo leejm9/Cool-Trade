@@ -34,9 +34,13 @@ public class ChatInsertMessageController extends HttpServlet {
 		
 		int result = new ChatService().insertMessage(userId,message,chatRoomNo);
 		
+		if(result>0) {
+			response.setContentType("text/html; charset=UTF-8");
+			response.getWriter().print(message);
+		}else {
+		 request.setAttribute("errorMsg", "실패했습니다");
+		}
 		
-		response.setContentType("text/html; charset=UTF-8");
-		response.getWriter().print(message);
 		
 	}
 
