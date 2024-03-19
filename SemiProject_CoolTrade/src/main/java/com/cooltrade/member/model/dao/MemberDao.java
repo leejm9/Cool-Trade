@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.print.attribute.SetOfIntegerSyntax;
+
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
@@ -175,7 +177,7 @@ public class MemberDao {
                         rset.getInt("caution"));
          }
          
-         System.out.println(m);
+         //System.out.println(m);
          
       } catch (SQLException e) {
          e.printStackTrace();
@@ -568,7 +570,7 @@ public class MemberDao {
 							   rset.getInt("caution"));
 			}
 			
-			System.out.println(m);
+			//System.out.println(m);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -719,7 +721,7 @@ public class MemberDao {
 				t.setReviewStatus(rset.getString("review_status"));
 				
 				list.add(t);
-				System.out.println(t);
+				//System.out.println(t);
          }
          
       } catch (SQLException e) {
@@ -1048,7 +1050,6 @@ public class MemberDao {
          pstmt.setString(2, search);
          pstmt.setInt(3, startRow);
          pstmt.setInt(4, endRow);
-         System.out.println(startRow);
          rset = pstmt.executeQuery();
          
          while(rset.next()) {
@@ -1416,7 +1417,7 @@ public class MemberDao {
          close(rset);
          close(pstmt);
       }
-      System.out.println(list);
+      //System.out.println(list);
       return list;
       
    }
@@ -1696,7 +1697,7 @@ public class MemberDao {
 					}
 				}
 			}
-			System.out.println("뉴리스트" + newList);
+			//System.out.println("뉴리스트" + newList);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1735,7 +1736,7 @@ public class MemberDao {
 				list.add(r);
 				
 			}
-			System.out.println("리뷰리스트:"+list);
+			//System.out.println("리뷰리스트:"+list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1814,7 +1815,7 @@ public class MemberDao {
 			if(rset.next()) {
 				count = rset.getInt("count");
 			}
-			System.out.println(count);
+			//System.out.println(count);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -2002,7 +2003,7 @@ public class MemberDao {
 				lp.setTitleImg(rset.getString("titleimg"));
 				
 				list.add(lp);
-				System.out.println(lp);
+				//System.out.println(lp);
 			}
 
 		} catch (SQLException e) {
@@ -2015,6 +2016,78 @@ public class MemberDao {
 
 		return list;
 
+	}
+	
+	public int checkDeleteLikePo(Connection conn, int uno, String[] pno) {
+		int result = 1;
+		//int count = 1;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("checkDeleteLikePo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			for(String p : pno) {
+				pstmt.setInt(1, uno);
+				pstmt.setString(2, p);
+				
+				result *= pstmt.executeUpdate();
+				//System.out.println(count + "번째 result 값 : " + result);
+			}
+				
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int allDeleteLikePo(Connection conn, int uno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("allDeleteLikePo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int selectLikePo(Connection conn, int pno) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectLikePo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
 	
 }

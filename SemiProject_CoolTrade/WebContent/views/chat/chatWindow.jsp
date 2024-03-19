@@ -1,9 +1,11 @@
+<%@page import="com.cooltrade.chatting.controller.model.vo.ChatRoom"%>
 <%@page import="com.cooltrade.chatting.controller.model.vo.Chat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%
 	String user = (String)request.getAttribute("userId");
 	String seller = (String)request.getAttribute("seller");
+	ChatRoom c = (ChatRoom)request.getAttribute("c");
 %>
 <!DOCTYPE html>
 <html>
@@ -24,22 +26,23 @@ pageEncoding="UTF-8"%>
         }
         .outer{
         	margin-bottom:100px;
+        	width: 1000px;
         }
 
         .wrap {
             padding: 50px 0;
-            background-color: #A8C0D6;
-            width:700px;
-            height:1000px;
-            max-height: 600px; /* 채팅창의 최대 높이를 지정합니다. */
+            background-color: #e6e6e6;
+            width:500px;
+            height:100%;
+            max-height: 100%; /* 채팅창의 최대 높이를 지정합니다. */
             overflow-y: auto; /* 내용이 넘칠 때 스크롤 표시합니다. */
-            margin-bottom:50px;
+/*             margin-bottom:50px; */
         }
         
         .wrap .chat {
             display: flex;
             align-items: flex-start;
-            padding: 20px;
+            padding: 10px;
         }
 	
 		
@@ -106,15 +109,107 @@ pageEncoding="UTF-8"%>
             background-color: #04b4fc;
             color: black;
         }
+        
+        .wrap-outer {
+        	width: 500px;
+        	height: 700px;
+        	margin: auto;
+        	border: 1px solid #e6e6e6;
+        	border-radius: 10px;
+        }
+        
+        .wrap-header {
+        	height: 10%;
+        	display: flex;
+        	align-items: center;
+    		padding: 0px 10px;
+        }
+        
+        .wrap {
+        	height: 80%;
+        }
+        
+        .wrap-footer {
+        	height: 10%;
+        }
+        
+        .wrap-footer {
+        	background-color: #e6e6e6;
+        	display: flex;
+        	align-items: center;
+        	justify-content: space-around;
+        }
+        
+        .wrap-footer-area {
+        	width: 90%;
+        	height: 50%;
+        	background: white;
+        	border: 1px solid #e3e3e3;
+        	border-radius: 20px;
+        	display: flex;
+    		align-items: center;
+        }
+        
+        .wrap-footer-area-div {
+        	display: flex;
+        	width: 98%;
+    		justify-content: space-around;
+        }
+        
+        #messageInput {
+        	border: none;
+        	outline: none;
+        	padding: 0px 10px;
+        }
+        
+        .btn-image {
+        	width: 35px; /* 버튼의 너비 설정 */
+		    height: 25px; /* 버튼의 높이 설정 */
+		    border: none; /* 필요 시 버튼 테두리 제거 */
+		    background: none;
+        }
+        
+        .title-img {
+        	width: 50px;
+        	height: 50px;
+        }
+        
+        h3 {
+        	text-align: middle;
+        }
+        
+        .btn-img {
+        	width: 30px;
+        	height: 25px;
+        }
     </style>
 </head>
 <body>
 	<%@ include file="../common/header.jsp"%>
+	<% String loginId = loginUser.getUserId(); %>
 	<br><br><br><br>
 	<br><br><br><br>
 	<br><br>
 	<h2><%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%= (String)request.getAttribute("userId") %> 판매자:<%= (String)request.getAttribute("seller") %> )</h2>
 	<div class="outer">
+	<div class="wrap-outer">
+	<div class="wrap-header">
+		<% if(loginId.equals(user)) { %>
+			<% if(c.getSellerTitleImg() == null) { %>
+				<div><img src="resources/images/user-icon.png" class="title-img"></div>
+			<% } else { %>
+				<div class="title-img"><%= c.getSellerTitleImg() %></div>
+			<% } %>
+			<div><%= c.getSellerNickname() %></div>
+		<% } else { %>
+			<% if(c.getBuyerTitleImg() == null) { %>
+				<div><img src="resources/images/user-icon.png" class="title-img"></div>
+			<% } else { %>
+				<div class="title-img"><%= c.getBuyerTitleImg() %></div>
+			<% } %>
+			<div><%= c.getBuyerNickname() %></div>
+		<% } %>
+	</div>
 	<div class="wrap">
 		
         
@@ -122,7 +217,18 @@ pageEncoding="UTF-8"%>
         
       
     </div>
-    <div align="right">
+    <div class="wrap-footer">
+    	<div class="wrap-footer-area">
+   		    <div align="center" class="wrap-footer-area-div">
+			    <input type="text" id="messageInput" style="width:370px;">
+			    <button type="submit" class="btn-image" onclick="insertReply();">
+			    	<img class="btn-img" src="resources/images/icon-send.png">
+			    </button>
+			</div>
+    	</div>
+    </div>
+    </div>
+    <div align="right" style="display: none;">
     <input type="text" id="messageInput" style="width:600px;">
     <button type="submit" onclick="insertReply();">전송</button>
 	</div>

@@ -404,6 +404,7 @@
 	<entry key="updateSellForm">
 		SELECT
 			   PRODUCT_NO
+			 , CATEGORY_NO
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
 		     , PRICE
@@ -691,5 +692,20 @@
 		   SET LIKE_STATUS = 'N'
 		 WHERE USER_NO = ?
 		   AND PRODUCT_NO = ?
+	</entry>
+	
+	<entry key="getAddressList">
+		SELECT
+		       DELIVERY_ADDRESS_NO
+		     , USER_NO
+		     , ADDRESS
+		     , DETAIL
+		     , POSTCODE
+		     , TITLE
+		     , NAME
+		     , PHONE
+		     , MAIN_YN
+		  FROM DELIVERY_ADDRESS
+		 WHERE USER_NO = ?
 	</entry>
 </properties>

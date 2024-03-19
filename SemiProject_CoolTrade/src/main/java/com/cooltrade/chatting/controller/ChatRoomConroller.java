@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.cooltrade.chatting.controller.model.Service.ChatService;
 import com.cooltrade.chatting.controller.model.vo.Chat;
+import com.cooltrade.chatting.controller.model.vo.ChatRoom;
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.product.model.vo.Images;
 
 /**
  * Servlet implementation class ChatRoomConroller
@@ -50,6 +52,17 @@ public class ChatRoomConroller extends HttpServlet {
 		request.setAttribute("userId", user[0]); // 만든사람의 로그인 아이디, 즉 구매자 << 이걸 보내는 이유는 chatWindow에서 session에 있는 로그인 유저 아이디는 계속 바뀌기때문에 쓰면안됨
 		request.setAttribute("seller", user[1]);
 		request.setAttribute("chatRoomNo", chatRoomNo);
+		
+		ChatRoom c = new ChatRoom();
+		Images img = new ChatService().getBuyerInfo(user[0]);
+		Images imgs = new ChatService().getSellerInfo(user[1]);
+		c.setBuyerNickname(img.getBuyerNickname());
+		c.setBuyerTitleImg(img.getBuyerTitleImg());
+		c.setSellerNickname(imgs.getSellerNickname());
+		c.setSellerTitleImg(imgs.getSellerTitleImg());
+		
+		request.setAttribute("c", c);
+		
 		request.getRequestDispatcher("views/chat/chatWindow.jsp").forward(request, response);
 		
 	}

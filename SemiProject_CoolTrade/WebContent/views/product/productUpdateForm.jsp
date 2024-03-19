@@ -143,7 +143,7 @@
         width: 160px;
         height: 160px;
         /* border: 1px solid #cfcfcf; */
-        display: none;
+        display: block;
         position: relative;
     }
     
@@ -258,16 +258,17 @@
         border-radius: 10px;
     }
 
-    li>input {
+    li>div {
         border: none;
         background-color: transparent;
         width: 100%;
         height: 30px;
         text-align: justify;
         padding: 0px 15px;
+        cursor: pointer;
     }
 
-    li>input:hover {
+    li>div:hover {
         background-color: #e3e3e3;
     }
 
@@ -564,10 +565,8 @@
 	<%@ include file = "../common/header.jsp" %>
 	<% int userNo = loginUser.getUserNo(); %>
 	
-	    <form action="<%= contextPath %>/updateSell.po" method="post" id="sell-enroll-form" enctype="multipart/form-data">
 	    <input type="hidden" name="seller" value="<%= userNo %>">
 	    <input type="hidden" name="pno" value="<%= pList.get(0).getProductNo() %>">
-<%-- 	    <input type="hidden" name="originImgNo" value="<%= imgList.get(0).getImgNo() %>"> --%>
 	        
 	        <div id="wrap" style="margin-top: 180px;">
 	            <div id="main-content" class="flex-class">
@@ -588,30 +587,18 @@
 	                                    </div>
 	                                    <div id="sell-fileInput-div">
 	                                        <div id="fileInput-div">
-	                                            <!-- <input type="file" id="fileInput" accept="image/*" name="files[]" multiple> -->
-	                                            <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg">
+	                                            <input type="file" id="fileInput" accept="image/*" name="files" multiple required>
+	                                            <img src="resources/images/이미지등록.jpg" alt="상품이미지 등록 버튼" id="fileImg" onclick="uploadAction();">
 	                                        </div>
 	                                        
-	                                        
-	                                        <% for(int i=0; i<=4; i++) { %>
-											    <% if(pList.size() > i) { %>
-											        <div class="hidden-div" style="display:block;">
-											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>" required>
-											            <img src="<%= contextPath %>/<%= pList.get(i).getTitleImg() %>" class="hidden-img">
-											            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
- 											            <!-- <div>originImage<%= i+1 %></div> -->
-											        </div>
-											    <% } else { %>
-											        <div class="hidden-div" style="display:none;">
-											            <input type="file" class="hidden-file-input" id="fileInput<%= i+1 %>" name="image<%= i+1 %>" required>
-											            <img src="#" class="hidden-img">
-											            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
-														<!-- <div>image<%= i+1 %></div> -->
-											        </div>
-											    <% } %>
-											<% } %>
-		                                    	
-		                                        
+	                                        <%-- 기존 이미지 --%>
+	                                        <% for(int i=0; i<pList.size(); i++) { %>
+									        <div class="hidden-div" style="display:block;">
+									            <img src="<%= contextPath %>/<%= pList.get(i).getTitleImg() %>" class="hidden-img">
+									            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
+									        </div>
+										    <% } %>
+										    
                                     	</div>
                                 	</div>
                                 	<input type="hidden" id="h-input" value=<%= pList.size() %>>
@@ -620,59 +607,73 @@
 	                                <script>
 	                                	let listSize = document.getElementById("h-input").value;
 	                                    
-	                                    let count = listSize;
-	                                    let index = 0;
-	
-										// 이미지 클릭 시 업로드창 열린다     
+	                                    let images = []; // 기존 이미지 배열 초기화
 	                                    
-	                                    $("#fileImg").click(function() {
-                                    		index++;
-                                    		console.log("index++; : " + index);
-                                    		
-	                                    	$("#fileInput" + index).click();
+	                                    $(document).ready(function(){
+	                                        $("#fileInput").on("change", handleImgFileSelect);
+	                                        // 기존 이미지 배열에 이미지 추가
+	                                        $(".hidden-div img").each(function() {
+	                                            images.push($(this).attr("src"));
+	                                        });
 	                                    });
 	                                    
-	                                    $(".hidden-btn").click(function() {
-	                                        // index 값을 감소시킴
-	                                        index--;
-	                                    	console.log("index--; : " + index);
-	                                    	
-	                                    	if(index < 0){
-	                                    		index = 0;
-	                                    	}
-
-	                                    });
+	                                    console.log(images);
 	                                    
+	                                    function uploadAction(){
+	                                    	$("#fileInput").trigger("click");
+	                                    }
 	                                    
-	                                    // input으로 업로드한 파일을 이미지 src 로 변경해줘서 미리보기 기능
-	                                    const fileDOMs = document.querySelectorAll(".hidden-file-input");
-	                                    const previews = document.querySelectorAll('.hidden-img');
-	                                    const $previewsDiv = $(".hidden-div");
-	                            
-	                                    fileDOMs.forEach((fileDOM, i) => {
-		                                    fileDOM.addEventListener('change', () => {
-		                                        const reader = new FileReader();
-		                                        reader.onload = ({ target }) => {
-		                                            previews[i].src = target.result;
-		                                            $($previewsDiv[i]).css('display', 'block');
-		                                            count++;
-		                                            
-		                                            $("#imgCount").html("(" + count + "/5)");
-		                                            console.log("등록count" + count);
-		                                            
-		                                        };
-		                                        reader.readAsDataURL(fileDOM.files[0]);
-		                                    });
-	                                    });
-	
-	                                    function deleteBtn(btn){
-	                                        const closeBtn = btn;                                        
-	                                        $(closeBtn).parent().css('display', 'none');                                       
-	                                        count--;
-	                                        console.log("삭제count" + count);
+	                                    function handleImgFileSelect(e){
+	                                        let files = e.target.files;
+	                                        let filesArr = Array.prototype.slice.call(files);
 	                                        
-	                                        $("#imgCount").html("(" + count + "/5)");
-	                                    };
+	                                        // 현재 선택된 이미지 개수 확인
+	                                        let currentImageCount = images.length;
+	                                        let remainingImageCount = 5 - currentImageCount;
+
+	                                        // 파일 개수가 5개 이상인 경우 추가하지 않음
+	                                        if (filesArr.length > remainingImageCount) {
+	                                            alert("이미지는 최대 5개까지 업로드 가능합니다.");
+	                                            return;
+	                                        }
+											
+	                                        filesArr.forEach(function(f, index){
+	                                        	
+	                                        	let reader = new FileReader();
+	                                    		reader.onload = function(e){
+	                                    			
+	                                    			images.push(f);
+	                                    			//let index = images.length;
+		                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+index+"\">"+
+				                                            		"<img src=\""+e.target.result+"\" class=\"hidden-img\">"+
+				                                            		"<button type=\"button\" class=\"hidden-btn\" onclick=\"deleteBtn(this, "+index+");\"></button>"+
+				                                        		"</div>";
+		                                   			$("#sell-fileInput-div").append(html);
+		                                   			
+		                                        	//console.log("이미지추가후 배열 : " + images);
+	                                                $("#imgCount").html("(" + images.length + "/5)");
+	                                            }
+	                                            reader.readAsDataURL(f);
+	                                        });
+	                                    }
+										
+	                                    function deleteBtn(e, index){
+	                                    	
+	                                        // 클릭된 이미지의 src 가져오기
+	                                        let imgSrc = $(e).prev().attr("src");
+	                                        let imgIndex = images.indexOf(imgSrc);
+	                                        //console.log(imgIndex);
+	                                        
+	                                        let indexToRemove = imgIndex // div의 인덱스
+										    images.splice(indexToRemove, 1);
+	                                        console.log(images);
+	                                        
+	                                        $(e).parent().remove();
+	                                        $("#imgCount").html("(" + images.length + "/5)");
+	                                    	
+	                                    }
+	                                    
+	                                    console.log("이미지가져갈거: "+images);
 	                                    
 	                                </script>
 	
@@ -686,17 +687,19 @@
 	                                            <input value="<%= pList.get(0).getProductName() %>" id="titleInput" type="text" maxlength="40" placeholder="상품명을 입력해주세요." name="title" required>
 	                                        </div>
 	                                        <div id="sell-section-product-name-input-limit">
-	                                            0/40
+	                                            <%= pList.get(0).getProductName().length() %>/40
 	                                        </div>
 	                                    </div>
 	                                </div>
 	                                
 	                                <script>
-	                                	
+	                                	let poName = null;	
+	                                
 		                                $(function(){
 		                                    $("#titleInput").on("input", function() {
 		                                        var length = $(this).val().length;
 		                                        $("#sell-section-product-name-input-limit").text(length + "/40");
+		                                        poName = $("#titleInput").val();
 		                                    });
 		                                });
 	                                
@@ -708,38 +711,51 @@
 	                                        <span class="redColor">*</span>
 	                                    </div>
 	                                    <div id="sell-section-category-select">
+	                                    	<input type="hidden" id="categoryTest" name="category">
 	                                        <div id="sell-section-category-select-list">
 	                                            <ul>
 	                                                <% for(Category c : list) { %>
 	                                                    <li>
-	                                                        <input type="button" id="select-category" value="<%= c.getCategoryName() %>" required>
-	                                                        <input type="hidden" name="category" value="<%= c.getCategoryNo() %>">
+	                                                        <div class="test"><%= c.getCategoryName() %></div>
+                                                        	<input type="hidden" id="select-category"  value="<%= c.getCategoryNo() %>" required>
 	                                                    </li>
 	                                                <% } %>
 	                                            </ul>
 	                                        </div>
 	                                        <div id="sell-section-category-select-input">
 	                                            <div>선택한 카테고리 :</div>
-	                                            <div id="select-category-name"><%= pList.get(0).getCategoryNo() %></div>
+	                                            <div id="select-category-name"><%= pList.get(0).getCategoryName() %></div>
 	                                        </div>
 	                                    </div>
 	                                </div>
 	
 	                                <script>  
+	                                
+	                                // 기존의 카테고리값
+	                                let categoryvalue = '<%= pList.get(0).getCategoryNo() %>';
+	                                
+	                                $(document).ready(function() {
+	                                    var selectButtons = $('.test'); // 보여지는 카테고리명
+	                                    var categoryNameDisplay = $('#select-category-name'); // 선택한 카테고리이름을 표시
+	                                    var categoryVal = $('#select-category').val(); // 카테고리번호 hidden input 
+	                                    var categoryTest = $('#categoryTest'); // 저장해서 값을 가져갈 input
 	                                    
-	                                    // 카테고리 선택 input 요소에 대한 클릭 이벤트 처리
-	                                    document.querySelectorAll('#sell-section-category-select-list input[type="button"]').forEach(item => {
-	                                        item.addEventListener('click', event => {
-	                                            // 선택한 카테고리의 이름을 가져와서 표시
-	                                            var categoryName = event.target.value;
-	                                            document.getElementById('select-category-name').textContent = categoryName;
-	                                            
-	                                            // 선택한 카테고리의 카테고리 번호를 hidden input에 설정 (선택한 카테고리를 서버로 제출할 때 사용할 수 있음)
-	                                            var categoryNo = event.target.nextElementSibling.value;
-	                                            document.querySelector('#sell-section-category input[name="category"]').value = categoryNo;
-	                                        });
+	                                    // 각 버튼에 클릭 이벤트 리스너 추가
+	                                    selectButtons.click(function() {
+	                                    	//console.log($(this).next('#select-category').val());
+	                                        categoryTest.val($(this).next('#select-category').val());
+	                                        var categoryName = $(this).text(); // 클릭된 버튼의 값(카테고리 닉네임)
+	                                        var categoryNoInput = $(this).next('.select-category'); // 클릭된 버튼 다음에 있는 숨겨진 input 요소
+	                                        var categoryNo = categoryNoInput.val(); // 숨겨진 input 요소의 값(카테고리 번호)
+
+	                                        // 선택한 카테고리 닉네임을 select-category-name div에 표시
+	                                        categoryNameDisplay.text(categoryName);
+	                                        categoryvalue = categoryTest.val();
 	                                    });
-	                                    
+	                                });
+	                                
+	                                console.log("가져갈거: "+categoryvalue);
+	                                
 	                                </script>
 	
 	                                <div id="sell-section-product-status">
@@ -780,7 +796,7 @@
 	                                <script>
 	                                
 	                                	var dbStatus = document.getElementById("h-status").value;
-	                                    console.log("상품상태" + dbStatus);
+	                                    //console.log("상품상태" + dbStatus);
 	                                    var newProduct = document.getElementById("new-product");
 	                                    var noUse = document.getElementById("no-use");
 	                                    var lessUse = document.getElementById("less-use");
@@ -846,7 +862,7 @@
 										// 천 단위로 콤마가 추가된 숫자 값
 										var result = commas(dbPrice);
 
-										console.log(result);
+										//console.log(result);
 										document.getElementById("numberInput").value = result;
 										
 									</script>
@@ -872,10 +888,10 @@
 	                                <script>
 	                                
 		                                var dbCharge = document.getElementById("h-charge").value;
-	                                    console.log(dbCharge);
+	                                    //console.log(dbCharge);
 	                                    var radioInclude = document.getElementById("delivery-charge-include");
 	                                    var radioNone = document.getElementById("delivery-charge-none");
-	                                    console.log(dbCharge);
+	                                    //console.log(dbCharge);
 	                                	
 	                                	if(dbCharge === "1"){
 	                                		radioInclude.checked = true;
@@ -892,7 +908,7 @@
 	                                    </div>
 	                                    <div id="sell-section-content-input">
 	                                        <textarea id="contentInput" rows="6" name="content" style="resize:none;" maxlength="2000" required><%= pList.get(0).getProductDesc() %></textarea>
-	                                        <div id="cotentInput-div">0/2000</div>
+	                                        <div id="cotentInput-div"><%= pList.get(0).getProductDesc().length() %>/2000</div>
 	                                    </div>
 	                                </div>
 	                                
@@ -951,7 +967,7 @@
 										// 천 단위로 콤마가 추가된 숫자 값
 										var result = commas(dbPieces);
 
-										console.log(result);
+										//console.log(result);
 										document.getElementById("numberInput2").value = result;
 	                                
 	                                </script>
@@ -991,10 +1007,10 @@
 	                                    }
 	                                
 	                                	var dbZone = document.getElementById("h-zone").value;
-	                                    console.log(dbZone);
+	                                    //console.log(dbZone);
 	                                	var sZone = document.getElementById("trade-zone");
 	                                	var options = sZone.options;
-	                                	console.log(options);
+	                                	//console.log(options);
 	                                	
 	                                	for(var i = 0; i < options.length; i++) {
 	                                		  if(options[i].value === dbZone) {
@@ -1046,7 +1062,7 @@
 		                                
 		                                // 체크 표시하기
 		                                var dbCool = document.getElementById("h-cool").value;
-		                                console.log(dbCool);
+		                                //console.log(dbCool);
 		                                var ty = document.getElementById("ty-checkbox");
 		                                
 		                                if(dbCool === "1") {
@@ -1054,6 +1070,8 @@
 		                                } else if(dbCool === "2") {
 		                                	ty.checked = true;
 		                                }
+		                                
+		                                console.log(dbCool);
 	                                	
 	                                </script>
 	                                
@@ -1077,11 +1095,84 @@
 	
 	        <div id="footer-content-cr">
 	            <div id="footer-content-div">
-	                <button type="button" id="save">임시저장</button>
-	                <button type="submit" id="enroll">수정하기</button>
+	                <button type="reset" id="save">초기화</button>
+	                <button type="button" id="enroll" onclick="submit();">수정하기</button>
 	            </div>
 	        </div>
-	    </form>
+	        
+	        <script>
+	        
+		     	// 상품상태
+		       	$("[name=status]").click(function(){
+		       		dbStatus = $("[name=status]:checked").val();
+		       	})
+		       	
+		       	// 배송비
+		       	$("[name=deliveryCharge]").click(function(){
+		       		dbCharge = $("[name=deliveryCharge]:checked").val();
+		       	})
+                
+                function submit(){
+		     		
+		       		console.log($("#fileInput"));
+		       		let fileAlert = $("#fileInput");
+		       		if(!fileAlert[0].files.length){
+		        		alert("이미지를 등록해주세요.");
+		        		return false;
+		        	}
+		     		
+					<%-- console.log(images); // 이미지가 담긴 배열
+        	    	console.log($("#titleInput").val()); // 상품명
+        	    	console.log(categoryvalue); // 카테고리
+        	    	console.log(dbStatus); // 상품상태
+        	    	console.log($("#numberInput").val()); // 가격
+        	    	console.log(dbCharge); // 배송비
+        	    	console.log($("#contentInput").val()); // 설명
+        	    	console.log($("#numberInput2").val()); // 수량
+        	    	console.log($("#trade-zone").val()); // 거래지역
+        	    	console.log($("#ty-checkbox").val()); // 쿨거래여부
+        	    	console.log(<%= userNo %>);
+        	    	console.log(<%= pList.get(0).getProductNo() %>); --%>
+        	    	
+               	    // 이미지 파일을 FormData에 추가
+               	    let formData = new FormData();
+               	    for (let i = 0; i < images.length; i++) {
+               	        formData.append('image'+(i+1), images[i]);
+               	    }
+               	    
+               	    // value 추가
+               	    formData.append('title', $("#titleInput").val());
+               	    formData.append('category', categoryvalue);
+               	    formData.append('status', dbStatus);
+               	    formData.append('price', $("#numberInput").val());
+               	    formData.append('deliveryCharge', dbCharge);
+               	    formData.append('content', $("#contentInput").val());
+               	    formData.append('pieces', $("#numberInput2").val());
+               	    formData.append('zone', $("#trade-zone").val());
+               	    formData.append('trade', $("#ty-checkbox").val());
+        	    	formData.append('seller', <%= userNo %>);
+        	    	formData.append('pno', <%= pList.get(0).getProductNo() %>);
+        	    	
+        	    	for (let pair of formData.entries()) {
+        	    	    console.log(pair[0] + ', ' + pair[1]); // key, value 출력
+        	    	}
+        	    	
+        	    	$.ajax({
+        	    		url:"updateSell.po",
+        	    		data:formData,
+        	    		type:"POST",
+       		    		processData: false,
+       		            contentType: false,
+       		            success:function(result){
+       		            	window.location.href = "insertSuccess.po";
+       		            },
+       		            error:function(){
+       		            	console.log("실패");
+       		            }
+        	    	});
+                }
+	        
+	        </script>
 	    
 	    <%@ include file="../common/footer.jsp" %>
 

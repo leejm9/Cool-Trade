@@ -12,6 +12,7 @@ import java.util.Properties;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
@@ -851,7 +852,8 @@ public class ProductDao {
          while(rset.next()) {
             Product p = new Product();
             p.setProductNo(rset.getInt("product_no"));
-            p.setCategoryNo(rset.getString("category_name"));
+            p.setCategoryNo(rset.getString("category_no"));
+            p.setCategoryName(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
             p.setPrice(rset.getInt("price"));
             p.setProductDesc(rset.getString("product_desc"));
@@ -873,7 +875,7 @@ public class ProductDao {
          close(rset);
          close(pstmt);
       }
-      System.out.println(pList);
+      //System.out.println(pList);
       return pList;
    }
    
@@ -960,6 +962,7 @@ public class ProductDao {
       } finally {
          close(pstmt);
       }
+      System.out.println("이미지수정다오:" + result);
       return result;
    }
    
@@ -980,7 +983,7 @@ public class ProductDao {
       } finally {
          close(pstmt);
       }
-      System.out.println("딜리트다오리절트 : " + result);
+      System.out.println("이미지삭제다오 : " + result);
       return result;
    }
    
@@ -1422,4 +1425,42 @@ public class ProductDao {
 		}
 		return result;
 	}
+	
+	public ArrayList<DeliveryAddress> getAddressList(Connection conn, int uno) {
+		ArrayList<DeliveryAddress> addressList = new ArrayList<DeliveryAddress>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getAddressList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				DeliveryAddress da = new DeliveryAddress();
+				da.setDeliveryAddressNo(rset.getInt("delivery_address_no"));
+				da.setUserNo(rset.getInt("user_no"));
+				da.setAddress(rset.getString("address"));
+				da.setDetail(rset.getString("detail"));
+				da.setPostcode(rset.getString("postcode"));
+				da.setTitle(rset.getString("title"));
+				da.setName(rset.getString("name"));
+				da.setPhone(rset.getString("phone"));
+				da.setMainYn(rset.getString("main_yn"));
+				
+				addressList.add(da);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return addressList;
+	}
+	
 }

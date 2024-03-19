@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.cooltrade.chatting.controller.model.Dao.ChatDao;
 import com.cooltrade.chatting.controller.model.vo.Chat;
 import com.cooltrade.chatting.controller.model.vo.ChatRoom;
+import com.cooltrade.product.model.vo.Images;
 
 public class ChatService {
 	public int countChatRoom(String userId, String pno) {
@@ -71,6 +72,22 @@ public class ChatService {
 		
 		close(conn);
 		return user;
+	}
+	
+	public Images getBuyerInfo(String userId) {
+		Connection conn = getConnection();
+		Images img = new ChatDao().getBuyerInfo(conn, userId);
+		
+		close(conn);
+		return img;
+	}
+	
+	public Images getSellerInfo(String sellerId) {
+		Connection conn = getConnection();
+		Images img = new ChatDao().getSellerInfo(conn, sellerId);
+		
+		close(conn);
+		return img;
 	}
 	
 }

@@ -62,12 +62,13 @@ public class MemberSellListController extends HttpServlet {
 		
 		ArrayList<Product> list = new MemberService().sellListPo(pi, userNo);
 		
-//		System.out.println(pi);
+		for(Product p : list) {
+			int likePoCount = new MemberService().selectLikePo(p.getProductNo());
+			p.setCount(likePoCount);
+		}
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		
-		System.out.println("sell리스트" + list);
 		
 		request.getRequestDispatcher("views/myPage/sellList.jsp").forward(request, response);
 		

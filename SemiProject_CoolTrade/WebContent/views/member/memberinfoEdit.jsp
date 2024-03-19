@@ -40,6 +40,10 @@
         padding-top: 20px;
     }
     
+    .outer {
+    	margin: auto;
+    }
+    
       /* 왼쪽 컨텐츠 CSS */
     #left-content {
         width: 20%;
@@ -85,25 +89,43 @@
         }
     td,#table th{
         border: 1px solid black;
+            border-top: 2px solid #d6d6d6;
+            border-bottom: 2px solid #e6e6e6;
+            width: 100%;
+            border-spacing: 10px;
+            /*border-collapse: separate; /* 셀테두리가 별도로 표시되도록 설정 */
+    }
+
+    tr {
+      border: none;
+    }
+
+    td,th{
         width: 350px;
         height: 45px;
- 
+        border: none;
     }
     
     #table th{
         width: 130px;
-        background-color: lightgray ;
+        background-color: rgb(231, 231, 231);
         text-align: center !important;
+        border-bottom: 1px solid #d3d3d3;
     }
 
-    
-    
+    td {
+      font-size: 14px;
+      border-bottom: 1px solid rgb(231, 231, 231);
+      padding-left: 5px;
+    }
     
    .inputbox{
-
       width: 240px;
       height: 30px;
       margin-right: 20px;
+      border: none;
+      outline: none;
+      background-color: rgb(231, 231, 231);
     }
     .inputbox1{
 
@@ -113,21 +135,25 @@
        
     }
 
-
     .bank{
         height: 30px;
         width: 85px;
     }
   
-    button{
+    .btncss{
         height: 25px;
         width: 70px;
-        
+        background-color: transparent;
+        border: 1px solid #d6d6d6;
+        border-radius: 5px;
     }
+    
+    .btncss:hover {
+    	background-color: rgb(255,255,255);
+    }
+    
     #bottombtn{
         text-align: center;
-       
-       
     }
     
     .no-delivery-address {
@@ -201,8 +227,8 @@
 			      alt="회원 프로필 사진 이미지">
 
 				    <div id="bottombtn" align="center">
-				        <button type="button" onclick="$('#profileImage').click();">선택</button>
-				        <button type="button" onclick="uploadProfileImage();">변경</button>
+				        <button type="button" onclick="$('#profileImage').click();" class="btncss">선택</button>
+				        <button type="button" onclick="uploadProfileImage();"" class="btncss">변경</button>
 				        <input type="file" id="profileImage" onchange="changeProfileImage();" style="display:none;"/>
 				    </div>
 			  </div>
@@ -221,20 +247,20 @@
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td>&nbsp;<input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()">변경</button></td>
+                <td>&nbsp;<input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()"" class="btncss">변경</button></td>
                
             </tr>
             <tr>
                 <th>휴대폰번호</th>
-                <td>&nbsp;<input type="tel" class="inputbox" id="phone" maxlength='13' value="<%= phone %>"><button onclick="btnChangePhone()">변경</button></td>
+                <td>&nbsp;<input type="tel" class="inputbox" id="phone" maxlength='13' value="<%= phone %>"><button onclick="btnChangePhone()"" class="btncss">변경</button></td>
             </tr>
             <tr>
                 <th>이메일</th>
-                <td>&nbsp;<input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE">변경</button></td>
+                <td>&nbsp;<input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE"" class="btncss">변경</button></td>
             </tr>
             <tr>
                 <th>주소</th>
-                <td>&nbsp;<div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 20px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();">선택</button></td>
+                <td>&nbsp;<div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 20px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();"" class="btncss">선택</button></td>
             </tr>
             <tr>
                 <div>
@@ -247,7 +273,7 @@
                         <option value="IBK기업은행" <%= "IBK기업은행".equals(bankAccount.getBank())?"selected":"" %>>IBK기업은행</option>
                         <option value="SC제일은행" <%= "SC제일은행".equals(bankAccount.getBank())?"selected":"" %>>SC제일은행</option>
                       </select>
-                      <input type="text" class="inputbox1" id="account" value="<%= bankAccount.getAccount() %>"><button onclick="saveBankAccount();">변경</button></td>
+                      <input type="text" class="inputbox1" id="account" value="<%= bankAccount.getAccount() %>"><button onclick="saveBankAccount();"" class="btncss">변경</button></td>
             </tr>
 
         
@@ -255,7 +281,7 @@
     <br>
     <div id="bottombtn" align="center">
         <!-- <button type="submit" >정보변경</button> -->
-        <button type="button" data-toggle="modal" data-target="#deleteModal">회원탈퇴</button>
+        <button type="button" data-toggle="modal" data-target="#deleteModal"" class="btncss">회원탈퇴</button>
     </div>
     <!-- 회원탈퇴용 Modal -->
     <div class="modal" id="deleteModal">
@@ -265,7 +291,7 @@
 	      <!-- Modal Header -->
 	      <div class="modal-header">
 	        <h4 class="modal-title">회원 탈퇴</h4>
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <button type="button" class="close" data-dismiss="modal"" class="btncss">&times;</button>
 	      </div>
 	
 	      <!-- Modal body -->
@@ -274,7 +300,7 @@
        	<b>탈퇴 후 복구가 불가능합니다. <br> 정말로 탈퇴하시겠습니까? </b> <br><br>
        	
        	비밀번호 : <input type="password" name="userPwd" id="userPw" required > <br><br>
-       	<button onclick="deleteMember();" >탈퇴하기</button>
+       	<button onclick="deleteMember();"" class="btncss">탈퇴하기</button>
 		</div>
         </div>
       </div>
@@ -289,7 +315,7 @@
 	        <!-- Modal Header -->
 	        <div class="modal-header">
 	          <h4 class="modal-title">배송지 목록</h4>
-	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	          <button type="button" class="close" data-dismiss="modal"" class="btncss">&times;</button>
 	        </div>
 	  
 	        <!-- Modal body -->
@@ -297,7 +323,7 @@
 	          <div style="text-align:right"><a href="javascript:showEditAddressModal();">대표 배송지 설정하기</a></div>
             <table id="delivery-address-list" style="margin-top:0px; width:100%;">
             </table>
-	        <button onclick="showAddAddressModal();" style="width: 200px; margin-top:50px;" >+ 배송지 추가</button>
+	        <button onclick="showAddAddressModal();" style="width: 200px; margin-top:50px;"" class="btncss">+ 배송지 추가</button>
 	        </div>
 	      </div>
 	    </div>
@@ -310,7 +336,7 @@
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">배송지 추가</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal"" class="btncss">&times;</button>
           </div>
     
           <!-- Modal body -->
@@ -345,7 +371,7 @@
                 <td><label style="margin:0px;"><input type="radio" name="delivery-address-main_yn" value="Y" checked> Y</label> <label style="margin:0px;"><input type="radio" name="delivery-address-main_yn" value="N"> N</label></td>
               </tr>
             </table>
-          <button onclick="addAddress();" style="width: 200px; margin-top:50px;" >저장</button>
+          <button onclick="addAddress();" style="width: 200px; margin-top:50px;"" class="btncss">저장</button>
           </div>
         </div>
       </div>
@@ -358,14 +384,14 @@
           <!-- Modal Header -->
           <div class="modal-header">
             <h4 class="modal-title">배송지 편집</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <button type="button" class="close" data-dismiss="modal"" class="btncss">&times;</button>
           </div>
     
           <!-- Modal body -->
           <div class="modal-body" align="center">
             <table id="delivery-address-edit-list" style="margin-top:0px;width:100%;">
             </table>
-            <button data-dismiss="modal" style="width: 200px; margin-top:50px;" >닫기</button>
+            <button data-dismiss="modal" style="width: 200px; margin-top:50px;"" class="btncss">닫기</button>
           </div>
         </div>
       </div>

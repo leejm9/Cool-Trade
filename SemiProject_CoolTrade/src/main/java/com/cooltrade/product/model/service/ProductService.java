@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
 import com.cooltrade.product.model.vo.Images;
@@ -205,7 +206,7 @@ public class ProductService {
 
 	public ArrayList<Product> updateSellForm(int pno) {
 		Connection conn = getConnection();
-		System.out.println("서비스 pno : " + pno);
+		//System.out.println("서비스 pno : " + pno);
 		ArrayList<Product> pList = new ProductDao().updateSellForm(conn, pno);
 
 		close(conn);
@@ -221,7 +222,7 @@ public class ProductService {
 		} else {
 			rollback(conn);
 		}
-		System.out.println("딜리트서비스리절트 : " + result);
+		//System.out.println("딜리트서비스리절트 : " + result);
 		close(conn);
 		return result;
 	}
@@ -502,4 +503,13 @@ public class ProductService {
 		}
 		return result;
 	}
+	
+	public ArrayList<DeliveryAddress> getAddressList(int uno) {
+		Connection conn = getConnection();
+		ArrayList<DeliveryAddress> addressList = new ProductDao().getAddressList(conn, uno);
+		
+		close(conn);
+		return addressList;
+	}
+	
 }

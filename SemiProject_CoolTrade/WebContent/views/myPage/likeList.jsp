@@ -260,7 +260,7 @@
 	
 	.timeDiff {
 		font-size: 14px;
-    	color: lightgray;
+    	color: rgb(190, 190, 190);
 	}
 	
 	.like-po-detail {
@@ -330,18 +330,18 @@
                     <span><%= likePoCount %></span>
                 </div>
 
-               	<% for(int i=0; i<list.size(); i++) { %>
                 <div>
                     <div class="like-list-area">
                         <div id="like-delete-select-box">
                             <div>
-                                <button type="button" onclick="checkDelete(<%= list.get(i).getUserNo() %>);">선택삭제</button>
-                                <button type="button" onclick="allDelete(<%= list.get(i).getUserNo() %>);">전체삭제</button>
+                                <button type="button" onclick="checkDelete(<%= userNo %>);">선택삭제</button>
+                                <button type="button" onclick="allDelete(<%= userNo %>);">전체삭제</button>
                             </div>
                         </div>
                     </div>
                     <div id="like-list-area-container">
                         <div class="like-list-area-wrap">
+               			<% for(int i=0; i<list.size(); i++) { %>
                             <div class="like-list-div">
                                 <div class="like-list-checkbox-div">
                                     <label for="deleteCheck<%= i %>" class="checkbox-label">
@@ -365,10 +365,10 @@
                                     </div>
                                 </a>
                             </div>
+                		<% } %>    
                         </div>
                     </div>
                 </div>
-                <% } %>    
                 
                 <script>
                 
@@ -387,28 +387,35 @@
                			}
                		}
 					//console.log(checkedBox);
+                	//console.log(checkedBox.join(','));
 					//return checkedBox;
 				}
 				
                 // 선택삭제 이벤트
                 function checkDelete(num){
                 	console.log(checkedBox);
-                	if(confirm("찜을 해제하시겠습니까?")){
-	                	$.ajax({
-                			url:"ajaxCheckDelete.me",
-                			data:{
-                				uno:num,
-                				pno:checkedBox,
-                			},
-                			type:"post",
-                			success:function(result){
-                				alert("찜이 해제되었습니다.");
-                				location.reload();
-                			}
-                		})
+                	if(checkedBox.length > 0){
+	                	if(confirm("찜을 해제하시겠습니까?")){
+		                	$.ajax({
+	                			url:"ajaxCheckDelete.me",
+	                			data:{
+	                				uno:num,
+	                				pno:checkedBox,
+	                			},
+	                			type:"post",
+	                			traditional: true,
+	                			success:function(result){
+	                				alert("찜이 해제되었습니다.");
+	                				location.reload();
+	                			}
+	                		})
+	                	} else {
+	                		console.log("취소");
+	                	}
                 	} else {
-                		console.log("취소");
+                		alert("선택한 상품이 없습니다.");
                 	}
+                	
                 }
                 
                 // 전체삭제 이벤트

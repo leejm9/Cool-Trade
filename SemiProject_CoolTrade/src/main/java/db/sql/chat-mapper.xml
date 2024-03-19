@@ -90,4 +90,23 @@
 		  FROM CHATROOM
 		 WHERE CHATROOM_NO = ?
 	</entry>
+	
+	<entry key="getBuyerInfo">
+		SELECT 
+		       NICKNAME
+		     , NVL(IMG_PATH || CHANGE_NAME, '') TITLEIMG
+		  FROM IMAGES
+	RIGHT JOIN MEMBER ON (REF_RNO = USER_NO)
+		 WHERE USER_ID = ?
+	</entry>
+	
+	<entry key="getSellerInfo">
+		SELECT 
+		       NICKNAME
+		     , NVL(IMG_PATH || CHANGE_NAME, '') TITLEIMG
+		  FROM IMAGES
+	RIGHT JOIN MEMBER ON (REF_RNO = USER_NO)
+		 WHERE USER_ID = ?
+	</entry>
+	
 </properties>

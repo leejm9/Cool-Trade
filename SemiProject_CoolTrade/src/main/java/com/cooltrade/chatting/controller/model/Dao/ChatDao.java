@@ -14,6 +14,7 @@ import static com.cooltrade.common.JDBCTemplate.*;
 import com.cooltrade.chatting.controller.model.vo.Chat;
 import com.cooltrade.chatting.controller.model.vo.ChatRoom;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.product.model.vo.Images;
 
 public class ChatDao {
 	private Properties prop = new Properties();
@@ -218,4 +219,59 @@ public class ChatDao {
 		}
 		return userInfo;
 	}
+	
+	public Images getBuyerInfo(Connection conn, String userId) {
+		Images img = new Images();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getBuyerInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				img.setBuyerNickname(rset.getString("nickname"));
+				img.setBuyerTitleImg(rset.getString("titleimg"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return img;
+	}
+	
+	public Images getSellerInfo(Connection conn, String sellerId) {
+		Images img = new Images();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getSellerInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sellerId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				img.setSellerNickname(rset.getString("nickname"));
+				img.setSellerTitleImg(rset.getString("titleimg"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return img;
+	}
+	
 }

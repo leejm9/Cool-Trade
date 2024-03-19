@@ -6,6 +6,10 @@ public class ChatRoom {
 	private String chatRoomStatus;
 	private String userId;
 	private String sellerId;
+	private String buyerNickname;
+	private String sellerNickname;
+	private String buyerTitleImg;
+	private String sellerTitleImg;
 	
 	public ChatRoom() {}
 
@@ -16,6 +20,20 @@ public class ChatRoom {
 		this.chatRoomStatus = chatRoomStatus;
 		this.userId = userId;
 		this.sellerId = sellerId;
+	}
+
+	public ChatRoom(int chatRoomNo, String chatRoomTitle, String chatRoomStatus, String userId, String sellerId,
+					String buyerNickname, String sellerNickname, String buyerTitleImg, String sellerTitleImg) {
+		super();
+		this.chatRoomNo = chatRoomNo;
+		this.chatRoomTitle = chatRoomTitle;
+		this.chatRoomStatus = chatRoomStatus;
+		this.userId = userId;
+		this.sellerId = sellerId;
+		this.buyerNickname = buyerNickname;
+		this.sellerNickname = sellerNickname;
+		this.buyerTitleImg = buyerTitleImg;
+		this.sellerTitleImg = sellerTitleImg;
 	}
 
 	public int getChatRoomNo() {
@@ -56,6 +74,38 @@ public class ChatRoom {
 
 	public void setSellerId(String sellerId) {
 		this.sellerId = sellerId;
+	}
+
+	public String getBuyerNickname() {
+		return buyerNickname;
+	}
+
+	public void setBuyerNickname(String buyerNickname) {
+		this.buyerNickname = buyerNickname;
+	}
+
+	public String getSellerNickname() {
+		return sellerNickname;
+	}
+
+	public void setSellerNickname(String sellerNickname) {
+		this.sellerNickname = sellerNickname;
+	}
+
+	public String getBuyerTitleImg() {
+		return buyerTitleImg;
+	}
+
+	public void setBuyerTitleImg(String buyerTitleImg) {
+		this.buyerTitleImg = buyerTitleImg;
+	}
+
+	public String getSellerTitleImg() {
+		return sellerTitleImg;
+	}
+
+	public void setSellerTitleImg(String sellerTitleImg) {
+		this.sellerTitleImg = sellerTitleImg;
 	}
 
 	@Override
