@@ -56,7 +56,7 @@ public class AjaxUploadProfileImageController extends HttpServlet {
 		// 유저의 프로필이미지 이미지번호 조회
 		int select = new MemberService().selectProfileImg(uno);
 		int result = 0;
-		
+		//System.out.println("셀렉트"+select);
 		if(select == 0) {
 			// 프로필이미지 이미지번호가 0일 경우 => 프로필이미지가 없다
 			if(multiRequest.getOriginalFileName("image") != null) {
@@ -84,9 +84,13 @@ public class AjaxUploadProfileImageController extends HttpServlet {
 		}
 		
 		String titleImg = new MemberService().getProfileImg(select);
+		String contextpath = request.getContextPath();
+		
+		String imgSrc = contextpath + "/" + titleImg;
+		//System.out.println(imgSrc);
 		
 		if(result > 0) {
-			response.getWriter().print(titleImg);
+			response.getWriter().print(imgSrc);
 		}
 		
 	/*

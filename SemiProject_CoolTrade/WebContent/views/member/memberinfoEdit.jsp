@@ -11,7 +11,7 @@
 	String email = member.getEmail();
 	
 	BankAccount bankAccount = (BankAccount) request.getAttribute("bankAccount");
-	
+	String titleImg = (String)request.getAttribute("titleImg");
 %>
 <!DOCTYPE html>
 <html>
@@ -169,8 +169,7 @@
   }
 
   
-  
-    </style>
+</style>
 </head>
 <body>
 <%@ include file = "../common/header.jsp" %>
@@ -221,18 +220,25 @@
     <div class="outer" style="margin-left:160px;">
     
     <div style="text-align: center;">
+    <% if(titleImg != null) { %>
 			      <img style="width:200px;margin-bottom:10px;" id="profile"
-			      src="#"
+			      src="<%= contextPath %>/<%= titleImg %>"
 			      onerror="$(this).attr('src', 'resources/images/user-icon.png')"
 			      alt="회원 프로필 사진 이미지">
+	<% } else { %>
+		<img style="width:200px;margin-bottom:10px;" id="profile"
+			      src="resources/images/user-icon.png"
+			      onerror="$(this).attr('src', 'resources/images/user-icon.png')"
+			      alt="회원 프로필 사진 이미지">
+	<% } %>
 
 				    <div id="bottombtn" align="center">
 				        <button type="button" onclick="$('#profileImage').click();" class="btncss">선택</button>
-				        <button type="button" onclick="uploadProfileImage();"" class="btncss">변경</button>
-				        <input type="file" id="profileImage" onchange="changeProfileImage();" style="display:none;"/>
+				        <button type="button" onclick="uploadProfileImage();" class="btncss">변경</button>
+				        <input type="file" id="profileImage" onchange="changeProfileImage(this);" style="display: none;">
 				    </div>
 			  </div>
-    
+			  
        <table id="table">
        
             <tr>
@@ -786,6 +792,7 @@
       function changeProfileImage() {
     	  $("#profile").attr("src", URL.createObjectURL($('#profileImage')[0].files[0]));
       }
+      
       function uploadProfileImage() {
         var formData = new FormData();
         formData.append('image', $('#profileImage')[0].files[0]);
@@ -797,7 +804,7 @@
              contentType: false, // 필수 옵션: FormData를 사용할 때 false로 설정
              success: function(data) {
                alert("프로필 사진이 변경 되었습니다.");
-               $("#profile").attr("src", "<%= contextPath %>/"+data);
+               //$("#profile").attr("src", data);
              },
              error: function(xhr, status, error) {
                alert("프로필 사진 변경에 실패 하였습니다.");

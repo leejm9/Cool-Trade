@@ -31,7 +31,7 @@ public class DownloadProfileImageController extends HttpServlet {
    *      response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+	  /*
     // 서버에 저장된 이미지 파일 경로
     String filePath = "/upload/profile/"+request.getParameter("uno");
     File downloadFile = new File(filePath);
@@ -54,7 +54,7 @@ public class DownloadProfileImageController extends HttpServlet {
       while ((bytesRead = inStream.read(buffer)) != -1) {
         outStream.write(buffer, 0, bytesRead);
       }
-    }
+    }*/
   }
 
   /**

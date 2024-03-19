@@ -50,12 +50,12 @@ public class DetailProductViewController extends HttpServlet {
 		// 2. 조회수 증가하면 성공
 		if (result > 0) {
 			Product p = new ProductService().selectProductDetail(pno);
-			System.out.println(p);
+			//System.out.println(p);
 			ArrayList<Images> imglist = new ProductService().selectImages(pno);
 			request.setAttribute("p", p);
 			request.setAttribute("imglist", imglist);
 			String uploadType = p.getUploadType();
-			System.out.println("업로드타입: "+uploadType);
+			//System.out.println("업로드타입: "+uploadType);
 			request.setAttribute("likeCount", likeCount);
 
 			RecentProducts recent = new RecentProducts();

@@ -1415,7 +1415,7 @@
 		       IMG_NO
 		  FROM IMAGES
 		 WHERE REF_UNO = ?
-		   AND REF_PNO IS NOT NULL AND REF_PNO = ''
+		   AND REF_PNO IS NULL
 	</entry>
 	
 	<entry key="insertMemberProfileImg">
@@ -1449,6 +1449,13 @@
 		   SET ORIGIN_NAME = ?
 		     , CHANGE_NAME = ?
 		     , IMG_PATH = ?
+		 WHERE IMG_NO = ?
+	</entry>
+	
+	<entry key="getProfileImg">
+		SELECT
+		       NVL(IMG_PATH || CHANGE_NAME, '') TITLEIMG
+		  FROM IMAGES
 		 WHERE IMG_NO = ?
 	</entry>
 	

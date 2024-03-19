@@ -48,6 +48,11 @@ public class MemberMyPageController extends HttpServlet {
 		// 찜한상품 카운트
 		int likePoCount = new MemberService().likeProductCount(uno);
 		request.setAttribute("likePoCount", likePoCount);
+		
+		// 프로필사진
+		int select = new MemberService().selectProfileImg(uno);
+		String titleImg = new MemberService().getProfileImg(select);
+		request.setAttribute("titleImg", titleImg);
 
 		request.getRequestDispatcher("views/myPage/myPage.jsp").forward(request, response);
 		
