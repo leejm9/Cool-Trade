@@ -863,7 +863,7 @@ div[id^="banner"] {
 }
 
 #like_chat_buy-ds {
-	justify-content: space-between;
+	justify-content: space-around;
 	margin-top: 30px;
 }
 

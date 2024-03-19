@@ -253,7 +253,7 @@
                         <div>
                       <img style="width:40px; border-radius: 50%;"
                             src="downloadprofileimage.do?uno=<%=uno%>"
-								            onerror="$(this).attr('src', 'resources/images/free-icon-user-847969.png')"
+								            onerror="$(this).attr('src', 'resources/images/user-icon.png')"
 								             alt="회원 프로필 사진 이미지">
                         </div>
                         <div>

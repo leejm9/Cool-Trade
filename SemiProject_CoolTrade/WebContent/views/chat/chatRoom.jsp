@@ -84,7 +84,11 @@
 	                	<% if(c.getUserId().equals(loginUser.getUserId()) || c.getSellerId().equals(loginUser.getUserId())){ %>
 		                <tr>
 		                    <td><%= c.getChatRoomNo() %></td>
-		                    <td><%= c.getChatRoomTitle() %></td>
+		                    <%if(c.getUserId().equals(c.getSellerId())){ %>
+		                    <td>나와의 채팅</td>
+		                    <%}else{ %>
+		                    <td><%= c.getUserId() %>님과 <%= c.getSellerId() %>님의 채팅</td>
+		                    <%} %>
 		                    <td><%= c.getUserId() %></td>
 		                    <td><%= c.getSellerId() %></td>
 		                </tr>

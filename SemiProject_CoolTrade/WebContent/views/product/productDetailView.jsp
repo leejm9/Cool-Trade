@@ -103,13 +103,21 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   ❤️찜<span><%= likeCount %></span>
                 </button>
                 <%} %>
+                <%if(loginUser.getUserId().equals(p.getSellerNo())) {%>
                 <button
                   class="btn btn-lg btn-warning"
-                  onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo() %>'"
+                  onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"
+                >
+                  💬 나와의 채팅
+                </button>
+                <%}else{ %>
+                <button
+                  class="btn btn-lg btn-warning"
+                  onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"
                 >
                   💬 채팅하기
                 </button>
-                <button class="btn btn-lg btn-danger">바로사버리기</button>
+                <%} %>
               </div>
             </div>
           </div>
