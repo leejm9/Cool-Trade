@@ -32,7 +32,7 @@
 	</entry>
 	
 	<entry key="selectRandomProduct">
-		SELECT 
+SELECT 
 			   * 
 		  FROM 
 		     ( 
@@ -54,6 +54,7 @@
 		       	    	   , PRICE
 		       	    	   , ZONE
 		       	    	   , UPLOAD_DATE
+                           , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
 		       	        FROM PRODUCT 
 		       	       WHERE UPLOAD_TYPE = 'Y' 
 		       	       ORDER 
@@ -144,6 +145,7 @@
 		       	    	   , PRICE
 		       	    	   , ZONE
 		       	    	   , UPLOAD_DATE
+		       	    	   , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
 		       	        FROM PRODUCT 
 		       	       WHERE UPLOAD_TYPE = 'Y' 
 		       	       ORDER 
@@ -168,6 +170,7 @@
 		     , TRADE_TYPE
 		     , TO_CHAR(UPLOAD_DATE, 'RR"-"MM"-"DD') UPLOAD_DATE
 		     , UPLOAD_TYPE
+		     , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
 		     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
      	    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
 	       	     WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 

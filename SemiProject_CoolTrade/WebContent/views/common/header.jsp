@@ -373,7 +373,7 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     style="padding: 5px"
                     alt="좋아요 이미지"
                   />
-                  <div style="padding-top: 3px" onchange="likePoCount(this);"><%= headerCo %></div>
+                  <div style="padding-top: 3px"><%= headerCo %></div>
                 </a>
                 <% } %>
               </div>
@@ -472,7 +472,7 @@ contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         recentProducts.productName +
                         "</div>" +
                         '<div style="color: #04b4fc;">' +
-                        recentProducts.price +
+                        recentProducts.strPrice +
                         "<span>원</span>" +
                         "</div>" +
                         "</div>" +

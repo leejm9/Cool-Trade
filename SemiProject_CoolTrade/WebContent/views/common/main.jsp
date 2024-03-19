@@ -96,7 +96,7 @@
 			                '<div class="search_title_price_main-ds">' +
 			                '<div class="search_ptitle_main-ds" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">' + product.productName + '</div>' +
 			                '<div class="search_price_time_main-ds flex-ds" style="justify-content: space-between;">' +
-			                '<div class="search_price_main-ds">' + product.price + '</div>' +
+			                '<div class="search_price_main-ds">' + product.strPrice + '</div>' +
 			                '<div id="search_time_main-ds">' + product.timeDiff + '</div>' +
 			                '</div>' +
 			                '</div>' +
@@ -198,7 +198,7 @@
 			                '<div class="search_title_price_main-ds">' +
 			                '<div class="search_ptitle_main-ds" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + product.productName + '</div>' +
 			                '<div class="search_price_time_main-ds flex-ds" style="justify-content: space-between;">' +
-			                '<div class="search_price_main-ds">' + product.price + '</div>' +
+			                '<div class="search_price_main-ds">' + product.strPrice + '</div>' +
 			                '<div id="search_time_main-ds">' + product.timeDiff + '</div>' +
 			                '</div>' +
 			                '</div>' +
