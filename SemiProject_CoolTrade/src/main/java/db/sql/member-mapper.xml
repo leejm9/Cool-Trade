@@ -241,7 +241,7 @@
                            , USER_NAME
                            , CAUTION
                            , UPLOAD_DATE
-                           , PRODUCT_STATUS
+                           , UPLOAD_TYPE
                         FROM PRODUCT P
                         JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
                        ORDER
@@ -1160,7 +1160,7 @@
 		                     , CAUTION
 		                     , PRODUCT_NAME
 		                     , UPLOAD_DATE
-		                     , PRODUCT_STATUS
+		                     , UPLOAD_TYPE
 		                  FROM PRODUCT P
 		                  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
 		                 WHERE (PRODUCT_NAME LIKE '%' || ? || '%'

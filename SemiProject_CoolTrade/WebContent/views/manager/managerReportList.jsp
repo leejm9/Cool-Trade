@@ -58,6 +58,7 @@
                                             <th>신고유형</th>
                                             <th>신고날짜</th>
                                             <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     
@@ -74,6 +75,7 @@
 		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= r.getProdNo()%>"><%= r.getProductTitle() %></a></td>
 		                                            <td><%= r.getReportTypeNo() %></td>
 		                                            <td><%= r.getReportDate() %></td>
+		                                            <td> <input type="button" class="btn btn-primary" value="상세보기" onclick="location.href='<%= contextPath %>/report.detail?rno=<%= r.getReportNo() %>'">
 		                                            <td><input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리"></td>
 		                                        </tr>
                                         	<% } %>
@@ -83,7 +85,7 @@
                                 <script>
 							        function Report(pno){
 							                $.ajax({
-							                	url:"report.check",
+							                	url:"report.ch",
 							                	data:{pno:pno},
 							                	success:function(result){
 							                			alert("신고처리되었습니다");

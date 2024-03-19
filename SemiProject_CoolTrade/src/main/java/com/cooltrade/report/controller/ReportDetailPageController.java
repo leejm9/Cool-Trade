@@ -1,27 +1,28 @@
 package com.cooltrade.report.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
 import com.cooltrade.report.model.service.ReportService;
+import com.cooltrade.report.model.vo.Report;
 
 /**
- * Servlet implementation class ReportCheckController
+ * Servlet implementation class ReportDetailPageController
  */
-@WebServlet("/report.ch")
-public class ReportCheckController extends HttpServlet {
+@WebServlet("/report.detail")
+public class ReportDetailPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportCheckController() {
+    public ReportDetailPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,12 +31,11 @@ public class ReportCheckController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pno = Integer.parseInt(request.getParameter("pno"));
-		int userNo = new ProductService().getReportedUserNo(pno);
+		int rno = Integer.parseInt(request.getParameter("rno"));
 		
-		int result = new ReportService().updateReport(userNo);
+		ArrayList<Report> list = new ReportService().selectReportDetail(rno);
 		
-		
+		request.getRequestDispatcher("views/manager/managerReportDetail.jsp").forward(request, response);
 	}
 
 	/**

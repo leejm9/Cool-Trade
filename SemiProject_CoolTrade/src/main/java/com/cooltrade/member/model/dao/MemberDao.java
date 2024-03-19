@@ -402,7 +402,7 @@ public class MemberDao {
                            rset.getInt("product_no"),
                            rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getString("product_status")
+                           rset.getString("upload_type")
                            ));
          }
          
@@ -1060,7 +1060,7 @@ public class MemberDao {
                            rset.getInt("product_no"),
                            rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getString("product_status")
+                           rset.getString("upload_type")
                            ));
          }
       } catch (SQLException e) {

@@ -66,4 +66,13 @@ public class ReportService {
 		}
 		return result;
 	}
+	
+	public ArrayList<Report> selectReportDetail(int rno){
+		Connection conn = getConnection();
+		
+		ArrayList<Report> list = new ReportDao().selectReportDetail(conn,rno);
+		
+		close(conn);
+		return list;
+	}
 }

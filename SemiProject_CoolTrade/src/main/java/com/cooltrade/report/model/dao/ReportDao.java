@@ -188,5 +188,40 @@ public class ReportDao {
 		}
 		return result;
 	}
+	
+	public ArrayList<Report> selectReportDetail(Connection conn ,int rno){
+		ArrayList<Report> list = new ArrayList<Report>();
+		
+		Report r = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectReportDetail");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Report(rset.getInt("report_no"),
+									rset.getInt("product_no"),
+									rset.getString("product_name"),
+									rset.getString("reporter"),
+									rset.getString("report_cate"),
+									rset.getDate("report_date"),
+									rset.getString("report_content")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
 
 }

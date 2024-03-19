@@ -85,7 +85,13 @@
 		                                            	삭제된 게시물
 		                                            	<% } %>
 		                                            </td>
-		                                            <td align="center"><button class="btn btn-danger" onclick="deleteBoard(<%= m.getProductNo() %>);">삭제</button></td>
+		                                            <td align="center">
+		                                            	<% if(!m.getProductStatus().equals("N")){ %>
+		                                            		<button class="btn btn-danger" onclick="deleteBoard(<%= m.getProductNo() %>,this);">삭제</button>
+		                                            	<% } %>
+		                                            	
+		                                            	
+		                                            </td>
 		                                        </tr>
                                         	<% } %>
                                     	<% } %>
@@ -93,15 +99,15 @@
                                 </table>
                                
                                 <script>
-                                	function deleteBoard(pno){
+                                	function deleteBoard(pno,btn){
                                 		$.ajax({
                                 			url:"delete.board",
                                 			data:{pno:pno},
                                 			success:function(a){
-                                				alert("삭제되었습니다");
-                                				$(this).prop("disabled",true);
-                                				$(this).siblings().eq(5).text("삭제된 게시물");
-                                				location.reload();
+                                				if(a > 0){
+                                					alert("삭제되었습니다");
+                                    				location.reload();
+                                				}
                                 			},error:function(a){
                                 				console.log("오류발생");
                                 			}

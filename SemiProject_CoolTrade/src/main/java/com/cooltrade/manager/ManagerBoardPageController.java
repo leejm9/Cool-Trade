@@ -87,7 +87,7 @@ public class ManagerBoardPageController extends HttpServlet {
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		
+		System.out.println(list);
 		request.getRequestDispatcher("views/manager/managerBoardPage.jsp").forward(request, response);
 		
 	}

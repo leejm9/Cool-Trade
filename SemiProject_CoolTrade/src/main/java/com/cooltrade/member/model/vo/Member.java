@@ -352,7 +352,10 @@ public class Member {
 				+ ", nickName=" + nickName + ", phone=" + phone + ", email=" + email + ", enrollDate=" + enrollDate
 				+ ", ondo=" + ondo + ", userLevel=" + userLevel + ", userStatus=" + userStatus + ", caution=" + caution
 				+ ", count=" + count + ", productTitle=" + productTitle + ", productNo=" + productNo + ", monthEnroll="
-				+ monthEnroll + ", uploadDate=" + uploadDate + "]";
+				+ monthEnroll + ", uploadDate=" + uploadDate + ", productName=" + productName + ", productStatus="
+				+ productStatus + "]";
 	}
+
+	
 	
 }

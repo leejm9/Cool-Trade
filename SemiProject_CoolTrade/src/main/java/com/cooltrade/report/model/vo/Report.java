@@ -16,6 +16,22 @@ public class Report {
 	
 	public Report() {}
 
+	
+	
+	public Report(int reportNo, int prodNo, String reporter, String reportTypeNo, String reportContent, Date reportDate,
+			String productTitle) {
+		super();
+		this.reportNo = reportNo;
+		this.prodNo = prodNo;
+		this.reporter = reporter;
+		this.reportTypeNo = reportTypeNo;
+		this.reportContent = reportContent;
+		this.reportDate = reportDate;
+		this.productTitle = productTitle;
+	}
+
+
+
 	public Report(int reportNo, String productNo, String reporter, String reportTypeNo, String reportContent,
 			Date reportDate) {
 		super();
