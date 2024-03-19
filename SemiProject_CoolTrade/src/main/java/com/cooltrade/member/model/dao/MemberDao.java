@@ -2140,4 +2140,77 @@ public class MemberDao {
 		return result;
 	}
 	
+	public int selectProfileImg(Connection conn, int uno) {
+		int select = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectProfileImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				select = rset.getInt("img_no");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return select;
+	}
+	
+	public int insertMemberProfileImg(Connection conn, int uno, Images img) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertMemberProfileImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			pstmt.setInt(2, img.getImgLevel());
+			pstmt.setString(3, img.getOriginName());
+			pstmt.setString(4, img.getChangeName());
+			pstmt.setString(5, img.getImgPath());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateMemberProfileImg(Connection conn, int uno, Images img) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMemberProfileImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, img.getOriginName());
+			pstmt.setString(2, img.getChangeName());
+			pstmt.setString(3, img.getImgPath());
+			pstmt.setInt(4, img.getImgNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 }

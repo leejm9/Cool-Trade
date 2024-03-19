@@ -27,9 +27,9 @@ String user = (String)request.getAttribute("userId"); String seller =
       }
 
       .wrap {
-        padding: 50px 0;
+        /*             padding: 50px 0; */
         background-color: #e6e6e6;
-        width: 500px;
+        width: 100%;
         height: 100%;
         max-height: 100%; /* 채팅창의 최대 높이를 지정합니다. */
         overflow-y: auto; /* 내용이 넘칠 때 스크롤 표시합니다. */
@@ -238,7 +238,7 @@ String user = (String)request.getAttribute("userId"); String seller =
       </div>
       <div align="right" style="display: none">
         <input type="text" id="messageInput" style="width: 600px" />
-        <button type="submit" onclick="insertReply();">전송</button>
+        <!-- <button type="submit" onclick="insertReply();">전송</button> -->
       </div>
     </div>
     <input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>" />

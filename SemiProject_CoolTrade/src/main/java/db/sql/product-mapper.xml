@@ -228,6 +228,8 @@ SELECT
 		  FROM IMAGES
 		 WHERE REF_PNO = ?
 		   AND IMG_STATUS ='Y'
+		 ORDER
+		    BY IMG_NO
 	</entry>
 	
 	<entry key="getTitleImg">

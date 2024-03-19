@@ -161,7 +161,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <% } else { %>
                 	<button class="btn btn-lg btn-danger" type="button"  style="background-color: rgb(4, 108, 250); border: none;" disabled>바로사버리기</button>
                 <% } %>
-                <%} %>
+                <% } %>
               </div>
             </div>
           </div>
@@ -579,7 +579,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             }
                                 renderSlider2(allData2); // 슬라이더 다시 렌더링
                         });
-
+						
                         fetchSliderData2(); // 최초 데이터 로드 및 슬라이더 초기화
                 });
           </script>

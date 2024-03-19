@@ -55,7 +55,7 @@ public class DetailProductViewController extends HttpServlet {
 			request.setAttribute("p", p);
 			request.setAttribute("imglist", imglist);
 			String uploadType = p.getUploadType();
-			System.out.println(uploadType);
+			System.out.println("업로드타입: "+uploadType);
 			request.setAttribute("likeCount", likeCount);
 
 			RecentProducts recent = new RecentProducts();

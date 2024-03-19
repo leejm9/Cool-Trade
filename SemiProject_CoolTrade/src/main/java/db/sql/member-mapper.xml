@@ -1410,5 +1410,47 @@
 		   SET CAUTION = CAUTION + 1
 		 WHERE USER_NO = ?
 	</entry>
+	<entry key="selectProfileImg">
+		SELECT 
+		       IMG_NO
+		  FROM IMAGES
+		 WHERE REF_UNO = ?
+		   AND REF_PNO IS NOT NULL AND REF_PNO = ''
+	</entry>
+	
+	<entry key="insertMemberProfileImg">
+		INSERT
+		  INTO IMAGES
+		  (
+		    IMG_NO
+		  , REF_UNO
+		  , IMG_LEVEL
+		  , ORIGIN_NAME
+		  , CHANGE_NAME
+		  , IMG_PATH
+		  , UPLOAD_DATE
+		  , IMG_STATUS
+		  )
+		  VALUES
+		  (
+		    SEQ_IMG.NEXTVAL
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , ?
+		  , DEFAULT
+		  , DEFAULT
+		  )
+	</entry>
+	
+	<entry key="updateMemberProfileImg">
+		UPDATE IMAGES
+		   SET ORIGIN_NAME = ?
+		     , CHANGE_NAME = ?
+		     , IMG_PATH = ?
+		 WHERE IMG_NO = ?
+	</entry>
+	
 	
 </properties>

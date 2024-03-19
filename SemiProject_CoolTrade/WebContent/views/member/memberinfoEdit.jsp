@@ -222,7 +222,7 @@
     
     <div style="text-align: center;">
 			      <img style="width:200px;margin-bottom:10px;" id="profile"
-			      src="downloadprofileimage.do?uno=<%=uno%>"
+			      src="#"
 			      onerror="$(this).attr('src', 'resources/images/user-icon.png')"
 			      alt="회원 프로필 사진 이미지">
 
@@ -788,7 +788,7 @@
       }
       function uploadProfileImage() {
         var formData = new FormData();
-        formData.append('file', $('#profileImage')[0].files[0]);
+        formData.append('image', $('#profileImage')[0].files[0]);
          $.ajax({
              url: 'uploadprofileimage.do', // 서버 측 업로드 스크립트 URL
              type: 'POST',
@@ -797,6 +797,7 @@
              contentType: false, // 필수 옵션: FormData를 사용할 때 false로 설정
              success: function(data) {
                alert("프로필 사진이 변경 되었습니다.");
+               $("#profile").attr("src", "<%= contextPath %>/"+data);
              },
              error: function(xhr, status, error) {
                alert("프로필 사진 변경에 실패 하였습니다.");
