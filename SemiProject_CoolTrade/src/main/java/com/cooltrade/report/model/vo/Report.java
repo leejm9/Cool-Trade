@@ -30,8 +30,6 @@ public class Report {
 		this.productTitle = productTitle;
 	}
 
-
-
 	public Report(int reportNo, String productNo, String reporter, String reportTypeNo, String reportContent,
 			Date reportDate) {
 		super();

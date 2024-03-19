@@ -129,7 +129,17 @@
 		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getEnrollDate() %></td>
 		                                            <td><%= m.getOndo() %></td>
-		                                            <td><%= m.getUserLevel() %></td>
+		                                            <td>
+		                                            	<% if( m.getUserLevel().equals("C")){ %>
+		                                            		쿨거래사용자
+		                                            	<% }else if(m.getUserLevel().equals("U")){ %>
+		                                            		일반사용자
+		                                            	<% }else if(m.getUserLevel().equals("B")){ %>
+		                                            		블랙리스트
+		                                            	<% }else{ %>
+		                                            		관리자
+		                                            	<% } %>
+		                                            </td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <td align="center">
 		                                            <% if(m.getOndo()<= 10.0f) { %>
