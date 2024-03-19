@@ -167,7 +167,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           </div>
           <%if(addressList != null){ %>
 <!--           Modal -->
-			<div class="modal fade" id="myModal">
+			<div class="modal fade" id="myModal1">
 			    <div class="modal-dialog">
 			        <div class="modal-content">
 			            <% if(addressList.size() > 0) { %>
@@ -289,7 +289,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             
             $(".coolbtn").click(function(){
             	if(confirm("정말 구매하시겠습니까?")){
-            		$("#myModal").modal("show");
+            		$("#myModal1").modal("show");
             	} else {
             		console.log("취소");
             	}
