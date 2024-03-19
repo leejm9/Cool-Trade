@@ -149,6 +149,7 @@ public class ProductDao {
             p.setZone(rset.getString("zone"));
             p.setPrice(rset.getInt("price"));
             p.setUploadDate(rset.getString("upload_date"));
+            p.setStrPrice(rset.getString("str_price"));
             p.setTimeDiff(rset.getString("time_diff"));
 
             list.add(p);
@@ -299,6 +300,7 @@ public class ProductDao {
             p.setZone(rset.getString("zone"));
             p.setUploadDate(rset.getString("upload_date"));
             p.setTimeDiff(rset.getString("time_diff"));
+            p.setStrPrice(rset.getString("str_price"));
             
             recentList.add(p);
          }
@@ -335,8 +337,10 @@ public class ProductDao {
             p.setProductStatus(rset.getString("pstatus"));
             p.setTradeType(rset.getInt("trade_type"));
             p.setUploadDate(rset.getString("upload_date"));
+            p.setUploadType(rset.getString("upload_type"));
             p.setCount(rset.getInt("count"));
             p.setTimeDiff(rset.getString("time_diff"));
+            p.setStrPrice(rset.getString("str_price"));
          }
       } catch (SQLException e) {
          e.printStackTrace();

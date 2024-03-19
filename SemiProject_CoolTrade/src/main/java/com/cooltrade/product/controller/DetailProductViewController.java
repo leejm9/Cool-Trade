@@ -24,80 +24,88 @@ import com.cooltrade.product.model.vo.RecentProducts;
 @WebServlet("/detail.po")
 public class DetailProductViewController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public DetailProductViewController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public DetailProductViewController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		
+
 		int likeCount = new ProductService().selectLikeCount(pno);
-		
+
 		// 1. 조회수 증가
 		int result = new ProductService().increaseCount(pno);
-		
+
 		// 2. 조회수 증가하면 성공
-		if(result>0) {
-			Product p = new ProductService().selectProductDetail(pno); 
+		if (result > 0) {
+			Product p = new ProductService().selectProductDetail(pno);
 			System.out.println(p);
 			ArrayList<Images> imglist = new ProductService().selectImages(pno);
 			request.setAttribute("p", p);
-			request.setAttribute("imglist",	imglist);
+			request.setAttribute("imglist", imglist);
 			String uploadType = p.getUploadType();
 			System.out.println(uploadType);
 			request.setAttribute("likeCount", likeCount);
-			
+
 			RecentProducts recent = new RecentProducts();
-			if(imglist.isEmpty()) {
+			if (imglist.isEmpty()) {
 				recent.setProductNo(p.getProductNo());
 				recent.setProductName(p.getProductName());
 				recent.setPrice(p.getPrice());
 				recent.setImgPath("resources/images/");
 				recent.setChangeName("noImage.png");
-			}else {
-				recent = new RecentProducts(p.getProductNo(), p.getProductName(), p.getPrice(), imglist.get(0).getRefPno(), imglist.get(0).getImgPath(), imglist.get(0).getChangeName());
+			} else {
+				recent = new RecentProducts(p.getProductNo(), p.getProductName(), p.getPrice(),p.getStrPrice(),
+						imglist.get(0).getRefPno(), imglist.get(0).getImgPath(), imglist.get(0).getChangeName());
 			}
 			HttpSession session = request.getSession();
-			
-			ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>)session.getAttribute("rlist");
-			
-			if(rlist == null) {
+
+			ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist");
+
+			if (rlist == null) {
 				rlist = new ArrayList<RecentProducts>();
 			}
-			for(int i = 0; i < rlist.size(); i++) {
-				if(rlist.get(i).getProductNo() == p.getProductNo()) {
+			for (int i = 0; i < rlist.size(); i++) {
+				if (rlist.get(i).getProductNo() == p.getProductNo()) {
 					rlist.remove(i);
 				}
 			}
 			rlist.add(0, recent);
-			
-			if(rlist.size() > 20) {
+
+			if (rlist.size() > 20) {
 				rlist.remove(20);
 			}
-			
-			Member m = (Member)session.getAttribute("loginUser");
-			ArrayList<DeliveryAddress> addressList = new ProductService().getAddressList(m.getUserNo());
-			request.setAttribute("addressList", addressList);
-			
+
+			ArrayList<DeliveryAddress> addressList = new ArrayList<DeliveryAddress>();
+			Member m = (Member) session.getAttribute("loginUser");
+			if (m != null) {
+				addressList = new ProductService().getAddressList(m.getUserNo());
+				request.setAttribute("addressList", addressList);
+			}
+
 			session.setAttribute("rlist", rlist);
-			
+
 			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

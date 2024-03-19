@@ -5,17 +5,20 @@ public class RecentProducts {
 	private int productNo;
 	private String productName;
 	private int price;
+	private String strPrice;
 	private int refPno;
 	private String imgPath;
 	private String changeName;
 	
 	public RecentProducts() {}
 
-	public RecentProducts(int productNo, String productName, int price, int refPno, String imgPath, String changeName) {
+	public RecentProducts(int productNo, String productName, int price, String strPrice, int refPno, String imgPath,
+			String changeName) {
 		super();
 		this.productNo = productNo;
 		this.productName = productName;
 		this.price = price;
+		this.strPrice = strPrice;
 		this.refPno = refPno;
 		this.imgPath = imgPath;
 		this.changeName = changeName;
@@ -45,6 +48,14 @@ public class RecentProducts {
 		this.price = price;
 	}
 
+	public String getStrPrice() {
+		return strPrice;
+	}
+
+	public void setStrPrice(String strPrice) {
+		this.strPrice = strPrice;
+	}
+
 	public int getRefPno() {
 		return refPno;
 	}
@@ -72,8 +83,10 @@ public class RecentProducts {
 	@Override
 	public String toString() {
 		return "RecentProducts [productNo=" + productNo + ", productName=" + productName + ", price=" + price
-				+ ", refPno=" + refPno + ", imgPath=" + imgPath + ", changeName=" + changeName + "]";
+				+ ", strPrice=" + strPrice + ", refPno=" + refPno + ", imgPath=" + imgPath + ", changeName="
+				+ changeName + "]";
 	}
+	
 
 	
 	

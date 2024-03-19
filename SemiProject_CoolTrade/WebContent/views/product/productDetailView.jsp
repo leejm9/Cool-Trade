@@ -58,7 +58,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 </div>
                 <div id="detail_price-ds" class="flex-ds">
                   <div class="flex-ds">
-                    <h1><%=p.getPrice()%></h1>
+                    <h1><%=p.getStrPrice()%></h1>
                     <span>원</span>
                   </div>
                   <a href="#">네이버 가격비교</a>
@@ -142,14 +142,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   ❤️찜<span><%= likeCount %></span>
                 </button>
                 <%} %>
-                <%if(loginUser.getUserId().equals(p.getSellerNo())) {%>
+                <%if(loginUser!=null && loginUser.getUserId().equals(p.getSellerNo())) {%>
                 <button
                   class="btn btn-lg btn-warning"
                   onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"
                 >
                   💬 나와의 채팅
                 </button>
-                <%}else{ %>
+                <%}else if (loginUser!=null && !loginUser.getUserId().equals(p.getSellerNo())){ %>
                 <button
                   class="btn btn-lg btn-warning"
                   onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"
@@ -161,21 +161,22 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <% } else { %>
                 	<button class="btn btn-lg btn-danger" type="button"  style="background-color: rgb(4, 108, 250); border: none;" disabled>바로사버리기</button>
                 <% } %>
+                <%} %>
               </div>
             </div>
           </div>
-          
-          <!-- Modal -->
+          <%if(addressList != null){ %>
+<!--           Modal -->
 			<div class="modal fade" id="myModal">
 			    <div class="modal-dialog">
 			        <div class="modal-content">
 			            <% if(addressList.size() > 0) { %>
-			            <!-- Modal Header -->
+			            Modal Header
 			            <div class="modal-header">
 			                <h5 class="modal-title">판매자에게 전달할 배송지를 선택하세요</h4>
 			                <button type="button" class="close" data-dismiss="modal">&times;</button>
 			            </div>
-			            <!-- Modal body -->
+			            Modal body
 			            <div class="modal-body">
 			            <form action="#" method="post">
 			            <input type="hidden" value="<%= p.getProductNo() %>">
@@ -211,17 +212,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 							</div>
 						</form>
 			            </div>
-			            <!-- Modal footer -->
+			            Modal footer
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">전달</button>
 			            </div>
 						<% } else { %>
-						<!-- Modal body -->
+						Modal body
 			            <div class="modal-body">
 							<div>배송지가 등록되어 있지 않습니다.</div>
 							<div>내정보에서 배송지를 먼저 등록해주세요.</div>
 						</div>
-						<!-- Modal footer -->
+						Modal footer
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 			            </div>
@@ -229,7 +230,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			        </div>
 			    </div>
 			</div>
-			
+			<%} %>
 			<!-- Modal -->
 			<div class="modal fade" id="myModal-send">
 			    <div class="modal-dialog">
@@ -321,35 +322,35 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         let imgData = [];
                         // 슬라이더에 데이터를 렌더링하는 함수
                         function renderSlider(data) {
-                const slider = $("#related_product_pic_title-ds");
-                slider.empty(); // 기존 내용을 비움
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                const startIndex = currentPage * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-             // data 객체에서 plist와 imglist를 추출합니다.
-                let plist = data.plist;
-                let imglist = data.imglist;
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                let slicedData = plist.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
-                slicedData.forEach(function(item){
-                    let img = imglist.find(i => i.refPno == item.productNo);
-                    let imagePath = img ? img.imgPath + img.changeName : "resources/images/noImage.png";
-                    let itemHTML = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">'
-                    			 + '<a href="detail.po?pno=' + item.productNo + '">'
-                    			 + '<img src="' + imagePath + '" alt="' + item.productName + '">'
-                    			 + '<p>' + item.productName + '</p>'
-                    			 + '</a>'
-                    			 + '</div>';
-                    slider.append(itemHTML);
-                });
-                maxPage = Math.ceil(data.plist.length / itemsPerPage) - 1;
-                if(maxPage == -1){
-            		currentPage = -1;
-                }
-                $("#related_cpage").text((currentPage + 1) + "/" + (maxPage + 1));
-            }
+			                const slider = $("#related_product_pic_title-ds");
+			                slider.empty(); // 기존 내용을 비움
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                const startIndex = currentPage * itemsPerPage;
+			                const endIndex = startIndex + itemsPerPage;
+			             // data 객체에서 plist와 imglist를 추출합니다.
+			                let plist = data.plist;
+			                let imglist = data.imglist;
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                let slicedData = plist.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+			                slicedData.forEach(function(item){
+			                    let img = imglist.find(i => i.refPno == item.productNo);
+			                    let imagePath = img ? img.imgPath + img.changeName : "resources/images/noImage.png";
+			                    let itemHTML = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">'
+			                    			 + '<a href="detail.po?pno=' + item.productNo + '">'
+			                    			 + '<img src="' + imagePath + '" alt="' + item.productName + '">'
+			                    			 + '<p>' + item.productName + '</p>'
+			                    			 + '</a>'
+			                    			 + '</div>';
+			                    slider.append(itemHTML);
+			                });
+			                maxPage = Math.ceil(data.plist.length / itemsPerPage) - 1;
+			                if(maxPage == -1){
+			            		currentPage = -1;
+			                }
+			                $("#related_cpage").text((currentPage + 1) + "/" + (maxPage + 1));
+			            }
 
                         // 서버로부터 데이터를 불러오는 함수
                         function fetchSliderData() {
@@ -494,10 +495,11 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             </div>
             <button class="next2-ds">&gt;</button>
           </div>
-
           <script>
+          
                     $(document).ready(function(){
                         let currentPno2 = <%= p.getProductNo() %>;
+                        console.log("2392032")
                         let currentPage2 = 0; // 현재 페이지 인덱스
                         const itemsPerPage2 = 5; // 페이지 당 아이템 수
                         let maxPage2;
@@ -505,35 +507,35 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         let imgData2 = [];
                         // 슬라이더에 데이터를 렌더링하는 함수
                         function renderSlider2(data) {
-                const slider2 = $("#random_product_pic_title-ds");
-                slider2.empty(); // 기존 내용을 비움
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                const startIndex2 = currentPage2 * itemsPerPage2;
-                const endIndex2 = startIndex2 + itemsPerPage2;
-             // data 객체에서 plist와 imglist를 추출합니다.
-                let plist2 = data.plist;
-                let imglist2 = data.imglist;
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                let slicedData2 = plist2.slice(currentPage2 * itemsPerPage2, (currentPage2 + 1) * itemsPerPage2);
-                slicedData2.forEach(function(item){
-                    let img2 = imglist2.find(i => i.refPno == item.productNo);
-                    let imagePath2 = img2 ? img2.imgPath + img2.changeName : "resources/images/noImage.png";
-                    let itemHTML2 = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
-                                    '<a href="detail.po?pno=' + item.productNo + '">' +
-                                    '<img src="' + imagePath2 + '" alt="' + item.productName + '">' +
-                                    '<p>' + item.productName + '</p>' +
-                                    '</a>' +
-                                    '</div>';
-                    slider2.append(itemHTML2);
-                });
-                maxPage2 = Math.ceil(data.plist.length / itemsPerPage2) - 1;
-                if(maxPage2 == -1){
-            		currentPage2 = -1;
-                }
-                $("#recommend_cpage").text((currentPage2 + 1) + "/" + (maxPage2 + 1));
-            }
+			                const slider2 = $("#random_product_pic_title-ds");
+			                slider2.empty(); // 기존 내용을 비움
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                const startIndex2 = currentPage2 * itemsPerPage2;
+			                const endIndex2 = startIndex2 + itemsPerPage2;
+			             // data 객체에서 plist와 imglist를 추출합니다.
+			                let plist2 = data.plist;
+			                let imglist2 = data.imglist;
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                let slicedData2 = plist2.slice(currentPage2 * itemsPerPage2, (currentPage2 + 1) * itemsPerPage2);
+			                slicedData2.forEach(function(item){
+			                    let img2 = imglist2.find(i => i.refPno == item.productNo);
+			                    let imagePath2 = img2 ? img2.imgPath + img2.changeName : "resources/images/noImage.png";
+			                    let itemHTML2 = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
+			                                    '<a href="detail.po?pno=' + item.productNo + '">' +
+			                                    '<img src="' + imagePath2 + '" alt="' + item.productName + '">' +
+			                                    '<p>' + item.productName + '</p>' +
+			                                    '</a>' +
+			                                    '</div>';
+			                    slider2.append(itemHTML2);
+			                });
+			                maxPage2 = Math.ceil(data.plist.length / itemsPerPage2) - 1;
+			                if(maxPage2 == -1){
+			            		currentPage2 = -1;
+			                }
+			                $("#recommend_cpage").text((currentPage2 + 1) + "/" + (maxPage2 + 1));
+			            }
 
                         // 서버로부터 데이터를 불러오는 함수
                         function fetchSliderData2() {
@@ -579,7 +581,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         });
 
                         fetchSliderData2(); // 최초 데이터 로드 및 슬라이더 초기화
-                    });
+                });
           </script>
         </div>
         <%@ include file="../common/footer.jsp" %>
