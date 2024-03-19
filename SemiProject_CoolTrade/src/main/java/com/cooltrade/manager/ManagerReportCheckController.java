@@ -7,21 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.dao.ProductDao;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.member.model.service.MemberService;
 
 /**
- * Servlet implementation class ManagerDeleteBoardController
+ * Servlet implementation class ManagerReportCheckController
  */
-@WebServlet("/delete.board")
-public class ManagerDeleteBoardController extends HttpServlet {
+@WebServlet("/report.check")
+public class ManagerReportCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerDeleteBoardController() {
+    public ManagerReportCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +28,14 @@ public class ManagerDeleteBoardController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println(request.getParameter("pno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		System.out.println("진짜 pno");
 		System.out.println(pno);
-		int result = new ProductService().deleteBoard(pno);
+		int userNo = new MemberService().selectUserNo(pno);
+		int result = new MemberService().updateMemReportCount(userNo);
 		
-		if(result >0) {
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(result);
-		}else {
-			
-		}	
-		
-		
-		
-		
-		
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 	/**

@@ -95,8 +95,6 @@ public class ManagerMemberInfoPageController extends HttpServlet {
 		}
 		
 		
-		
-		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
 		

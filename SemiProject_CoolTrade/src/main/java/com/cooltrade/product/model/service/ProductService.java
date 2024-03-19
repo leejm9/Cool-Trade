@@ -512,4 +512,14 @@ public class ProductService {
 		return addressList;
 	}
 	
+	
+	public int getReportedUserNo(int pno) {
+		Connection conn = getConnection();
+		
+		int userNo = new ProductDao().getReportedUserNo(conn,pno);
+		
+		close(conn);
+		return userNo;
+	}
+   
 }

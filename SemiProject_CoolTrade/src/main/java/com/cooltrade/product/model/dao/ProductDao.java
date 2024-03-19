@@ -1070,10 +1070,11 @@ public class ProductDao {
    public int deleteBoard(Connection conn ,int pno) {
 	      int result = 0;
 	      PreparedStatement pstmt = null;
-	      try{
 	      String sql = prop.getProperty("deleteBoard");
+	      try{
+	      pstmt= conn.prepareStatement(sql);
 	         pstmt.setInt(1, pno);
-	         
+	         System.out.println(pno);
 	         result = pstmt.executeUpdate();
 	         
 	      } catch (SQLException e) {
@@ -1339,26 +1340,46 @@ public class ProductDao {
 		boolean checkFlag = false;
 		
 		String sql = prop.getProperty("checkLike");
-		
-		try {
+      try {
 			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, uno);
+         	pstmt.setInt(1, uno);
 			pstmt.setInt(2, pno);
-			
-			rset = pstmt.executeQuery();
+         rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				checkFlag = true;
-			}
+            checkFlag = true;
+         	}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rset);
 			close(pstmt);
 		}
-		return checkFlag;
+      return checkFlag;
+		
 	}
+	public int getReportedUserNo(Connection conn, int pno) {
+		int userNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getReportedUserNo");
+      try {
+			pstmt = conn.prepareStatement(sql);
+         pstmt.setInt(1, pno);
+         rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+            userNo = rset.getInt("seller_no");
+         	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+      return userNo;
+		
+	}		
 	
 	public String checkYn(Connection conn, int uno, int pno) {
 		PreparedStatement pstmt = null;
@@ -1461,6 +1482,7 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return addressList;
+		
 	}
 	
 }

@@ -34,10 +34,6 @@ public class MangerMemInfoDetailController extends HttpServlet {
 		if (cpageParam != null) {
 		    cpage = Integer.parseInt(cpageParam);
 		}
-		
-		
-		
-		
 		int uno = Integer.parseInt(request.getParameter("uno"));
 		
 		Member m = new MemberService().selectMember(uno);

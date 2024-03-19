@@ -40,7 +40,7 @@ public class ChatDao {
 			
 			pstmt.setString(1, userId);
 			pstmt.setString(2, pno);
-			
+			System.out.println(pno);
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -65,7 +65,9 @@ public class ChatDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userId);
 			pstmt.setString(2, pno);
-			
+			System.out.println("체크");
+			System.out.println(userId);
+			System.out.println(pno);
 			
 			result = pstmt.executeUpdate();
 			
@@ -123,7 +125,7 @@ public class ChatDao {
 			while(rset.next()) {
 				list.add(new Chat(rset.getInt("message_no"),
 								  rset.getString("message"),
-								  rset.getDate("message_date"),
+								  rset.getString("message_date"),
 								  rset.getString("read_yn"),
 								  rset.getInt("chatroom_no"),
 								  rset.getString("sender")
@@ -274,4 +276,62 @@ public class ChatDao {
 		return img;
 	}
 	
+	public int updateReadCheck(Connection conn, String loginUser, int chatRoomNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateReadCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, loginUser);
+			pstmt.setInt(2, chatRoomNo);
+			System.out.println(loginUser);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	public ArrayList<Chat> getAlarm(Connection conn, String loginUser){
+		ArrayList<Chat> list = new ArrayList<Chat>();
+		Chat c = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getAlarm");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, loginUser);
+			pstmt.setString(2, loginUser);
+			pstmt.setString(3, loginUser);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Chat(rset.getInt("message_no"),
+								  rset.getString("message"),
+								  rset.getString("message_date"),
+								  rset.getString("read_yn"),
+								  rset.getInt("chatroom_no"),
+								  rset.getString("sender"),
+								  rset.getString("user_id"),
+								  rset.getString("seller_id")
+								  ));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+		
+	}
 }

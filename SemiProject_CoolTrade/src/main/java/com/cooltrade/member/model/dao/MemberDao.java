@@ -398,11 +398,13 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
          while(rset.next()) {
-            list.add(new Member(rset.getInt("user_no"),
+            list.add(new Member(
                            rset.getString("user_name"),
                            rset.getInt("caution"),
+                           rset.getInt("product_no"),
+                           rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getDate("upload_date")
+                           rset.getString("upload_type")
                            ));
          }
          
@@ -1053,11 +1055,13 @@ public class MemberDao {
          rset = pstmt.executeQuery();
          
          while(rset.next()) {
-            list.add(new Member(rset.getInt("user_no"),
+            list.add(new Member(
                            rset.getString("user_name"),
                            rset.getInt("caution"),
+                           rset.getInt("product_no"),
+                           rset.getDate("upload_date"),
                            rset.getString("product_name"),
-                           rset.getDate("upload_date")
+                           rset.getString("upload_type")
                            ));
          }
       } catch (SQLException e) {
@@ -2072,13 +2076,9 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pno);
+
+         count = rset.getInt("count");
 			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()) {
-				count = rset.getInt("count");
-			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -2088,6 +2088,56 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return count;
+   }
+	public int selectUserNo(Connection conn ,int pno) {
+		int userNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectUserNo(pno)");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				userNo = rset.getInt("seller_no");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return userNo;
+		
+	}
+	
+	public int updateMemReportCount(Connection conn , int userNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+
+		
+		String sql = prop.getProperty("updateMemReportCount");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }

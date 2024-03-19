@@ -1,4 +1,4 @@
-package com.cooltrade.manager;
+package com.cooltrade.report.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,21 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.service.ProductService;
 import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.report.model.service.ReportService;
 
 /**
- * Servlet implementation class ManagerDeleteBoardController
+ * Servlet implementation class ReportCheckController
  */
-@WebServlet("/delete.board")
-public class ManagerDeleteBoardController extends HttpServlet {
+@WebServlet("/report.ch")
+public class ReportCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerDeleteBoardController() {
+    public ReportCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,21 +30,10 @@ public class ManagerDeleteBoardController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		System.out.println("진짜 pno");
-		System.out.println(pno);
-		int result = new ProductService().deleteBoard(pno);
+		int userNo = new ProductService().getReportedUserNo(pno);
 		
-		if(result >0) {
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(result);
-		}else {
-			
-		}	
-		
-		
-		
+		int result = new ReportService().updateReport(userNo);
 		
 		
 	}

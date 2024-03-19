@@ -115,29 +115,22 @@ ArrayList<ChatRoom>
               </tr>
             </thead>
             <tbody>
-              <!-- case1. 공지글이 없을 경우 -->
-              <% if(list.isEmpty()) {%>
-              <tr>
-                <td colspan="4">존재하는 채팅방이 없습니다.</td>
-              </tr>
-              <% }else{ %>
-              <!-- case2. 공지글이 있을 경우 -->
-              <% for(ChatRoom c : list){ %> <%
+              <% int count = 0; %> <% boolean chatRoomExists = false; %> <%
+              for(ChatRoom c : list){ %> <%
               if(c.getUserId().equals(loginUser.getUserId()) ||
-              c.getSellerId().equals(loginUser.getUserId())){ %>
+              c.getSellerId().equals(loginUser.getUserId())){ %> <%
+              chatRoomExists = true; %>
               <tr>
                 <td><%= c.getChatRoomNo() %></td>
-                <%if(c.getUserId().equals(c.getSellerId())){ %>
-                <td>나와의 채팅</td>
-                <%}else{ %>
-                <td>
-                  <%= c.getUserId() %>님과 <%= c.getSellerId() %>님의 채팅
-                </td>
-                <%} %>
+                <td><%= c.getChatRoomTitle() %></td>
                 <td><%= c.getUserId() %></td>
                 <td><%= c.getSellerId() %></td>
               </tr>
-              <% } %> <% } %> <% } %>
+              <% } %> <% } %> <% if (!chatRoomExists) { %>
+              <tr>
+                <td colspan="4">존재하는 채팅방이 없습니다.</td>
+              </tr>
+              <% } %>
             </tbody>
           </table>
 

@@ -12,18 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.member.model.vo.Member;
+import com.cooltrade.report.model.service.ReportService;
+import com.cooltrade.report.model.vo.Report;
 
 /**
- * Servlet implementation class ManagerBoardPageController
+ * Servlet implementation class ManagerReportPageController
  */
-@WebServlet("/board.in")
-public class ManagerBoardPageController extends HttpServlet {
+@WebServlet("/report.in")
+public class ManagerReportPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerBoardPageController() {
+    public ManagerReportPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,11 +34,7 @@ public class ManagerBoardPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String search = null;
-		String boardsearch = request.getParameter("boardsearch");
-		if(boardsearch != null) {
-			search = boardsearch;
-		}
+		
 		
 		int listCount; 	 
 		int currentPage; 
@@ -46,12 +44,12 @@ public class ManagerBoardPageController extends HttpServlet {
 		int maxPage;	 
 		int startPage;	 
 		int endPage;	 
-		if (search == null || search.isEmpty()) {
-		    listCount = new MemberService().countBoardList();
-		} else {
-		    listCount = new MemberService().countSearchBoard(search);
-		}
-		
+//		if (search == null || search.isEmpty()) {
+//		    listCount = new MemberService().countBoardList();
+//		} else {
+//		    listCount = new MemberService().countSearchBoard(search);
+//		}
+		listCount = new ReportService().countReportList();
 		
 		int cpage = 1; 
 	    String cpageParam = request.getParameter("cpage");
@@ -78,17 +76,19 @@ public class ManagerBoardPageController extends HttpServlet {
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
 		
-		ArrayList<Member> list = new ArrayList<Member>();
-		if(search == null) {
-			list = new MemberService().selectBoardList(pi);
-		}else {
-			list = new MemberService().selectSearchBoard(pi,search);
-		}
+//		ArrayList<Member> list = new ArrayList<Member>();
+//		if(search == null) {
+//			list = new MemberService().selectBoardList(pi);
+//		}else {
+//			list = new MemberService().selectSearchBoard(pi,search);
+//		}
+		
+		ArrayList<Report> list = new ReportService().selectReportList(pi);
 		
 		request.setAttribute("pi", pi);
 		request.setAttribute("list", list);
-		System.out.println(list);
-		request.getRequestDispatcher("views/manager/managerBoardPage.jsp").forward(request, response);
+		
+		request.getRequestDispatcher("views/manager/managerReportList.jsp").forward(request, response);
 		
 	}
 

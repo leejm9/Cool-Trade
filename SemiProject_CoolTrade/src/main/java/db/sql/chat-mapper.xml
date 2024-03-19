@@ -37,16 +37,27 @@
 	
 	<entry key="getMessage">
 		SELECT 
-		       MESSAGE_NO
-		     , MESSAGE
-		     , MESSAGE_DATE
-		     , READ_YN
-		     , CHATROOM_NO
-		     , SENDER
-		  FROM MESSAGE
-		 WHERE CHATROOM_NO = ?
-		 ORDER
-		    BY MESSAGE_DATE
+		    MESSAGE_NO,
+		    MESSAGE,
+		    (CASE
+		        WHEN TO_NUMBER(TO_CHAR(message_date, 'HH24')) &lt; 12 THEN '오전 ' || TO_CHAR(message_date, 'HH24:MI')
+		        ELSE '오후 ' || TO_CHAR(message_date, 'HH24:MI')
+		    END) AS MESSAGE_DATE,
+		    READ_YN,
+		    CHATROOM_NO,
+		    SENDER
+		FROM (
+		    SELECT 
+		        MESSAGE_NO,
+		        MESSAGE,
+		        MESSAGE_DATE,
+		        READ_YN,
+		        CHATROOM_NO,
+		        SENDER
+		    FROM MESSAGE
+		    WHERE CHATROOM_NO = ?
+		    ORDER BY MESSAGE_DATE
+		)
 	</entry>
 	
 	<entry key="insertMessage">
@@ -109,4 +120,46 @@
 		 WHERE USER_ID = ?
 	</entry>
 	
+	<entry key="updateReadCheck">
+		UPDATE MESSAGE
+		   SET READ_YN = 'Y'
+		 WHERE SENDER != ?
+		   AND CHATROOM_NO = ?
+	</entry>
+	
+	<entry key="getAlarm">
+		SELECT C.MESSAGE_NO,
+		       C.CHATROOM_NO,
+		       C.MESSAGE,
+		       C.SENDER,
+		       C.READ_YN,
+		       (CASE
+		           WHEN TRUNC(SYSDATE) - TRUNC(C.message_date) &gt; 1 THEN TRUNC(SYSDATE) - TRUNC(C.message_date) || '일전'
+		           WHEN TRUNC(SYSDATE) - TRUNC(C.message_date) &lt; 1 THEN
+		               CASE
+		                   WHEN TO_NUMBER(TO_CHAR(C.message_date, 'HH24')) &lt; 12 THEN '오전 ' || TO_CHAR(C.message_date, 'HH24:MI')
+		                   ELSE '오후 ' || TO_CHAR(C.message_date, 'HH24:MI')
+		               END
+		           ELSE TO_CHAR(C.message_date, 'HH24:MI')
+		       END) AS MESSAGE_DATE ,
+		       C.USER_ID,
+		       C.SELLER_ID
+		FROM (
+		         SELECT MESSAGE_NO,
+		                CHATROOM_NO,
+		                MESSAGE,
+		                SENDER,
+		                MESSAGE_DATE,
+		                READ_YN,
+		                USER_ID,
+		                SELLER_ID,
+		                ROW_NUMBER() OVER (PARTITION BY CHATROOM_NO ORDER BY MESSAGE_DATE DESC) AS RNK
+		         FROM CHATROOM
+		                  JOIN MESSAGE USING (CHATROOM_NO)
+		         WHERE SENDER != ?
+		           AND READ_YN = 'N'
+		           AND (USER_ID = ? OR SELLER_ID = ?)
+		     ) C
+		WHERE C.RNK = 1
+	</entry>
 </properties>

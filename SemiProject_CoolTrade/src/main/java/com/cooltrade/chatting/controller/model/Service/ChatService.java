@@ -90,4 +90,25 @@ public class ChatService {
 		return img;
 	}
 	
+	public int updateReadCheck(String loginUser,int chatRoomNo) {
+		Connection conn = getConnection();
+		
+		int result = new ChatDao().updateReadCheck(conn,loginUser,chatRoomNo);
+		if(result >0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public ArrayList<Chat> getAlarm(String loginUser){
+		Connection conn = getConnection();
+		
+		ArrayList<Chat> list = new ChatDao().getAlarm(conn, loginUser);
+		
+		close(conn);
+		return list;
+	}
 }

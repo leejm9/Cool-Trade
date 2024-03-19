@@ -1,27 +1,28 @@
-package com.cooltrade.manager;
+package com.cooltrade.report.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.cooltrade.product.model.dao.ProductDao;
-import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Product;
+import com.cooltrade.report.model.service.ReportService;
+import com.cooltrade.report.model.vo.Report;
 
 /**
- * Servlet implementation class ManagerDeleteBoardController
+ * Servlet implementation class ReportDetailPageController
  */
-@WebServlet("/delete.board")
-public class ManagerDeleteBoardController extends HttpServlet {
+@WebServlet("/report.detail")
+public class ReportDetailPageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ManagerDeleteBoardController() {
+    public ReportDetailPageController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,23 +31,11 @@ public class ManagerDeleteBoardController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int rno = Integer.parseInt(request.getParameter("rno"));
 		
-		int pno = Integer.parseInt(request.getParameter("pno"));
-		System.out.println("진짜 pno");
-		System.out.println(pno);
-		int result = new ProductService().deleteBoard(pno);
+		ArrayList<Report> list = new ReportService().selectReportDetail(rno);
 		
-		if(result >0) {
-			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().print(result);
-		}else {
-			
-		}	
-		
-		
-		
-		
-		
+		request.getRequestDispatcher("views/manager/managerReportDetail.jsp").forward(request, response);
 	}
 
 	/**

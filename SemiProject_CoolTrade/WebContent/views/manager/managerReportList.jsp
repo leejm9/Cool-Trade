@@ -1,37 +1,32 @@
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.cooltrade.common.PageInfo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>    
-<!DOCTYPE html>
-<html lang="en">
+<%@page import="com.cooltrade.report.model.vo.Report"%>
+<%@page import="java.util.ArrayList"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("list");
+	ArrayList<Report> list = (ArrayList<Report>)request.getAttribute("list");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
 	int maxPage = pi.getMaxPage();
-	
 %>
+<!DOCTYPE html>
+<html>
 <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <title>SB Admin 2 - Dashboard</title>
-	
-	<style>
-		#searchBtn2{
-			margin-bottom:5px;
-		}
-		#dataTable tbody tr:hover{
-			background-color:rgb(211, 211, 211);
-			cursor:pointer;
-		}
-	</style>
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
-
-<body id="page-top">
-
-   <%@ include file = "../common/managerMenubar.jsp" %>
+<body>
+	<%@ include file = "../common/managerMenubar.jsp" %>
+    
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
@@ -41,101 +36,86 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">게시물 조회</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">신고 조회</h6>
                         </div>
                         <div class="card-body">
-                        	 <div id="searchBtn">
-		                        <div id="searchBtn2">
-			                        <form action="<%= contextPath %>/board.in?cpage=1">
-			                        <input type="text" id="boardForm" name="boardsearch">
+	                        <div id="searchBtn">
+		                        <div id="searchBtn1">
+			                        <form action="<%= contextPath %>/blacklist.in?cpage=1">
+			                        <input type="text" id="bsearchForm" name="bsearch">
 			                        <button type="submit" style="border-color:white;" >검색</button>
 			                        </form>
 		                        </div>
 	                        </div>
+	                        
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>제목</th>
-                                            <th>게시물 번호</th>
-                                            <th>판매자 이름</th>
-                                            <th>판매자 경고횟수</th>
-                                            <th>등록일자</th>
-                                            <th>게시물 상태</th>
-                                            <th>복구/삭제</th>
+                                            <th>신고번호</th>
+                                            <th>신고자</th>
+                                            <th>신고게시물</th>
+                                            <th>신고유형</th>
+                                            <th>신고날짜</th>
+                                            <th></th>
+                                            <th></th>
                                         </tr>
                                     </thead>
-                                   
+                                    
                                     <tbody>
                                     	<% if(list.isEmpty()){ %>
 						                <tr>
 						                    <td colspan="6">조회된 게시글이 없습니다</td>
 						                </tr>
 										<% }else{ %>
-										
-	                                    	<% for(Member m : list){ %>
+	                                    	<% for(Report r : list){ %>
 		                                        <tr>
-		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= m.getProductNo() %>"><%= m.getProductName() %></a></td>
-		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= m.getProductNo() %>"><%= m.getProductNo() %></a></td>
-		                                            <td><%= m.getUserName() %></td>
-		                                            <td><%= m.getCaution() %></td>
-		                                            <td><%= m.getUploadDate() %></td>
-		                                            <td>
-		                                            	<% if(m.getProductStatus().equals("N")){ %>
-		                                            	삭제된 게시물
-		                                            	<% } %>
-		                                            </td>
-		                                            <td align="center">
-		                                            	<% if(!m.getProductStatus().equals("N")){ %>
-		                                            		<button class="btn btn-danger" onclick="deleteBoard(<%= m.getProductNo() %>,this);">삭제</button>
-		                                            	<% } %>
-		                                            	
-		                                            	
-		                                            </td>
+		                                            <td><%= r.getReportNo() %></td>
+		                                            <td><%= r.getReporter() %></td>
+		                                            <td><a href="<%= contextPath %>/detail.po?pno=<%= r.getProdNo()%>"><%= r.getProductTitle() %></a></td>
+		                                            <td><%= r.getReportTypeNo() %></td>
+		                                            <td><%= r.getReportDate() %></td>
+		                                            <td> <input type="button" class="btn btn-primary" value="상세보기" onclick="location.href='<%= contextPath %>/report.detail?rno=<%= r.getReportNo() %>'">
+		                                            <td><input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리"></td>
 		                                        </tr>
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
-                               
                                 <script>
-                                	function deleteBoard(pno,btn){
-                                		$.ajax({
-                                			url:"delete.board",
-                                			data:{pno:pno},
-                                			success:function(a){
-                                				if(a > 0){
-                                					alert("삭제되었습니다");
-                                    				location.reload();
-                                				}
-                                			},error:function(a){
-                                				console.log("오류발생");
-                                			}
-                                		})
-                                	}
-                                </script>
-                                
-                                
+							        function Report(pno){
+							                $.ajax({
+							                	url:"report.ch",
+							                	data:{pno:pno},
+							                	success:function(result){
+							                			alert("신고처리되었습니다");
+							                	},error:function(result){
+							                		console.log("ajax 통신 실패");
+							                	}
+							                })
+							        }
+							      
+							    </script>
                                 
                                 <div id="btn" align="center">
-	                                <% if(currentPage > 1){ %>
-				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
+	                                <% if(startPage!=1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/report.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
 				                    <% } %>
-				                    <% for(int i=1; i<= maxPage;i++){ %>
-				                    	<% if(request.getParameter("boardsearch") ==  null){ %>
-						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>"><%= i %></button>
-						            	<% }else{ %>
-						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
-						            	<% } %>
-						            
+				                    <% for(int i = startPage; i<=endPage; i++){ %>
+				                    <%if(i == currentPage){ %>
+					                     <button disabled><%=i%></button>
+				                	<%}else{%>
+						            <button onclick="location.href='<%= contextPath %>/report.in?cpage=' + <%= i %>;"><%= i %></button>
 						            <% } %>
-						            <% if(currentPage != maxPage) { %>
-						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
+						            <% } %>
+						            <% if(endPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/report.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
 									<% } %> 
 								</div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <!-- /.container-fluid -->
 
@@ -243,7 +223,5 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-
 </body>
-
 </html>
