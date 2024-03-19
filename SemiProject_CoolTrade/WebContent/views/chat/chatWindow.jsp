@@ -230,7 +230,7 @@ pageEncoding="UTF-8"%>
     </div>
     <div align="right" style="display: none;">
     <input type="text" id="messageInput" style="width:600px;">
-    <button type="submit" onclick="insertReply();">전송</button>
+<!--     <button type="submit" onclick="insertReply();">전송</button> -->
 	</div>
 	</div>
 	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">

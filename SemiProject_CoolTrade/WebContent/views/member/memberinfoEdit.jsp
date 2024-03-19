@@ -84,11 +84,11 @@
 
     #table{
             border-collapse : collapse;
-            margin-top: 70px;
+            margin-top: 20px;
             
         }
     td,#table th{
-        border: 1px solid black;
+        border: 1px solid rgb(220, 220, 220);
             border-top: 2px solid #d6d6d6;
             border-bottom: 2px solid #e6e6e6;
             width: 100%;
@@ -97,13 +97,13 @@
     }
 
     tr {
-      border: none;
+      border: solid 1px rgb(220, 220, 220);
     }
 
     td,th{
         width: 350px;
         height: 45px;
-        border: none;
+        border: solid 1px rgb(220, 220, 220);
     }
     
     #table th{

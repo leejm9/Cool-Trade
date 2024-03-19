@@ -43,7 +43,7 @@ public class AjaxUploadProfileImageController extends HttpServlet {
       int maxSize = 10 * 1024 * 1024;
 
       // 저장시킬 폴더 경로
-      String savePath = "/upload/profile";
+      String savePath = "/resources/images_upfiles/";
       File file = new File(savePath);
       if (file.exists() == false) {
         file.mkdirs();
@@ -61,7 +61,11 @@ public class AjaxUploadProfileImageController extends HttpServlet {
           File uploadedFile = new File(savePath, uploadedFileName);
           String newFileName = "" + userNo; // 새 파일명 지정
           File newFile = new File(savePath, newFileName);
-
+         
+          if(newFile.exists()) { // 두줄  
+              newFile.delete();  // 추가
+            }
+          
           // 파일명 변경
           if (uploadedFile.renameTo(newFile)) {
             System.out.println("파일명이 성공적으로 변경되었습니다.");
