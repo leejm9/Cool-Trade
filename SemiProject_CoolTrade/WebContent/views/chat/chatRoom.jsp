@@ -1,8 +1,7 @@
 <%@page import="com.cooltrade.chatting.controller.model.vo.ChatRoom"%> <%@ page
 language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> <%
 ArrayList<ChatRoom>
-  list = (ArrayList<ChatRoom
-    >)request.getAttribute("list"); %>
+  list = (ArrayList<ChatRoom>)request.getAttribute("list"); %>
     <!DOCTYPE html>
     <html>
       <head>
@@ -10,7 +9,7 @@ ArrayList<ChatRoom>
         <title>Insert title here</title>
         <style>
           .outer {
-            background-color: white;
+/*             background-color: white; */
             color: white;
             width: 1000px;
             height: 1200px;
@@ -48,7 +47,7 @@ ArrayList<ChatRoom>
             display: flex;
             align-items: center;
             /* width: 100%; */
-            height: 80px;
+            height: 70px;
           }
 
           .chat-list-div > div {
@@ -57,13 +56,17 @@ ArrayList<ChatRoom>
             height: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            margin-left: 10px;
+/*             justify-content: space-around; */
           }
 
           .chat-list-wrap {
             border: 1px solid #e6e6e6;
             margin: auto;
             width: 500px;
+            height: 600px;
+            background-color: white;
+            border-radius: 10px;
           }
 
           .chat-list-wrap > div {
@@ -80,6 +83,11 @@ ArrayList<ChatRoom>
           .chat-list-num {
             width: 50px;
             height: 100%;
+          }
+          
+          .chat-list-name {
+          	cursor: pointer;
+          	width: 60%;
           }
         </style>
       </head>
@@ -142,34 +150,49 @@ ArrayList<ChatRoom>
           </table>
 
           <div class="chat-list-wrap">
-            <div>
+            <div class="chat-list-area chat-title-area">
               <div class="chat-list-title">
-                <%= loginUser.getUserName() %>님의 채팅방
+                <%= loginUser.getNickName() %>님의 채팅방
               </div>
-
+            </div>  
+            <div class="chat-list-area">  
               <div>
                 <% if(list.isEmpty()) { %>
                 <div>
                   <div>존재하는 채팅방이 없습니다.</div>
                 </div>
-                <% } else { %> <% for(ChatRoom c : list) { %> <%
-                if(c.getUserId().equals(loginUser.getUserId()) ||
-                c.getSellerId().equals(loginUser.getUserId())) { %>
-                <div class="chat-list-div">
-                  <div class="chat-list-num">
-                    <div><%= c.getChatRoomNo() %></div>
-                  </div>
-                  <!-- <div><%= c.getChatRoomTitle() %></div> -->
-                  <% if(c.getUserId().equals(loginUser.getUserId())) { %>
-                  <div><%= c.getSellerId() %></div>
-                  <% } else if(c.getSellerId().equals(loginUser.getUserId())) {
-                  %>
-                  <div><%= c.getUserId() %></div>
-                  <% } %>
-                </div>
-                <% } %> <% } %> <% } %>
+                <% } else { %> 
+                	<% for(ChatRoom c : list) { %>
+                		<% if(c.getUserId().equals(loginUser.getUserId()) || c.getSellerId().equals(loginUser.getUserId())) { %>
+		                <div class="chat-list-div">
+        				  <input type="hidden" value="<%= c.getUserId() %>">
+               			  <input type="hidden" value="<%= c.getSellerId() %>">
+		                  <% if(c.getUserId().equals(loginUser.getUserId())) { %>
+			                  <div class="chat-list-num">
+			                  	<% if(c.getSellerTitleImg() == null) { %>
+			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
+			                  	<% } else { %>
+			                  	<div><%= c.getSellerTitleImg() %></div>
+			                  	<% } %>
+			                  </div>
+				              <div class="chat-list-name"><%= c.getSellerNickname() %></div>
+
+			              <% } else if(c.getSellerId().equals(loginUser.getUserId())) {%>
+			              	  <div class="chat-list-num">
+           				        <% if(c.getBuyerTitleImg() == null) { %>
+			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
+			                  	<% } else { %>
+			                  	<div><%= c.getBuyerTitleImg() %></div>
+			                  	<% } %>
+			                  </div>
+			                  <div class="chat-list-name"><%= c.getBuyerNickname() %></div>
+			              <% } %>
+                		</div>
+                		<% } %> 
+                	<% } %> 
+                <% } %>
               </div>
-            </div>
+	      	</div>
           </div>
         </div>
 
@@ -184,6 +207,20 @@ ArrayList<ChatRoom>
                 $(this).children().eq(3).text();
             });
           });
+          
+          $(function () {
+      	    $(".chat-list-div").click(function () {
+      	        // 찾고자 하는 정보를 input 태그에서 읽어옴
+      	        const userId1 = $(this).children("input[type='hidden']").eq(0).val();
+      	        const sellerId1 = $(this).children("input[type='hidden']").eq(1).val();
+      	        
+      	        console.log(userId1);
+      	        console.log(sellerId1)
+      	        
+      	        location.href = "<%= contextPath %>/chatroom.in?userId="+userId1+"&pno="+sellerId1;
+      	        
+      	     });
+   		   });
         </script>
 
         <%@ include file="../common/footer.jsp"%>

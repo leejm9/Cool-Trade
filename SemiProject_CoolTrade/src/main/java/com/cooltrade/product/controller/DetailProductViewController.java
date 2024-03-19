@@ -53,7 +53,7 @@ public class DetailProductViewController extends HttpServlet {
 			request.setAttribute("p", p);
 			request.setAttribute("imglist",	imglist);
 			String uploadType = p.getUploadType();
-			System.out.println(uploadType);
+			System.out.println("업로드타입: "+uploadType);
 			request.setAttribute("likeCount", likeCount);
 			
 			RecentProducts recent = new RecentProducts();
@@ -84,10 +84,12 @@ public class DetailProductViewController extends HttpServlet {
 				rlist.remove(20);
 			}
 			
+			ArrayList<DeliveryAddress> addressList = new ArrayList<DeliveryAddress>();
 			Member m = (Member)session.getAttribute("loginUser");
-			ArrayList<DeliveryAddress> addressList = new ProductService().getAddressList(m.getUserNo());
-			request.setAttribute("addressList", addressList);
-			
+			if(m != null) {
+				addressList = new ProductService().getAddressList(m.getUserNo());
+				request.setAttribute("addressList", addressList);
+			} 
 			session.setAttribute("rlist", rlist);
 			
 			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);

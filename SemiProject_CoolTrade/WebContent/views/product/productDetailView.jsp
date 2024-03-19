@@ -124,6 +124,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <% } else { %>
                 	<button class="btn btn-lg btn-danger" type="button"  style="background-color: rgb(4, 108, 250); border: none;" disabled>바로사버리기</button>
                 <% } %>
+                <% } %>
               </div>
             </div>
           </div>
@@ -468,35 +469,35 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                         let imgData2 = [];
                         // 슬라이더에 데이터를 렌더링하는 함수
                         function renderSlider2(data) {
-                const slider2 = $("#random_product_pic_title-ds");
-                slider2.empty(); // 기존 내용을 비움
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                const startIndex2 = currentPage2 * itemsPerPage2;
-                const endIndex2 = startIndex2 + itemsPerPage2;
-             // data 객체에서 plist와 imglist를 추출합니다.
-                let plist2 = data.plist;
-                let imglist2 = data.imglist;
-
-                // 현재 페이지에 해당하는 아이템들만 표시
-                let slicedData2 = plist2.slice(currentPage2 * itemsPerPage2, (currentPage2 + 1) * itemsPerPage2);
-                slicedData2.forEach(function(item){
-                    let img2 = imglist2.find(i => i.refPno == item.productNo);
-                    let imagePath2 = img2 ? img2.imgPath + img2.changeName : "resources/images/noImage.png";
-                    let itemHTML2 = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
-                                    '<a href="detail.po?pno=' + item.productNo + '">' +
-                                    '<img src="' + imagePath2 + '" alt="' + item.productName + '">' +
-                                    '<p>' + item.productName + '</p>' +
-                                    '</a>' +
-                                    '</div>';
-                    slider2.append(itemHTML2);
-                });
-                maxPage2 = Math.ceil(data.plist.length / itemsPerPage2) - 1;
-                if(maxPage2 == -1){
-            		currentPage2 = -1;
-                }
-                $("#recommend_cpage").text((currentPage2 + 1) + "/" + (maxPage2 + 1));
-            }
+			                const slider2 = $("#random_product_pic_title-ds");
+			                slider2.empty(); // 기존 내용을 비움
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                const startIndex2 = currentPage2 * itemsPerPage2;
+			                const endIndex2 = startIndex2 + itemsPerPage2;
+			             // data 객체에서 plist와 imglist를 추출합니다.
+			                let plist2 = data.plist;
+			                let imglist2 = data.imglist;
+			
+			                // 현재 페이지에 해당하는 아이템들만 표시
+			                let slicedData2 = plist2.slice(currentPage2 * itemsPerPage2, (currentPage2 + 1) * itemsPerPage2);
+			                slicedData2.forEach(function(item){
+			                    let img2 = imglist2.find(i => i.refPno == item.productNo);
+			                    let imagePath2 = img2 ? img2.imgPath + img2.changeName : "resources/images/noImage.png";
+			                    let itemHTML2 = '<div class="item" style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
+			                                    '<a href="detail.po?pno=' + item.productNo + '">' +
+			                                    '<img src="' + imagePath2 + '" alt="' + item.productName + '">' +
+			                                    '<p>' + item.productName + '</p>' +
+			                                    '</a>' +
+			                                    '</div>';
+			                    slider2.append(itemHTML2);
+			                });
+			                maxPage2 = Math.ceil(data.plist.length / itemsPerPage2) - 1;
+			                if(maxPage2 == -1){
+			            		currentPage2 = -1;
+			                }
+			                $("#recommend_cpage").text((currentPage2 + 1) + "/" + (maxPage2 + 1));
+			            }
 
                         // 서버로부터 데이터를 불러오는 함수
                         function fetchSliderData2() {
@@ -540,7 +541,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                             }
                                 renderSlider2(allData2); // 슬라이더 다시 렌더링
                         });
-
+						
                         fetchSliderData2(); // 최초 데이터 로드 및 슬라이더 초기화
                     });
           </script>

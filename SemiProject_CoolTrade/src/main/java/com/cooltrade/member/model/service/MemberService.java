@@ -629,5 +629,39 @@ public class MemberService {
 		close(conn);
 		return count;
 	}
+	
+	public int selectProfileImg(int uno) {
+		Connection conn = getConnection();
+		int select = new MemberDao().selectProfileImg(conn, uno);
+		
+		close(conn);
+		return select;
+	}
+	
+	public int insertMemberProfileImg(int uno, Images img) {
+		Connection conn = getConnection();
+		int result = new MemberDao().insertMemberProfileImg(conn, uno, img);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	public int updateMemberProfileImg(int uno, Images img) {
+		Connection conn = getConnection();
+		int result = new MemberDao().updateMemberProfileImg(conn, uno, img);
+		
+		if(result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
 
 }

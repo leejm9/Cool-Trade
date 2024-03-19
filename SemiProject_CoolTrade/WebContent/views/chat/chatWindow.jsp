@@ -30,9 +30,9 @@ pageEncoding="UTF-8"%>
         }
 
         .wrap {
-            padding: 50px 0;
+/*             padding: 50px 0; */
             background-color: #e6e6e6;
-            width:500px;
+            width: 100%;
             height:100%;
             max-height: 100%; /* 채팅창의 최대 높이를 지정합니다. */
             overflow-y: auto; /* 내용이 넘칠 때 스크롤 표시합니다. */
@@ -138,6 +138,7 @@ pageEncoding="UTF-8"%>
         	display: flex;
         	align-items: center;
         	justify-content: space-around;
+        	border-radius: 0px 0px 5px 5px;
         }
         
         .wrap-footer-area {
@@ -190,7 +191,7 @@ pageEncoding="UTF-8"%>
 	<br><br><br><br>
 	<br><br><br><br>
 	<br><br>
-	<h2><%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%= (String)request.getAttribute("userId") %> 판매자:<%= (String)request.getAttribute("seller") %> )</h2>
+<%-- 	<h2><%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%= (String)request.getAttribute("userId") %> 판매자:<%= (String)request.getAttribute("seller") %> )</h2> --%>
 	<div class="outer">
 	<div class="wrap-outer">
 	<div class="wrap-header">
@@ -230,7 +231,7 @@ pageEncoding="UTF-8"%>
     </div>
     <div align="right" style="display: none;">
     <input type="text" id="messageInput" style="width:600px;">
-    <button type="submit" onclick="insertReply();">전송</button>
+<!--     <button type="submit" onclick="insertReply();">전송</button> -->
 	</div>
 	</div>
 	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
