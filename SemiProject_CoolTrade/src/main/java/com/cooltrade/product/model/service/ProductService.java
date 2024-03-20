@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -522,12 +523,12 @@ public class ProductService {
 		return userNo;
 	}
 	
-	public int getImgCount(int pno) {
+	public BankAccount getBankList(String nickname) {
 		Connection conn = getConnection();
-		int count = new ProductDao().getImgCount(conn, pno);
+		BankAccount bankList = new ProductDao().getBankList(conn, nickname);
 		
 		close(conn);
-		return count;
+		return bankList;
 	}
-   
+	
 }

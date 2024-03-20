@@ -448,7 +448,6 @@ SELECT
 		  (
 		    IMG_NO
 		  , REF_PNO
-		  , REF_UNO
 		  , IMG_LEVEL
 		  , ORIGIN_NAME
 		  , CHANGE_NAME
@@ -457,7 +456,6 @@ SELECT
 		  VALUES
 		  (
 		    SEQ_IMG.NEXTVAL
-		  , ?
 		  , ?
 		  , ?
 		  , ?
@@ -714,10 +712,16 @@ SELECT
 		 WHERE USER_NO = ?
 	</entry>
 	
-	<entry key="getImgCount">
+	<entry key="getBankList">
 		SELECT
-		       COUNT(REF_PNO) COUNT
-		  FROM IMAGES
-		 WHERE REF_PNO = ?
+		       BANKACCOUNT_NO
+		     , USER_NO
+		     , BANK
+		     , ACCOUNT
+		     , USER_NAME
+		  FROM BANK_ACCOUNT
+		  JOIN MEMBER M USING (USER_NO)
+		 WHERE NICKNAME = ?
 	</entry>
+	
 </properties>

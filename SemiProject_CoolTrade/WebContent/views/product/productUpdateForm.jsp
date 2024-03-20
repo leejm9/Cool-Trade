@@ -595,9 +595,6 @@
 	                                        <%-- 기존 이미지 --%>
 	                                        <% for(int i=0; i<pList.size(); i++) { %>
 									        <div class="hidden-div" style="display:block;">
-									        	<% for(Images img : imgList) { %>
-									        	<input type="hidden" value="<%= img.getImgNo() %>">
-									        	<% } %>
 									            <img src="<%= contextPath %>/<%= pList.get(i).getTitleImg() %>" class="hidden-img">
 									            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
 									        </div>
@@ -610,69 +607,86 @@
 	
 	                                <script>
 	                                	let listSize = document.getElementById("h-input").value;
-	                                    
+
 	                                    let images = []; // 기존 이미지 배열 초기화
 	                                    
-	                                    $(document).ready(function(){
-	                                    	console.log(images);
+                                        // 기존 이미지 배열에 이미지 추가
+                                        
+                                        //$(".hidden-div img").each(function() {
+                                        	/*let src = $(this).attr("src");
+                                            let modifiedSrc = modifyFileName(src); // 파일명 뒤에 "123" 추가
+                                            images.push(modifiedSrc);*/
+                                        	//console.log($(this).siblings().eq(0).files);
+                                            //images.push($(this).attr("src"));
+                                        //});
+	                                    
+	                                    function getRandomNumber(min, max) {
+	                                        return Math.floor(Math.random() * (max - min + 1)) + min;
+	                                    }
+	                                    
+	                                    $(document).ready(async function(){
+	                                    	$("#fileInput").on("change", handleImgFileSelect);
+	                                        let promises = $(".hidden-div img").map(async function() {
+	                                            let src = $(this).attr("src");
+	                                            //console.log("src찍히냐?:" + src);
+	                                            let imgBlob = await fetchImageAsBlob(src);
+	                                            let randomNum = getRandomNumber(100, 999);
+	                                            let imgId = generateUniqueId();
+	                                            //return blobToFile(imgBlob, "image" + imgId + ".png", imgId);
+	                                            let imgFile = blobToFile(imgBlob, "image" + imgId + ".png", imgId); // 이미지 파일 생성
+	                                            $(this).siblings().attr("data-id", imgId); // 이미지에 imgId 데이터 속성 추가
+	                                            return imgFile;
+	                                        }).get();
+
+	                                        images = await Promise.all(promises);
+	                                        console.log("배열에 들어왔냐?");
+	                                        console.log(images);
+	                                    });
+	                                    /*
+	                                    $(document).ready(async function(index){
 	                                        $("#fileInput").on("change", handleImgFileSelect);
-	                                        // 기존 이미지 배열에 이미지 추가
-	                                        
-	                                        $(".hidden-div img").each(function() {
-	                                        	/*let src = $(this).attr("src");
-	                                            let modifiedSrc = modifyFileName(src); // 파일명 뒤에 "123" 추가
-	                                            images.push(modifiedSrc);*/
-	                                        	console.log($(this).siblings().eq(0).files);
-	                                            images.push($(this).attr("src"));
+
+	                                        // 기존 이미지에 대한 처리
+	                                        $(".hidden-div img").each(async function(index) {
+	                                            let src = $(this).attr("src");
+	                                            //console.log("src찍히냐?:" + src);
+	                                            let imgBlob = await fetchImageAsBlob(src);
+	                                            let imgId = generateUniqueId(); // 고유한 식별자 생성
+	                                            let file = blobToFile(imgBlob, "image" + imgId + ".png", imgId); // 파일 객체 생성
+	                                            images.push({index: index, file: file}); // 배열에 파일 객체 추가
+												console.log(images)
 	                                        });
-	                                    });
-	                                    
-	                                    async function imageUrlToFile(imageUrl, fileName) {
-	                                        try {
-	                                            const blob = await fetchImageAsBlob(imageUrl);
-	                                            const file = blobToFile(blob, fileName);
-	                                            return file;
-	                                        } catch (error) {
-	                                            console.error('Error converting image URL to file:', error);
+	                                    });*/
+		
+	                                    async function fetchImageAsBlob(imageUrl) {
+	                                        const response = await fetch(imageUrl);
+	                                        if (!response.ok) {
+	                                            throw new Error('Network response was not ok.');
 	                                        }
+	                                        const blob = await response.blob();
+	                                        return blob;
 	                                    }
 	                                    
-	                                    for(let i=0; i<<%= pList.size() %>; i++){
-		                                    const imageUrl = "<%= contextPath%>/<%= pList.get(i).getTitleImg() %>";
-		                                    const fileName = "image"+i+".png"; // 원하는 파일 이름
-	                                    }
-	                                    
-	                                    imageUrlToFile(imageUrl, fileName).then(file => {
-	                                        console.log(file);
-	                                        // 이제 'file'을 사용하여 업로드 등의 작업을 할 수 있습니다.
-	                                    });
-	                                    
-	                                    async function imageUrlToFile(imageUrl, fileName) {
-	                                        try {
-	                                            const blob = await fetchImageAsBlob(imageUrl);
-	                                            const file = blobToFile(blob, fileName);
-	                                            return file;
-	                                        } catch (error) {
-	                                            console.error('Error converting image URL to file:', error);
-	                                            throw error; // 에러를 던져서 상위 호출자가 처리할 수 있도록 합니다.
-	                                        }
+	                                    function blobToFile(blob, fileName, imgId) {
+	                                        // 이미지 식별자를 파일 이름에 포함하여 설정
+	                                        const file = new File([blob], fileName, {
+	                                            type: blob.type,
+	                                            lastModified: Date.now()
+	                                        });
+	                                        file.id = imgId; // 파일 객체의 id 속성에 이미지 식별자 추가
+	                                        return file;
 	                                    }
 
-	                                    (async () => {
-	                                        for (let i = 0; i < <%= pList.size() %>; i++) {
-	                                            try {
-	                                                const imageUrl = "<%= contextPath%>/<%= pList.get(i).getTitleImg() %>";
-	                                                const fileName = "image" + i + ".png"; // 원하는 파일 이름
-
-	                                                const file = await imageUrlToFile(imageUrl, fileName);
-	                                                console.log(file);
-	                                                // 이제 'file'을 사용하여 업로드 등의 작업을 할 수 있습니다.
-	                                            } catch (error) {
-	                                                // 오류 처리
-	                                                console.error('Error processing image:', error);
-	                                            }
-	                                        }
-	                                    })();
+	                                    /*
+	                                    function blobToFile(blob, fileName) {
+	                                        const file = new File([blob], fileName, {
+	                                            type: blob.type,
+	                                            lastModified: Date.now()
+	                                        });
+	                                        return file;
+	                                    }
+	                                    */
+	                                    //console.log(images);
 	                                    
 	                                    /*
 	                                    // 이미지 파일명 뒤에 "123" 추가하는 함수
@@ -682,7 +696,6 @@
 	                                        return modifiedFileName;
 	                                    }
 	                                    */
-	                                    console.log(images);
 	                                    
 	                                    function uploadAction(){
 	                                    	$("#fileInput").trigger("click");
@@ -706,12 +719,14 @@
 	                                        	
 	                                        	let reader = new FileReader();
 	                                    		reader.onload = function(e){
-	                                    			
+	                                    			let imgId = generateUniqueId();
 	                                    			images.push(f);
-	                                    			//let index = images.length;
-		                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+index+"\">"+
+	                                    			f.id = imgId;
+	                                    			
+	                                    			let newIndex = images.length - 1; // 현재 이미지의 인덱스
+		                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+imgId+"\">"+
 				                                            		"<img src=\""+e.target.result+"\" class=\"hidden-img\">"+
-				                                            		"<button type=\"button\" class=\"hidden-btn\" onclick=\"deleteBtn(this, "+index+");\"></button>"+
+				                                            		"<button type=\"button\" class=\"hidden-btn\" data-id=\"" + imgId + "\" onclick=\"deleteBtn(this);\"></button>"+
 				                                        		"</div>";
 		                                   			$("#sell-fileInput-div").append(html);
 		                                   			
@@ -721,20 +736,33 @@
 	                                            reader.readAsDataURL(f);
 	                                        });
 	                                    }
+	                                    
+	                                    function generateUniqueId() {
+	                                        return '_' + Math.random().toString(36).substr(2, 9);
+	                                    }
 										
-	                                    function deleteBtn(e, index){
+	                                    function deleteBtn(btn){
 	                                    	
-	                                        // 클릭된 이미지의 src 가져오기
-	                                        let imgSrc = $(e).prev().attr("src");
-	                                        let imgIndex = images.indexOf(imgSrc);
-	                                        //console.log(imgIndex);
-	                                        
-	                                        let indexToRemove = imgIndex // div의 인덱스
-										    images.splice(indexToRemove, 1);
-	                                        console.log(images);
-	                                        
-	                                        $(e).parent().remove();
+	                                    	console.log(btn);
+	                                    	let imgId = $(btn).data("id");
+	                                        console.log(imgId);
+	                                        //$("#hidden-div-id-"+imgId).remove(); // 해당 식별자를 가진 이미지 요소를 삭제
+	                                        $(btn).parent().remove();
+	                                        images = images.filter(image => image.id !== imgId); // 배열에서 해당 식별자를 가진 이미지 제거
 	                                        $("#imgCount").html("(" + images.length + "/5)");
+	                                        
+	                                        /*
+	                                        for(let i = 0; i < images.length; i++) {
+	                                        	console.log(images[i].id);
+	                                            if(images[i].id === imgId) {
+	                                                //images.splice(i, 1); // 해당 식별자를 가진 이미지를 배열에서 삭제
+	                                                break;
+	                                            }
+	                                        }
+	                                        //$(e).parent().remove();
+	                                        //$("#imgCount").html("(" + images.length + "/5)");
+	                                    	*/
+	                                    	console.log(images);
 	                                    	
 	                                    }
 	                                    
@@ -1205,6 +1233,9 @@
 		        		alert("이미지를 등록해주세요.");
 		        		return false;
 		        	}*/
+		        	
+		        	console.log("여기에 들어옴?");
+		        	console.log(images);
 		     		
 		            if(images.length === 0){
 		                alert("이미지를 등록해주세요.");
@@ -1247,7 +1278,7 @@
         	    	for (let pair of formData.entries()) {
         	    	    console.log(pair[0] + ', ' + pair[1]); // key, value 출력
         	    	}
-        	    	/*
+        	    	
         	    	$.ajax({
         	    		url:"updateSell.po",
         	    		data:formData,
@@ -1260,7 +1291,7 @@
        		            error:function(){
        		            	console.log("실패");
        		            }
-        	    	});*/
+        	    	});
                 }
 	        
 	        </script>

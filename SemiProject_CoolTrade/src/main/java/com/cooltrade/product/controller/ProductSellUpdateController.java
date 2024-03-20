@@ -88,17 +88,17 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			ArrayList<Images> list = new ArrayList<Images>();
 			
-			int count = new ProductService().getImgCount(pno);
-			
-			//int del = new ProductService().deleteProductSellImage(pno);
+			int del = new ProductService().deleteProductSellImage(pno);
 			
 			for(int i=0; i<5; i++) {
 				String key = "image" + (i + 1);
 				System.out.println(key+": "+multiRequest.getFilesystemName(key));
 				
-				if(multiRequest.getOriginalFileName(key) == null) { // 기존의 첨부파일이 넘어온 경우!! delete 안함!
-					System.out.println("기존의 이미지가 넘어왔다!");
+				if(multiRequest.getOriginalFileName(key) != null) { 
+					System.out.println("새로넘어온 이미지가 있다!");
 					
+					if(del > 0) {
+						System.out.println("이미지 삭제 성공!");
 						Images img = new Images();
 						img.setRefPno(Integer.parseInt(multiRequest.getParameter("pno")));
 						img.setOriginName(multiRequest.getOriginalFileName(key));
@@ -112,28 +112,14 @@ public class ProductSellUpdateController extends HttpServlet {
 						}
 						
 						list.add(img);
-						System.out.println(key + "는: " + img);
-				 } else { // 기존의 이미지가 안넘어왔어! delete 함!!
-						System.out.println("삭제하고 인서트!!");
-						
-						Images img = new Images();
-						img.setRefPno(Integer.parseInt(multiRequest.getParameter("pno")));
-						img.setOriginName(multiRequest.getOriginalFileName(key));
-						img.setChangeName(multiRequest.getFilesystemName(key));
-						img.setImgPath("resources/images_upfiles/");
-						
-						if((i+1) == 1) {
-							img.setImgLevel(1);
-						} else {
-							img.setImgLevel(2);
-						}
-						list.add(img);
-						System.out.println(key + "는: " + img);
-				  }
+					} else {
+						System.out.println("이미지 삭제 실패!");
+					}
+				 } 
 			}
 			
-			System.out.println(list);
-			/*
+			//System.out.println(list);
+			
 			int result = new ProductService().updateProductSell(p, list, pno, userNo);
 			
 			if(result > 0) {
@@ -141,7 +127,7 @@ public class ProductSellUpdateController extends HttpServlet {
 				response.getWriter().print(result);
 			} else {
 				System.out.println("업데이트실패");
-			}*/
+			}
 			
 		}
 	

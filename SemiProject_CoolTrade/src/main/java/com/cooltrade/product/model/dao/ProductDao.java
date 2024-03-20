@@ -12,6 +12,7 @@ import java.util.Properties;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -951,11 +952,10 @@ public class ProductDao {
             pstmt = conn.prepareStatement(sql);
             
             pstmt.setInt(1, pno);
-            pstmt.setInt(2, userNo);
-            pstmt.setInt(3, img.getImgLevel());
-            pstmt.setString(4, img.getOriginName());
-            pstmt.setString(5, img.getChangeName());
-            pstmt.setString(6, img.getImgPath());
+            pstmt.setInt(2, img.getImgLevel());
+            pstmt.setString(3, img.getOriginName());
+            pstmt.setString(4, img.getChangeName());
+            pstmt.setString(5, img.getImgPath());
             
             result = pstmt.executeUpdate();
          }
@@ -1489,20 +1489,26 @@ public class ProductDao {
 		
 	}
 	
-	public int getImgCount(Connection conn, int pno) {
-		int count = 0;
+	public BankAccount getBankList(Connection conn, String nickname) {
+		BankAccount bankList = new BankAccount();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("getImgCount");
+		String sql = prop.getProperty("getBankList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pno);
+			pstmt.setString(1, nickname);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				count = rset.getInt("count");
+				
+				bankList.setBankaccountNo(rset.getInt("bankaccount_no"));
+				bankList.setUserNo(rset.getInt("user_no"));
+				bankList.setBank(rset.getString("bank"));
+				bankList.setAccount(rset.getString("account"));
+				bankList.setUserName(rset.getString("user_name"));
+				
 			}
 			
 		} catch (SQLException e) {
@@ -1512,7 +1518,7 @@ public class ProductDao {
 			close(rset);
 			close(pstmt);
 		}
-		return count;
+		return bankList;
 	}
 	
 }
