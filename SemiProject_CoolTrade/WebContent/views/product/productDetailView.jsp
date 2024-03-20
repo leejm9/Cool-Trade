@@ -72,7 +72,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     <div class="need_line_after-ds">👁️‍🗨️<%=p.getCount() %></div>
                     <div>🕗 <%=p.getTimeDiff()%></div>
                   </div>
-                  
+                  <% if(loginUser != null){%>
                   <!-- Button to Open the Modal -->
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 					  🚨신고하기
@@ -110,6 +110,17 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 					    </div>
 					  </div>
 					</div>
+					<%}else{ %>
+					<button type="button" class="btn btn-primary" onClick="loginFirst();">
+					  🚨신고하기
+					</button>
+					<%} %>
+					<script>
+						function loginFirst(){
+								alert("로그인 이후 사용가능한 기능입니다.");
+								location.href= "<%=contextPath%>/loginForm.me";
+						}
+					</script>
                 </div>
                 <div id="product_stats-ds">
                   <div id="current_status-ds" class="flex-ds">
@@ -167,7 +178,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           </div>
           <%if(addressList != null){ %>
 <!--           Modal -->
-			<div class="modal fade" id="myModal">
+			<div class="modal fade" id="myModal1">
 			    <div class="modal-dialog">
 			        <div class="modal-content">
 			            <% if(addressList.size() > 0) { %>
@@ -289,7 +300,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             
             $(".coolbtn").click(function(){
             	if(confirm("정말 구매하시겠습니까?")){
-            		$("#myModal").modal("show");
+            		$("#myModal1").modal("show");
             	} else {
             		console.log("취소");
             	}

@@ -33,7 +33,7 @@ public class MemberLoginController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		Member loginUser = new MemberService().loginMember(userId, userPwd);
-
+		String prevUrl = request.getParameter("prevUrl");
 		
 		if(loginUser == null) {
 			
@@ -49,7 +49,7 @@ public class MemberLoginController extends HttpServlet {
 			session.setAttribute("headerCo", headerCo);
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", loginUser.getUserName()+"님 로그인 되었습니다.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(prevUrl);
 		}
 		
 		//request.getRequestDispatcher("views/common/header.jsp").forward(request, response);

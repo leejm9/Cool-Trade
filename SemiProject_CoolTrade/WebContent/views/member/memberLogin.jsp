@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
+	String pageUrl = (String)request.getAttribute("pageUrl");
 %>
 <!DOCTYPE html>
 <html>
@@ -130,7 +131,7 @@ button:hover {
 				<input type="checkbox" id="remember" name="remember"> <label
 					for="remember">로그인 상태 유지</label>
 			</div>
-
+			<input type="hidden" id="prevURL" name="prevUrl" value="<%=pageUrl%>">
 			<button type="submit">로그인</button>
 
 		</form>
