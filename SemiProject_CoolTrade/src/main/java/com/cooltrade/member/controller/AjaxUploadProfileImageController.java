@@ -35,7 +35,7 @@ public class AjaxUploadProfileImageController extends HttpServlet {
    *      response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    HttpSession session = request.getSession();
+    /*HttpSession session = request.getSession();
     Member m = (Member) session.getAttribute("loginUser");
     int userNo = m.getUserNo();
     if (ServletFileUpload.isMultipartContent(request)) {
@@ -75,7 +75,7 @@ public class AjaxUploadProfileImageController extends HttpServlet {
         }
       }
     }
-    response.getWriter().print("success");
+    response.getWriter().print("success");*/
   }
 
   /**

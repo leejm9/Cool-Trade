@@ -157,7 +157,7 @@
     }
     
     .no-delivery-address {
-    border: 1px solid #ccc; /* 기본 테두리 색상 */
+    /*border: 1px solid #ccc; /* 기본 테두리 색상 */
     padding: 10px;
     text-align: center;
     cursor: default; /* 기본으로는 일반 커서 모양 */
