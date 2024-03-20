@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%> <% int count = (int)request.getAttribute("count"); int
-reviewCount = (int)request.getAttribute("reviewCount"); int likePoCount =
-(int)request.getAttribute("likePoCount"); Member sessionMember =
-(Member)session.getAttribute("loginUser"); Integer uno =
-sessionMember.getUserNo(); %>
+pageEncoding="UTF-8"%> 
+<% 
+	int count = (int)request.getAttribute("count"); 
+	int reviewCount = (int)request.getAttribute("reviewCount"); 
+	int likePoCount = (int)request.getAttribute("likePoCount"); 
+	Member sessionMember = (Member)session.getAttribute("loginUser"); 
+	Integer uno = sessionMember.getUserNo();
+	String titleImg = (String)request.getAttribute("titleImg");
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -192,9 +196,11 @@ sessionMember.getUserNo(); %>
     </style>
   </head>
   <body>
-    <%@ include file = "../common/header.jsp" %> <% String nickname =
-    loginUser.getNickName(); double ondo = loginUser.getOndo(); int userNo =
-    loginUser.getUserNo(); %>
+    <%@ include file = "../common/header.jsp" %> 
+    <% 	String nickname = loginUser.getNickName(); 
+	    double ondo = loginUser.getOndo(); 
+	    int userNo = loginUser.getUserNo(); 
+    %>
 
     <div id="mypage-wrap">
       <div id="left-content">
@@ -254,12 +260,21 @@ sessionMember.getUserNo(); %>
           <div id="right-content-top">
             <div id="profile-div">
               <div>
+              <% if(titleImg != null) { %>
                 <img
-                  style="width: 40px; border-radius: 50%"
-                  src="downloadprofileimage.do?uno=<%=uno%>"
+                  style="width: 40px;"
+                  src="<%= contextPath %>/<%= titleImg %>"
                   onerror="$(this).attr('src', 'resources/images/user-icon.png')"
                   alt="회원 프로필 사진 이미지"
                 />
+              <% } else { %>
+              	<img
+                  style="width: 40px;"
+                  src="resources/images/user-icon.png"
+                  onerror="$(this).attr('src', 'resources/images/user-icon.png')"
+                  alt="회원 프로필 사진 이미지"
+                />
+              <% } %>
               </div>
               <div><b><%= nickname %>님</b> 환영합니다!</div>
             </div>

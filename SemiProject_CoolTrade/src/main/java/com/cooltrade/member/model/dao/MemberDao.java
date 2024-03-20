@@ -1291,7 +1291,7 @@ public class MemberDao {
 	        bankAccount.setAccount(rset.getString("account"));
 	      }
 	      
-	      System.out.println(bankAccount);
+	      //System.out.println(bankAccount);
 	      
 	    } catch (SQLException e) {
 	      e.printStackTrace();
@@ -2076,9 +2076,13 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-
-         count = rset.getInt("count");
+			pstmt.setInt(1, pno);
 			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -2211,6 +2215,32 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public String getProfileImg(Connection conn, int select) {
+		String titleImg = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getProfileImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, select);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				titleImg = rset.getString("titleimg");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return titleImg;
 	}
 	
 }

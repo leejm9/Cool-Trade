@@ -60,6 +60,12 @@ public class MemberInfoEditController extends HttpServlet {
           + deliveryAddress.getDetail();
     }
     request.setAttribute("address", address);
+    
+    int select = new MemberService().selectProfileImg(userNo);
+    String titleImg = new MemberService().getProfileImg(select);
+    
+    request.setAttribute("titleImg", titleImg);
+    
     request.getRequestDispatcher("views/member/memberinfoEdit.jsp").forward(request, response);
 
   }
