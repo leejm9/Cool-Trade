@@ -362,7 +362,9 @@
 	                                    <div>
 	                                    	<div>
 	                                    		<% if(p.getTitleImg() != null) { %>
-	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>"></a>
+	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>">
+	                                    				<img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>">
+	                                    			</a>
 	                                    		<% } else { %>
 	                                    			<a href="#"><img class="titleImg" src="resources/images/no_img.png"></a>
                                     			<% } %>

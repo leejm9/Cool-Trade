@@ -158,7 +158,7 @@ SELECT
 	<entry key="selectProductDetail">
 		SELECT
 			   PRODUCT_NO 
-		     , USER_ID
+		     , NICKNAME
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
 		     , PRICE
@@ -712,5 +712,12 @@ SELECT
 		     , MAIN_YN
 		  FROM DELIVERY_ADDRESS
 		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="getImgCount">
+		SELECT
+		       COUNT(REF_PNO) COUNT
+		  FROM IMAGES
+		 WHERE REF_PNO = ?
 	</entry>
 </properties>

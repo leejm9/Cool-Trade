@@ -200,21 +200,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 									</div>
 									<div>
 										<div class="flex-ds">
-											<div>배송지명</div>
-											<div><%= addressList.get(i).getTitle() %></div>
+											<div><%= addressList.get(i).getName() %></div><div>(<%= addressList.get(i).getTitle() %>)</div>
 										</div>
 										<div class="flex-ds">
-											<div>받는사람</div>
-											<div><%= addressList.get(i).getName() %></div>
-										</div>
-										<div class="flex-ds">
-											<div>주소</div>
-											<div><%= addressList.get(i).getAddress() %></div>
-											<div><%= addressList.get(i).getDetail() %></div>
-										</div>
-										<div class="flex-ds">
-											<div>핸드폰번호</div>
 											<div><%= addressList.get(i).getPhone() %></div>
+										</div>
+										<div class="flex-ds">
+											<div><%= addressList.get(i).getAddress() %></div>,&nbsp;<div><%= addressList.get(i).getDetail() %></div>
 										</div>
 									</div>
 								</div>
@@ -452,7 +444,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   />
                 </div>
                 <div>
-                  <h5><%=p.getSellerNo()%></h5>
+                  <h5><%= p.getSellerNo() %></h5>
                   <div
                     class="flex-ds"
                     style="justify-content: center; flex-direction: column"

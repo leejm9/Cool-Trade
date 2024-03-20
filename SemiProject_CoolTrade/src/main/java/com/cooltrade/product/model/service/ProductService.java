@@ -521,5 +521,13 @@ public class ProductService {
 		close(conn);
 		return userNo;
 	}
+	
+	public int getImgCount(int pno) {
+		Connection conn = getConnection();
+		int count = new ProductDao().getImgCount(conn, pno);
+		
+		close(conn);
+		return count;
+	}
    
 }

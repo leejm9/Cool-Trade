@@ -564,6 +564,7 @@
 
 	<%@ include file = "../common/header.jsp" %>
 	<% int userNo = loginUser.getUserNo(); %>
+	<% double ondo = loginUser.getOndo(); %>
 	
 	    <input type="hidden" name="seller" value="<%= userNo %>">
 	    <input type="hidden" name="pno" value="<%= pList.get(0).getProductNo() %>">
@@ -594,6 +595,9 @@
 	                                        <%-- 기존 이미지 --%>
 	                                        <% for(int i=0; i<pList.size(); i++) { %>
 									        <div class="hidden-div" style="display:block;">
+									        	<% for(Images img : imgList) { %>
+									        	<input type="hidden" value="<%= img.getImgNo() %>">
+									        	<% } %>
 									            <img src="<%= contextPath %>/<%= pList.get(i).getTitleImg() %>" class="hidden-img">
 									            <button type="button" class="hidden-btn" onclick="deleteBtn(this);"></button>
 									        </div>
@@ -610,13 +614,74 @@
 	                                    let images = []; // 기존 이미지 배열 초기화
 	                                    
 	                                    $(document).ready(function(){
+	                                    	console.log(images);
 	                                        $("#fileInput").on("change", handleImgFileSelect);
 	                                        // 기존 이미지 배열에 이미지 추가
+	                                        
 	                                        $(".hidden-div img").each(function() {
+	                                        	/*let src = $(this).attr("src");
+	                                            let modifiedSrc = modifyFileName(src); // 파일명 뒤에 "123" 추가
+	                                            images.push(modifiedSrc);*/
+	                                        	console.log($(this).siblings().eq(0).files);
 	                                            images.push($(this).attr("src"));
 	                                        });
 	                                    });
 	                                    
+	                                    async function imageUrlToFile(imageUrl, fileName) {
+	                                        try {
+	                                            const blob = await fetchImageAsBlob(imageUrl);
+	                                            const file = blobToFile(blob, fileName);
+	                                            return file;
+	                                        } catch (error) {
+	                                            console.error('Error converting image URL to file:', error);
+	                                        }
+	                                    }
+	                                    
+	                                    for(let i=0; i<<%= pList.size() %>; i++){
+		                                    const imageUrl = "<%= contextPath%>/<%= pList.get(i).getTitleImg() %>";
+		                                    const fileName = "image"+i+".png"; // 원하는 파일 이름
+	                                    }
+	                                    
+	                                    imageUrlToFile(imageUrl, fileName).then(file => {
+	                                        console.log(file);
+	                                        // 이제 'file'을 사용하여 업로드 등의 작업을 할 수 있습니다.
+	                                    });
+	                                    
+	                                    async function imageUrlToFile(imageUrl, fileName) {
+	                                        try {
+	                                            const blob = await fetchImageAsBlob(imageUrl);
+	                                            const file = blobToFile(blob, fileName);
+	                                            return file;
+	                                        } catch (error) {
+	                                            console.error('Error converting image URL to file:', error);
+	                                            throw error; // 에러를 던져서 상위 호출자가 처리할 수 있도록 합니다.
+	                                        }
+	                                    }
+
+	                                    (async () => {
+	                                        for (let i = 0; i < <%= pList.size() %>; i++) {
+	                                            try {
+	                                                const imageUrl = "<%= contextPath%>/<%= pList.get(i).getTitleImg() %>";
+	                                                const fileName = "image" + i + ".png"; // 원하는 파일 이름
+
+	                                                const file = await imageUrlToFile(imageUrl, fileName);
+	                                                console.log(file);
+	                                                // 이제 'file'을 사용하여 업로드 등의 작업을 할 수 있습니다.
+	                                            } catch (error) {
+	                                                // 오류 처리
+	                                                console.error('Error processing image:', error);
+	                                            }
+	                                        }
+	                                    })();
+	                                    
+	                                    /*
+	                                    // 이미지 파일명 뒤에 "123" 추가하는 함수
+	                                    function modifyFileName(fileName) {
+	                                        let dotIndex = fileName.lastIndexOf(".");
+	                                        let modifiedFileName = fileName.slice(0, dotIndex) + "123" + fileName.slice(dotIndex);
+	                                        return modifiedFileName;
+	                                    }
+	                                    */
 	                                    console.log(images);
 	                                    
 	                                    function uploadAction(){
@@ -672,8 +737,6 @@
 	                                        $("#imgCount").html("(" + images.length + "/5)");
 	                                    	
 	                                    }
-	                                    
-	                                    console.log("이미지가져갈거: "+images);
 	                                    
 	                                </script>
 	
@@ -1030,6 +1093,7 @@
 	                            <h2 class="sell-section-title-h2">빠른 판매</h2>
 	                            <div class="sell-section-title-div">내 상품에 쿨거래 배지가 표시돼요</div>
 	                        </div>
+	                        <% if(ondo <= 10.0) { %>
 	                        <div id="cool-trade-option" class="flex-class">
 	                            <div id="cool-trade-option-title">옵션</div>
 	                            <div id="cool-trade-option-ex">
@@ -1040,40 +1104,6 @@
 	                                    <div id="cool-trade-btn-title">쿨거래</div>
 	                                </div>
 	                                <input type="hidden" id="h-cool" value="<%= pList.get(0).getTradeType() %>">
-	                                
-	                                <script>
-	                                	
-		                             	// 체크박스 요소를 가져옵니다.
-		                                const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
-		
-		                                // 체크박스의 변경 이벤트를 감지하고 처리합니다.
-		                                coolTradeCheckbox.addEventListener('change', function() {
-		                                    // 체크박스가 체크되었는지 확인합니다.
-		                                    if (this.checked) {
-		                                        // 체크되었을 때 value 값을 2로 설정합니다.
-		                                        this.value = "2";
-		                                    } else {
-		                                        // 체크되지 않았을 때 value 값을 1로 설정합니다.
-		                                        this.value = "1";
-		                                    }
-		                                    
-		                                    console.log(coolTradeCheckbox.value);
-		                                });
-		                                
-		                                // 체크 표시하기
-		                                var dbCool = document.getElementById("h-cool").value;
-		                                //console.log(dbCool);
-		                                var ty = document.getElementById("ty-checkbox");
-		                                
-		                                if(dbCool === "1") {
-		                                	ty.checked = false;
-		                                } else if(dbCool === "2") {
-		                                	ty.checked = true;
-		                                }
-		                                
-		                                console.log(dbCool);
-	                                	
-	                                </script>
 	                                
 	                                <div id="use-agreement">
 	                                    <ul>
@@ -1087,6 +1117,31 @@
 	                                </div>
 	                            </div>
 	                        </div>
+	                        <% } else { %>
+	                        <div id="cool-trade-option" class="flex-class">
+	                            <div id="cool-trade-option-title">옵션</div>
+	                            <div id="cool-trade-option-ex">
+	                                <div class="flex-class" id="cool-trade-btn">
+	                                    <div>
+	                                        <input type="checkbox" name="coolTrade" value="1" id="ty-checkbox" onclick="return false;">
+	                                    </div>
+	                                    <div id="cool-trade-btn-title">온도 10도 이하 회원부터 쿨거래 이용이 가능해요.</div>
+	                                </div>
+	                                <input type="hidden" id="h-cool" value="<%= pList.get(0).getTradeType() %>">
+	                                
+	                                <div id="use-agreement">
+	                                    <ul>
+	                                        <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
+	                                        <li>내 상품을 먼저 보여주는 전용 필터로 더 빠르게 판매할 수 있어요.</li>
+	                                        <li>쿨거래 배지로 더 많은 관심을 받을 수 있어요.</li>
+	                                        <li>
+	                                            <small>개인 정보 이용 약관에 동의 시 이용이 가능합니다.</small>
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <% } %>
 	                    </div>
 	                </div>
 	            </div>
@@ -1101,6 +1156,36 @@
 	        </div>
 	        
 	        <script>
+	        	
+	         	// 체크박스 요소를 가져옵니다.
+	            const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
+	
+	            // 체크박스의 변경 이벤트를 감지하고 처리합니다.
+	            coolTradeCheckbox.addEventListener('change', function() {
+	                // 체크박스가 체크되었는지 확인합니다.
+	                if (this.checked) {
+	                    // 체크되었을 때 value 값을 2로 설정합니다.
+	                    this.value = "2";
+	                } else {
+	                    // 체크되지 않았을 때 value 값을 1로 설정합니다.
+	                    this.value = "1";
+	                }
+	                
+	                console.log(coolTradeCheckbox.value);
+	            });
+	            
+	            // 체크 표시하기
+	            var dbCool = document.getElementById("h-cool").value;
+	            //console.log(dbCool);
+	            var ty = document.getElementById("ty-checkbox");
+	            
+	            if(dbCool === "1") {
+	            	ty.checked = false;
+	            } else if(dbCool === "2") {
+	            	ty.checked = true;
+	            }
+	            
+	            console.log(dbCool);
 	        
 		     	// 상품상태
 		       	$("[name=status]").click(function(){
@@ -1113,14 +1198,19 @@
 		       	})
                 
                 function submit(){
-		     		
+		     		/*
 		       		console.log($("#fileInput"));
 		       		let fileAlert = $("#fileInput");
-		       		if(!fileAlert[0].files.length){
+		       		if(!images.size()){
 		        		alert("이미지를 등록해주세요.");
 		        		return false;
-		        	}
+		        	}*/
 		     		
+		            if(images.length === 0){
+		                alert("이미지를 등록해주세요.");
+		                return false;
+		            }
+		            
 					<%-- console.log(images); // 이미지가 담긴 배열
         	    	console.log($("#titleInput").val()); // 상품명
         	    	console.log(categoryvalue); // 카테고리
@@ -1137,6 +1227,7 @@
                	    // 이미지 파일을 FormData에 추가
                	    let formData = new FormData();
                	    for (let i = 0; i < images.length; i++) {
+               	    	//if(images[i] === )
                	        formData.append('image'+(i+1), images[i]);
                	    }
                	    
@@ -1156,7 +1247,7 @@
         	    	for (let pair of formData.entries()) {
         	    	    console.log(pair[0] + ', ' + pair[1]); // key, value 출력
         	    	}
-        	    	
+        	    	/*
         	    	$.ajax({
         	    		url:"updateSell.po",
         	    		data:formData,
@@ -1169,7 +1260,7 @@
        		            error:function(){
        		            	console.log("실패");
        		            }
-        	    	});
+        	    	});*/
                 }
 	        
 	        </script>

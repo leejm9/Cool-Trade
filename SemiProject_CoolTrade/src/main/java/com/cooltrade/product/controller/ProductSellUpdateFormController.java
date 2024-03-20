@@ -49,6 +49,8 @@ public class ProductSellUpdateFormController extends HttpServlet {
 		ArrayList<Images> imgList = new ProductService().selectImages(pno);
 		request.setAttribute("imgList", imgList);
 		
+		//System.out.println(imgList);
+		
 		request.getRequestDispatcher("views/product/productUpdateForm.jsp").forward(request, response);
 		
 	}

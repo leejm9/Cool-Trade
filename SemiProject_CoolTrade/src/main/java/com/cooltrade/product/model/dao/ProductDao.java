@@ -327,7 +327,7 @@ public class ProductDao {
          
          if(rset.next()) {
             p.setProductNo(rset.getInt("product_no"));
-            p.setSellerNo(rset.getString("user_id"));
+            p.setSellerNo(rset.getString("nickname"));
             p.setCategoryNo(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
             p.setPrice(rset.getInt("price"));
@@ -1487,6 +1487,32 @@ public class ProductDao {
 		}
 		return addressList;
 		
+	}
+	
+	public int getImgCount(Connection conn, int pno) {
+		int count = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getImgCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return count;
 	}
 	
 }

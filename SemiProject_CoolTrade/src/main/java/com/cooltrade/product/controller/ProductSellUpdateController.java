@@ -88,19 +88,17 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			ArrayList<Images> list = new ArrayList<Images>();
 			
-			int del = new ProductService().deleteProductSellImage(pno);
+			int count = new ProductService().getImgCount(pno);
+			
+			//int del = new ProductService().deleteProductSellImage(pno);
 			
 			for(int i=0; i<5; i++) {
 				String key = "image" + (i + 1);
-				System.out.println(key+": "+multiRequest.getOriginalFileName(key));
+				System.out.println(key+": "+multiRequest.getFilesystemName(key));
 				
-				if(multiRequest.getOriginalFileName(key) != null) { // 새로넘어온 첨부파일이 있을 경우
+				if(multiRequest.getOriginalFileName(key) == null) { // 기존의 첨부파일이 넘어온 경우!! delete 안함!
+					System.out.println("기존의 이미지가 넘어왔다!");
 					
-					System.out.println("새로넘어온 첨부파일 있음");
-					
-					if(del > 0) { // 기존 첨부파일 삭제 성공
-						System.out.println("기존 이미지 삭제");
-						
 						Images img = new Images();
 						img.setRefPno(Integer.parseInt(multiRequest.getParameter("pno")));
 						img.setOriginName(multiRequest.getOriginalFileName(key));
@@ -114,14 +112,28 @@ public class ProductSellUpdateController extends HttpServlet {
 						}
 						
 						list.add(img);
+						System.out.println(key + "는: " + img);
+				 } else { // 기존의 이미지가 안넘어왔어! delete 함!!
+						System.out.println("삭제하고 인서트!!");
 						
-					} else {
-						System.out.println("기존 이미지 삭제 실패");
-					}
-					
-				} 
-			} 
+						Images img = new Images();
+						img.setRefPno(Integer.parseInt(multiRequest.getParameter("pno")));
+						img.setOriginName(multiRequest.getOriginalFileName(key));
+						img.setChangeName(multiRequest.getFilesystemName(key));
+						img.setImgPath("resources/images_upfiles/");
+						
+						if((i+1) == 1) {
+							img.setImgLevel(1);
+						} else {
+							img.setImgLevel(2);
+						}
+						list.add(img);
+						System.out.println(key + "는: " + img);
+				  }
+			}
 			
+			System.out.println(list);
+			/*
 			int result = new ProductService().updateProductSell(p, list, pno, userNo);
 			
 			if(result > 0) {
@@ -129,7 +141,7 @@ public class ProductSellUpdateController extends HttpServlet {
 				response.getWriter().print(result);
 			} else {
 				System.out.println("업데이트실패");
-			}
+			}*/
 			
 		}
 	

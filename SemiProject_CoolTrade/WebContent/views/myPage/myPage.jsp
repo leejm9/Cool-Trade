@@ -262,14 +262,14 @@ pageEncoding="UTF-8"%>
               <div>
               <% if(titleImg != null) { %>
                 <img
-                  style="width: 40px;"
+                  style="width: 30px; height: 30px;"
                   src="<%= contextPath %>/<%= titleImg %>"
                   onerror="$(this).attr('src', 'resources/images/user-icon.png')"
                   alt="회원 프로필 사진 이미지"
                 />
               <% } else { %>
               	<img
-                  style="width: 40px;"
+                  style="width: 30px; height: 30px;"
                   src="resources/images/user-icon.png"
                   onerror="$(this).attr('src', 'resources/images/user-icon.png')"
                   alt="회원 프로필 사진 이미지"
