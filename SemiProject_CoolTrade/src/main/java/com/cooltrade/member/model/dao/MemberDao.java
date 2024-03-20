@@ -2076,8 +2076,15 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				count = rset.getInt("count");
+			}
 
-         count = rset.getInt("count");
+         
 			
 			
 		} catch (SQLException e) {
