@@ -40,9 +40,10 @@
 		    MESSAGE_NO,
 		    MESSAGE,
 		    (CASE
-		        WHEN TO_NUMBER(TO_CHAR(message_date, 'HH24')) &lt; 12 THEN '오전 ' || TO_CHAR(message_date, 'HH24:MI')
-		        ELSE '오후 ' || TO_CHAR(message_date, 'HH24:MI')
-		    END) AS MESSAGE_DATE,
+			    WHEN TO_NUMBER(TO_CHAR(message_date, 'HH24')) = 0 THEN '오전 12' || TO_CHAR(message_date, ':MI')
+			    WHEN TO_NUMBER(TO_CHAR(message_date, 'HH24')) &lt;= 12 THEN '오전 ' || TO_CHAR(message_date, 'HH12:MI')
+			    ELSE '오후 ' || TO_CHAR(message_date, 'HH12:MI')
+			END) AS MESSAGE_DATE,
 		    READ_YN,
 		    CHATROOM_NO,
 		    SENDER
