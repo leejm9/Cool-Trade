@@ -548,9 +548,9 @@ public class MemberService {
 		return count;
 	}
 
-	public int likePoCount(String userId) {
+	public int likePoCount(int uno) {
 		Connection conn = getConnection();
-		int count = new MemberDao().likePoCount(conn, userId);
+		int count = new MemberDao().likePoCount(conn, uno);
 
 		close(conn);
 		return count;

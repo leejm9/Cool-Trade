@@ -1113,10 +1113,9 @@
 		       	})
                 
                 function submit(){
-		     		
-		       		console.log($("#fileInput"));
+		     		console.log("image = " + images)
 		       		let fileAlert = $("#fileInput");
-		       		if(!fileAlert[0].files.length){
+		       		if(images.length === 0){
 		        		alert("이미지를 등록해주세요.");
 		        		return false;
 		        	}

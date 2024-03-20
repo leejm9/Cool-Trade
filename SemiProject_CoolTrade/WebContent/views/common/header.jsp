@@ -72,8 +72,9 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
             z-index: 999;
             display: none;
             overflow: auto;
-            left: 850px;
+            left: 950px;
             top: 40px;
+            padding:10px;
           }
 
           .notification.hidden {
@@ -222,8 +223,6 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                   $(function () {
                     getAlarm();
                     setInterval(getAlarm, 2000);
-
-                    console.log("오냐");
                   });
 
                   function getAlarm() {

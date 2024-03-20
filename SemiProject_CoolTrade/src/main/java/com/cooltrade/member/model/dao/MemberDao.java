@@ -1804,7 +1804,7 @@ public class MemberDao {
 		return count;
 	}
 	
-	public int likePoCount(Connection conn, String userId) {
+	public int likePoCount(Connection conn, int uno) {
 		int count = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1812,16 +1812,14 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
+			pstmt.setInt(1, uno);
 			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
 				count = rset.getInt("count");
 			}
-			//System.out.println(count);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close(rset);

@@ -41,7 +41,7 @@ public class MemberLoginController extends HttpServlet {
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}else {
 			HttpSession session =  request.getSession();
-			int headerCo = new MemberService().likePoCount(userId);
+			int headerCo = new MemberService().likePoCount(loginUser.getUserNo());
 			if(String.valueOf(headerCo) == null) {
 				headerCo = 0;
 			}

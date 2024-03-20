@@ -61,7 +61,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     <h1><%=p.getStrPrice()%></h1>
                     <span>원</span>
                   </div>
-                  <a href="#">네이버 가격비교</a>
+
                 </div>
                 <div id="like_view_report-ds" class="flex-ds">
                   <div id="like_view_time-ds" class="flex-ds">
@@ -153,6 +153,12 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 >
                   ❤️찜<span><%= likeCount %></span>
                 </button>
+                <button
+                  class="btn btn-lg btn-warning"
+                  onclick="loginToChat();"
+                >
+                  💬 채팅하기
+                </button>
                 <%} %>
                 <%if(loginUser!=null && loginUser.getUserId().equals(p.getSellerNo())) {%>
                 <button
@@ -177,6 +183,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
               </div>
             </div>
           </div>
+          <script>
+          	function loginToChat(){
+          		alert("로그인 후 가능합니다.");
+          		location.href = "<%=contextPath%>/loginForm.me";
+          	};
+          	
+          </script>
           <%if(addressList != null){ %>
 <!--           Modal -->
 			<div class="modal fade" id="myModal-address">

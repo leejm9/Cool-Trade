@@ -81,7 +81,7 @@
 									+ '</div>'
 									+ '<div class="search_price_time-ds flex-ds" style="justify-content: space-between;">'
 									+ '<div class="search_price-ds">'
-									+ product.price
+									+ product.strPrice
 									+ '</div>'
 									+ '<div class="search_time-ds">' + product.timeDiff + '</div>'	
 									+ '</div>'
@@ -116,7 +116,7 @@
 						</div>
 						<div class="search_price_time-ds flex-ds" style="justify-content: space-between;">
 							<div class="search_price-ds">
-								<%=searchList.get(i).getPrice()%>
+								<%=searchList.get(i).getStrPrice()%>
 							</div>
 							<div class="search_time-ds"><%=searchList.get(i).getTimeDiff() %></div>	
 						</div>

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cooltrade.member.model.service.MemberService;
 import com.cooltrade.product.model.service.ProductService;
 
 /**
@@ -31,30 +32,37 @@ public class AjaxLikeProductInsertController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		int result = 0;
+		int headerCo = 0;
+
 		int uno = Integer.parseInt(request.getParameter("uno"));
 		int pno = Integer.parseInt(request.getParameter("pno"));
-
 		boolean checkFlag = new ProductService().checkLike(uno, pno);
 
+
 		if (!checkFlag) {
-			int result = new ProductService().likeInsert(uno, pno);
+			result = new ProductService().likeInsert(uno, pno);
 
 			if (result > 0) {
+				headerCo = new MemberService().likePoCount(uno);
+				request.getSession().removeAttribute("headerCo");
+				request.getSession().setAttribute("headerCo", headerCo);
+				System.out.println(headerCo);
 				response.getWriter().print(result);
 			}
 		} else {
 			String yn = new ProductService().checkYn(uno, pno);
 			if (yn.equals("N")) {
-				System.out.println("here");
-				int result = new ProductService().updateYesLike(uno, pno);
-				if(result>0) {
-					response.getWriter().print(result);
-				}
+				result = new ProductService().updateYesLike(uno, pno);
 			} else if(yn.equals("Y")){
-				int result = new ProductService().updateNoLike(uno, pno);
-				if(result>0) {
-					response.getWriter().print(result);
+				result = new ProductService().updateNoLike(uno, pno);
 				}
+			if(result>0) {
+				headerCo = new MemberService().likePoCount(uno);
+				request.getSession().removeAttribute("headerCo");
+				request.getSession().setAttribute("headerCo", headerCo);
+				System.out.println(headerCo);
+				response.getWriter().print(result);
 			}
 		}
 

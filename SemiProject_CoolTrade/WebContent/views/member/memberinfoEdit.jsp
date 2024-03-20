@@ -87,7 +87,7 @@
             margin-top: 20px;
             
         }
-    td,#table th{
+ #mypage-wrap td, #table th{
         border: 1px solid rgb(220, 220, 220);
             border-top: 2px solid #d6d6d6;
             border-bottom: 2px solid #e6e6e6;
@@ -96,11 +96,11 @@
             /*border-collapse: separate; /* 셀테두리가 별도로 표시되도록 설정 */
     }
 
-    tr {
+    #mypage-wrap tr {
       border: solid 1px rgb(220, 220, 220);
     }
 
-    td,th{
+   #mypage-wrap  td,#mypage-wrap th{
         width: 350px;
         height: 45px;
         border: solid 1px rgb(220, 220, 220);
@@ -113,7 +113,7 @@
         border-bottom: 1px solid #d3d3d3;
     }
 
-    td {
+    #mypage-wrap td {
       font-size: 14px;
       border-bottom: 1px solid rgb(231, 231, 231);
       padding-left: 5px;

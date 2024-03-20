@@ -207,7 +207,7 @@ public class ProductDao {
             p.setProductNo(rset.getInt("product_no"));
             p.setSellerNo(rset.getString("seller_no"));
             p.setProductName(rset.getString("product_name"));
-            p.setPrice(rset.getInt("price"));
+			p.setStrPrice(rset.getString("str_price"));
             p.setZone(rset.getString("zone"));
             p.setUploadDate(rset.getString("upload_date"));
             p.setTimeDiff(rset.getString("time_diff"));
@@ -948,6 +948,7 @@ public class ProductDao {
       try {
          
          for(Images img : list) {
+        	 System.out.println(img);
             pstmt = conn.prepareStatement(sql);
             
             pstmt.setInt(1, pno);
@@ -1056,7 +1057,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1155,7 +1156,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1188,7 +1189,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1221,7 +1222,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1255,7 +1256,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1289,7 +1290,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				
@@ -1323,7 +1324,7 @@ public class ProductDao {
 				Product p = new Product();
 				p.setProductNo(rset.getInt("product_no"));
 				p.setProductName(rset.getString("product_name"));
-				p.setPrice(rset.getInt("price"));
+				p.setStrPrice(rset.getString("str_price"));
 				p.setZone(rset.getString("zone"));
 				p.setTimeDiff(rset.getString("time_diff"));
 				

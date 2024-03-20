@@ -106,13 +106,13 @@ public class ProductSellUpdateController extends HttpServlet {
 						img.setOriginName(multiRequest.getOriginalFileName(key));
 						img.setChangeName(multiRequest.getFilesystemName(key));
 						img.setImgPath("resources/images_upfiles/");
-						
+						System.out.println(img);
 						if((i+1) == 1) {
 							img.setImgLevel(1);
 						} else {
 							img.setImgLevel(2);
 						}
-						
+						System.out.println(img);
 						list.add(img);
 						
 					} else {
@@ -121,7 +121,7 @@ public class ProductSellUpdateController extends HttpServlet {
 					
 				} 
 			} 
-			
+			System.out.println();
 			int result = new ProductService().updateProductSell(p, list, pno, userNo);
 			
 			if(result > 0) {
