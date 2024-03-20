@@ -67,12 +67,27 @@ public class ReportService {
 		return result;
 	}
 	
-	public ArrayList<Report> selectReportDetail(int rno){
+	public Report selectReportDetail(int rno){
 		Connection conn = getConnection();
 		
-		ArrayList<Report> list = new ReportDao().selectReportDetail(conn,rno);
+		Report r = new ReportDao().selectReportDetail(conn,rno);
 		
 		close(conn);
-		return list;
+		return r;
 	}
+	
+	public int deleteReport(int reportNo) {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().deleteReport(conn, reportNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	
 }

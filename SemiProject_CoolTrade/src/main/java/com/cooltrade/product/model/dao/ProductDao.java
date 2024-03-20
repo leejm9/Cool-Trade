@@ -1364,12 +1364,17 @@ public class ProductDao {
 		
 	}
 	public int getReportedUserNo(Connection conn, int pno) {
+		System.out.println(pno);
+		System.out.println("오냐 11");
 		int userNo = 0;
 		PreparedStatement pstmt = null;
+		System.out.println("오냐 22");
 		ResultSet rset = null;
 		String sql = prop.getProperty("getReportedUserNo");
-      try {
+		System.out.println("오냐 33");
+		try {
 			pstmt = conn.prepareStatement(sql);
+			System.out.println("오냐44");
          pstmt.setInt(1, pno);
          rset = pstmt.executeQuery();
 			

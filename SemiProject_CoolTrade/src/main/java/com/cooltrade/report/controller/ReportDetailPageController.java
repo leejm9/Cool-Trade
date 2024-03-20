@@ -33,8 +33,8 @@ public class ReportDetailPageController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int rno = Integer.parseInt(request.getParameter("rno"));
 		
-		ArrayList<Report> list = new ReportService().selectReportDetail(rno);
-		
+		Report r = new ReportService().selectReportDetail(rno);
+		request.setAttribute("r", r);
 		request.getRequestDispatcher("views/manager/managerReportDetail.jsp").forward(request, response);
 	}
 

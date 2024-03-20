@@ -1,7 +1,10 @@
+<%@page import="com.cooltrade.report.model.vo.Report"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	Member m = (Member)request.getAttribute("m");
+	Report r = (Report)request.getAttribute("r");
 %>
 <!DOCTYPE html>
 <html>
@@ -46,68 +49,46 @@
 	<%@ include file = "../common/managerMenubar.jsp" %>
 	<div class="outer" align="center">
 	<div id="meminfo">
-            <h3 style="margin-right: 220px;">회원상세조회</h3>
+            <h3>회원상세조회</h3>
             <table>
                 <tr>
-                    <th>이름</th>
-                    <td><%= m.getUserName() %></td>
+                    <th>신고번호</th>
+                    <td><%= r.getReportNo() %></td>
                 </tr>
                 <tr>
-                    <th>회원번호</th>
-                    <td><%= m.getUserNo() %></td>
+                    <th>신고대상</th>
+                    <td><%= r.getProdNo() %></td>
                 </tr>
                 <tr>
-                    <th>닉네임</th>
-                    <td><%= m.getNickName() %></td>
+                    <th>신고게시물제목</th>
+                    <td><%= r.getProductTitle() %></td>
                 </tr>
                  <tr>
-                    <th>아이디</th>
-                    <td><%= m.getUserId() %></td>
+                    <th>신고자</th>
+                    <td><%= r.getReporter() %></td>
                 </tr>
                 <tr>
-                    <th>비밀번호</th>
-                    <td><%= m.getUserPwd() %></td>
+                    <th>신고유형</th>
+                    <td><%= r.getReportTypeNo() %></td>
                 </tr>
                 <tr>
-                    <th>회원등급</th>
-                    <td><% if(m.getUserLevel().equals("U")){ %>
-	           		일반
-	           		<%}else if(m.getUserLevel().equals("B")){ %>
-	           		블랙리스트
-	           		<%}else if(m.getUserLevel().equals("C")){ %>
-	           		쿨거래사용자
-	           		<%} %>
-	           		</td>
+                    <th>신고날짜</th>
+                    <td><%= r.getReportDate() %><td>
                 </tr>
                 <tr>
-                    <th>이메일</th>
-                    <td><%= m.getEmail() %></td>
-                </tr>
-                <tr>
-                    <th>회원상태</th>
-                    <td><% if(m.getUserStatus().equals("Y")){ %>
-	           		회원
-	           		<%}else{ %>
-	           		탈퇴
-	           		<%} %>
-	           		</td>
-                </tr>
-                <tr>
-                    <th>ONDO</th>
-                    <td><%= m.getOndo() %>도</td>
-                </tr>
-                <tr>
-                    <th>경고</th>
-                    <td><%= m.getCaution() %>회</td>
+                    <th>신고내용</th>
+                    <td><%= r.getReportContent() %></td>
                 </tr>
             </table>
         </div>
         
 	   <div>
-	       <a href="<%= contextPath %>/member.in?cpage=1&dropDownValue=1"  class="btn btn-sm btn-secondary">목록가기</a>
-	       <a href="<%= contextPath %>/delete.detail?uno=<%= m.getUserNo() %>" class="btn btn-sm btn-danger">추방하기</a>
-	       
+	       <a onclick="location.href='<%= contextPath %>/report.in?cpage=1'"  class="btn btn-secondary">목록가기</a>
+	       	<input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리">
 	   </div>
+	   <br><br><br><br><br><br><br><br><br><br>
 	  </div>
+	  
+	  
 </body>
 </html>

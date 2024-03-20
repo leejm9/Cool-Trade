@@ -241,29 +241,10 @@ String user = (String)request.getAttribute("userId"); String seller =
         <!-- <button type="submit" onclick="insertReply();">전송</button> -->
       </div>
     </div>
-    <div class="wrap-footer">
-    	<div class="wrap-footer-area">
-   		    <div align="center" class="wrap-footer-area-div">
-			    <input type="text" id="messageInput" style="width:370px;">
-			    <button type="submit" class="btn-image" onclick="insertReply();">
-			    	<img class="btn-img" src="resources/images/icon-send.png">
-			    </button>
-			</div>
-    	</div>
-    </div>
-    </div>
-    <div align="right" style="display: none;">
-    <input type="text" id="messageInput" style="width:600px;">
-<!--     <button type="submit" onclick="insertReply();">전송</button> -->
-	</div>
-	</div>
-	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
-	<input type="hidden" id="user" value="<%= user %>">
-	<input type="hidden" id="seller" value="<%= seller %>">
-	
-	<button onclick="location.href='<%= contextPath %>/apipage.in'">택배배송?</button>
-	
-	
+    <input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>" />
+    <input type="hidden" id="user" value="<%= user %>" />
+    <input type="hidden" id="seller" value="<%= seller %>" />
+
     <script>
       $(function () {
         getMessage();

@@ -44,11 +44,7 @@ public class ManagerReportPageController extends HttpServlet {
 		int maxPage;	 
 		int startPage;	 
 		int endPage;	 
-//		if (search == null || search.isEmpty()) {
-//		    listCount = new MemberService().countBoardList();
-//		} else {
-//		    listCount = new MemberService().countSearchBoard(search);
-//		}
+
 		listCount = new ReportService().countReportList();
 		
 		int cpage = 1; 
@@ -75,13 +71,6 @@ public class ManagerReportPageController extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, maxPage, startPage, endPage);
-		
-//		ArrayList<Member> list = new ArrayList<Member>();
-//		if(search == null) {
-//			list = new MemberService().selectBoardList(pi);
-//		}else {
-//			list = new MemberService().selectSearchBoard(pi,search);
-//		}
 		
 		ArrayList<Report> list = new ReportService().selectReportList(pi);
 		

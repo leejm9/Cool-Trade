@@ -170,7 +170,7 @@ public class ReportDao {
 	
 	public int updateReport(Connection conn,int pno) {
 		int result = 0;
-		
+		System.out.println("오냐ㅑㅑ");
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("updateReport");
@@ -189,9 +189,7 @@ public class ReportDao {
 		return result;
 	}
 	
-	public ArrayList<Report> selectReportDetail(Connection conn ,int rno){
-		ArrayList<Report> list = new ArrayList<Report>();
-		
+	public Report selectReportDetail(Connection conn ,int rno){
 		Report r = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -205,14 +203,15 @@ public class ReportDao {
 			
 			rset = pstmt.executeQuery();
 			
-			while(rset.next()) {
-				list.add(new Report(rset.getInt("report_no"),
+			if(rset.next()) {
+				r = new Report(rset.getInt("report_no"),
 									rset.getInt("product_no"),
-									rset.getString("product_name"),
 									rset.getString("reporter"),
 									rset.getString("report_cate"),
+									rset.getString("report_content"),
 									rset.getDate("report_date"),
-									rset.getString("report_content")));
+									rset.getString("product_name")
+									);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -220,8 +219,28 @@ public class ReportDao {
 			close(rset);
 			close(pstmt);
 		}
-		return list;
+		return r;
 		
 	}
+	
+	public int deleteReport(Connection conn, int reportNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reportNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 
 }

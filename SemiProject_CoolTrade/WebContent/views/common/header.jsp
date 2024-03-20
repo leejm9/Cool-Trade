@@ -74,7 +74,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
             overflow: auto;
             left: 950px;
             top: 40px;
-            padding:10px;
+            padding: 10px;
           }
 
           .notification.hidden {
@@ -218,6 +218,87 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                   id="loginUser"
                   value="<%= loginUser.getUserId() %>"
                 />
+                <input
+                  type="hidden"
+                  id="loginUser"
+                  value="<%= loginUser.getUserId() %>"
+                />
+
+                <script>
+                  $(function () {
+                    getAlarm();
+                    setInterval(getAlarm, 2000);
+
+                    console.log("오냐");
+                  });
+
+                  function getAlarm() {
+                    var userId = $("#loginUser").val();
+                    $.ajax({
+                      url: "alarm.in",
+                      data: { loginUser: userId },
+                      success: function (list) {
+                        let value = "";
+                        if (list.length !== 0) {
+                          for (let i = 0; i < list.length; i++) {
+                            value +=
+                              '<div class="content">' +
+                              '<div class="content_0" style="border-top: 1px solid rgb(204, 203, 203); border-right: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203); ">' +
+                              (userId === list[i].userId ? "구매" : "판매") +
+                              "</div>" +
+                              '<div class="content_1" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);" onclick="goChatRoom();">&nbsp;' +
+                              list[i].message +
+                              "</div>" +
+                              '<div class="content_2" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' +
+                              list[i].messageDate +
+                              "</div>" +
+                              '<div class="content_3" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' +
+                              list[i].sender +
+                              "</div>" +
+                              '<input type="hidden" id="chatRoomNo" value="' +
+                              list[i].chatRoomNo +
+                              '" >' +
+                              '<input type="hidden" id="userId" value="' +
+                              list[i].userId +
+                              '" >' +
+                              '<input type="hidden" id="sellerId" value="' +
+                              list[i].sellerId +
+                              '" >' +
+                              "</div>";
+                          }
+                          $(".content-container").html(value);
+                          $("#alarmCount").html(list.length);
+                        } else {
+                          $(".content-container").html("받은 알림이 없습니다");
+                          $("#alarmCount").remove();
+                        }
+                      },
+                      error: function () {
+                        console.log("ajax 통신 실패");
+                      },
+                    });
+                  }
+
+                  function toggleNotification() {
+                    var notification = document.getElementById("notification");
+                    notification.classList.toggle("show");
+                  }
+
+                  function closeNotification() {
+                    var notification = document.getElementById("notification");
+                    notification.classList.remove("show");
+                  }
+                  function goChatRoom() {
+                    const num = $("#chatRoomNo").val();
+                    const userId = $("#userId").val();
+                    const sellerId = $("#sellerId").val();
+                    location.href =
+                      "<%= contextPath %>/chatroom.in?userId=" +
+                      userId +
+                      "&pno=" +
+                      sellerId;
+                  }
+                </script>
 
                 <script>
                   $(function () {
@@ -459,6 +540,21 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                 </div>
                 <div id="chatSell-ds" class="flex-ds">
                   <div id="chatContainer-ds">
+                    <% if(loginUser == null) {%>
+                    <a id="chat-ds" onclick="chatLogin();">
+                      <img
+                        src="resources/images/말풍선.png"
+                        alt="말풍선 이미지"
+                      />
+                      채팅하기
+                    </a>
+                    <script>
+                      function chatLogin() {
+                        alert("로그인 후 채팅이 가능합니다.");
+                        location.href = "<%= contextPath %>/loginForm.me";
+                      }
+                    </script>
+                    <% }else{ %>
                     <a href="<%= contextPath %>/chatRoom.list" id="chat-ds">
                       <img
                         src="resources/images/말풍선.png"
@@ -466,6 +562,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                       />
                       채팅하기
                     </a>
+                    <% } %>
                   </div>
                   <div id="sellContainer-ds">
                     <% if(loginUser == null) { %>
