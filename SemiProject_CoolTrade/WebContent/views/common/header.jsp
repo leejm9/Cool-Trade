@@ -116,7 +116,7 @@ ArrayList<RecentProducts>
             text-align: right;
           }
 
-          .close {
+          .close-jm {
             color: #000;
             font-size: 20px;
             font-weight: bold;
@@ -125,7 +125,7 @@ ArrayList<RecentProducts>
             height: 10%;
           }
 
-          .close:hover {
+          .close-jm:hover {
             color: #999;
             cursor: pointer;
           }

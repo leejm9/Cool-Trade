@@ -72,7 +72,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                     <div class="need_line_after-ds">👁️‍🗨️<%=p.getCount() %></div>
                     <div>🕗 <%=p.getTimeDiff()%></div>
                   </div>
-                  
+                   
                   <!-- Button to Open the Modal -->
 					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
 					  🚨신고하기
@@ -111,6 +111,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 					  </div>
 					</div>
                 </div>
+                
                 <div id="product_stats-ds">
                   <div id="current_status-ds" class="flex-ds">
                     <div class="dot_before-ds">상품상태</div>
@@ -167,16 +168,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
           </div>
           <%if(addressList != null){ %>
 <!--           Modal -->
-			<div class="modal fade" id="myModal">
+			<div class="modal fade" id="myModal-address">
 			    <div class="modal-dialog">
 			        <div class="modal-content">
 			            <% if(addressList.size() > 0) { %>
-			            Modal Header
 			            <div class="modal-header">
 			                <h5 class="modal-title">판매자에게 전달할 배송지를 선택하세요</h4>
 			                <button type="button" class="close" data-dismiss="modal">&times;</button>
 			            </div>
-			            Modal body
 			            <div class="modal-body">
 			            <form action="#" method="post">
 			            <input type="hidden" value="<%= p.getProductNo() %>">
@@ -212,17 +211,14 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 							</div>
 						</form>
 			            </div>
-			            Modal footer
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">전달</button>
 			            </div>
 						<% } else { %>
-						Modal body
 			            <div class="modal-body">
 							<div>배송지가 등록되어 있지 않습니다.</div>
 							<div>내정보에서 배송지를 먼저 등록해주세요.</div>
 						</div>
-						Modal footer
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>
 			            </div>
@@ -289,7 +285,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
             
             $(".coolbtn").click(function(){
             	if(confirm("정말 구매하시겠습니까?")){
-            		$("#myModal").modal("show");
+            		$("#myModal-address").modal("show");
             	} else {
             		console.log("취소");
             	}

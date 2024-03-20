@@ -33,7 +33,7 @@ public class DownloadProfileImageController extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	  /*
     // 서버에 저장된 이미지 파일 경로
-    String filePath = "/upload/profile/"+request.getParameter("uno");
+    String filePath = "/resources/images_upfiles/"+request.getParameter("uno");
     File downloadFile = new File(filePath);
 
     // MIME 타입 설정
