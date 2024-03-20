@@ -708,4 +708,11 @@
 		  FROM DELIVERY_ADDRESS
 		 WHERE USER_NO = ?
 	</entry>
+	
+	<entry key="getReportedUserNo">
+		SELECT
+		       SELLER_NO
+		  FROM PRODUCT
+		 WHERE PRODUCT_NO = ?
+	</entry>
 </properties>

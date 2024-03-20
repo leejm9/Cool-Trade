@@ -446,21 +446,17 @@ public class MemberDao {
       PreparedStatement pstmt = null;
       
       String sql = prop.getProperty("recoveryMember");
-      
+      System.out.println(userNo);
       try {
          pstmt = conn.prepareStatement(sql);
          
          pstmt.setInt(1, userNo);
-         
          result = pstmt.executeUpdate();
-         
-         
       } catch (SQLException e) {
          e.printStackTrace();
       }finally {
          close(pstmt);
       }
-      
       return result;
    }
    
@@ -2140,4 +2136,47 @@ public class MemberDao {
 		return result;
 	}
 	
+	public int checkUserCaution(Connection conn, int userNo) {
+		int check = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("checkUserCaution");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				check = rset.getInt("caution");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return check;
+	}
+	public int updateLevelToBlack(Connection conn, int userNo) {
+		int black = 0;
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateLevelToBlack");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			black = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return black;
+	}
 }

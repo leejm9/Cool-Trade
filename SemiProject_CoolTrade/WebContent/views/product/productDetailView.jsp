@@ -161,6 +161,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 <% } else { %>
                 	<button class="btn btn-lg btn-danger" type="button"  style="background-color: rgb(4, 108, 250); border: none;" disabled>바로사버리기</button>
                 <% } %>
+                <% } %>
               </div>
             </div>
           </div>
@@ -584,6 +585,4 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
         </div>
         <%@ include file="../common/footer.jsp" %>
       </body>
-    </html></Images
-  ></Images
->
+    </html>

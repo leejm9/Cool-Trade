@@ -227,7 +227,6 @@ public class MemberService {
       }else {
          rollback(conn);
       }
-      
       close(conn);
       return result;
    }
@@ -646,6 +645,18 @@ public class MemberService {
 		
 		close(conn);
 		return count;
+	}
+	public int checkUserCaution(int userNo) {
+		Connection conn = getConnection();
+		int check = new MemberDao().checkUserCaution(conn,userNo);
+		close(conn);
+		return check;
+	}
+	public int updateLevelToBlack(int userNo) {
+		Connection conn = getConnection();
+		int black = new MemberDao().updateLevelToBlack(conn,userNo);
+		close(conn);
+		return black;
 	}
 
 }

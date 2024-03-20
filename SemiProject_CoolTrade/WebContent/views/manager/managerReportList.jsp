@@ -39,14 +39,6 @@
                             <h6 class="m-0 font-weight-bold text-primary">신고 조회</h6>
                         </div>
                         <div class="card-body">
-	                        <div id="searchBtn">
-		                        <div id="searchBtn1">
-			                        <form action="<%= contextPath %>/blacklist.in?cpage=1">
-			                        <input type="text" id="bsearchForm" name="bsearch">
-			                        <button type="submit" style="border-color:white;" >검색</button>
-			                        </form>
-		                        </div>
-	                        </div>
 	                        
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -65,7 +57,7 @@
                                     <tbody>
                                     	<% if(list.isEmpty()){ %>
 						                <tr>
-						                    <td colspan="6">조회된 게시글이 없습니다</td>
+						                    <td colspan="7">조회된 게시글이 없습니다</td>
 						                </tr>
 										<% }else{ %>
 	                                    	<% for(Report r : list){ %>
@@ -76,19 +68,23 @@
 		                                            <td><%= r.getReportTypeNo() %></td>
 		                                            <td><%= r.getReportDate() %></td>
 		                                            <td><input type="button" class="btn btn-primary" value="상세보기" onclick="location.href='<%= contextPath %>/report.detail?rno=<%= r.getReportNo() %>'">
-		                                            <td><input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리"></td>
+		                                            <td><input type="button" onclick="Report(<%= r.getReportNo() %>,<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리"></td>
 		                                        </tr>
                                         	<% } %>
                                     	<% } %>
                                     </tbody>
                                 </table>
                                 <script>
-							        function Report(pno){
+							        function Report(reportNo,pno){
 							                $.ajax({
 							                	url:"report.ch",
-							                	data:{pno:pno},
+							                	data:{reportNo:reportNo,
+							                		  pno:pno},
 							                	success:function(result){
+							                		if(result > 0){
 							                			alert("신고처리되었습니다");
+							                			location.reload();
+							                		}
 							                	},error:function(result){
 							                		console.log("ajax 통신 실패");
 							                	}
@@ -105,7 +101,7 @@
 				                    <%if(i == currentPage){ %>
 					                     <button disabled><%=i%></button>
 				                	<%}else{%>
-						            <button onclick="location.href='<%= contextPath %>/report.in?cpage=' + <%= i %>;"><%= i %></button>
+						            <button onclick="location.href='<%= contextPath %>/report.in?cpage=' + <%= i %>+'&bsearch=<%= request.getParameter("bsearch") %>';"><%= i %></button>
 						            <% } %>
 						            <% } %>
 						            <% if(endPage != maxPage) { %>

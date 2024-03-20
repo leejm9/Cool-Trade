@@ -211,11 +211,12 @@
 			            			                 '</div>';
 			            			    }
 		            			        $(".content-container").html(value);
+			            			    $("#alarmCount").html(list.length);
 		            			    }else{
 		            			    	$(".content-container").html('받은 알림이 없습니다');
+		            			    	$("#alarmCount").remove();
 		            			    }
 		            			   
-		            			    $("#alarmCount").html(list.length);
 		            			},error:function(){
 		            				console.log("ajax 통신 실패");
 		            			}
@@ -377,9 +378,21 @@
 					</div>
 					<div id="chatSell-ds" class="flex-ds">
 						<div id="chatContainer-ds">
-							<a href="<%= contextPath %>/chatRoom.list" id="chat-ds"> <img src="resources/images/말풍선.png"
+							<% if(loginUser == null) {%>
+								<a id="chat-ds" onclick="chatLogin();"> <img src="resources/images/말풍선.png"
 								alt="말풍선 이미지" /> 채팅하기
-							</a>
+								</a>
+								<script>
+									function chatLogin(){
+										alert("로그인 후 채팅이 가능합니다.");
+										location.href="<%= contextPath %>/loginForm.me";
+									}
+								</script>
+							<% }else{ %>
+								<a href="<%= contextPath %>/chatRoom.list" id="chat-ds"> <img src="resources/images/말풍선.png"
+									alt="말풍선 이미지" /> 채팅하기
+								</a>
+							<% } %>
 						</div>
 						<div id="sellContainer-ds">
 							<% if(loginUser == null) { %>

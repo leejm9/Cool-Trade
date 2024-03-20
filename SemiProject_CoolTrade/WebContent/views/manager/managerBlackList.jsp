@@ -89,9 +89,9 @@
 		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getCaution() %></td>
 		                                            <% if(m.getUserStatus().equals("Y")){ %>
-		                                            <td align="center"><button onclick="btn1(<%= m.getUserNo() %>);" style="background-color: rgb(203, 22, 22); border: none;">추방</button></td>
+		                                            <td align="center"><button onclick="btn1(<%= m.getUserNo() %>);" class="btn btn-danger">추방</button></td>
 		                                       		<% }else if(m.getUserStatus().equals("N")) { %>
-		                                       		<td align="center"><button onclick="btn2(<%= m.getUserNo() %>);" style="background-color: rgb(86, 190, 234); border: none;">복구</button></td>
+		                                       		<td align="center"><button onclick="btn2(<%= m.getUserNo() %>);" class="btn btn-primary">복구</button></td>
 		                                       		<% } %>
 		                                        </tr>
                                         	<% } %>
@@ -104,9 +104,6 @@
 							                	url:"delete.me",
 							                	data:{uno:userNo},
 							                	success:function(result){
-							                		$(this).css("backgroundColor","rgb(86, 190, 234)");
-									                $(this).html("복구");
-									                $(this).attr("onclick","btn2(" +userNo + ");");
 									                location.reload();
 							                	},error:function(){
 							                		console.log("ajax 통신 실패");
@@ -118,9 +115,6 @@
 							                	url:"recovery.me",
 							                	data:{uno:userNo},
 							                	success:function(result){
-							                		$(this).css("backgroundColor","rgb(203, 22, 22)");
-							                		$(this).html("추방") ;
-							                		$(this).attr("onclick","btn1(" +userNo + ");");
 							                		location.reload();
 							                	},error:function(){
 							                		console.log("ajax 통신 실패");

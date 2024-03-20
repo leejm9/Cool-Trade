@@ -194,7 +194,7 @@
    <entry key="selectBlackListCount">
       SELECT COUNT(*) count
         FROM MEMBER
-       WHERE CAUTION >= 3
+       WHERE USER_LEVEL = 'B'
    </entry>
    
    <entry key="selectBlackList">
@@ -259,8 +259,11 @@
    
    <entry key="recoveryMember">
       UPDATE MEMBER
-         SET USER_STATUS = 'Y'
-       WHERE USER_NO = ?
+	   SET USER_STATUS = 'Y',
+         	CAUTION = 2,
+	       USER_LEVEL = 'U',
+	       ONDO = 40
+	 WHERE USER_NO = ?
    </entry>
    
    <entry key="selectEnrollMonth">
@@ -701,20 +704,6 @@
 		SELECT
 		COUNT(*) count
 		FROM PRODUCT
-	</entry>
-
-	
-
-	<entry key="deleteMember">
-		UPDATE MEMBER
-		   SET USER_STATUS = 'N'
-		 WHERE USER_NO = ?
-	</entry>
-
-	<entry key="recoveryMember">
-		UPDATE MEMBER
-		   SET USER_STATUS = 'Y'
-		 WHERE USER_NO = ?
 	</entry>
 
 	<entry key="selectEnrollMonth">
@@ -1409,6 +1398,18 @@
 		UPDATE MEMBER
 		   SET CAUTION = CAUTION + 1
 		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="checkUserCaution">
+		SELECT CAUTION
+		  FROM MEMBER
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="updateLevelToBlack">
+	 	UPDATE MEMBER
+	 	   SET USER_LEVEL = 'B'
+	 	 WHERE USER_NO = ?
 	</entry>
 	
 </properties>

@@ -75,4 +75,19 @@ public class ReportService {
 		close(conn);
 		return r;
 	}
+	
+	public int deleteReport(int reportNo) {
+		Connection conn = getConnection();
+		
+		int result = new ReportDao().deleteReport(conn, reportNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
+	
 }

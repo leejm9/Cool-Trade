@@ -192,13 +192,11 @@
 			
 			$("#chkAllone").change(function(){
 				if(checkbox.is(':checked')){
-					$("#popularWordList input").prop("checked",true);
+					$(".tac").filter(function() {return $(this).css("display") !== "none";}).find(":input").prop("checked", true);
 				}else{
-					$("#popularWordList input").prop("checked",false);
+					$(".tac").children().children().prop("checked",false);
 				}
 			})
-			
-			
 		}
 		
 		function fn_displayBlockCheckAll2(checkbox){
@@ -207,9 +205,12 @@
 			
 			$("#chkAlltwo").change(function(){
 				if(checkbox.is(':checked')){
-					$("#usrPopTable input").prop("checked",true);
+					if($("#usrPopTable input").css("display") != "none"){
+						$("#usrPopTable input").prop("checked",true);
+					}
 				}else{
-					$("#usrPopTable input").prop("checked",false);
+						$("#usrPopTable input").prop("checked",false);
+					
 				}
 			})
 			

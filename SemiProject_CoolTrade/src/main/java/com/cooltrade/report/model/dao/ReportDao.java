@@ -170,7 +170,7 @@ public class ReportDao {
 	
 	public int updateReport(Connection conn,int pno) {
 		int result = 0;
-		
+		System.out.println("오냐ㅑㅑ");
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("updateReport");
@@ -222,5 +222,25 @@ public class ReportDao {
 		return r;
 		
 	}
+	
+	public int deleteReport(Connection conn, int reportNo) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("deleteReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reportNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 
 }

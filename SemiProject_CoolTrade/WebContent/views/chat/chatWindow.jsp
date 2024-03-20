@@ -245,10 +245,6 @@ String user = (String)request.getAttribute("userId"); String seller =
     <input type="hidden" id="user" value="<%= user %>" />
     <input type="hidden" id="seller" value="<%= seller %>" />
 
-    <button onclick="location.href='<%= contextPath %>/apipage.in'">
-      택배배송?
-    </button>
-
     <script>
       $(function () {
         getMessage();
