@@ -38,59 +38,23 @@ public class AjaxUploadProfileImageController extends HttpServlet {
    *      response)
    */
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    HttpSession session = request.getSession();
+    /*HttpSession session = request.getSession();
     Member m = (Member) session.getAttribute("loginUser");
-    int uno = m.getUserNo();
-	request.setCharacterEncoding("UTF-8");
-	
-	if(ServletFileUpload.isMultipartContent(request)) {
-		// 파일 용량 제한
-		int maxSize = 10*1024*1024;
-		
-		// 저장시킬 폴더 경로
-		String savePath = request.getSession().getServletContext().getRealPath("/resources/images_upfiles/");
-		
-		// 전달 파일 업로드
-		MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-		
-		// 유저의 프로필이미지 이미지번호 조회
-		int select = new MemberService().selectProfileImg(uno);
-		int result = 0;
-		
-		if(select == 0) {
-			// 프로필이미지 이미지번호가 0일 경우 => 프로필이미지가 없다
-			if(multiRequest.getOriginalFileName("image") != null) {
-				System.out.println("프로필이미지 없다!");
-				Images img = new Images();
-				img.setOriginName(multiRequest.getOriginalFileName("image"));
-				img.setChangeName(multiRequest.getFilesystemName("image"));
-				img.setImgPath("resources/images_upfiles/");
-				img.setImgLevel(1);
-				
-				result = new MemberService().insertMemberProfileImg(uno, img);
-			}
-		} else {
-			if(multiRequest.getOriginalFileName("image") != null) {
-				System.out.println("프로필이미지 있었다!");
-				Images img = new Images();
-				img.setOriginName(multiRequest.getOriginalFileName("image"));
-				img.setChangeName(multiRequest.getFilesystemName("image"));
-				img.setImgPath("resources/images_upfiles/");
-				img.setImgNo(select);
-				img.setImgLevel(1);
-				
-				result = new MemberService().updateMemberProfileImg(uno, img);
-			}
-		}
-		
-		String titleImg = new MemberService().getProfileImg(select);
-		
-		if(result > 0) {
-			response.getWriter().print(titleImg);
-		}
-		
-	/*
-	  // 업로드된 파일에 대한 처리
+    int userNo = m.getUserNo();
+    if (ServletFileUpload.isMultipartContent(request)) {
+      // 파일 용량 제한
+      int maxSize = 10 * 1024 * 1024;
+
+      // 저장시킬 폴더 경로
+      String savePath = "/resources/images_upfiles/";
+      File file = new File(savePath);
+      if (file.exists() == false) {
+        file.mkdirs();
+      }
+
+      // 전달 파일 업로드
+      MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8");
+      // 업로드된 파일에 대한 처리
       @SuppressWarnings("rawtypes")
       Enumeration files = multiRequest.getFileNames();
       while (files.hasMoreElements()) {
@@ -100,6 +64,10 @@ public class AjaxUploadProfileImageController extends HttpServlet {
           File uploadedFile = new File(savePath, uploadedFileName);
           String newFileName = "" + userNo; // 새 파일명 지정
           File newFile = new File(savePath, newFileName);
+         
+          if(newFile.exists()) { // 두줄  
+              newFile.delete();  // 추가
+            }
           
           // 파일명 변경
           if (uploadedFile.renameTo(newFile)) {
