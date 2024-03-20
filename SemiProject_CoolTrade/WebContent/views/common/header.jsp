@@ -13,8 +13,8 @@
 session.getAttribute("alertMsg"); 
 if (session.getAttribute("headerCo") == null){
 	headerCo = 0; } else { headerCo = (int) session.getAttribute("headerCo"); }
-ArrayList<RecentProducts>
-  rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist"); %>
+ArrayList<RecentProducts> rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist"); 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,7 +116,7 @@ ArrayList<RecentProducts>
 	text-align: right;
 }
 
-.close {
+.close-jm {
 	color: #000;
 	font-size: 20px;
 	font-weight: bold;
@@ -125,7 +125,7 @@ ArrayList<RecentProducts>
 	height: 10%;
 }
 
-.close:hover {
+.close-jm:hover {
 	color: #999;
 	cursor: pointer;
 }
@@ -176,7 +176,7 @@ ArrayList<RecentProducts>
 						<div id="notification" class="notification hidden"
 							style="border: 1px solid #ddd">
 							<div class="close-container">
-								<span class="close" onclick="closeNotification()"
+								<span class="close-jm" onclick="closeNotification()"
 									style="line-height: 20px">×</span>
 							</div>
 							<div class="content-container"></div>
@@ -607,5 +607,4 @@ ArrayList<RecentProducts>
 	</div>
 </body>
 </html>
-</RecentProducts>
-</RecentProducts>
+
