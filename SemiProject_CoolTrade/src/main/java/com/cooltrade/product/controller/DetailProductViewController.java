@@ -98,9 +98,9 @@ public class DetailProductViewController extends HttpServlet {
 			session.setAttribute("rlist", rlist);
 			
 			BankAccount bankList = new BankAccount();
-			String nickname = p.getSellerNo();
-			if(nickname != null) {
-				bankList = new ProductService().getBankList(nickname);
+			int uno = p.getSellerNum();
+			if(uno > 0) {
+				bankList = new ProductService().getBankList(uno);
 				request.setAttribute("bankList", bankList);
 			}
 

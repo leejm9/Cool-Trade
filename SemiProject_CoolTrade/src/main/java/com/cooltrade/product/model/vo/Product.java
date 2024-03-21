@@ -26,6 +26,8 @@ public class Product {
 	private String titleImg;
 	private String strPrice;
 	private String categoryName;
+	private String nickName;
+	private int sellerNum;
 	
 	public Product() {}
 	
@@ -325,6 +327,22 @@ public class Product {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public int getSellerNum() {
+		return sellerNum;
+	}
+
+	public void setSellerNum(int sellerNum) {
+		this.sellerNum = sellerNum;
 	}
 
 	@Override

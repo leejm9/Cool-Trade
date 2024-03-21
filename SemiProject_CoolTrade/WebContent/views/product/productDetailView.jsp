@@ -9,6 +9,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	int likeCount = (int)request.getAttribute("likeCount");
 	ArrayList<DeliveryAddress> addressList = (ArrayList<DeliveryAddress>)request.getAttribute("addressList");
 	BankAccount bankList = (BankAccount)request.getAttribute("bankList");
+	// 구매번호, 판매자번호, 판매자거래은행, 판매자계좌번호, 판매자닉네임
 %>
     <!DOCTYPE html>
     <html>
@@ -18,6 +19,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </head>
       <body>
         <%@ include file="../common/header.jsp" %>
+        <% int uno = loginUser.getUserNo(); %>
 
         <div id="content-ds">
           <div id="category_path-ds">
@@ -193,7 +195,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			            <form action="#" method="post">
 			            <input type="hidden" value="<%= p.getProductNo() %>">
 			            <input type="hidden" value="<%= p.getProductName() %>">
-			            <input type="hidden" value="<%= p.getSellerNo() %>">
+			            <input type="hidden" value="<%= p.getNickName() %>">
 							<div>
 								<% for(int i=0; i<addressList.size(); i++) { %>
 								<div class="flex-ds" style="padding: 10px 0px; align-items: center;">
@@ -237,12 +239,13 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			<!-- Modal -->
 			<div class="modal fade" id="myModal-send">
 			    <div class="modal-dialog">
-		            <form action="#" method="post">
+		            <form action="<%= contextPath %>/complete.tr" method="post">
 			        <div class="modal-content">
 			            <!-- Modal body -->
 			            <div class="modal-body">
 			            <input type="hidden" name="pno" value="<%= p.getProductNo() %>">
-			            <input type="hidden" value="<%= p.getSellerNo() %>">
+			            <input type="hidden" name="sellerNo" value="<%= p.getSellerNum() %>">
+			            <input type="hidden" name="buyerNo" value="<%= uno %>">
 							<div>
 								<div>
 									<h3>판매자에게 거래금액을 입금해주세요</h3>
@@ -257,7 +260,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			            <!-- Modal footer -->
 			            <div class="modal-footer">
 			            	<div>입금 후 거래완료 버튼을 눌러야 거래가 완료돼요</div>
-			                <button type="submit" class="btn btn-danger" data-dismiss="modal">거래완료</button>
+			                <button class="btn btn-danger">거래완료</button>
 			            </div>
 			        </div>
 					</form>
@@ -445,7 +448,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   />
                 </div>
                 <div>
-                  <h5><%= p.getSellerNo() %></h5>
+                  <h5><%= p.getNickName() %></h5>
                   <div
                     class="flex-ds"
                     style="justify-content: center; flex-direction: column"

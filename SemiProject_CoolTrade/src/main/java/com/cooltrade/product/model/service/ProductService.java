@@ -523,12 +523,30 @@ public class ProductService {
 		return userNo;
 	}
 	
-	public BankAccount getBankList(String nickname) {
+	public BankAccount getBankList(int uno) {
 		Connection conn = getConnection();
-		BankAccount bankList = new ProductDao().getBankList(conn, nickname);
+		BankAccount bankList = new ProductDao().getBankList(conn, uno);
 		
 		close(conn);
 		return bankList;
+	}
+	
+	public int insertTrade(int pno, int buyerNo) {
+		Connection conn = getConnection();
+		int result1 = new ProductDao().insertTrade(conn, pno, buyerNo);
+		int result2 = 0;
+		
+		if(result1 > 0) {
+			result2 = new ProductDao().updatePoStatus(conn, pno);
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2;
 	}
 	
 }

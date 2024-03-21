@@ -328,7 +328,8 @@ public class ProductDao {
          
          if(rset.next()) {
             p.setProductNo(rset.getInt("product_no"));
-            p.setSellerNo(rset.getString("nickname"));
+            p.setSellerNum(rset.getInt("seller_no"));
+            p.setNickName(rset.getString("nickname"));
             p.setCategoryNo(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
             p.setPrice(rset.getInt("price"));
@@ -1489,7 +1490,7 @@ public class ProductDao {
 		
 	}
 	
-	public BankAccount getBankList(Connection conn, String nickname) {
+	public BankAccount getBankList(Connection conn, int uno) {
 		BankAccount bankList = new BankAccount();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1497,7 +1498,7 @@ public class ProductDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, nickname);
+			pstmt.setInt(1, uno);
 			
 			rset = pstmt.executeQuery();
 			
@@ -1519,6 +1520,47 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return bankList;
+	}
+	
+	public int insertTrade(Connection conn, int pno, int buyerNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertTrade");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			pstmt.setInt(2, buyerNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updatePoStatus(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updatePoStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }

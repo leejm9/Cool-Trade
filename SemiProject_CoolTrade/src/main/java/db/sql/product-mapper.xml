@@ -95,8 +95,8 @@ SELECT
 	       	     ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
      	         FROM PRODUCT 
      	        WHERE UPLOAD_TYPE = 'Y'
-     	          AND PRODUCT_NAME LIKE '%' || ? || '%'
-     	           OR PRODUCT_DESC LIKE '%' || ? || '%'
+     	          AND (PRODUCT_NAME LIKE '%' || ? || '%'
+     	           OR PRODUCT_DESC LIKE '%' || ? || '%')
 	</entry> 
 	
 	<entry key="searchCatList">
@@ -157,7 +157,8 @@ SELECT
 	
 	<entry key="selectProductDetail">
 		SELECT
-			   PRODUCT_NO 
+			   PRODUCT_NO
+			 , SELLER_NO 
 		     , NICKNAME
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
@@ -721,7 +722,27 @@ SELECT
 		     , USER_NAME
 		  FROM BANK_ACCOUNT
 		  JOIN MEMBER M USING (USER_NO)
-		 WHERE NICKNAME = ?
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="insertTrade">
+		INSERT
+		  INTO TRADE
+		VALUES
+		  (
+		    SEQ_TRADE.NEXTVAL
+		  , ?
+		  , ?
+		  , DEFAULT
+		  , SYSDATE
+		  , DEFAULT
+		  )
+	</entry>
+	
+	<entry key="updatePoStatus">
+		UPDATE PRODUCT
+		   SET UPLOAD_TYPE = 'P'
+		 WHERE PRODUCT_NO = ?
 	</entry>
 	
 </properties>
