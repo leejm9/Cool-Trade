@@ -197,11 +197,11 @@ String user = (String)request.getAttribute("userId"); String seller =
     <br /><br /><br /><br />
     <br /><br /><br /><br />
     <br /><br />
-    <h2>
-      <%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%=
-      (String)request.getAttribute("userId") %> 판매자:<%=
-      (String)request.getAttribute("seller") %> )
-    </h2>
+<!--     <h2> -->
+<%--       <%= (int)request.getAttribute("chatRoomNo") %>번채팅방(구매자:<%= --%>
+<%--       (String)request.getAttribute("userId") %> 판매자:<%= --%>
+<%--       (String)request.getAttribute("seller") %> ) --%>
+<!--     </h2> -->
     <div class="outer">
       <div class="wrap-outer">
         <div class="wrap-header">
@@ -260,9 +260,6 @@ String user = (String)request.getAttribute("userId"); String seller =
 	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
 	<input type="hidden" id="user" value="<%= user %>">
 	<input type="hidden" id="seller" value="<%= seller %>">
-	
-	<button onclick="location.href='<%= contextPath %>/apipage.in'">택배배송?</button>
-	
 	
     <script>
       $(function () {

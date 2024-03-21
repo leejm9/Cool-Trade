@@ -222,7 +222,7 @@
 											} ],
 											yAxes : [ {
 												ticks : {
-													maxTicksLimit : 5,
+													maxTicksLimit : 4,
 													padding : 10,
 													callback : function(
 															value,
