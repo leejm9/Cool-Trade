@@ -189,6 +189,17 @@ String user = (String)request.getAttribute("userId"); String seller =
       .read-status {
         padding: 0px 5px 0px 0px;
       }
+      .ch2 button:hover{
+		cursor: not-allowed;
+      }
+      .ch1 button{
+      border : none;
+      padding: 2px;
+      }
+      .ch1 button:hover{
+      color: #04b4fc;
+      background-color: gray;
+      }
     </style>
   </head>
   <body>
@@ -267,7 +278,7 @@ String user = (String)request.getAttribute("userId"); String seller =
     <script>
       $(function () {
         getMessage();
-        setInterval(getMessage, 1000);
+        setInterval(getMessage, 100000);
       });
 
       $(document).ready(function () {
@@ -278,6 +289,51 @@ String user = (String)request.getAttribute("userId"); String seller =
         });
       });
 
+      $(document).on('click', '.ch2 #tradeComplete', function() {
+    	  console.log($("#pno").val());
+    	    $.ajax({
+    	    	url : "ajaxtrade.cancel",
+    	    	type : "post",
+    	    	data : {
+    	    		pno : $("#pno").val(),
+    	    		originalString : $(this).parent().html()	
+    	    		},
+    	    	success : function(response){
+    	    		console.log(response);
+    	    		disableButtons(1);
+    	    	},
+    	    	error : function (){
+    	    		console.log("error");
+    	    	}
+    	    });
+    	});
+      
+      $(document).on('click', '.ch1 #tradeComplete', function() {
+    	  console.log($("#pno").val());
+    	    $.ajax({
+    	    	url : "ajaxtrade.complete",
+    	    	type : "post",
+    	    	data : {
+    	    		pno : $("#pno").val(),
+    	    		originalString : $(this).parent().html()	
+    	    		},
+    	    	success : function(response){
+    	    		console.log(response);
+    	    		disableButtons(1);
+    	    	},
+    	    	error : function (){
+    	    		console.log("error");
+    	    	}
+    	    });
+    	});
+      function disableButtons(data){
+    	  if(data === 1){
+    	  alert("거래가 완료되었습니다.");
+    	  }elseif (data === 2){
+    	  alert("거래가 취소되었습니다.");
+    	  }
+    	  location.reload();
+      }
       function getMessage() {
         var userId = $("#loginUser").val();
         var user = $("#user").val(); // 구매자

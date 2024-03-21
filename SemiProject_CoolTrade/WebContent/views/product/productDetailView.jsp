@@ -9,6 +9,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	int likeCount = (int)request.getAttribute("likeCount");
 	ArrayList<DeliveryAddress> addressList = (ArrayList<DeliveryAddress>)request.getAttribute("addressList");
 	BankAccount bankList = (BankAccount)request.getAttribute("bankList");
+	int uno = 0;
 	// 구매번호, 판매자번호, 판매자거래은행, 판매자계좌번호, 판매자닉네임
 %>
     <!DOCTYPE html>
@@ -19,7 +20,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </head>
       <body>
         <%@ include file="../common/header.jsp" %>
-        <% int uno = loginUser.getUserNo(); %>
+
 
         <div id="content-ds">
           <div id="category_path-ds">
@@ -165,6 +166,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                 </button>
                 <%} %>
                 <%if(loginUser!=null && loginUser.getUserId().equals(p.getSellerNo())) {%>
+                
+        		<% uno = loginUser.getUserNo(); %>
                 <button
                   class="btn btn-lg btn-warning"
                   onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"
@@ -172,6 +175,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   💬 나와의 채팅
                 </button>
                 <%}else if (loginUser!=null && !loginUser.getUserId().equals(p.getSellerNo())){ %>
+                <% uno = loginUser.getUserNo(); %>
                 <button
                   class="btn btn-lg btn-warning"
                   onclick="location.href='<%= request.getContextPath() %>/chatroom.in?pno=<%= p.getSellerNo()%>&userId=<%=loginUser.getUserId() %>'"

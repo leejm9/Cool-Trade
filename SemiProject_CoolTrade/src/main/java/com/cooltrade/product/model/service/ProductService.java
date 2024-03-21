@@ -548,5 +548,25 @@ public class ProductService {
 		close(conn);
 		return result1 * result2;
 	}
+	public int endTrade(int pno) {
+		Connection conn = getConnection();
+		int result = new ProductDao().endTrade(conn,pno);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 	
+	public int rollbackTrade(int pno) {
+		Connection conn = getConnection();
+		int result = new ProductDao().rollbackTrade(conn,pno);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 }

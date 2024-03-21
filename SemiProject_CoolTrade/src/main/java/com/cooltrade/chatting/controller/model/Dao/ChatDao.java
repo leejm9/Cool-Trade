@@ -327,7 +327,25 @@ public class ChatDao {
 			close(pstmt);
 		}
 		return list;
-		
-		
+	}
+	
+	public int cutOffButton(Connection conn, String newString) {
+		int result = 0;
+		PreparedStatement pstmt = null; 
+		String sql = prop.getProperty("cutOffButton");
+		System.out.println(sql);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, newString);
+			pstmt.setString(2, newString);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

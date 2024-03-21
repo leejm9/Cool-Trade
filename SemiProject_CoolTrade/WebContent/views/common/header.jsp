@@ -144,7 +144,8 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
         <script>
           alert("<%=alertMsg%>");
         </script>
-        <% session.removeAttribute("alertMsg");%> <%} %>
+        <% session.removeAttribute("alertMsg");%>
+         <%} %>
         <div class="wrap-ds">
           <!--Header 시작!-->
           <div id="header1-ds" class="flex-ds">

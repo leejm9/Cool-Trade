@@ -163,4 +163,10 @@
 		     ) C
 		WHERE C.RNK = 1
 	</entry>
+	
+	<entry key="cutOffButton">
+		UPDATE MESSAGE
+		   SET MESSAGE = ?
+		 WHERE MESSAGE LIKE ? || '%'
+	</entry>
 </properties>

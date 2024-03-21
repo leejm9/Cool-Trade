@@ -111,4 +111,20 @@ public class ChatService {
 		close(conn);
 		return list;
 	}
+	
+	public int cutOffButton(String newString) {
+		Connection conn = getConnection();
+		
+		int result = new ChatDao().cutOffButton(conn, newString);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result;
+	}
 }

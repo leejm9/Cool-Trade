@@ -61,7 +61,6 @@ public class AjaxLikeProductInsertController extends HttpServlet {
 				headerCo = new MemberService().likePoCount(uno);
 				request.getSession().removeAttribute("headerCo");
 				request.getSession().setAttribute("headerCo", headerCo);
-				System.out.println(headerCo);
 				response.getWriter().print(result);
 			}
 		}
