@@ -27,7 +27,7 @@
 .container {
    width: 350px; /* 컨테이너의 너비 */
    margin: 0 auto;
-   margin-top: 200px;
+   margin-top: 100px;
 }
 
 .form-group {
@@ -171,7 +171,8 @@ button {
   <form action="<%=contextPath %>/signup.me" method="post">
   
     <div class="form-group">
-
+		<h1 style="text-align: center;">회원가입</h1>
+      <h3 style="text-align: center;">회원정보를 정확히 입력해 주세요</h3>
       <div class="input-group">
       <input type="text" id="userId" name="userId" placeholder="아이디" required>
       <button id="checkUserIdBtn" type="button" onclick="btnCheckUserId()">중복확인</button>
@@ -225,41 +226,41 @@ button {
  <div class="terms-container">
 
 
+<!-- 만14세 이상 체크박스 그룹 -->
+<div class="checkbox-group">
+  <div class="checkbox-area">
+     <input type="checkbox" id="personalInfo2" name="telecomInfo"
+        class="sub-agree"> <label for="personalInfo2">만 14세 이상</label>
+  </div>
+  
+</div>
+ <details id="telecomInfoDetails">
+  <summary></summary>
+ <p style="font-size: 12px;">통신사 이용약관 내용... Lorem ipsum dolor
+   sit amet consectetur, adipisicing elit. Molestiae reprehenderit
+   veritatis quas, in nihil culpa eligendi ratione assumenda fugiat
+   omnis ab deleniti. Ab eos sint nostrum ullam libero odit
+    reiciendis.</p>
+ </details>
+
  <!-- 개인정보이용 체크박스 그룹 -->
  <div class="checkbox-group">
   <div class="checkbox-area">
      <input type="checkbox" id="personalInfo1" name="personalInfo"
-        class="sub-agree"> <label for="personalInfo1">개인정보이용</label>
+        class="sub-agree"> <label for="personalInfo1">개인정보이용약관</label>
   </div>
   <button type="button" class="view-content-button"
      onclick="toggleDetail('personalInfoDetails1')">내용보기 ⅴ</button>
 </div>
 <details id="personalInfoDetails1">
   <summary></summary>
-  <p style="font-size: 12px;">개인정보 수집 이용 동의(필수)
+  <p style="font-size: 12px;">쿨거래 이용약관(필수)
 쿨거래는 이용자의 권익 및 개인정보 보호에 만전을 기하고자 관계법령의 규정을 반영하여 쿨거래에 회원가입을 신청하시는 이용자분들께 
 아래와 같이 개인정보의 수집 및 이용 목적, 개인정보의 항목, 개인정보의 보유 및 이용기간을 안내해 드립니다.</p>
 </details>
 
 
-<!-- 통신사 이용약관 체크박스 그룹 -->
-<div class="checkbox-group">
-  <div class="checkbox-area">
-     <input type="checkbox" id="personalInfo2" name="telecomInfo"
-        class="sub-agree"> <label for="personalInfo2">통신사
-        이용약관</label>
-  </div>
-  <button type="button" class="view-content-button"
-     onclick="toggleDetail('telecomInfoDetails')">내용보기 ⅴ</button>
-</div>
-<details id="telecomInfoDetails">
-  <summary></summary>
-  <p style="font-size: 12px;">통신사 이용약관 내용... Lorem ipsum dolor
-     sit amet consectetur, adipisicing elit. Molestiae reprehenderit
-     veritatis quas, in nihil culpa eligendi ratione assumenda fugiat
-     omnis ab deleniti. Ab eos sint nostrum ullam libero odit
-     reiciendis.</p>
-</details>
+
 
 <!-- 쿨거래 개인정보수집 체크박스 그룹 -->
 <div class="checkbox-group">
@@ -273,9 +274,11 @@ button {
 </div>
 <details id="tradeInfoDetails">
   <summary></summary>
-  <p style="font-size: 12px;">개인정보 수집 이용 동의(필수)
-쿨거래는 이용자의 권익 및 개인정보 보호에 만전을 기하고자 관계법령의 규정을 반영하여 쿨거래에 회원가입을 신청하시는 이용자분들께 
-아래와 같이 개인정보의 수집 및 이용 목적, 개인정보의 항목, 개인정보의 보유 및 이용기간을 안내해 드립니다.</p>
+  <p style="font-size: 12px;">개인정보 수집 이용 동의(필수)<br>
+수집하는 개인정보 항목<br>이름, 아이디, 비밀번호, 생년월일,휴대폰번호, 주소
+수집 및 이용목적<br>회원제 가입 서비스 제공, 계약이행을 위한 연락, 민원 및 고충 처리<br>
+보유 및 이용기간회원탈퇴까지
+</p>
 </details>
 
   </div>
