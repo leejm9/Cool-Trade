@@ -36,11 +36,8 @@ public class AjaxGetMessageController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String pno = request.getParameter("pno");
 		int chatRoomNo = new ChatService().getChatRoomNo(userId,pno); // 채팅방 번호 가져와서
-		System.out.println("1오냐");
 		int readCheck = new ChatService().updateReadCheck(loginUser,chatRoomNo);
-		System.out.println("2오냐");
 		ArrayList<Chat> list = new ChatService().getMessage(chatRoomNo);
-		System.out.println("3오냐");
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(list,response.getWriter());

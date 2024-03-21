@@ -214,20 +214,20 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 									<div>
 										<div class="flex-ds">
 											<div>배송지명</div>
-											<div><%= addressList.get(i).getTitle() %></div>
+											<div>: <%= addressList.get(i).getTitle() %></div>
 										</div>
 										<div class="flex-ds">
-											<div>받는사람</div>
-											<div><%= addressList.get(i).getName() %></div>
+											<div>받는사람 </div>
+											<div>: <%= addressList.get(i).getName() %></div>
 										</div>
-										<div class="flex-ds">
-											<div>주소</div>
+										<div>
+											<div>주소 : </div>
 											<div><%= addressList.get(i).getAddress() %></div>
 											<div><%= addressList.get(i).getDetail() %></div>
 										</div>
 										<div class="flex-ds">
 											<div>핸드폰번호</div>
-											<div><%= addressList.get(i).getPhone() %></div>
+											<div>: <%= addressList.get(i).getPhone() %></div>
 										</div>
 									</div>
 								</div>
