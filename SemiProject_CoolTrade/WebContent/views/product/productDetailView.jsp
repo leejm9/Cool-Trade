@@ -1,3 +1,4 @@
+<%@page import="com.cooltrade.member.model.vo.BankAccount"%>
 <%@page import="com.cooltrade.member.model.vo.DeliveryAddress"%>
 <%@page import="com.cooltrade.product.model.vo.Images"%> <%@ page
 language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
@@ -7,6 +8,8 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	double ondo = p.getOndo(); 
 	int likeCount = (int)request.getAttribute("likeCount");
 	ArrayList<DeliveryAddress> addressList = (ArrayList<DeliveryAddress>)request.getAttribute("addressList");
+	BankAccount bankList = (BankAccount)request.getAttribute("bankList");
+	// 구매번호, 판매자번호, 판매자거래은행, 판매자계좌번호, 판매자닉네임
 %>
     <!DOCTYPE html>
     <html>
@@ -16,6 +19,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
       </head>
       <body>
         <%@ include file="../common/header.jsp" %>
+        <% int uno = loginUser.getUserNo(); %>
 
         <div id="content-ds">
           <div id="category_path-ds">
@@ -204,36 +208,33 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			            <form action="#" method="post">
 			            <input type="hidden" value="<%= p.getProductNo() %>">
 			            <input type="hidden" value="<%= p.getProductName() %>">
-			            <input type="hidden" value="<%= p.getSellerNo() %>">
-							<div>
-								<% for(int i=0; i<addressList.size(); i++) { %>
-								<div class="flex-ds" style="padding: 10px 0px; align-items: center;">
-									<div style="padding: 0px 15px;">
-										<input type="radio" name="address" value="<%= addressList.get(i).getDeliveryAddressNo() %>">
-									</div>
-									<div>
-										<div class="flex-ds">
-											<div>배송지명</div>
-											<div>: <%= addressList.get(i).getTitle() %></div>
-										</div>
-										<div class="flex-ds">
-											<div>받는사람 </div>
-											<div>: <%= addressList.get(i).getName() %></div>
-										</div>
-										<div>
-											<div>주소 : </div>
-											<div><%= addressList.get(i).getAddress() %></div>
-											<div><%= addressList.get(i).getDetail() %></div>
-										</div>
-										<div class="flex-ds">
-											<div>핸드폰번호</div>
-											<div>: <%= addressList.get(i).getPhone() %></div>
-										</div>
-									</div>
-								</div>
-								<% } %>
-							</div>
-						</form>
+			            <input type="hidden" value="<%= p.getNickName() %>">
+                  <div>
+                    <% for(int i=0; i<addressList.size(); i++) { %>
+                    <div class="flex-ds" style="padding: 10px 0px; align-items: center;">
+                      <div style="padding: 0px 15px;">
+                        <input type="radio" name="address" id="addressRadio<%= i %>" value="<%= addressList.get(i).getDeliveryAddressNo() %>">
+                      </div>
+                      <div>
+                        <label for="addressRadio<%= i %>">
+                        <div class="flex-ds">
+                          <div><%= addressList.get(i).getTitle() %></div>
+                        </div>
+                        <div class="flex-ds">
+                          <div><%= addressList.get(i).getName() %></div>
+                        </div>
+                        <div>
+                          <div><%= addressList.get(i).getAddress() %></div>,&nbsp;<div><%= addressList.get(i).getDetail() %></div>
+                        </div>
+                        <div class="flex-ds">
+                          <div><%= addressList.get(i).getPhone() %></div>
+                        </div>
+                        </label>
+                      </div>
+                    </div>
+                    <% } %>
+                  </div>
+						      </form>
 			            </div>
 			            <div class="modal-footer">
 			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">전달</button>
@@ -254,33 +255,31 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 			<!-- Modal -->
 			<div class="modal fade" id="myModal-send">
 			    <div class="modal-dialog">
+		            <form action="<%= contextPath %>/complete.tr" method="post">
 			        <div class="modal-content">
-
 			            <!-- Modal body -->
 			            <div class="modal-body">
-			            <form action="#" method="post">
-			            <input type="hidden" value="<%= p.getProductNo() %>">
-			            <input type="hidden" value="<%= p.getProductName() %>">
-			            <input type="hidden" value="<%= p.getSellerNo() %>">
+			            <input type="hidden" name="pno" value="<%= p.getProductNo() %>">
+			            <input type="hidden" name="sellerNo" value="<%= p.getSellerNum() %>">
+			            <input type="hidden" name="buyerNo" value="<%= uno %>">
 							<div>
 								<div>
 									<h3>판매자에게 거래금액을 입금해주세요</h3>
 								</div>
-								<div>
-									<div>판매자 계좌번호</div>
-									<div>국민은행</div>
-									<div>1111-2222-3333</div>
-									<div>12,000원</div>
+								<div class="bank-area-ds">
+									<div><%= bankList.getUserName() %></div>
+									<div><%= bankList.getBank() %>&nbsp;<%= bankList.getAccount() %></div>
+									<div><%= p.getStrPrice() %>원</div>
 								</div>
 							</div>
-						</form>
 			            </div>
 			            <!-- Modal footer -->
 			            <div class="modal-footer">
 			            	<div>입금 후 거래완료 버튼을 눌러야 거래가 완료돼요</div>
-			                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="send();">거래완료</button>
+			                <button class="btn btn-danger">거래완료</button>
 			            </div>
 			        </div>
+					</form>
 			    </div>
 			</div>
 
@@ -465,7 +464,7 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                   />
                 </div>
                 <div>
-                  <h5><%=p.getSellerNo()%></h5>
+                  <h5><%= p.getNickName() %></h5>
                   <div
                     class="flex-ds"
                     style="justify-content: center; flex-direction: column"

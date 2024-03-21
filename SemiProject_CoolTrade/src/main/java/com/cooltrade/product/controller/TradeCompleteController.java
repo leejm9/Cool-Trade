@@ -1,32 +1,25 @@
 package com.cooltrade.product.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
-
 import com.cooltrade.product.model.service.ProductService;
-import com.cooltrade.product.model.vo.Category;
-import com.cooltrade.product.model.vo.Images;
-import com.cooltrade.product.model.vo.Product;
 
 /**
- * Servlet implementation class ProductSellUpdateController
+ * Servlet implementation class TradeCompleteController
  */
-@WebServlet("/updateSellForm.po")
-public class ProductSellUpdateFormController extends HttpServlet {
+@WebServlet("/complete.tr")
+public class TradeCompleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProductSellUpdateFormController() {
+    public TradeCompleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,23 +28,22 @@ public class ProductSellUpdateFormController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		System.out.println("왜안와...?");
 
+		System.out.println("오냐?");
+		request.setCharacterEncoding("UTF-8");
+		
 		int pno = Integer.parseInt(request.getParameter("pno"));
-		ArrayList<Product> pList = new ProductService().updateSellForm(pno);
-		request.setAttribute("pList", pList);
-		//System.out.println(pList);
+		int sellerNo = Integer.parseInt(request.getParameter("sellerNo"));
+		int buyerNo = Integer.parseInt(request.getParameter("buyerNo"));
 		
-		ArrayList<Category> list = new ProductService().selectCategoryList();
-		request.setAttribute("list", list);
+		int result = new ProductService().insertTrade(pno, buyerNo);
 		
-		ArrayList<Images> imgList = new ProductService().selectImages(pno);
-		request.setAttribute("imgList", imgList);
-		
-		//System.out.println(imgList);
-		
-		request.getRequestDispatcher("views/product/productUpdateForm.jsp").forward(request, response);
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "상품을 구매했습니다!");
+			request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
+		} else {
+			request.getSession().setAttribute("alertMsg", "구매할수 없는 상품입니다.");
+		}
 		
 	}
 

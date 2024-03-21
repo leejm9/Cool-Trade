@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.member.model.vo.Member;
 import com.cooltrade.product.model.service.ProductService;
@@ -95,6 +96,13 @@ public class DetailProductViewController extends HttpServlet {
 			}
 
 			session.setAttribute("rlist", rlist);
+			
+			BankAccount bankList = new BankAccount();
+			int uno = p.getSellerNum();
+			if(uno > 0) {
+				bankList = new ProductService().getBankList(uno);
+				request.setAttribute("bankList", bankList);
+			}
 
 			request.getRequestDispatcher("views/product/productDetailView.jsp").forward(request, response);
 		}

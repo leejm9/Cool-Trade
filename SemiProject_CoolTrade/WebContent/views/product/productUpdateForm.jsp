@@ -564,6 +564,7 @@
 
 	<%@ include file = "../common/header.jsp" %>
 	<% int userNo = loginUser.getUserNo(); %>
+	<% double ondo = loginUser.getOndo(); %>
 	
 	    <input type="hidden" name="seller" value="<%= userNo %>">
 	    <input type="hidden" name="pno" value="<%= pList.get(0).getProductNo() %>">
@@ -606,18 +607,95 @@
 	
 	                                <script>
 	                                	let listSize = document.getElementById("h-input").value;
-	                                    
+
 	                                    let images = []; // 기존 이미지 배열 초기화
 	                                    
-	                                    $(document).ready(function(){
-	                                        $("#fileInput").on("change", handleImgFileSelect);
-	                                        // 기존 이미지 배열에 이미지 추가
-	                                        $(".hidden-div img").each(function() {
-	                                            images.push($(this).attr("src"));
-	                                        });
-	                                    });
+                                        // 기존 이미지 배열에 이미지 추가
+                                        
+                                        //$(".hidden-div img").each(function() {
+                                        	/*let src = $(this).attr("src");
+                                            let modifiedSrc = modifyFileName(src); // 파일명 뒤에 "123" 추가
+                                            images.push(modifiedSrc);*/
+                                        	//console.log($(this).siblings().eq(0).files);
+                                            //images.push($(this).attr("src"));
+                                        //});
 	                                    
-	                                    console.log(images);
+	                                    function getRandomNumber(min, max) {
+	                                        return Math.floor(Math.random() * (max - min + 1)) + min;
+	                                    }
+	                                    
+	                                    $(document).ready(async function(){
+	                                    	$("#fileInput").on("change", handleImgFileSelect);
+	                                        let promises = $(".hidden-div img").map(async function() {
+	                                            let src = $(this).attr("src");
+	                                            //console.log("src찍히냐?:" + src);
+	                                            let imgBlob = await fetchImageAsBlob(src);
+	                                            let randomNum = getRandomNumber(100, 999);
+	                                            let imgId = generateUniqueId();
+	                                            //return blobToFile(imgBlob, "image" + imgId + ".png", imgId);
+	                                            let imgFile = blobToFile(imgBlob, "image" + imgId + ".png", imgId); // 이미지 파일 생성
+	                                            $(this).siblings().attr("data-id", imgId); // 이미지에 imgId 데이터 속성 추가
+	                                            return imgFile;
+	                                        }).get();
+
+	                                        images = await Promise.all(promises);
+	                                        console.log("배열에 들어왔냐?");
+	                                        console.log(images);
+	                                    });
+	                                    /*
+	                                    $(document).ready(async function(index){
+	                                        $("#fileInput").on("change", handleImgFileSelect);
+
+	                                        // 기존 이미지에 대한 처리
+	                                        $(".hidden-div img").each(async function(index) {
+	                                            let src = $(this).attr("src");
+	                                            //console.log("src찍히냐?:" + src);
+	                                            let imgBlob = await fetchImageAsBlob(src);
+	                                            let imgId = generateUniqueId(); // 고유한 식별자 생성
+	                                            let file = blobToFile(imgBlob, "image" + imgId + ".png", imgId); // 파일 객체 생성
+	                                            images.push({index: index, file: file}); // 배열에 파일 객체 추가
+												console.log(images)
+	                                        });
+	                                    });*/
+		
+	                                    async function fetchImageAsBlob(imageUrl) {
+	                                        const response = await fetch(imageUrl);
+	                                        if (!response.ok) {
+	                                            throw new Error('Network response was not ok.');
+	                                        }
+	                                        const blob = await response.blob();
+	                                        return blob;
+	                                    }
+	                                    
+	                                    function blobToFile(blob, fileName, imgId) {
+	                                        // 이미지 식별자를 파일 이름에 포함하여 설정
+	                                        const file = new File([blob], fileName, {
+	                                            type: blob.type,
+	                                            lastModified: Date.now()
+	                                        });
+	                                        file.id = imgId; // 파일 객체의 id 속성에 이미지 식별자 추가
+	                                        return file;
+	                                    }
+
+	                                    /*
+	                                    function blobToFile(blob, fileName) {
+	                                        const file = new File([blob], fileName, {
+	                                            type: blob.type,
+	                                            lastModified: Date.now()
+	                                        });
+	                                        return file;
+	                                    }
+	                                    */
+	                                    //console.log(images);
+	                                    
+	                                    /*
+	                                    // 이미지 파일명 뒤에 "123" 추가하는 함수
+	                                    function modifyFileName(fileName) {
+	                                        let dotIndex = fileName.lastIndexOf(".");
+	                                        let modifiedFileName = fileName.slice(0, dotIndex) + "123" + fileName.slice(dotIndex);
+	                                        return modifiedFileName;
+	                                    }
+	                                    */
 	                                    
 	                                    function uploadAction(){
 	                                    	$("#fileInput").trigger("click");
@@ -641,12 +719,14 @@
 	                                        	
 	                                        	let reader = new FileReader();
 	                                    		reader.onload = function(e){
-	                                    			
+	                                    			let imgId = generateUniqueId();
 	                                    			images.push(f);
-	                                    			//let index = images.length;
-		                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+index+"\">"+
+	                                    			f.id = imgId;
+	                                    			
+	                                    			let newIndex = images.length - 1; // 현재 이미지의 인덱스
+		                               				let html = "<div class=\"hidden-div\" id=\"hidden-div-id-"+imgId+"\">"+
 				                                            		"<img src=\""+e.target.result+"\" class=\"hidden-img\">"+
-				                                            		"<button type=\"button\" class=\"hidden-btn\" onclick=\"deleteBtn(this, "+index+");\"></button>"+
+				                                            		"<button type=\"button\" class=\"hidden-btn\" data-id=\"" + imgId + "\" onclick=\"deleteBtn(this);\"></button>"+
 				                                        		"</div>";
 		                                   			$("#sell-fileInput-div").append(html);
 		                                   			
@@ -656,24 +736,35 @@
 	                                            reader.readAsDataURL(f);
 	                                        });
 	                                    }
+	                                    
+	                                    function generateUniqueId() {
+	                                        return '_' + Math.random().toString(36).substr(2, 9);
+	                                    }
 										
-	                                    function deleteBtn(e, index){
+	                                    function deleteBtn(btn){
 	                                    	
-	                                        // 클릭된 이미지의 src 가져오기
-	                                        let imgSrc = $(e).prev().attr("src");
-	                                        let imgIndex = images.indexOf(imgSrc);
-	                                        //console.log(imgIndex);
-	                                        
-	                                        let indexToRemove = imgIndex // div의 인덱스
-										    images.splice(indexToRemove, 1);
-	                                        console.log(images);
-	                                        
-	                                        $(e).parent().remove();
+	                                    	console.log(btn);
+	                                    	let imgId = $(btn).data("id");
+	                                        console.log(imgId);
+	                                        //$("#hidden-div-id-"+imgId).remove(); // 해당 식별자를 가진 이미지 요소를 삭제
+	                                        $(btn).parent().remove();
+	                                        images = images.filter(image => image.id !== imgId); // 배열에서 해당 식별자를 가진 이미지 제거
 	                                        $("#imgCount").html("(" + images.length + "/5)");
+	                                        
+	                                        /*
+	                                        for(let i = 0; i < images.length; i++) {
+	                                        	console.log(images[i].id);
+	                                            if(images[i].id === imgId) {
+	                                                //images.splice(i, 1); // 해당 식별자를 가진 이미지를 배열에서 삭제
+	                                                break;
+	                                            }
+	                                        }
+	                                        //$(e).parent().remove();
+	                                        //$("#imgCount").html("(" + images.length + "/5)");
+	                                    	*/
+	                                    	console.log(images);
 	                                    	
 	                                    }
-	                                    
-	                                    console.log("이미지가져갈거: "+images);
 	                                    
 	                                </script>
 	
@@ -1030,6 +1121,7 @@
 	                            <h2 class="sell-section-title-h2">빠른 판매</h2>
 	                            <div class="sell-section-title-div">내 상품에 쿨거래 배지가 표시돼요</div>
 	                        </div>
+	                        <% if(ondo <= 10.0) { %>
 	                        <div id="cool-trade-option" class="flex-class">
 	                            <div id="cool-trade-option-title">옵션</div>
 	                            <div id="cool-trade-option-ex">
@@ -1040,40 +1132,6 @@
 	                                    <div id="cool-trade-btn-title">쿨거래</div>
 	                                </div>
 	                                <input type="hidden" id="h-cool" value="<%= pList.get(0).getTradeType() %>">
-	                                
-	                                <script>
-	                                	
-		                             	// 체크박스 요소를 가져옵니다.
-		                                const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
-		
-		                                // 체크박스의 변경 이벤트를 감지하고 처리합니다.
-		                                coolTradeCheckbox.addEventListener('change', function() {
-		                                    // 체크박스가 체크되었는지 확인합니다.
-		                                    if (this.checked) {
-		                                        // 체크되었을 때 value 값을 2로 설정합니다.
-		                                        this.value = "2";
-		                                    } else {
-		                                        // 체크되지 않았을 때 value 값을 1로 설정합니다.
-		                                        this.value = "1";
-		                                    }
-		                                    
-		                                    console.log(coolTradeCheckbox.value);
-		                                });
-		                                
-		                                // 체크 표시하기
-		                                var dbCool = document.getElementById("h-cool").value;
-		                                //console.log(dbCool);
-		                                var ty = document.getElementById("ty-checkbox");
-		                                
-		                                if(dbCool === "1") {
-		                                	ty.checked = false;
-		                                } else if(dbCool === "2") {
-		                                	ty.checked = true;
-		                                }
-		                                
-		                                console.log(dbCool);
-	                                	
-	                                </script>
 	                                
 	                                <div id="use-agreement">
 	                                    <ul>
@@ -1087,6 +1145,31 @@
 	                                </div>
 	                            </div>
 	                        </div>
+	                        <% } else { %>
+	                        <div id="cool-trade-option" class="flex-class">
+	                            <div id="cool-trade-option-title">옵션</div>
+	                            <div id="cool-trade-option-ex">
+	                                <div class="flex-class" id="cool-trade-btn">
+	                                    <div>
+	                                        <input type="checkbox" name="coolTrade" value="1" id="ty-checkbox" onclick="return false;">
+	                                    </div>
+	                                    <div id="cool-trade-btn-title">온도 10도 이하 회원부터 쿨거래 이용이 가능해요.</div>
+	                                </div>
+	                                <input type="hidden" id="h-cool" value="<%= pList.get(0).getTradeType() %>">
+	                                
+	                                <div id="use-agreement">
+	                                    <ul>
+	                                        <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
+	                                        <li>내 상품을 먼저 보여주는 전용 필터로 더 빠르게 판매할 수 있어요.</li>
+	                                        <li>쿨거래 배지로 더 많은 관심을 받을 수 있어요.</li>
+	                                        <li>
+	                                            <small>개인 정보 이용 약관에 동의 시 이용이 가능합니다.</small>
+	                                        </li>
+	                                    </ul>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <% } %>
 	                    </div>
 	                </div>
 	            </div>
@@ -1101,6 +1184,36 @@
 	        </div>
 	        
 	        <script>
+	        	
+	         	// 체크박스 요소를 가져옵니다.
+	            const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
+	
+	            // 체크박스의 변경 이벤트를 감지하고 처리합니다.
+	            coolTradeCheckbox.addEventListener('change', function() {
+	                // 체크박스가 체크되었는지 확인합니다.
+	                if (this.checked) {
+	                    // 체크되었을 때 value 값을 2로 설정합니다.
+	                    this.value = "2";
+	                } else {
+	                    // 체크되지 않았을 때 value 값을 1로 설정합니다.
+	                    this.value = "1";
+	                }
+	                
+	                console.log(coolTradeCheckbox.value);
+	            });
+	            
+	            // 체크 표시하기
+	            var dbCool = document.getElementById("h-cool").value;
+	            //console.log(dbCool);
+	            var ty = document.getElementById("ty-checkbox");
+	            
+	            if(dbCool === "1") {
+	            	ty.checked = false;
+	            } else if(dbCool === "2") {
+	            	ty.checked = true;
+	            }
+	            
+	            console.log(dbCool);
 	        
 		     	// 상품상태
 		       	$("[name=status]").click(function(){
@@ -1115,27 +1228,29 @@
                 function submit(){
 		     		console.log("image = " + images)
 		       		let fileAlert = $("#fileInput");
-		       		if(images.length === 0){
-		        		alert("이미지를 등록해주세요.");
-		        		return false;
-		        	}
 		     		
-					<%-- console.log(images); // 이미지가 담긴 배열
-        	    	console.log($("#titleInput").val()); // 상품명
-        	    	console.log(categoryvalue); // 카테고리
-        	    	console.log(dbStatus); // 상품상태
-        	    	console.log($("#numberInput").val()); // 가격
-        	    	console.log(dbCharge); // 배송비
-        	    	console.log($("#contentInput").val()); // 설명
-        	    	console.log($("#numberInput2").val()); // 수량
-        	    	console.log($("#trade-zone").val()); // 거래지역
-        	    	console.log($("#ty-checkbox").val()); // 쿨거래여부
-        	    	console.log(<%= userNo %>);
-        	    	console.log(<%= pList.get(0).getProductNo() %>); --%>
+		            if(images.length === 0){
+		                alert("이미지를 등록해주세요.");
+		                return false;
+		            }
+		            
+					// console.log(images); // 이미지가 담긴 배열
+        	    	// console.log($("#titleInput").val()); // 상품명
+        	    	// console.log(categoryvalue); // 카테고리
+        	    	// console.log(dbStatus); // 상품상태
+        	    	// console.log($("#numberInput").val()); // 가격
+        	    	// console.log(dbCharge); // 배송비
+        	    	// console.log($("#contentInput").val()); // 설명
+        	    	// console.log($("#numberInput2").val()); // 수량
+        	    	// console.log($("#trade-zone").val()); // 거래지역
+        	    	// console.log($("#ty-checkbox").val()); // 쿨거래여부
+        	    	// console.log(<%= userNo %>);
+        	    	// console.log(<%= pList.get(0).getProductNo() %>);
         	    	
                	    // 이미지 파일을 FormData에 추가
                	    let formData = new FormData();
                	    for (let i = 0; i < images.length; i++) {
+               	    	//if(images[i] === )
                	        formData.append('image'+(i+1), images[i]);
                	    }
                	    

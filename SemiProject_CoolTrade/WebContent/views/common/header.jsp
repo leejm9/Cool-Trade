@@ -226,7 +226,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                 <script>
                   $(function () {
                     getAlarm();
-                    setInterval(getAlarm, 2000);
+                    //setInterval(getAlarm, 2000);
 
                     console.log("오냐");
                   });

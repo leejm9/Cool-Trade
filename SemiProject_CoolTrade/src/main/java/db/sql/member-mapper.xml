@@ -282,7 +282,7 @@
              COUNT(*) COUNT
         FROM PRODUCT
        WHERE SELLER_NO = ?
-         AND UPLOAD_TYPE = 'Y'
+         AND UPLOAD_TYPE IN ('Y', 'P')
    </entry>
    
    <entry key="sellListPo">
@@ -301,7 +301,7 @@
                   FROM PRODUCT P
                   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
                   WHERE SELLER_NO = ?
-                    AND UPLOAD_TYPE = 'Y'
+                    AND UPLOAD_TYPE IN ('Y', 'P')
                   ORDER 
                      BY UPLOAD_DATE DESC
                      , PRODUCT_NO DESC
@@ -369,7 +369,7 @@
              COUNT(*) COUNT
         FROM PRODUCT
        WHERE SELLER_NO = ?
-         AND UPLOAD_TYPE = 'Y'
+         AND UPLOAD_TYPE IN ('Y', 'P')
          AND SELL_STATUS = ?
    </entry>
    
@@ -389,7 +389,7 @@
                   FROM PRODUCT P
                   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
                   WHERE SELLER_NO = ?
-                    AND UPLOAD_TYPE = 'Y'
+                    AND UPLOAD_TYPE IN ('Y', 'P')
                     AND SELL_STATUS = ?
                   ORDER 
                      BY UPLOAD_DATE DESC
@@ -404,7 +404,7 @@
              COUNT(*) COUNT
         FROM PRODUCT
        WHERE SELLER_NO = ?
-         AND UPLOAD_TYPE = 'Y'
+         AND UPLOAD_TYPE IN ('Y', 'P')
          AND PRODUCT_NAME LIKE '%' || ? || '%'
    </entry>   
    
@@ -424,7 +424,7 @@
                   FROM PRODUCT P
                   LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
                   WHERE SELLER_NO = ?
-                    AND UPLOAD_TYPE = 'Y'
+                    AND UPLOAD_TYPE IN ('Y', 'P')
                     AND PRODUCT_NAME LIKE '%' || ? || '%'
                   ORDER 
                      BY UPLOAD_DATE DESC
@@ -479,7 +479,7 @@
         FROM TRADE
         JOIN PRODUCT USING (PRODUCT_NO)
        WHERE BUYER_NO = ?
-          AND UPLOAD_TYPE = 'Y'
+          AND UPLOAD_TYPE IN ('Y', 'P')
             AND PRODUCT_NAME LIKE '%' || ? || '%'
    </entry>
       
@@ -722,7 +722,7 @@
 		       COUNT(*) COUNT
 		  FROM PRODUCT
 		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
+		   AND UPLOAD_TYPE IN ('Y', 'P')
 	</entry>
 	
 	<entry key="sellListPo">
@@ -741,7 +741,7 @@
 						FROM PRODUCT P
 						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
 						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
+						  AND UPLOAD_TYPE IN ('Y', 'P')
 						ORDER 
 						   BY UPLOAD_DATE DESC
 							, PRODUCT_NO DESC
@@ -810,7 +810,7 @@
 		       COUNT(*) COUNT
 		  FROM PRODUCT
 		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
+		   AND UPLOAD_TYPE IN ('Y', 'P')
 		   AND SELL_STATUS = ?
 	</entry>
 	
@@ -830,7 +830,7 @@
 						FROM PRODUCT P
 						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
 						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
+						  AND UPLOAD_TYPE IN ('Y', 'P')
 						  AND SELL_STATUS = ?
 						ORDER 
 						   BY UPLOAD_DATE DESC
@@ -845,7 +845,7 @@
 		       COUNT(*) COUNT
 		  FROM PRODUCT
 		 WHERE SELLER_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
+		   AND UPLOAD_TYPE IN ('Y', 'P')
 		   AND PRODUCT_NAME LIKE '%' || ? || '%'
 	</entry>	
 	
@@ -865,7 +865,7 @@
 						FROM PRODUCT P
 						LEFT JOIN IMAGES ON (PRODUCT_NO = REF_PNO AND IMG_LEVEL = '1')
 						WHERE SELLER_NO = ?
-						  AND UPLOAD_TYPE = 'Y'
+						  AND UPLOAD_TYPE IN ('Y', 'P')
 						  AND PRODUCT_NAME LIKE '%' || ? || '%'
 						ORDER 
 						   BY UPLOAD_DATE DESC
@@ -921,7 +921,7 @@
 		  FROM TRADE
 		  JOIN PRODUCT USING (PRODUCT_NO)
 		 WHERE BUYER_NO = ?
- 		   AND UPLOAD_TYPE = 'Y'
+ 		   AND UPLOAD_TYPE IN ('Y', 'P')
    		   AND PRODUCT_NAME LIKE '%' || ? || '%'
 	</entry>
 		

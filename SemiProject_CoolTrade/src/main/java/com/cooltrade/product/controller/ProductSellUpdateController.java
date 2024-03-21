@@ -92,15 +92,13 @@ public class ProductSellUpdateController extends HttpServlet {
 			
 			for(int i=0; i<5; i++) {
 				String key = "image" + (i + 1);
-				System.out.println(key+": "+multiRequest.getOriginalFileName(key));
+				System.out.println(key+": "+multiRequest.getFilesystemName(key));
 				
-				if(multiRequest.getOriginalFileName(key) != null) { // 새로넘어온 첨부파일이 있을 경우
+				if(multiRequest.getOriginalFileName(key) != null) { 
+					System.out.println("새로넘어온 이미지가 있다!");
 					
-					System.out.println("새로넘어온 첨부파일 있음");
-					
-					if(del > 0) { // 기존 첨부파일 삭제 성공
-						System.out.println("기존 이미지 삭제");
-						
+					if(del > 0) {
+						System.out.println("이미지 삭제 성공!");
 						Images img = new Images();
 						img.setRefPno(Integer.parseInt(multiRequest.getParameter("pno")));
 						img.setOriginName(multiRequest.getOriginalFileName(key));
@@ -114,14 +112,14 @@ public class ProductSellUpdateController extends HttpServlet {
 						}
 						System.out.println(img);
 						list.add(img);
-						
 					} else {
-						System.out.println("기존 이미지 삭제 실패");
+						System.out.println("이미지 삭제 실패!");
 					}
-					
-				} 
-			} 
-			System.out.println();
+				 } 
+			}
+			
+			//System.out.println(list);
+			
 			int result = new ProductService().updateProductSell(p, list, pno, userNo);
 			
 			if(result > 0) {

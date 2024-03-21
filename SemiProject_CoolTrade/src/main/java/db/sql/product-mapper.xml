@@ -96,8 +96,8 @@ SELECT
 	       	     ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
      	         FROM PRODUCT 
      	        WHERE UPLOAD_TYPE = 'Y'
-     	          AND PRODUCT_NAME LIKE '%' || ? || '%'
-     	           OR PRODUCT_DESC LIKE '%' || ? || '%'
+     	          AND (PRODUCT_NAME LIKE '%' || ? || '%'
+     	           OR PRODUCT_DESC LIKE '%' || ? || '%')
 	</entry> 
 	
 	<entry key="searchCatList">
@@ -158,8 +158,9 @@ SELECT
 	
 	<entry key="selectProductDetail">
 		SELECT
-			   PRODUCT_NO 
-		     , USER_ID
+			   PRODUCT_NO
+			 , SELLER_NO 
+		     , NICKNAME
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME
 		     , PRICE
@@ -449,7 +450,6 @@ SELECT
 		  (
 		    IMG_NO
 		  , REF_PNO
-		  , REF_UNO
 		  , IMG_LEVEL
 		  , ORIGIN_NAME
 		  , CHANGE_NAME
@@ -458,7 +458,6 @@ SELECT
 		  VALUES
 		  (
 		    SEQ_IMG.NEXTVAL
-		  , ?
 		  , ?
 		  , ?
 		  , ?
@@ -728,4 +727,36 @@ SELECT
 		  FROM PRODUCT
 		 WHERE PRODUCT_NO = ?
 	</entry>
+	<entry key="getBankList">
+		SELECT
+		       BANKACCOUNT_NO
+		     , USER_NO
+		     , BANK
+		     , ACCOUNT
+		     , USER_NAME
+		  FROM BANK_ACCOUNT
+		  JOIN MEMBER M USING (USER_NO)
+		 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="insertTrade">
+		INSERT
+		  INTO TRADE
+		VALUES
+		  (
+		    SEQ_TRADE.NEXTVAL
+		  , ?
+		  , ?
+		  , DEFAULT
+		  , SYSDATE
+		  , DEFAULT
+		  )
+	</entry>
+	
+	<entry key="updatePoStatus">
+		UPDATE PRODUCT
+		   SET UPLOAD_TYPE = 'P'
+		 WHERE PRODUCT_NO = ?
+	</entry>
+	
 </properties>

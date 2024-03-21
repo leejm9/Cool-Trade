@@ -562,6 +562,7 @@
 	<%@ include file = "../common/header.jsp" %>
 	
 	<% int userNo = loginUser.getUserNo(); %>
+	<% double ondo = loginUser.getOndo(); %>
 	
 
     <%-- <form action="<%= contextPath %>/sellinsert.po" method="post" id="sell-enroll-form" enctype="multipart/form-data"> --%>
@@ -924,12 +925,12 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div id="right-content-footer">
                         <div  class="sell-section-title">
                             <h2 class="sell-section-title-h2">빠른 판매</h2>
                             <div class="sell-section-title-div">내 상품에 쿨거래 배지가 표시돼요</div>
                         </div>
+	                    <% if(ondo <= 10.0) { %>
                         <div id="cool-trade-option" class="flex-class">
                             <div id="cool-trade-option-title">옵션</div>
                             <div id="cool-trade-option-ex">
@@ -939,27 +940,6 @@
                                     </div>
                                     <div id="cool-trade-btn-title">쿨거래</div>
                                 </div>
-                                
-                                <script>
-                                	
-	                             	// 체크박스 요소를 가져옵니다.
-	                                const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
-	
-	                                // 체크박스의 변경 이벤트를 감지하고 처리합니다.
-	                                coolTradeCheckbox.addEventListener('change', function() {
-	                                    // 체크박스가 체크되었는지 확인합니다.
-	                                    if (this.checked) {
-	                                        // 체크되었을 때 value 값을 2로 설정합니다.
-	                                        this.value = "2";
-	                                    } else {
-	                                        // 체크되지 않았을 때 value 값을 1로 설정합니다.
-	                                        this.value = "1";
-	                                    }
-	                                    
-	                                    console.log(coolTradeCheckbox.value);
-	                                });
-                                	
-                                </script>
                                 
                                 <div id="use-agreement">
                                     <ul>
@@ -973,6 +953,30 @@
                                 </div>
                             </div>
                         </div>
+                        <% } else { %>
+                        <div id="cool-trade-option" class="flex-class">
+                            <div id="cool-trade-option-title">옵션</div>
+                            <div id="cool-trade-option-ex">
+                                <div class="flex-class" id="cool-trade-btn">
+                                    <div>
+                                        <input type="checkbox" id="coolTrade" name="coolTrade" value="1" onclick="return false;">
+                                    </div>
+                                    <div id="cool-trade-btn-title">온도 10도 이하 회원부터 쿨거래 이용이 가능해요.</div>
+                                </div>
+                                
+                                <div id="use-agreement">
+                                    <ul>
+                                        <li>구매자와 별도의 대화 없이 판매가 가능해요.</li>
+                                        <li>내 상품을 먼저 보여주는 전용 필터로 더 빠르게 판매할 수 있어요.</li>
+                                        <li>쿨거래 배지로 더 많은 관심을 받을 수 있어요.</li>
+                                        <li>
+                                            <small>개인 정보 이용 약관에 동의 시 이용이 가능합니다.</small>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
                     </div>
                 </div>
             </div>
@@ -985,9 +989,27 @@
                 <button type="button" id="enroll" onclick="submit();">등록하기</button>
             </div>
         </div>
-    
-    <script>
-    
+        
+                
+        <script>
+        	
+      	// 체크박스 요소를 가져옵니다.
+         const coolTradeCheckbox = document.querySelector('input[name="coolTrade"]');
+
+         // 체크박스의 변경 이벤트를 감지하고 처리합니다.
+         coolTradeCheckbox.addEventListener('change', function() {
+             // 체크박스가 체크되었는지 확인합니다.
+             if (this.checked) {
+                 // 체크되었을 때 value 값을 2로 설정합니다.
+                 this.value = "2";
+             } else {
+                 // 체크되지 않았을 때 value 값을 1로 설정합니다.
+                 this.value = "1";
+             }
+             
+             console.log(coolTradeCheckbox.value);
+         });
+        	
     	// 상품상태
     	let poStatus = null;
     	

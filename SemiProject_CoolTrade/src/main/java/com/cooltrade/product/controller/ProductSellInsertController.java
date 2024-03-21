@@ -51,11 +51,10 @@ public class ProductSellInsertController extends HttpServlet {
 			
 			// 전달 파일 업로드
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-		
-			// 쿨거래 체크박스의 값이 널일 경우는 1:일반거래/ 널이 아닐경우 2:일반거래
 			/*
+			// 쿨거래 체크박스의 값이 널일 경우는 1:일반거래/ 널이 아닐경우 2:일반거래
 			int trade = 0;
-			if(multiRequest.getParameter("coolTrade") == null) {
+			if(multiRequest.getParameter("trade") == null) {
 				trade = 1;
 			} else {
 				trade = 2;

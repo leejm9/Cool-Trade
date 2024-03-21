@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import com.cooltrade.common.PageInfo;
 import com.cooltrade.member.model.dao.MemberDao;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -521,5 +522,31 @@ public class ProductService {
 		close(conn);
 		return userNo;
 	}
-   
+	
+	public BankAccount getBankList(int uno) {
+		Connection conn = getConnection();
+		BankAccount bankList = new ProductDao().getBankList(conn, uno);
+		
+		close(conn);
+		return bankList;
+	}
+	
+	public int insertTrade(int pno, int buyerNo) {
+		Connection conn = getConnection();
+		int result1 = new ProductDao().insertTrade(conn, pno, buyerNo);
+		int result2 = 0;
+		
+		if(result1 > 0) {
+			result2 = new ProductDao().updatePoStatus(conn, pno);
+		}
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result1 * result2;
+	}
+	
 }

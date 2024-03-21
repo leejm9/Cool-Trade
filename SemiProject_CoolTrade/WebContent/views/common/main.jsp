@@ -193,7 +193,7 @@
 			            let productHTML = '<div class="product_result_main-ds"  style="border: 1px solid rgb(204, 204, 204); padding: 5px;">' +
 			                '<a href="detail.po?pno=' + product.productNo + '" class="flex-ds show_detail-ds" style="flex-direction: column;">' +
 			                '<div class="img_container_main-ds">' +
-			                '<img src="' + imagePath2 + '" alt="" class="product_thumbnail_main-ds">' +
+			                '<img src="<%= contextPath %>/' + imagePath2 + '" alt="" class="product_thumbnail_main-ds">' +
 			                '</div>' +
 			                '<div class="search_title_price_main-ds">' +
 			                '<div class="search_ptitle_main-ds" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' + product.productName + '</div>' +

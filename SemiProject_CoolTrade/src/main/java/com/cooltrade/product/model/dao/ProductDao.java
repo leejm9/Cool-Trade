@@ -12,6 +12,7 @@ import java.util.Properties;
 import static com.cooltrade.common.JDBCTemplate.*;
 
 import com.cooltrade.common.PageInfo;
+import com.cooltrade.member.model.vo.BankAccount;
 import com.cooltrade.member.model.vo.DeliveryAddress;
 import com.cooltrade.product.model.dao.ProductDao;
 import com.cooltrade.product.model.vo.Category;
@@ -327,7 +328,8 @@ public class ProductDao {
          
          if(rset.next()) {
             p.setProductNo(rset.getInt("product_no"));
-            p.setSellerNo(rset.getString("user_id"));
+            p.setSellerNum(rset.getInt("seller_no"));
+            p.setNickName(rset.getString("nickname"));
             p.setCategoryNo(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
             p.setPrice(rset.getInt("price"));
@@ -952,11 +954,10 @@ public class ProductDao {
             pstmt = conn.prepareStatement(sql);
             
             pstmt.setInt(1, pno);
-            pstmt.setInt(2, userNo);
-            pstmt.setInt(3, img.getImgLevel());
-            pstmt.setString(4, img.getOriginName());
-            pstmt.setString(5, img.getChangeName());
-            pstmt.setString(6, img.getImgPath());
+            pstmt.setInt(2, img.getImgLevel());
+            pstmt.setString(3, img.getOriginName());
+            pstmt.setString(4, img.getChangeName());
+            pstmt.setString(5, img.getImgPath());
             
             result = pstmt.executeUpdate();
          }
@@ -1493,6 +1494,79 @@ public class ProductDao {
 		}
 		return addressList;
 		
+	}
+	
+	public BankAccount getBankList(Connection conn, int uno) {
+		BankAccount bankList = new BankAccount();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getBankList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, uno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				bankList.setBankaccountNo(rset.getInt("bankaccount_no"));
+				bankList.setUserNo(rset.getInt("user_no"));
+				bankList.setBank(rset.getString("bank"));
+				bankList.setAccount(rset.getString("account"));
+				bankList.setUserName(rset.getString("user_name"));
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return bankList;
+	}
+	
+	public int insertTrade(Connection conn, int pno, int buyerNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertTrade");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			pstmt.setInt(2, buyerNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updatePoStatus(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updatePoStatus");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }
