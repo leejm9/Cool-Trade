@@ -241,10 +241,29 @@ String user = (String)request.getAttribute("userId"); String seller =
         <!-- <button type="submit" onclick="insertReply();">전송</button> -->
       </div>
     </div>
-    <input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>" />
-    <input type="hidden" id="user" value="<%= user %>" />
-    <input type="hidden" id="seller" value="<%= seller %>" />
-
+<!--     <div class="wrap-footer"> -->
+<!--     	<div class="wrap-footer-area"> -->
+<!--    		    <div align="center" class="wrap-footer-area-div"> -->
+<!-- 			    <input type="text" id="messageInput" style="width:370px;"> -->
+<!-- 			    <button type="submit" class="btn-image" onclick="insertReply();"> -->
+<!-- 			    	<img class="btn-img" src="resources/images/icon-send.png"> -->
+<!-- 			    </button> -->
+<!-- 			</div> -->
+<!--     	</div> -->
+<!--     </div> -->
+<!--     </div> -->
+<!--     <div align="right" style="display: none;"> -->
+<!--     <input type="text" id="messageInput" style="width:600px;"> -->
+<!--     <button type="submit" onclick="insertReply();">전송</button> --> 
+<!-- 	</div> -->
+	</div>
+	<input type="hidden" id="loginUser" value="<%= loginUser.getUserId() %>">
+	<input type="hidden" id="user" value="<%= user %>">
+	<input type="hidden" id="seller" value="<%= seller %>">
+	
+	<button onclick="location.href='<%= contextPath %>/apipage.in'">택배배송?</button>
+	
+	
     <script>
       $(function () {
         getMessage();
@@ -342,7 +361,6 @@ String user = (String)request.getAttribute("userId"); String seller =
             chatDiv.append(iconDiv, textboxDiv, infoDiv);
 
             $(".wrap").append(chatDiv); // 채팅창에 메시지 추가
-            console.log(chatDiv);
             $("#messageInput").val(""); // 입력 필드 초기화
             scrollToBottom(); // 스크롤을 항상 아래로 이동
           },

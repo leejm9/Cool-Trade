@@ -12,8 +12,7 @@ contextPath = request.getContextPath(); int headerCo; Member loginUser =
 (String)session.getAttribute("alertMsg"); if (session.getAttribute("headerCo")
 == null) { headerCo = 0; } else { headerCo = (int)
 session.getAttribute("headerCo"); } ArrayList<RecentProducts>
-  rlist = (ArrayList<RecentProducts
-    >) session.getAttribute("rlist"); %>
+  rlist = (ArrayList<RecentProducts>) session.getAttribute("rlist"); %>
     <!DOCTYPE html>
     <html>
       <head>
@@ -810,5 +809,4 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
         </div>
       </body>
     </html>
-  </RecentProducts></RecentProducts
->
+  
