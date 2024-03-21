@@ -167,7 +167,7 @@
                                 				if(result == 1){
                                 					btn.prop("disabled",true);
                                        				btn.text("쿨거래사용자");
-                                       				btn.parents('tr').find('td:eq(5)').text('C');
+                                       				btn.parents('tr').find('td:eq(5)').text('쿨거래사용자');
                                 				}
                                 			}, error:function(){
                                 				console.log("ajax 통신 실패");
