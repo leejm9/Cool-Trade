@@ -137,6 +137,64 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
             background-color: #ddd;
             cursor: pointer;
           }
+          .SMN_effect-42 a {
+        position: relative;
+      }
+
+      .SMN_effect-42 a:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(4,180,252);
+        transform-origin: 100% 50%;
+        transform: scale(0, 1);
+        top: 0;
+        left: 0;
+        transition: transform 0.3s cubic-bezier(0.33, 0.91, 0.42, 1);
+      }
+
+      .SMN_effect-42 a:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: rgb(4,180,252);
+        left: 0;
+        bottom: 0;
+        transform-origin: 0% 50%;
+        transition: transform 0.3s cubic-bezier(0.33, 0.91, 0.42, 1) 0.2s;
+      }
+
+      .SMN_effect-42 a span {
+        position: relative;
+      }
+
+      .SMN_effect-42 a span:after {
+        content: attr(data-hover);
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 0.2s cubic-bezier(0.33, 0.91, 0.42, 1) 0s;
+      }
+
+      .SMN_effect-42 a:hover:before {
+        transform: scale(1);
+        transform-origin: 0 50%;
+        transition: transform 0.3s cubic-bezier(0.33, 0.91, 0.42, 1) 0.2s;
+      }
+
+      .SMN_effect-42 a:hover:after {
+        transform: scale(0, 1);
+        transform-origin: 100% 50%;
+        transition: transform 0.3s cubic-bezier(0.33, 0.91, 0.42, 1) 0s;
+      }
+
+      .SMN_effect-42 a:hover span:after {
+        color: #444;
+        transition: color 0.3s cubic-bezier(0.33, 0.91, 0.42, 1) 0.2s;
+      }
         </style>
       </head>
       <body>
@@ -585,33 +643,24 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                   </div>
                 </div>
               </div>
-              <div id="headerCategory-ds" class="flex-ds">
-                <div class="category_wrap-ds">
-                  <div id="categoryMenu-ds">
-                    <img
-                      src="resources/images/카테고리.png"
-                      width="30"
-                      height="30"
-                      style="padding: 5px"
-                      alt="카테고리 이미지"
-                    />
-                    카테고리 <br />
+              <div id="headerCategory-ds" class="flex-ds" >
+                <div class="category_wrap-ds" >
+                  <div id="categoryMenu-ds"  class="align-center expanded text-center SMN_effect-42">
+                    <a href="" style="padding-bottom:2px;"><span data-hover="카테고리">카테고리</span></a> <br />
                   </div>
-                  <div class="category_hover-ds flex-ds">
-                    <a href="<%=contextPath %>/search.po?cno=C1">패션의류</a>
-                    <a href="<%=contextPath %>/search.po?cno=C2">패션잡화</a>
-                    <a href="<%=contextPath %>/search.po?cno=C3">뷰티</a>
-                    <a href="<%=contextPath %>/search.po?cno=C4">전자제품</a>
-                    <a href="<%=contextPath %>/search.po?cno=C5">리빙/생활</a>
-                    <a href="<%=contextPath %>/search.po?cno=C6"
-                      >가구/인테리어</a
-                    >
-                    <a href="<%=contextPath %>/search.po?cno=C7">반려동물</a>
-                    <a href="<%=contextPath %>/search.po?cno=C8"
-                      >도서/음반/문구</a
-                    >
-                    <a href="<%=contextPath %>/search.po?cno=C9">상품권</a>
-                    <a href="<%=contextPath %>/search.po?cno=C10">무료나눔</a>
+                  <div class="category_hover-ds flex-ds align-center expanded text-center SMN_effect-42">
+                    <a href="<%=contextPath %>/search.po?cno=C1" style="border-bottom:0px;"><span data-hover="패션의류">패션의류</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C2" style="border-bottom:0px; border-top:0px;"><span data-hover="패션잡화">패션잡화</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C3" style="border-bottom:0px; border-top:0px;"><span data-hover="뷰티">뷰티</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C4" style="border-bottom:0px; border-top:0px;"><span data-hover="전자제품">전자제품</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C5" style="border-bottom:0px; border-top:0px;"><span data-hover="리빙/생활">리빙/생활</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C6" style="border-bottom:0px; border-top:0px;"
+                      ><span data-hover="가구/인테리어">가구/인테리어</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C7" style="border-bottom:0px; border-top:0px;"><span data-hover="반려동물">반려동물</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C8" style="border-bottom:0px; border-top:0px;"
+                      ><span data-hover="도서/음반/문구">도서/음반/문구</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C9" style="border-bottom:0px; border-top:0px;"><span data-hover="상품권">상품권</span></a>
+                    <a href="<%=contextPath %>/search.po?cno=C10" style="border-bottom:0px; border-top:0px;"><span data-hover="무료나눔">무료나눔</span></a>
                   </div>
                 </div>
                 <div id="notice-ds">

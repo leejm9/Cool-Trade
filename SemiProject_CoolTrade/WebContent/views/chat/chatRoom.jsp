@@ -89,17 +89,16 @@ ArrayList<ChatRoom>
           	cursor: pointer;
           	width: 60%;
           }
+          .chat-list-div:hover{
+            background-color: #e6e6e6;
+          }
         </style>
       </head>
       <body>
         <%@ include file="../common/header.jsp"%>
 
         <div class="outer" align="center">
-          <br />
-          <h2 align="left" style="margin-left: 150px">
-            <%= loginUser.getUserName() %>님의 채팅방 목록
-          </h2>
-          <br />
+        
 
           <!-- 현재 로그인한 사용자가 관리자 일 경우 보여질 div- -->
           <% if(loginUser != null && loginUser.getUserId().equals("admin")){ %>
@@ -113,34 +112,34 @@ ArrayList<ChatRoom>
           </div>
           <% } %>
 
-          <table class="list-area" align="center">
-            <thead>
-              <tr>
-                <th>채팅방 번호</th>
-                <th width="400">채팅방제목</th>
-                <th width="100">구매자</th>
-                <th>판매자</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% int count = 0; %> <% boolean chatRoomExists = false; %> <%
-              for(ChatRoom c : list){ %> <%
-              if(c.getUserId().equals(loginUser.getUserId()) ||
-              c.getSellerId().equals(loginUser.getUserId())){ %> <%
-              chatRoomExists = true; %>
-              <tr>
-                <td><%= c.getChatRoomNo() %></td>
-                <td><%= c.getChatRoomTitle() %></td>
-                <td><%= c.getUserId() %></td>
-                <td><%= c.getSellerId() %></td>
-              </tr>
-              <% } %> <% } %> <% if (!chatRoomExists) { %>
-              <tr>
-                <td colspan="4">존재하는 채팅방이 없습니다.</td>
-              </tr>
-              <% } %>
-            </tbody>
-          </table>
+<!--           <table class="list-area" align="center"> -->
+<!--             <thead> -->
+<!--               <tr> -->
+<!--                 <th>채팅방 번호</th> -->
+<!--                 <th width="400">채팅방제목</th> -->
+<!--                 <th width="100">구매자</th> -->
+<!--                 <th>판매자</th> -->
+<!--               </tr> -->
+<!--             </thead> -->
+<!--             <tbody> -->
+<%--               <% int count = 0; %> <% boolean chatRoomExists = false; %> <% --%>
+<%--               for(ChatRoom c : list){ %> <% --%>
+//               if(c.getUserId().equals(loginUser.getUserId()) ||
+<%--               c.getSellerId().equals(loginUser.getUserId())){ %> <% --%>
+<%--               chatRoomExists = true; %> --%>
+<!--               <tr> -->
+<%--                 <td><%= c.getChatRoomNo() %></td> --%>
+<%--                 <td><%= c.getChatRoomTitle() %></td> --%>
+<%--                 <td><%= c.getUserId() %></td> --%>
+<%--                 <td><%= c.getSellerId() %></td> --%>
+<!--               </tr> -->
+<%--               <% } %> <% } %> <% if (!chatRoomExists) { %> --%>
+<!--               <tr> -->
+<!--                 <td colspan="4">존재하는 채팅방이 없습니다.</td> -->
+<!--               </tr> -->
+<%--               <% } %> --%>
+<!--             </tbody> -->
+<!--           </table> -->
 
           <div class="chat-list-wrap">
             <div class="chat-list-area chat-title-area">
