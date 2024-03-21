@@ -276,7 +276,7 @@ String user = (String)request.getAttribute("userId"); String seller =
     <script>
       $(function () {
         getMessage();
-        setInterval(getMessage, 100000);
+        setInterval(getMessage, 1000);
       });
 
       $(document).ready(function () {
@@ -317,7 +317,7 @@ String user = (String)request.getAttribute("userId"); String seller =
     	    		},
     	    	success : function(response){
     	    		console.log(response);
-    	    		disableButtons(1);
+    	    		disableButtons(2);
     	    	},
     	    	error : function (){
     	    		console.log("error");
@@ -327,7 +327,7 @@ String user = (String)request.getAttribute("userId"); String seller =
       function disableButtons(data){
     	  if(data === 1){
     	  alert("거래가 완료되었습니다.");
-    	  }elseif (data === 2){
+    	  }else if(data === 2){
     	  alert("거래가 취소되었습니다.");
     	  }
     	  location.reload();
