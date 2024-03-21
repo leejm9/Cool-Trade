@@ -118,20 +118,27 @@
                                 
                                 
                                 <div id="btn" align="center">
+                                <% if(request.getParameter("boardsearch") == null){ %>
 	                                <% if(currentPage > 1){ %>
 				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)">&lt;</button>
 				                    <% } %>
 				                    <% for(int i=1; i<= maxPage;i++){ %>
-				                    	<% if(request.getParameter("boardsearch") ==  null){ %>
 						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>"><%= i %></button>
-						            	<% }else{ %>
-						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
-						            	<% } %>
-						            
 						            <% } %>
 						            <% if(currentPage != maxPage) { %>
 						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)">&gt;</button>
-									<% } %> 
+									<% } %>
+								<% }else{ %>
+									<% if(currentPage > 1){ %>
+				                    <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') - 1)+'&boardsearch=<%= request.getParameter("boardsearch") %>';">&lt;</button>
+				                    <% } %>
+				                    <% for(int i=1; i<= maxPage;i++){ %>
+						            		<button onclick="location.href='<%= contextPath %>/board.in?cpage=' + <%= i %>+'&boardsearch=<%= request.getParameter("boardsearch") %>';"><%= i %></button>
+						            <% } %>
+						            <% if(currentPage != maxPage) { %>
+						            <button onclick="location.href='<%= contextPath%>/board.in?cpage='+ (parseInt('<%= currentPage %>') + 1)+'&boardsearch=<%= request.getParameter("boardsearch") %>';">&gt;</button>
+									<% } %>
+								<% } %> 
 								</div>
                             </div>
                         </div>

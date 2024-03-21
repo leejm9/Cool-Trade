@@ -6,7 +6,7 @@
 <%
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Report> list = (ArrayList<Report>)request.getAttribute("list");
-	
+	System.out.print(list);
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();

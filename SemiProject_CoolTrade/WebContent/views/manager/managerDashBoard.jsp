@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="com.cooltrade.report.model.vo.Report"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.cooltrade.product.model.vo.Product"%>
@@ -82,7 +83,10 @@
 									class="text-xs font-weight-bold text-success text-uppercase mb-1">
 									오늘 누적 판매량</div>
 								<div class="h5 mb-0 font-weight-bold text-gray-800"
-									id="numberInput"><%=salesRate.getSalesRate()%>원
+									id="numberInput">
+									<% DecimalFormat formatter = new DecimalFormat("#,###");
+							        String formattedNumber = formatter.format(salesRate.getSalesRate()); %>
+									<%= formattedNumber %>원
 								</div>
 							</div>
 							<div class="col-auto">
@@ -92,22 +96,6 @@
 					</div>
 				</div>
 			</div>
-
-			<script>
-				document.getElementById('numberInput')
-						.addEventListener(
-								'change',
-								function() {
-									// 입력된 값을 가져옴
-									var value = this.textContent.replace(/,/g,
-											''); // 기존에 입력된 쉼표 제거
-									// 천 단위마다 쉼표 추가
-									value = value.replace(
-											/\B(?=(\d{3})+(?!\d))/g, ',');
-									// 입력된 값을 다시 입력 상자에 설정
-									this.textContent = value;
-								});
-			</script>
 
 			<div class="col-xl-3 col-md-6 mb-4">
 				<div class="card border-left-success shadow h-100 py-2">
@@ -295,7 +283,7 @@
 
 			<!-- Pie Chart -->
 			<div class="col-xl-4 col-lg-5" >
-				<div class="card shadow mb-4" style="width:750px; height:450px;">
+				<div class="card shadow mb-4" style="width:550px; height:450px;">
 					<!-- Card Header - Dropdown -->
 					<div
 						class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
