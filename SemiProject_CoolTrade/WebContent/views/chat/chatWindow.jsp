@@ -132,6 +132,7 @@ String user = (String)request.getAttribute("userId"); String seller =
         display: flex;
         align-items: center;
         justify-content: space-around;
+        border-radius: 0px 0px 5px 5px;
       }
 
       .wrap-footer-area {

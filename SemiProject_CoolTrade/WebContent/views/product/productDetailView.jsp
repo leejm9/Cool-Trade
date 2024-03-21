@@ -218,12 +218,9 @@ language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
                       <div>
                         <label for="addressRadio<%= i %>">
                         <div class="flex-ds">
-                          <div><%= addressList.get(i).getTitle() %></div>
+                          <div><%= addressList.get(i).getName() %>(<%= addressList.get(i).getTitle() %>)</div>
                         </div>
                         <div class="flex-ds">
-                          <div><%= addressList.get(i).getName() %></div>
-                        </div>
-                        <div>
                           <div><%= addressList.get(i).getAddress() %></div>,&nbsp;<div><%= addressList.get(i).getDetail() %></div>
                         </div>
                         <div class="flex-ds">
