@@ -224,6 +224,42 @@ public class ProductDao {
       return plist;
    }
 
+   public ArrayList<Product> searchProductListWithCno(Connection conn, String search, String cno) {
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   ArrayList<Product> plist = new ArrayList<Product>();
+	   String sql = prop.getProperty("searchProductListWithCno");
+	   
+	   try {
+		   pstmt = conn.prepareStatement(sql);
+		   
+		   pstmt.setString(1, search);
+		   pstmt.setString(2, search);
+		   pstmt.setString(3, cno);
+		   
+		   rset = pstmt.executeQuery();
+		   
+		   while (rset.next()) {
+			   Product p = new Product();
+			   p.setProductNo(rset.getInt("product_no"));
+			   p.setSellerNo(rset.getString("seller_no"));
+			   p.setProductName(rset.getString("product_name"));
+			   p.setStrPrice(rset.getString("str_price"));
+			   p.setZone(rset.getString("zone"));
+			   p.setUploadDate(rset.getString("upload_date"));
+			   p.setTimeDiff(rset.getString("time_diff"));
+			   
+			   plist.add(p);
+		   }
+	   } catch (SQLException e) {
+		   e.printStackTrace();
+	   } finally {
+		   close(rset);
+		   close(pstmt);
+	   }
+	   return plist;
+   }
+
    public ArrayList<Category> searchCatList(Connection conn, String search) {
       PreparedStatement pstmt = null;
       ResultSet rset = null;
@@ -255,6 +291,38 @@ public class ProductDao {
       return catList;
    }
 
+   public ArrayList<Category> searchCatListWithCno(Connection conn, String search, String cno) {
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   ArrayList<Category> catList = new ArrayList<Category>();
+	   String sql = prop.getProperty("searchCatListWithCno");
+	   
+	   try {
+		   pstmt = conn.prepareStatement(sql);
+		   
+		   pstmt.setString(1, search);
+		   pstmt.setString(2, search);
+		   pstmt.setString(3, cno);
+		   
+		   rset = pstmt.executeQuery();
+		   
+		   while (rset.next()) {
+			   Category c = new Category();
+			   c.setCategoryName(rset.getString("category_name"));
+			   c.setCategoryNo(rset.getString("category_no"));
+			   c.setCategoryCount(rset.getInt("count"));
+			   
+			   catList.add(c);
+		   }
+	   } catch (SQLException e) {
+		   e.printStackTrace();
+	   } finally {
+		   close(rset);
+		   close(pstmt);
+	   }
+	   return catList;
+   }
+
    public int countProduct(Connection conn, String search) {
       PreparedStatement pstmt = null;
       ResultSet rset = null;
@@ -279,6 +347,33 @@ public class ProductDao {
          close(pstmt);
       }
       return pCount;
+   }
+
+   public int countProductWithCno(Connection conn, String search, String cno) {
+	   PreparedStatement pstmt = null;
+	   ResultSet rset = null;
+	   int pCount = 0;
+	   String sql = prop.getProperty("countProductWithCno");
+	   
+	   try {
+		   pstmt = conn.prepareStatement(sql);
+		   
+		   pstmt.setString(1, search);
+		   pstmt.setString(2, search);
+		   pstmt.setString(3, cno);
+		   
+		   rset = pstmt.executeQuery();
+		   
+		   if (rset.next()) {
+			   pCount = rset.getInt("count");
+		   }
+	   } catch (SQLException e) {
+		   e.printStackTrace();
+	   } finally {
+		   close(rset);
+		   close(pstmt);
+	   }
+	   return pCount;
    }
    
    public ArrayList<Product> selectRecentList(Connection conn){
@@ -1238,7 +1333,7 @@ public class ProductDao {
 		return list;
 	}
 	
-	public ArrayList<Product> arrangeByDateS(Connection conn, String search){
+	public ArrayList<Product> arrangeByDateS(Connection conn, String search, String cno){
 		ArrayList<Product> list = new ArrayList<Product>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -1250,6 +1345,7 @@ public class ProductDao {
 			
 			pstmt.setString(1, search);
 			pstmt.setString(2, search);
+			pstmt.setString(3, cno);
 			
 			rset = pstmt.executeQuery();
 			
@@ -1272,12 +1368,82 @@ public class ProductDao {
 		return list;
 	}
 	
-	public ArrayList<Product> arrangePriceHighS(Connection conn, String search){
+	public ArrayList<Product> arrangePriceHighS(Connection conn, String search, String cno){
 		ArrayList<Product> list = new ArrayList<Product>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		String sql = prop.getProperty("arrangePriceHighS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			pstmt.setString(3, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setStrPrice(rset.getString("str_price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowS(Connection conn, String search, String cno){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceLowS");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			pstmt.setString(3, cno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setStrPrice(rset.getString("str_price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangeByDateS2(Connection conn, String search){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangeByDateS2");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1306,12 +1472,46 @@ public class ProductDao {
 		return list;
 	}
 	
-	public ArrayList<Product> arrangePriceLowS(Connection conn, String search){
+	public ArrayList<Product> arrangePriceHighS2(Connection conn, String search){
 		ArrayList<Product> list = new ArrayList<Product>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		String sql = prop.getProperty("arrangePriceLowS");
+		String sql = prop.getProperty("arrangePriceHighS2");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, search);
+			pstmt.setString(2, search);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Product p = new Product();
+				p.setProductNo(rset.getInt("product_no"));
+				p.setProductName(rset.getString("product_name"));
+				p.setStrPrice(rset.getString("str_price"));
+				p.setZone(rset.getString("zone"));
+				p.setTimeDiff(rset.getString("time_diff"));
+				
+				list.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowS2(Connection conn, String search){
+		ArrayList<Product> list = new ArrayList<Product>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("arrangePriceLowS2");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -1605,5 +1805,26 @@ public class ProductDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	public int reduceCount(Connection conn, int pno) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("reduceCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, pno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+		
+		
 	}
 }

@@ -329,7 +329,7 @@ String user = (String)request.getAttribute("userId"); String seller =
       function disableButtons(data){
     	  if(data === 1){
     	  alert("거래가 완료되었습니다.");
-    	  }elseif (data === 2){
+    	  }else if(data === 2){
     	  alert("거래가 취소되었습니다.");
     	  }
     	  location.reload();

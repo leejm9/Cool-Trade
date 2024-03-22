@@ -25,7 +25,7 @@
 			
 				<%for(Category c : catList) {%>
 				<div class="cat-list-ds">
-					<a href="<%=contextPath%>/search.po?cno=<%=c.getCategoryNo()%>&search=<%=search%>">
+					<a href="<%=contextPath%>/category.po?cno=<%=c.getCategoryNo()%>">
 						<div class="category_name-ds"><%=c.getCategoryName()%></div>
 						<div class="searched_items-ds"><%=c.getCategoryCount()%></div>
 					</a>
@@ -38,9 +38,9 @@
 				<span style="color: #04b4fc;"><%=search%></span>의 검색결과 <span style="color: rgb(136 136 136);"><%=pCount%>개</span>
 			</div>
 			<div>
-				<a onclick="productListOrder(4)" class="aline-ds">최신순</a>
-				<a onclick="productListOrder(5)" class="aline-ds">저가순</a>
-				<a onclick="productListOrder(6)">고가순</a>
+				<a onclick="productListOrder(1)" class="aline-ds">최신순</a>
+				<a onclick="productListOrder(2)" class="aline-ds">저가순</a>
+				<a onclick="productListOrder(3)">고가순</a>
 			</div>
 		</div>
 	

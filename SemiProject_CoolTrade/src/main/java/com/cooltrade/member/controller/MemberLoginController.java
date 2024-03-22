@@ -49,7 +49,12 @@ public class MemberLoginController extends HttpServlet {
 			session.setAttribute("headerCo", headerCo);
 			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", loginUser.getUserName()+"님 로그인 되었습니다.");
+			String subUrl = prevUrl.substring(prevUrl.indexOf("cooltrade/") + "cooltrade/".length());
+			if(subUrl.equals("searchpwd.me") || subUrl.equals("searchid.me")) {
+				response.sendRedirect(request.getContextPath());
+			}else {
 			response.sendRedirect(prevUrl);
+			}
 		}
 		
 		//request.getRequestDispatcher("views/common/header.jsp").forward(request, response);
