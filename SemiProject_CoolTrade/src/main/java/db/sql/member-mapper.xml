@@ -1460,4 +1460,10 @@
 		 WHERE PRODUCT_NO = ?
 	</entry>
 	
+	<entry key="decreaseOndo">
+		UPDATE MEMBER
+		   SET ONDO = ONDO - 0.5
+		 WHERE USER_NO IN (?, ?)
+	</entry>
+	
 </properties>

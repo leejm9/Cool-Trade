@@ -2303,4 +2303,24 @@ public class MemberDao {
 		}
 		return reportedUser;
 	}
+	
+	public int decreaseOndo(Connection conn, int buno, int suno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("decreaseOndo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, buno);
+			pstmt.setInt(2, suno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
 }

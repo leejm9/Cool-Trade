@@ -48,7 +48,9 @@ public class TradeCompleteController extends HttpServlet {
 		int check = new ChatService().countChatRoom(buyer.getUserId(), seller.getUserId());
 		int checkResult = 0;
 		String message = "<b> 상품명 " + p.getProductName() + "에 대한 거래를 시작해 보세요.</b> <br>" + " - 구매자 : "
-				+ buyer.getNickName() + "<br>" + "입금 확인 후 거래를 완료하세요. <br> <button id='tradeComplete'>거래완료</button> <button id='tradeCancel'>거래취소</button> <input type='hidden' id='pno' value='"+pno+"'>";
+				+ buyer.getNickName() + "<br>"
+				+ "입금 확인 후 거래를 완료하세요. <br> <button id='tradeComplete'>거래완료</button> <button id='tradeCancel'>거래취소</button> <input type='hidden' id='pno' value='"
+				+ pno + "'>";
 		int result = new ProductService().insertTrade(pno, buyerNo);
 
 		if (result > 0) {
@@ -59,11 +61,16 @@ public class TradeCompleteController extends HttpServlet {
 
 			int chatCheckResult = new ChatService().insertMessage(buyer.getUserId(), message, chatRoomNo);
 			if (chatCheckResult > 0) {
-				request.getSession().setAttribute("alertMsg", "상품을 구매했습니다!");
-				request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
+				int ondoCheck = new MemberService().decreaseOndo(buyer.getUserNo(), seller.getUserNo());
+				if (ondoCheck > 0) {
+					request.getSession().setAttribute("alertMsg", "상품을 구매했습니다!");
+					request.getRequestDispatcher("views/common/home.jsp").forward(request, response);
+				}
 			}
 		} else {
 			request.getSession().setAttribute("alertMsg", "구매할수 없는 상품입니다.");
+			request.setAttribute("errorMsg", "상품 구매에 실패했습니다!");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 
 	}

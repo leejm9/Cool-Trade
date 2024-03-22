@@ -709,4 +709,16 @@ public class MemberService {
 		return reportedUser;
 	}
 
+	public int decreaseOndo(int buno, int suno) {
+		Connection conn = getConnection();
+		
+		int result = new MemberDao().decreaseOndo(conn, buno, suno);
+		
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
 }
