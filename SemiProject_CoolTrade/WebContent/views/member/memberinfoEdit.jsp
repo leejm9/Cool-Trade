@@ -105,6 +105,16 @@
         height: 45px;
         border: solid 1px rgb(220, 220, 220);
     }
+
+    tr {
+      border: solid 1px rgb(220, 220, 220);
+    }
+
+    td,th{
+        width: 350px;
+        height: 45px;
+        border: solid 1px rgb(220, 220, 220);
+    }
     
     #table th{
         width: 130px;
@@ -133,6 +143,14 @@
     height: 30px;
     margin-right: 20px;
        
+    }
+    
+    .inputb{
+      height: 30px;
+      margin-left: 5px;
+      border: none;
+      outline: none;
+      
     }
 
     .bank{
@@ -350,26 +368,26 @@
             <table id="table" style="margin-top:0px;">
               <tr>
                 <th>배송지명</th>
-                <td><input type="text" class="inputbox" id="delivery-address-title" placeholder="배송지명(최대10글자)"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-title" placeholder="배송지명(최대10글자)"/></td>
               </tr>
               <tr>
                 <th>받는사람</th>
-                <td><input type="text" class="inputbox" id="delivery-address-name" placeholder="이름입력"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-name" placeholder="이름입력"/></td>
               </tr>
               <tr>
                 <th>전화번호</th>
-                <td><input type="text" class="inputbox" id="delivery-address-phone" placeholder="휴대폰 번호"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-phone" placeholder="휴대폰 번호(-를 넣어서 입력)"/></td>
               </tr>
               <tr>
                 <th>주소검색</th>
                 <td>
-                <input type="text" class="inputbox" id="delivery-address-address" placeholder="주소 검색" readonly onclick="fnGetPost(fnSetKorPost);"/>
+                <input type="text" class="inputb" id="delivery-address-address" placeholder="주소 검색" readonly onclick="fnGetPost(fnSetKorPost);"/>
                 <input type="hidden" id="delivery-address-postcode"/>
                 </td>
               </tr>
               <tr>
                 <th>상세주소</th>
-                <td><input type="text" class="inputbox" id="delivery-address-detail" placeholder="상세주소(예시:101동101호)"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-detail" placeholder="상세주소(예시:101동101호)"/></td>
               </tr>
               
               <tr>
