@@ -123,10 +123,10 @@ ArrayList<ChatRoom>
 <!--             </thead> -->
 <!--             <tbody> -->
 <%--               <% int count = 0; %> <% boolean chatRoomExists = false; %> <% --%>
-<%--               for(ChatRoom c : list){ %> <% --%>
-<!--                if(c.getUserId().equals(loginUser.getUserId()) || -->
+<%--                for(ChatRoom c : list){ %> <% --%>
+//                if(c.getUserId().equals(loginUser.getUserId()) ||
 <%--               c.getSellerId().equals(loginUser.getUserId())){ %> <% --%>
-<%--               chatRoomExists = true; %> --%>
+<%--                chatRoomExists = true; %>  --%>
 <!--               <tr> -->
 <%--                 <td><%= c.getChatRoomNo() %></td> --%>
 <%--                 <td><%= c.getChatRoomTitle() %></td> --%>
@@ -149,13 +149,11 @@ ArrayList<ChatRoom>
             </div>  
             <div class="chat-list-area">  
               <div>
-                <% if(list.isEmpty()) { %>
-                <div>
-                  <div>존재하는 채팅방이 없습니다.</div>
-                </div>
-                <% } else { %> 
+                
+         <% int count = 0; %>
                 	<% for(ChatRoom c : list) { %>
                 		<% if(c.getUserId().equals(loginUser.getUserId()) || c.getSellerId().equals(loginUser.getUserId())) { %>
+		                <% count++; %>
 		                <div class="chat-list-div">
         				  <input type="hidden" value="<%= c.getUserId() %>">
                			  <input type="hidden" value="<%= c.getSellerId() %>">
@@ -184,9 +182,14 @@ ArrayList<ChatRoom>
 			                  <div class="chat-list-name"><%= c.getBuyerNickname() %></div>
 			              <% } %>
                 		</div>
-                		<% } %> 
+                		<% } %>
+                		<% if(count == 0){ %>
+                			<tr>
+				                <td colspan="4">존재하는 채팅방이 없습니다.</td>
+				              </tr>
+                		<% } %>
                 	<% } %> 
-                <% } %>
+              
               </div>
 	      	</div>
           </div>
