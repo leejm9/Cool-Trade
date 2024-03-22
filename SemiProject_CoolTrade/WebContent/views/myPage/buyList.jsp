@@ -57,16 +57,16 @@
             height: 60px;
         }
 
-        li {
+        .li-cr {
             list-style: none;
         }
 
-        a {
+        .a-cr {
             text-decoration: none;
             color: #444444;
         }
 
-        a:hover {
+        .a-cr:hover {
             color: rgb(4, 180, 252);
         }
 
@@ -113,6 +113,10 @@
             font-weight: 700;
             cursor: pointer;
         }
+        
+        .buy-list-search-btn:hover {
+        	border-bottom: 2px solid #d1cccc;
+        }
 
         #right-content-search-area {
             display: flex;
@@ -147,7 +151,7 @@
             background: white;
         }
 
-        table {
+        .table-cr {
             border-top: 2px solid #d6d6d6;
             border-bottom: 1px solid #e6e6e6;
             width: 100%;
@@ -165,8 +169,12 @@
             font-size: 13px;
             cursor: pointer;
         }
+        
+        .list-select-btn:hover:not(:disabled) {
+		    /*color: rgb(4, 108, 250);*/
+		}
 
-        td {
+        .td-cr {
             text-align: center;
             font-size: 14px;
             border: 1px solid #e6e6e6;
@@ -177,7 +185,7 @@
             padding-bottom: 5px;
         }
 
-        th {
+        .th-cr {
             text-align: center;
         }
 
@@ -367,28 +375,28 @@
             <div>
                <div>
                     <ul>
-                        <li class="sub-title-li">
+                        <li class="sub-title-li li-cr">
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
                         
-                        <li class="sub-title-li">
+                        <li class="sub-title-li li-cr">
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=1">찜한 상품</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
@@ -447,43 +455,43 @@
                 </div>
 
                 <div id="right-content-buy-list-area">
-                    <table>
+                    <table class="table-cr">
                         <thead>
                             <tr id="thead-tr">
-                                <th>구매일자</th>
-                                <th>상품</th>
-                                <th>금액</th>
-                                <th>상태</th>
-                                <th>이용후기</th>
+                                <th class="th-cr">구매일자</th>
+                                <th class="th-cr">상품</th>
+                                <th class="th-cr">금액</th>
+                                <th class="th-cr">상태</th>
+                                <th class="th-cr">이용후기</th>
                             </tr>
                         </thead>
                         <tbody>
                         	<% for(int i=0; i<list.size(); i++) { %>
 	                            <tr>
-	                                <td id="td-date"><%= list.get(i).getTradeDate() %></td>
-	                                <td id="td-po">
+	                                <td id="td-date" class="td-cr"><%= list.get(i).getTradeDate() %></td>
+	                                <td id="td-po" class="td-cr">
 	                                    <div>
 	                                    	<% if(list.get(i).getUploadType().equals("Y") || list.get(i).getUploadType().equals("P") || list.get(i).getUploadType().equals("C")) { %>
 		                                    	<div>
 			                                        <% if(list.get(i).getTitleImg() != null) { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>" class="a-cr"><img class="titleImg" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
-		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="resources/images/no_img.png"></a>
+		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>" class="a-cr"><img class="titleImg" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><%= list.get(i).getProductName() %></a>
+			                                        <a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>" class="a-cr"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } else { %>
 	                                    		<div>
 			                                        <% if(list.get(i).getTitleImg() != null) { %>
-		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
+		                                    			<a href="#" onclick="deletePo(this);" class="a-cr"><img class="titleImg deletePo" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
 		                                    		<% } else { %>
-		                                    			<a href="#" onclick="deletePo(this);"><img class="titleImg deletePo" src="resources/images/no_img.png"></a>
+		                                    			<a href="#" onclick="deletePo(this);" class="a-cr"><img class="titleImg deletePo" src="resources/images/no_img.png"></a>
 	                                    			<% } %>
 		                                    	</div>
 		                                    	<div>
-			                                        <a class="deletePo" href="#" onclick="deletePo(this);"><%= list.get(i).getProductName() %></a>
+			                                        <a class="deletePo" href="#" onclick="deletePo(this);" class="a-cr"><%= list.get(i).getProductName() %></a>
 		                                    	</div>
 	                                    	<% } %>
 	                                    	
@@ -499,12 +507,12 @@
 	                                    </div>
 	                                </td>
 	                                
-	                                <td><%= list.get(i).getStrPrice() %>원</td>
-	                                <td>
+	                                <td class="td-cr"><%= list.get(i).getStrPrice() %>원</td>
+	                                <td class="td-cr">
 	                                    <div class="deliver-status"><%= list.get(i).getDeliveryStatus() %></div>
-	                                    <button type="button" class="list-select-btn">배송조회</button>
+										<!-- <button type="button" class="list-select-btn">배송조회</button> -->
 	                                </td>
-	                                <td>
+	                                <td class="td-cr">
 	                                	<% if(list.get(i).getReviewStatus().equals("Y")) { %>
 	                                    	<button type="button" class="list-select-btn" data-toggle="modal" data-target="#reviewModal" disabled>후기남기기</button>
                                 		<% } else { %>
@@ -567,7 +575,7 @@
 												      	<!-- Modal body -->
 												      	<div class="modal-body" align="center">
 												        
-												        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data">
+												        	<form action="<%= contextPath %>/reviewForm.me?" method="post" id="review-form" enctype="multipart/form-data" onsubmit="return validateForm()">
 												        		<input type="hidden" name="pno" value="<%= list.get(i).getProductNo() %>">
 												        		<input type="hidden" name="uno" value="<%= userNo %>">
 												        		<input type="hidden" name="cpage" value="1">
@@ -684,7 +692,7 @@
                     function changeColor(element) {
                         let input = element.querySelector('input[type="checkbox"]');
                         let checkboxVal = input.value;
-                        console.log(checkboxVal);
+                        //console.log(checkboxVal);
                         // 체크박스의 선택 여부에 따라 처리
                         if (!input.checked) {
                             // 체크되지 않은 경우
@@ -697,6 +705,7 @@
                             element.style.color = "black";
                             input.checked = false; // 체크박스 선택 해제
                         }
+                        
                     }
                     
                     function reviewForm(e){
@@ -705,19 +714,31 @@
                     	const moText = $(e).parent().siblings().eq(3).children();
                     	// checkValidity()는 required를 만족하는지 체크하는 메소드
                     	// input의 required가 만족하지않으면
+                    	
                     	if(!moImgInput[0].files.length){
                     		alert("이미지를 등록해주세요.");
                     		return false;
-                    	}  
+                    	} 
                     	
                     	if(!moText.val().trim()){
                     		alert("후기를 입력해주세요.");
                     		return false;
                     	}
+                    	
                     }
                     
+                    function validateForm() {
+                        const checkboxes = document.querySelectorAll('#se-review input[type="checkbox"]');
+                        const isChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
-					
+                        if (!isChecked) {
+                            alert('적어도 하나의 항목을 선택해야 합니다.');
+                            return false; // 폼 제출을 중단함
+                        }
+
+                        return true; // 폼 제출을 계속 진행함
+                    }
+                    
                     </script>  
                 
                 <div class="paging-area" align="center">

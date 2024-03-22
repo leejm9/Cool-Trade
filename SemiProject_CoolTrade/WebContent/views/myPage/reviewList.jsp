@@ -494,9 +494,9 @@
 			                <div id="review-list-area" class="flex-class">
 			                    <div id="buyer-profile-img">
 			                    <% if(r.getTitleImg() == null) { %>
-			                        <img src="resources/images/user-icon.png" alt="구매자 프로필 사진" width="50" height="50">
+			                        <img src="resources/images/user-icon.png" width="50" height="50">
 			                    <% } else { %>
-			                    	<img src="<%= contextPath %>/<%= r.getTitleImg() %>" alt="구매자 프로필 사진" width="50" height="50">
+			                    	<img src="<%= contextPath %>/<%= r.getTitleImg() %>" width="50" height="50">
 			                    <% } %>
 			                    </div>
 			                    <div id="review-content">

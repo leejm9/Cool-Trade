@@ -146,6 +146,10 @@
         cursor: pointer;
     }
 
+    .sell-list-select-btn:hover {
+        border-bottom: 2px solid #d1cccc; 
+    }
+
     .table-cr {
         border-top: 2px solid #d6d6d6;
         border-bottom: 1px solid #e6e6e6;

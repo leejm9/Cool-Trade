@@ -35,7 +35,7 @@ public class TradeCompleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		System.out.println("오냐?");
+		//System.out.println("오냐?");
 		request.setCharacterEncoding("UTF-8");
 
 		int pno = Integer.parseInt(request.getParameter("pno"));
