@@ -164,7 +164,9 @@ ArrayList<ChatRoom>
 			                  	<% if(c.getSellerTitleImg() == null) { %>
 			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
 			                  	<% } else { %>
-			                  	<div><%= c.getSellerTitleImg() %></div>
+			                  	<div>
+			                  		<img src="<%= contextPath %>/<%= c.getSellerTitleImg() %>">
+			                  	</div>
 			                  	<% } %>
 			                  </div>
 				              <div class="chat-list-name"><%= c.getSellerNickname() %></div>
@@ -174,7 +176,9 @@ ArrayList<ChatRoom>
            				        <% if(c.getBuyerTitleImg() == null) { %>
 			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
 			                  	<% } else { %>
-			                  	<div><%= c.getBuyerTitleImg() %></div>
+			                  	<div>
+			                  		<img src="<%= contextPath %>/<%= c.getBuyerTitleImg() %>">
+			                  	</div>
 			                  	<% } %>
 			                  </div>
 			                  <div class="chat-list-name"><%= c.getBuyerNickname() %></div>

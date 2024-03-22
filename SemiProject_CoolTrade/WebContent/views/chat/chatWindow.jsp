@@ -223,7 +223,9 @@ String user = (String)request.getAttribute("userId"); String seller =
             <img src="resources/images/user-icon.png" class="title-img" />
           </div>
           <% } else { %>
-          <div class="title-img"><%= c.getSellerTitleImg() %></div>
+          <div class="title-img">
+          	<img src="<%= contextPath %>/<%= c.getSellerTitleImg() %>" class="title-img">
+          </div>
           <% } %>
           <div><%= c.getSellerNickname() %></div>
           <% } else { %> <% if(c.getBuyerTitleImg() == null) { %>
@@ -231,7 +233,9 @@ String user = (String)request.getAttribute("userId"); String seller =
             <img src="resources/images/user-icon.png" class="title-img" />
           </div>
           <% } else { %>
-          <div class="title-img"><%= c.getBuyerTitleImg() %></div>
+          <div class="title-img">
+          	<img src="<%= contextPath %>/<%= c.getSellerTitleImg() %>" class="title-img">
+          </div>
           <% } %>
           <div><%= c.getBuyerNickname() %></div>
           <% } %>

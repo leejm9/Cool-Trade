@@ -463,7 +463,7 @@
 	                                <td id="td-date"><%= list.get(i).getTradeDate() %></td>
 	                                <td id="td-po">
 	                                    <div>
-	                                    	<% if(list.get(i).getUploadType().equals("Y") || list.get(i).getUploadType().equals("P")) { %>
+	                                    	<% if(list.get(i).getUploadType().equals("Y") || list.get(i).getUploadType().equals("P") || list.get(i).getUploadType().equals("C")) { %>
 		                                    	<div>
 			                                        <% if(list.get(i).getTitleImg() != null) { %>
 		                                    			<a href="<%= contextPath %>/detail.po?pno=<%= list.get(i).getProductNo() %>"><img class="titleImg" src="<%= contextPath %>/<%= list.get(i).getTitleImg() %>"></a>
