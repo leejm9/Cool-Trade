@@ -21,43 +21,41 @@ import com.google.gson.Gson;
 @WebServlet("/listOrder.po")
 public class AjaxListOrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AjaxListOrderController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public AjaxListOrderController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		int order = Integer.parseInt(request.getParameter("order"));
 		String search = request.getParameter("search");
 		String cno = request.getParameter("cno");
 		ArrayList<Product> plist = new ArrayList<Product>();
 		ArrayList<Images> imgList = new ArrayList<Images>();
-
-		if(cno == null || "null".equals(cno)) {
-			switch(order) {
-			case 1:
-				plist = new ProductService().arrangeByDateS(search);
+		if (!cno.equals("null")) {
+			switch (order) {
+			case 4:
+				plist = new ProductService().arrangeByDateS(search, cno);
 				imgList = new ProductService().getTitleImg(plist);
 				break;
-			case 2:
-				plist = new ProductService().arrangePriceLowS(search);
+			case 5:
+				plist = new ProductService().arrangePriceLowS(search, cno);
 				imgList = new ProductService().getTitleImg(plist);
 				break;
-			case 3:
-				plist = new ProductService().arrangePriceHighS(search);
+			case 6:
+				plist = new ProductService().arrangePriceHighS(search, cno);
 				imgList = new ProductService().getTitleImg(plist);
 				break;
-			}
-		}else {
-			switch(order) {
 			case 1:
 				plist = new ProductService().arrangeByDateC(cno);
 				imgList = new ProductService().getTitleImg(plist);
@@ -71,20 +69,37 @@ public class AjaxListOrderController extends HttpServlet {
 				imgList = new ProductService().getTitleImg(plist);
 				break;
 			}
+		} else {
+			switch (order) {
+			case 4:
+				plist = new ProductService().arrangeByDateS2(search);
+				imgList = new ProductService().getTitleImg(plist);
+				break;
+			case 5:
+				plist = new ProductService().arrangePriceLowS2(search);
+				imgList = new ProductService().getTitleImg(plist);
+				break;
+			case 6:
+				plist = new ProductService().arrangePriceHighS2(search);
+				imgList = new ProductService().getTitleImg(plist);
+				break;
+			}
 		}
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("plist", plist);
 		map.put("imgList", imgList);
-		
+
 		response.setContentType("application/json; charset=utf-8");
-		new Gson().toJson(map,response.getWriter());
+		new Gson().toJson(map, response.getWriter());
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

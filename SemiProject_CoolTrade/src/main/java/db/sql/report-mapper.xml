@@ -15,6 +15,7 @@
 		                  JOIN PRODUCT P ON (M.USER_NO=P.SELLER_NO)
 		                  JOIN REPORT R USING (PRODUCT_NO)
 		                  JOIN REPORT_TYPE RT USING (REPORT_TYPE_NO)
+                         WHERE REPORT_STATUS = 'Y'
 		                 ORDER
 		                    BY 4 DESC
 		                    ) A
@@ -103,6 +104,13 @@
 		   SET REPORT_STATUS = 'N'
 		 WHERE REPORT_NO = ?
 		   AND REPORT_STATUS = 'Y'
+	</entry>
+		
+	<entry key="getReportedProductNo">
+		SELECT
+		       PRODUCT_NO
+		  FROM REPORT
+		 WHERE REPORT_NO = ?
 	</entry>
 	
 </properties>

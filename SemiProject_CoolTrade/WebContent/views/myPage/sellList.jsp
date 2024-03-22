@@ -56,16 +56,16 @@
         height: 60px;
     }
 
-    li {
+    .li-cr {
         list-style: none;
     }
 
-    a {
+    .a-cr {
         text-decoration: none;
         color: #444444;
     }
 
-    a:hover {
+    .a-cr:hover {
         color: rgb(4, 180, 252);
     }
 
@@ -146,7 +146,7 @@
         cursor: pointer;
     }
 
-    table {
+    .table-cr {
         border-top: 2px solid #d6d6d6;
         border-bottom: 1px solid #e6e6e6;
         width: 100%;
@@ -166,14 +166,14 @@
         margin: 3px;
     }
 
-    td {
+    .td-cr {
         text-align: center;
         font-size: 14px;
         border: 1px solid #e6e6e6;
         padding: 10px 10px;
     }
 
-    th {
+    .th-cr {
         text-align: center;
     }
 
@@ -261,28 +261,28 @@
             <div>
                <div>
                     <ul>
-                        <li class="sub-title-li">
+                        <li class="sub-title-li li-cr">
                             <h3 class="sub-title-h3">내정보</h3>
                             <ul>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/infoedit.me">회원정보 수정</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/review.me?uno=<%= userNo %>">거래 후기</a>
                                 </li>
                             </ul>
                         </li>
                         
-                        <li class="sub-title-li">
+                        <li class="sub-title-li li-cr">
                             <h3 class="sub-title-h3">마이 쇼핑</h3>
                             <ul>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/likelist.me?uno=<%= userNo %>&cpage=1">찜한 상품</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/buylist.me?uno=<%= userNo %>&cpage=1">구매 내역</a>
                                 </li>
-                                <li class="sub-title-list">
+                                <li class="sub-title-list li-cr">
                                     <a href="<%= contextPath %>/selllist.me?uno=<%= userNo %>&cpage=1">판매 내역</a>
                                 </li>
                             </ul>
@@ -341,52 +341,52 @@
                 </script>
                 
                 <div id="right-content-read">
-                    <table>
+                    <table class="table-cr">
                         <thead>
                             <tr id="thead-tr"> 
-                                <th id="th-date">등록일자</th>
-                                <th id="th-po">상품</th>
-                                <th id="th-price">가격</th>
-                                <th class="th-oth">찜</th>
-                                <th class="th-oth">쿨거래</th>
-                                <th id="th-status">판매상태</th>
-                                <th id="th-func">기능</th>
+                                <th id="th-date" class="th-cr">등록일자</th>
+                                <th id="th-po" class="th-cr">상품</th>
+                                <th id="th-price" class="th-cr">가격</th>
+                                <th class="th-oth th-cr">찜</th>
+                                <th class="th-oth th-cr">쿨거래</th>
+                                <th id="th-status" class="th-cr">판매상태</th>
+                                <th id="th-func" class="th-cr">기능</th>
                             </tr>
                         </thead>
                         
                         <tbody>
                            	<% for(Product p : list) { %>
                             	<tr>
-	                                <td><%= p.getUploadDate() %></td>
-	                                <td>
+	                                <td class="td-cr"><%= p.getUploadDate() %></td>
+	                                <td class="td-cr">
 	                                    <div>
 	                                    	<div>
 	                                    		<% if(p.getTitleImg() != null) { %>
-	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>">
+	                                    			<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>" class="a-cr">
 	                                    				<img class="titleImg" src="<%= contextPath %>/<%= p.getTitleImg() %>">
 	                                    			</a>
 	                                    		<% } else { %>
-	                                    			<a href="#"><img class="titleImg" src="resources/images/no_img.png"></a>
+	                                    			<a href="#" class="a-cr"><img class="titleImg" src="resources/images/no_img.png"></a>
                                     			<% } %>
 	                                    	</div>
 	                                    	<div>
-	                                    		<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>"><%= p.getProductName() %></a>
+	                                    		<a href="<%= contextPath %>/detail.po?pno=<%= p.getProductNo() %>" class="a-cr"><%= p.getProductName() %></a>
 	                                    	</div>
 	                                    </div>
 	                                </td>
 	                                
-	                                <td class="td-price">
+	                                <td class="td-price td-cr">
 	                                	<%= p.getStrPrice() %>원
 	                                </td>
 	                                
-	                                <td><%= p.getCount() %></td>
+	                                <td class="td-cr"><%= p.getCount() %></td>
 	                                	<% if(p.getTradeType() == 1) { %>
-	                                		<td>X</td>
+	                                		<td class="td-cr">X</td>
 	                                	<% } else { %>
-	                                		<td>O</td>
+	                                		<td class="td-cr">O</td>
 	                                	<% } %>
 	                                
-	                                <td>
+	                                <td class="td-cr">
 
                                         <% if(p.getSellStatus().equals("판매중")) { %>
                                         	<select name="sell-status" onchange="changeSel(this, <%= p.getProductNo() %>);">
@@ -428,14 +428,14 @@
                                     
 	                                </td>
 
-	                                <td>
+	                                <td class="td-cr">
 	                                    <div>
 	                                        <button type="button" class="func-btn" onclick="updateBtn(this, <%= p.getProductNo() %>);">수정</button>
 	                                    </div>
 	                                    <div>
 	                                        <button type="button" class="func-btn" onclick="deleteBtn(<%= p.getProductNo() %>);">삭제</button>
 	                                    </div>                                   
-	                                </td>
+	                                </td class="td-cr">
 	                                
                             	</tr>
                             <% } %>

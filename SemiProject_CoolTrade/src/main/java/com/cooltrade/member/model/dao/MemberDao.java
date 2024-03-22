@@ -214,17 +214,16 @@ public class MemberDao {
       return result;
    }
    
-   public Member countMember(Connection conn) {
-      Member m = null; 
+   public int countMember(Connection conn) {
+      int enrollMember = 0; 
       PreparedStatement pstmt = null;
       ResultSet rset = null;
       String sql = prop.getProperty("countMember");
       try {
          pstmt = conn.prepareStatement(sql);
-         
          rset = pstmt.executeQuery();
          if(rset.next()) {
-            m = new Member(rset.getInt("count"));
+        	 enrollMember = rset.getInt("count");
          }
       } catch (SQLException e) {
          e.printStackTrace();
@@ -232,7 +231,7 @@ public class MemberDao {
          close(rset);
          close(pstmt);
       }
-      return m;
+      return enrollMember;
    }
    
    public int updateUserLevel(Connection conn, int userNo) {
@@ -645,6 +644,7 @@ public class MemberDao {
             list.add(p);
             
          }
+         System.out.println("리스트 담기냐?"+list);
          
       } catch (SQLException e) {
          // TODO Auto-generated catch block
@@ -2278,7 +2278,29 @@ public class MemberDao {
 		}
 		return black;
 	}
-			
-			
+	
+	public String getReportedUserName(Connection conn,int ReportedProductNo) {
+		String reportedUser = null;
 		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getReportedUserName");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, ReportedProductNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				reportedUser = rset.getString("user_name");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return reportedUser;
+	}
 }

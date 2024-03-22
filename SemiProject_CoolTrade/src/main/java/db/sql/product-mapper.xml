@@ -12,16 +12,16 @@
 		SELECT 
 		       NVL(COUNT(*),0) tstockgoods
 		  FROM PRODUCT
-		 WHERE UPLOAD_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		 WHERE TO_CHAR(UPLOAD_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
 	</entry>
 	
 	<entry key="countReportedProduct">
-		SELECT NVL(COUNT(*),0) reportedproduct
+		SELECT COUNT(*) reportedproduct
 		  FROM (SELECT DISTINCT
 				       PRODUCT_NO
 				  FROM PRODUCT
 				  JOIN REPORT USING (PRODUCT_NO)
-				 WHERE REPORT_DATE = TO_CHAR(SYSDATE,'YY/MM/DD'))
+		 WHERE TO_CHAR(REPORT_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD'))
 	</entry>
 	
 	<entry key="selectProductCount">
@@ -72,6 +72,7 @@ SELECT
 		  FROM PRODUCT 
 		  JOIN CATEGORY 
 		 USING (CATEGORY_NO)
+		 WHERE UPLOAD_TYPE = 'Y'
 		 GROUP
 		    BY CATEGORY_NAME
 		     , CATEGORY_NO
@@ -100,6 +101,30 @@ SELECT
      	           OR PRODUCT_DESC LIKE '%' || ? || '%')
 	</entry> 
 	
+	<entry key="searchProductListWithCno">
+	  SELECT PRODUCT_NO
+    	   , SELLER_NO
+    	   , PRODUCT_NAME
+    	   , CATEGORY_NO
+    	   , PRICE
+    	   , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
+    	   , ZONE
+    	   , UPLOAD_DATE
+    	   , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
+    		      THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
+		  	      WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
+		  	      THEN 
+  	    	 CASE WHEN (SYSDATE - UPLOAD_DATE) * 24 &lt; 1 
+  	    	   	  THEN TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 1440)) || '분 전' 
+  	    		  ELSE TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 24)) || '시간 전' END 
+  	     		  ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
+         FROM PRODUCT 
+        WHERE UPLOAD_TYPE = 'Y'
+          AND (PRODUCT_NAME LIKE '%' || ? || '%'
+           OR PRODUCT_DESC LIKE '%' || ? || '%')
+          AND CATEGORY_NO = ? 
+	</entry> 
+	
 	<entry key="searchCatList">
 		SELECT 
 		       CATEGORY_NAME
@@ -108,6 +133,21 @@ SELECT
 		  FROM CATEGORY 
 		  LEFT 
 		  JOIN PRODUCT USING (CATEGORY_NO)
+		 WHERE UPLOAD_TYPE = 'Y'
+		 GROUP 
+		    BY CATEGORY_NAME, CATEGORY_NO
+	</entry>
+
+	<entry key="searchCatListWithCno">
+		SELECT 
+		       CATEGORY_NAME
+		     , CATEGORY_NO
+		     , COUNT(CASE WHEN (PRODUCT_NAME LIKE '%' || ? || '%' OR PRODUCT_DESC LIKE '%' || ? || '%') THEN 1 END) AS count
+		  FROM CATEGORY 
+		  LEFT 
+		  JOIN PRODUCT USING (CATEGORY_NO)
+		 WHERE CATEGORY_NO = ?
+		   AND UPLOAD_TYPE = 'Y'
 		 GROUP 
 		    BY CATEGORY_NAME, CATEGORY_NO
 	</entry>
@@ -121,6 +161,20 @@ SELECT
 		 	   PRODUCT_NAME LIKE '%' || ? || '%'
 		 	   OR PRODUCT_DESC LIKE '%' || ? || '%'
 		 	 )  
+		   AND UPLOAD_TYPE = 'Y'	 
+	</entry>
+
+	<entry key="countProductWithCno">
+		SELECT 
+		       COUNT(*) count
+		  FROM PRODUCT 
+		 WHERE 
+		 	 ( 
+		 	   PRODUCT_NAME LIKE '%' || ? || '%'
+		 	   OR PRODUCT_DESC LIKE '%' || ? || '%'
+		 	 )  
+		   AND UPLOAD_TYPE = 'Y'	 
+		   AND CATEGORY_NO = ?
 	</entry>
 
 	<entry key="selectRecentList">
@@ -217,7 +271,6 @@ SELECT
 		       PRODUCT
 		   SET COUNT = COUNT + 1
 		 WHERE PRODUCT_NO = ?
-		   AND UPLOAD_TYPE = 'Y'
 	</entry>
 	
 	<entry key="selectImages">
@@ -390,16 +443,16 @@ SELECT
 	
 	<entry key="selectDaySales">
 		SELECT
-		       TO_CHAR(TRADE_DATE,'MM/DD') TRADE_DATE
+		       TO_CHAR(TRADE_DATE,'MM/DD') trade_date
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)
 		 WHERE TO_CHAR(TRADE_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
 		   AND TRADE_DATE > SYSDATE-7
 		 GROUP
-		    BY trade_date
+		    BY TO_CHAR(TRADE_DATE,'MM/DD') 
 		 ORDER
-            BY trade_date
+		    BY trade_date
 	</entry>
 	
 	<entry key="deleteBoard">
@@ -529,6 +582,7 @@ SELECT
 		SELECT COUNT(*) count
 		  FROM PRODUCT
 		 WHERE CATEGORY_NO = ? 
+		   AND UPLOAD_TYPE = 'Y'
 	</entry>
 	
 	<entry key="arrangeByDateC">
@@ -622,8 +676,9 @@ SELECT
   	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
           FROM PRODUCT 
          WHERE UPLOAD_TYPE = 'Y'
-           AND PRODUCT_NAME LIKE '%' || ? || '%'
-            OR PRODUCT_DESC LIKE '%' || ? || '%'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
+           AND CATEGORY_NO = ?
          ORDER
             BY UPLOAD_DATE DESC
 	</entry>
@@ -647,8 +702,9 @@ SELECT
   	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
           FROM PRODUCT 
          WHERE UPLOAD_TYPE = 'Y'
-           AND PRODUCT_NAME LIKE '%' || ? || '%'
-            OR PRODUCT_DESC LIKE '%' || ? || '%'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
+           AND CATEGORY_NO = ?
          ORDER
             BY PRICE DESC
 	</entry>
@@ -672,8 +728,84 @@ SELECT
   	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
           FROM PRODUCT 
          WHERE UPLOAD_TYPE = 'Y'
-           AND PRODUCT_NAME LIKE '%' || ? || '%'
-            OR PRODUCT_DESC LIKE '%' || ? || '%'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
+           AND CATEGORY_NO = ?
+         ORDER
+            BY PRICE ASC
+	</entry>
+	
+	<entry key="arrangeByDateS2">
+		SELECT PRODUCT_NO
+    	     , SELLER_NO
+    	     , PRODUCT_NAME
+    	     , CATEGORY_NO
+    	     , PRICE
+    	     , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
+    	     , ZONE
+    	     , UPLOAD_DATE
+    	     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
+    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
+  	      WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
+  	      THEN 
+  	    	   CASE WHEN (SYSDATE - UPLOAD_DATE) * 24 &lt; 1 
+  	    	   	   THEN TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 1440)) || '분 전' 
+  	    			    ELSE TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 24)) || '시간 전' END 
+  	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
+          FROM PRODUCT 
+         WHERE UPLOAD_TYPE = 'Y'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
+         ORDER
+            BY UPLOAD_DATE DESC
+	</entry>
+	
+	<entry key="arrangePriceHighS2">
+		SELECT PRODUCT_NO
+    	     , SELLER_NO
+    	     , PRODUCT_NAME
+    	     , CATEGORY_NO
+    	     , PRICE
+    	     , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
+    	     , ZONE
+    	     , UPLOAD_DATE
+    	     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
+    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
+  	      WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
+  	      THEN 
+  	    	   CASE WHEN (SYSDATE - UPLOAD_DATE) * 24 &lt; 1 
+  	    	   	   THEN TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 1440)) || '분 전' 
+  	    			    ELSE TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 24)) || '시간 전' END 
+  	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
+          FROM PRODUCT 
+         WHERE UPLOAD_TYPE = 'Y'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
+         ORDER
+            BY PRICE DESC
+	</entry>
+	
+	<entry key="arrangePriceLowS2">
+		SELECT PRODUCT_NO
+    	     , SELLER_NO
+    	     , PRODUCT_NAME
+    	     , CATEGORY_NO
+    	     , PRICE
+    	     , TO_CHAR(PRICE,'FM999,999,999') AS STR_PRICE
+    	     , ZONE
+    	     , UPLOAD_DATE
+    	     , CASE WHEN ABS(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) &gt;= 7 
+    		     THEN TO_CHAR(UPLOAD_DATE, 'YYYY-MM-DD') 
+  	      WHEN TRUNC(SYSDATE) = TRUNC(UPLOAD_DATE) 
+  	      THEN 
+  	    	   CASE WHEN (SYSDATE - UPLOAD_DATE) * 24 &lt; 1 
+  	    	   	   THEN TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 1440)) || '분 전' 
+  	    			    ELSE TO_CHAR(FLOOR((SYSDATE - UPLOAD_DATE) * 24)) || '시간 전' END 
+  	      ELSE TO_CHAR(TRUNC(SYSDATE) - TRUNC(UPLOAD_DATE)) || '일 전' END AS TIME_DIFF
+          FROM PRODUCT 
+         WHERE UPLOAD_TYPE = 'Y'
+           AND (PRODUCT_NAME LIKE '%' || ? || '%'
+            OR PRODUCT_DESC LIKE '%' || ? || '%')
          ORDER
             BY PRICE ASC
 	</entry>
@@ -771,5 +903,11 @@ SELECT
 		 WHERE PRODUCT_NO = ?
 	</entry>
 	
+	<entry key="reduceCount">
+		UPDATE
+		       PRODUCT
+		   SET COUNT = COUNT - 1
+		 WHERE PRODUCT_NO = ?
+	</entry>
 
 </properties>
