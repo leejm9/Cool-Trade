@@ -105,6 +105,22 @@
         height: 45px;
         border: solid 1px rgb(220, 220, 220);
     }
+
+    /* tr {
+      border: solid 1px rgb(220, 220, 220);
+    } */
+
+    td{
+        width: 350px;
+        height: 45px;
+        border: solid 1px rgb(220, 220, 220);
+    }
+
+    .infotable{
+      width: 350px;
+      height: 45px;
+      border: solid 1px rgb(220, 220, 220);
+    }
     
     #table th{
         width: 130px;
@@ -133,6 +149,14 @@
     height: 30px;
     margin-right: 20px;
        
+    }
+    
+    .inputb{
+      height: 30px;
+      margin-left: 5px;
+      border: none;
+      outline: none;
+      
     }
 
     .bank{
@@ -241,36 +265,36 @@
 			  
        <table id="table">
        
-            <tr>
-                <th>이름</th>
+            <tr class="infotable">
+                <th class="infotable">이름</th>
                 <td>&nbsp;<%=name %></td>  
             </tr>
       
-            <tr>
-                <th>아이디</th>
+            <tr class="infotable">
+                <th class="infotable">아이디</th>
                 <td>&nbsp;<%=id %></td>
                 
             </tr>
-            <tr>
-                <th>비밀번호</th>
+            <tr class="infotable">
+                <th class="infotable">비밀번호</th>
                 <td>&nbsp;<input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()"" class="btncss">변경</button></td>
                
             </tr>
-            <tr>
-                <th>휴대폰번호</th>
+            <tr class="infotable">
+                <th class="infotable">휴대폰번호</th>
                 <td>&nbsp;<input type="tel" class="inputbox" id="phone" maxlength='13' value="<%= phone %>"><button onclick="btnChangePhone()"" class="btncss">변경</button></td>
             </tr>
-            <tr>
-                <th>이메일</th>
+            <tr class="infotable">
+                <th class="infotable">이메일</th>
                 <td>&nbsp;<input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE"" class="btncss">변경</button></td>
             </tr>
-            <tr>
-                <th>주소</th>
+            <tr class="infotable">
+                <th class="infotable">주소</th>
                 <td>&nbsp;<div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 20px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();"" class="btncss">선택</button></td>
             </tr>
             <tr>
                 <div>
-                <th>계좌번호</th>
+                <th class="infotable">계좌번호</th>
                 <td>&nbsp; 
                       <select class="bank" id="bank">
                         <option value="국민은행" <%= "국민은행".equals(bankAccount.getBank())?"selected":"" %>>국민은행</option>
@@ -350,26 +374,26 @@
             <table id="table" style="margin-top:0px;">
               <tr>
                 <th>배송지명</th>
-                <td><input type="text" class="inputbox" id="delivery-address-title" placeholder="배송지명(최대10글자)"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-title" placeholder="배송지명(최대10글자)"/></td>
               </tr>
               <tr>
                 <th>받는사람</th>
-                <td><input type="text" class="inputbox" id="delivery-address-name" placeholder="이름입력"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-name" placeholder="이름입력"/></td>
               </tr>
               <tr>
                 <th>전화번호</th>
-                <td><input type="text" class="inputbox" id="delivery-address-phone" placeholder="휴대폰 번호"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-phone" placeholder="휴대폰 번호(-를 넣어서 입력)"/></td>
               </tr>
               <tr>
                 <th>주소검색</th>
                 <td>
-                <input type="text" class="inputbox" id="delivery-address-address" placeholder="주소 검색" readonly onclick="fnGetPost(fnSetKorPost);"/>
+                <input type="text" class="inputb" id="delivery-address-address" placeholder="주소 검색" readonly onclick="fnGetPost(fnSetKorPost);"/>
                 <input type="hidden" id="delivery-address-postcode"/>
                 </td>
               </tr>
               <tr>
                 <th>상세주소</th>
-                <td><input type="text" class="inputbox" id="delivery-address-detail" placeholder="상세주소(예시:101동101호)"/></td>
+                <td><input type="text" class="inputb" id="delivery-address-detail" placeholder="상세주소(예시:101동101호)"/></td>
               </tr>
               
               <tr>

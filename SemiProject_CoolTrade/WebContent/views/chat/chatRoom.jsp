@@ -124,7 +124,7 @@ ArrayList<ChatRoom>
 <!--             <tbody> -->
 <%--               <% int count = 0; %> <% boolean chatRoomExists = false; %> <% --%>
 <%--               for(ChatRoom c : list){ %> <% --%>
-//               if(c.getUserId().equals(loginUser.getUserId()) ||
+<!--                if(c.getUserId().equals(loginUser.getUserId()) || -->
 <%--               c.getSellerId().equals(loginUser.getUserId())){ %> <% --%>
 <%--               chatRoomExists = true; %> --%>
 <!--               <tr> -->
