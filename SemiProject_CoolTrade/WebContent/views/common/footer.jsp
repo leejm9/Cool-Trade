@@ -25,10 +25,11 @@
                     <div id="footer2-2-ds">
                         <h3>Social</h3>
                         <p>
-                            <a href="#"><img src="resources/images/icon-facebook.png" width="20" height="20" style="margin-right: 2px;">페이스북</a><br>
-                            <a href="#"><img src="resources/images/icon-youtube.png" width="25" height="25" style="margin-right: 2px;">유튜브</a><br>
-                            <a href="#"><img src="resources/images/icon-instagram.png" width="20" height="20" style="margin-right: 2px;">인스타그램</a><br>
-                            <a href="#"><img src="resources/images/icon-twitter.png" width="15" height="15" style="margin-right: 2px;">트위터</a><br>
+                            <a href="https://www.facebook.com/" target="_blank"><img src="resources/images/icon-facebook.png" width="20" height="20" style="margin-right: 2px;">페이스북</a><br>
+                            <a href="https://www.youtube.com/" target="_blank"><img src="resources/images/icon-youtube.png" width="25" height="25" style="margin-right: 2px;">유튜브</a><br>
+                            <a href="https://www.instagram.com/" target="_blank"><img src="resources/images/icon-instagram.png" width="20" height="20" style="margin-right: 2px;">인스타그램</a><br>
+                            <a href="https://twitter.com/?lang=ko" target="_blank"><img src="resources/images/icon-twitter.png" width="15" height="15" style="margin-right: 2px;">트위터</a><br>
+                            
                         </p>
                     </div>
                     <div id="footer2-3-ds">
