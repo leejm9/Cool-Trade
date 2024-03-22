@@ -645,6 +645,7 @@ public class MemberDao {
             list.add(p);
             
          }
+         System.out.println("리스트 담기냐?"+list);
          
       } catch (SQLException e) {
          // TODO Auto-generated catch block
