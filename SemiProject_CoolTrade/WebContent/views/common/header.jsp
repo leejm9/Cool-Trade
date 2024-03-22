@@ -250,12 +250,12 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                         border-radius: 50px;
                         display: inline-block;
                         padding: 0px 14px 0px 5px;
-                        width: 15px;
-                        height: 0px;
+                        width: 17px;
+                        height: 17px;
                         text-align: 10px;
                       "
                     >
-                      0
+                      8
                     </div>
                   </button>
                   <div
@@ -338,7 +338,6 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                           $("#alarmCount").html(list.length);
                         } else {
                           $(".content-container").html("받은 알림이 없습니다");
-                          $("#alarmCount").remove();
                         }
                       },
                       error: function () {
@@ -412,8 +411,12 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                         } else {
                           $(".content-container").html("받은 알림이 없습니다");
                         }
-
+						if(list.length === 0){
+							$("#alarmCount").remove();
+						}else{
+							
                         $("#alarmCount").html(list.length);
+						}
                       },
                       error: function () {
                         console.log("ajax 통신 실패");
@@ -664,21 +667,21 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                     >
                     <br />
                   </div>
-                  <div class="category_hover-ds flex-ds">
-                    <a href="<%=contextPath %>/category.po?cno=C1">패션의류</a>
-                    <a href="<%=contextPath %>/category.po?cno=C2">패션잡화</a>
-                    <a href="<%=contextPath %>/category.po?cno=C3">뷰티</a>
-                    <a href="<%=contextPath %>/category.po?cno=C4">전자제품</a>
-                    <a href="<%=contextPath %>/category.po?cno=C5">리빙/생활</a>
-                    <a href="<%=contextPath %>/category.po?cno=C6"
-                      >가구/인테리어</a
+                  <div class="category_hover-ds flex-ds align-center expanded text-center SMN_effect-42">
+                    <a href="<%=contextPath %>/category.po?cno=C1" style="border-top:0px;border-bottom:0px;"><span data-hover="패션의류">패션의류</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C2" style="border-top:0px;border-bottom:0px;"><span data-hover="패션잡화">패션잡화</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C3" style="border-top:0px;border-bottom:0px;"><span data-hover="뷰티">뷰티</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C4" style="border-top:0px;border-bottom:0px;"><span data-hover="전자제품">전자제품</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C5" style="border-top:0px;border-bottom:0px;"><span data-hover="리빙/생활">리빙/생활</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C6" style="border-top:0px;border-bottom:0px;"
+                      ><span data-hover="가구/인테리어">가구/인테리어</span></a
                     >
-                    <a href="<%=contextPath %>/category.po?cno=C7">반려동물</a>
-                    <a href="<%=contextPath %>/category.po?cno=C8"
-                      >도서/음반/문구</a
+                    <a href="<%=contextPath %>/category.po?cno=C7" style="border-top:0px;border-bottom:0px;"><span data-hover="반려동물">반려동물</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C8" style="border-top:0px;border-bottom:0px;"
+                      ><span data-hover="도서/음반/문구" >도서/음반/문구</span></a
                     >
-                    <a href="<%=contextPath %>/category.po?cno=C9">상품권</a>
-                    <a href="<%=contextPath %>/category.po?cno=C10">무료나눔</a>
+                    <a href="<%=contextPath %>/category.po?cno=C9" style="border-top:0px;border-bottom:0px;"><span data-hover="상품권">상품권</span></a>
+                    <a href="<%=contextPath %>/category.po?cno=C10" style="border-top:0px;border-bottom:0px;"><span data-hover="무료나눔">무료나눔</span></a>
                   </div>
                 </div>
                 <div id="notice-ds">

@@ -240,7 +240,7 @@ String user = (String)request.getAttribute("userId"); String seller =
           <div><%= c.getBuyerNickname() %></div>
           <% } %>
         </div>
-        <div class="wrap"></div>
+        <div class="wrap" id="container"></div>
         <div class="wrap-footer">
           <div class="wrap-footer-area">
             <div align="center" class="wrap-footer-area-div">
@@ -279,8 +279,9 @@ String user = (String)request.getAttribute("userId"); String seller =
 	
     <script>
       $(function () {
+    	  
         getMessage();
-        setInterval(getMessage, 1000);
+        setInterval(getMessage, 500);
       });
 
       $(document).ready(function () {
@@ -336,15 +337,24 @@ String user = (String)request.getAttribute("userId"); String seller =
     	  }
     	  location.reload();
       }
+      var count = 0;
       function getMessage() {
+    	  count++;
         var userId = $("#loginUser").val();
         var user = $("#user").val(); // 구매자
         var pno = $("#seller").val(); // 판매자
+        var container = document.getElementById("container");
+        
+        
+        var saveListLength = 0;
         $.ajax({
           url: "message.in",
           data: { loginUser: userId, userId: user, pno: pno },
           success: function (list) {
             let value = "";
+            var currentListLength = list.length;
+            
+            
             for (let i = 0; i < list.length; i++) {
               if (list[i].sender == userId) {
                 value +=
@@ -383,8 +393,19 @@ String user = (String)request.getAttribute("userId"); String seller =
                   "</div>" +
                   "</div>";
               }
+              
+              
             }
             $(".wrap").html(value);
+            if(count === 1){
+            	container.scrollTop = container.scrollHeight-container.clientHeight;
+            }
+            
+            console.log(container.scrollHeight-container.clientHeight);
+            console.log(container.scrollTop);
+            if((container.scrollHeight-container.clientHeight-container.scrollTop) <100){
+            	container.scrollTop = container.scrollHeight-container.clientHeight;
+            }
           },
           error: function () {
             console.log("ajax 통신 실패");
