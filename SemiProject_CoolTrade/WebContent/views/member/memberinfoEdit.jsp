@@ -106,14 +106,20 @@
         border: solid 1px rgb(220, 220, 220);
     }
 
-    tr {
+    /* tr {
       border: solid 1px rgb(220, 220, 220);
-    }
+    } */
 
-    td,th{
+    td{
         width: 350px;
         height: 45px;
         border: solid 1px rgb(220, 220, 220);
+    }
+
+    .infotable{
+      width: 350px;
+      height: 45px;
+      border: solid 1px rgb(220, 220, 220);
     }
     
     #table th{
@@ -259,36 +265,36 @@
 			  
        <table id="table">
        
-            <tr>
-                <th>이름</th>
+            <tr class="infotable">
+                <th class="infotable">이름</th>
                 <td>&nbsp;<%=name %></td>  
             </tr>
       
-            <tr>
-                <th>아이디</th>
+            <tr class="infotable">
+                <th class="infotable">아이디</th>
                 <td>&nbsp;<%=id %></td>
                 
             </tr>
-            <tr>
-                <th>비밀번호</th>
+            <tr class="infotable">
+                <th class="infotable">비밀번호</th>
                 <td>&nbsp;<input type="password" id="pwd" class="inputbox"  value="<%= password %>"><button onclick="btnChangePwd()"" class="btncss">변경</button></td>
                
             </tr>
-            <tr>
-                <th>휴대폰번호</th>
+            <tr class="infotable">
+                <th class="infotable">휴대폰번호</th>
                 <td>&nbsp;<input type="tel" class="inputbox" id="phone" maxlength='13' value="<%= phone %>"><button onclick="btnChangePhone()"" class="btncss">변경</button></td>
             </tr>
-            <tr>
-                <th>이메일</th>
+            <tr class="infotable">
+                <th class="infotable">이메일</th>
                 <td>&nbsp;<input type="email" class="inputbox" id="email" value="<%= email %>"><button onclick="btnChangeEmail()" id="btnCE"" class="btncss">변경</button></td>
             </tr>
-            <tr>
-                <th>주소</th>
+            <tr class="infotable">
+                <th class="infotable">주소</th>
                 <td>&nbsp;<div id="mainAddress" style="display: inline-block; width: 240px; margin-right: 20px;"><%= request.getAttribute("address") %></div><button type="button" style="vertical-align: super;" onclick="showAddressModal();"" class="btncss">선택</button></td>
             </tr>
             <tr>
                 <div>
-                <th>계좌번호</th>
+                <th class="infotable">계좌번호</th>
                 <td>&nbsp; 
                       <select class="bank" id="bank">
                         <option value="국민은행" <%= "국민은행".equals(bankAccount.getBank())?"selected":"" %>>국민은행</option>
