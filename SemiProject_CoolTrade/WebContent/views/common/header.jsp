@@ -295,82 +295,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                 <script>
                   $(function () {
                     getAlarm();
-                    //setInterval(getAlarm, 2000);
-
-                    console.log("오냐");
-                  });
-
-                  function getAlarm() {
-                    var userId = $("#loginUser").val();
-                    $.ajax({
-                      url: "alarm.in",
-                      data: { loginUser: userId },
-                      success: function (list) {
-                        let value = "";
-                        if (list.length !== 0) {
-                          for (let i = 0; i < list.length; i++) {
-                            value +=
-                              '<div class="content">' +
-                              '<div class="content_0" style="border-top: 1px solid rgb(204, 203, 203); border-right: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203); ">' +
-                              (userId === list[i].userId ? "구매" : "판매") +
-                              "</div>" +
-                              '<div class="content_1" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);" onclick="goChatRoom();">&nbsp;' +
-                              list[i].message +
-                              "</div>" +
-                              '<div class="content_2" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' +
-                              list[i].messageDate +
-                              "</div>" +
-                              '<div class="content_3" style="border-top: 1px solid rgb(204, 203, 203); border-bottom: 1px solid rgb(204, 203, 203);">' +
-                              list[i].sender +
-                              "</div>" +
-                              '<input type="hidden" id="chatRoomNo" value="' +
-                              list[i].chatRoomNo +
-                              '" >' +
-                              '<input type="hidden" id="userId" value="' +
-                              list[i].userId +
-                              '" >' +
-                              '<input type="hidden" id="sellerId" value="' +
-                              list[i].sellerId +
-                              '" >' +
-                              "</div>";
-                          }
-                          $(".content-container").html(value);
-                          $("#alarmCount").html(list.length);
-                        } else {
-                          $(".content-container").html("받은 알림이 없습니다");
-                        }
-                      },
-                      error: function () {
-                        console.log("ajax 통신 실패");
-                      },
-                    });
-                  }
-
-                  function toggleNotification() {
-                    var notification = document.getElementById("notification");
-                    notification.classList.toggle("show");
-                  }
-
-                  function closeNotification() {
-                    var notification = document.getElementById("notification");
-                    notification.classList.remove("show");
-                  }
-                  function goChatRoom() {
-                    const num = $("#chatRoomNo").val();
-                    const userId = $("#userId").val();
-                    const sellerId = $("#sellerId").val();
-                    location.href =
-                      "<%= contextPath %>/chatroom.in?userId=" +
-                      userId +
-                      "&pno=" +
-                      sellerId;
-                  }
-                </script>
-
-                <script>
-                  $(function () {
-                    getAlarm();
-                    setInterval(getAlarm, 2000);
+                    setInterval(getAlarm, 1000);
                   });
 
                   function getAlarm() {
@@ -411,12 +336,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
                         } else {
                           $(".content-container").html("받은 알림이 없습니다");
                         }
-						if(list.length === 0){
-							$("#alarmCount").remove();
-						}else{
-							
                         $("#alarmCount").html(list.length);
-						}
                       },
                       error: function () {
                         console.log("ajax 통신 실패");
