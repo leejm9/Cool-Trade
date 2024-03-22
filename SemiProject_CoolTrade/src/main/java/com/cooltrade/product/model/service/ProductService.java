@@ -83,6 +83,16 @@ public class ProductService {
 
 		return plist;
 	}
+	
+	public ArrayList<Product> searchProductListWithCno(String search, String cno) {
+		Connection conn = getConnection();
+
+		ArrayList<Product> plist = new ProductDao().searchProductListWithCno(conn, search, cno);
+
+		close(conn);
+
+		return plist;
+	}
 
 	public ArrayList<Category> searchCatList(String search) {
 		Connection conn = getConnection();
@@ -94,6 +104,16 @@ public class ProductService {
 		return catList;
 	}
 
+	public ArrayList<Category> searchCatListWithCno(String search, String cno) {
+		Connection conn = getConnection();
+		
+		ArrayList<Category> catList = new ProductDao().searchCatListWithCno(conn, search, cno);
+		
+		close(conn);
+		
+		return catList;
+	}
+
 	public int countProduct(String search) {
 		Connection conn = getConnection();
 
@@ -101,6 +121,16 @@ public class ProductService {
 
 		close(conn);
 
+		return pCount;
+	}
+
+	public int countProductWithCno(String search, String cno) {
+		Connection conn = getConnection();
+		
+		int pCount = new ProductDao().countProductWithCno(conn, search, cno);
+		
+		close(conn);
+		
 		return pCount;
 	}
 
@@ -418,33 +448,63 @@ public class ProductService {
 		return list;
 	}
 
-	public ArrayList<Product> arrangeByDateS(String search) {
+	public ArrayList<Product> arrangeByDateS(String search, String cno) {
 		Connection conn = getConnection();
 
-		ArrayList<Product> list = new ProductDao().arrangeByDateS(conn, search);
+		ArrayList<Product> list = new ProductDao().arrangeByDateS(conn, search, cno);
 
 		close(conn);
 
 		return list;
 	}
 
-	public ArrayList<Product> arrangePriceHighS(String search) {
+	public ArrayList<Product> arrangePriceHighS(String search, String cno) {
 		Connection conn = getConnection();
 
-		ArrayList<Product> list = new ProductDao().arrangePriceHighS(conn, search);
+		ArrayList<Product> list = new ProductDao().arrangePriceHighS(conn, search, cno);
 
 		close(conn);
 
 		return list;
 	}
 
-	public ArrayList<Product> arrangePriceLowS(String search) {
+	public ArrayList<Product> arrangePriceLowS(String search, String cno) {
 		Connection conn = getConnection();
 
-		ArrayList<Product> list = new ProductDao().arrangePriceLowS(conn, search);
+		ArrayList<Product> list = new ProductDao().arrangePriceLowS(conn, search, cno);
 
 		close(conn);
 
+		return list;
+	}
+	
+	public ArrayList<Product> arrangeByDateS2(String search) {
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangeByDateS2(conn, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceHighS2(String search) {
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceHighS2(conn, search);
+		
+		close(conn);
+		
+		return list;
+	}
+	
+	public ArrayList<Product> arrangePriceLowS2(String search) {
+		Connection conn = getConnection();
+		
+		ArrayList<Product> list = new ProductDao().arrangePriceLowS2(conn, search);
+		
+		close(conn);
+		
 		return list;
 	}
 
@@ -562,6 +622,16 @@ public class ProductService {
 	public int rollbackTrade(int pno) {
 		Connection conn = getConnection();
 		int result = new ProductDao().rollbackTrade(conn,pno);
+		if(result>0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		return result;
+	}
+	public int reduceCount(int pno) {
+		Connection conn = getConnection();
+		int result = new ProductDao().reduceCount(conn,pno);
 		if(result>0) {
 			commit(conn);
 		}else {
