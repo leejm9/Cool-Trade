@@ -34,11 +34,15 @@
     
     
     <style>
+    	.outouter{
+    	display:flex;
+    	
+    	}
     	.outouter th{
     		background-Color:rgb(208, 208, 208);
     	}
     	#searchRank{
-    		width:975px;
+    		width:500px;
     		height:700px;
     	}
     	.div>div{
@@ -46,18 +50,22 @@
     	}
     	.div{ height:8%;}
     	.outer>div{
-    		width:500px;
+    		width:100%;
+    		
     	}
     	.outer2{
-    		width:1000px;
+    		width:500px;
     		height:700px;
     	}
 		.outer2 tr{
 			width:100%;
 		}    	
 		.outer{
-			width:100%;
+			width: 400px;
+		    margin-left: 100px;
+		    margin-right: 200px;
 		}
+		
     </style>
     
     
@@ -65,12 +73,15 @@
 <body>
 	<%@ include file = "../common/managerMenubar.jsp" %>
 	<div class="outouter">
-	<div class="outer" style="margin-left:420px;">
-	<div class="div">
+	<div class="outer" >
+	
+	<div>
 	<h3>DB검색화면</h3>
+	</div>
 	<div text-align="left">
 	<button onclick="fn_chkAdd();" class="btn btn-warning" style="margin-bottom:5px;">추가</button>
 	</div>
+	<div>
 		<table id="searchRank" class="table table-bordered">
 			<colgroup>
 				<col style="width: 55px;">
@@ -99,17 +110,18 @@
 			</tbody>
 		</table>
 	</div>
-	<div>
+	
+	
 	<div class="text-center dataTables_paginate paging_simple_numbers"
-		id="example1_paginate">
-		<ul class="pagination justify-content-end">
+		id="example1_paginate" style="width:430px;" >
+		<ul class="justify-content-end" >
 			<c:forEach varStatus="status" begin="1"
 				end="${endValue}">
-				<button id="page${status.count}" class="paginate_button"><a	href="#none" onclick="goPage(${status.count-1})">${status.count}</a></button>
+				<button id="page${status.count}"  ><a href="#none" onclick="goPage(${status.count-1})">${status.count}</a></button>
 			</c:forEach>
 		</ul>
 	</div>
-	</div>
+	
 	</div>
 
 	
@@ -118,12 +130,12 @@
 	
 	<div class="outer2">
 	<form action="show.popw">
-	<div class="col-sm-12" style="margin-left:407px;">
+	<div class="col-sm-12" >
 		<div class="tbl-top-area">
 			<div class="tit">
 				<h4 class="box-title">사용자 화면 검색 순위</h4>
 			</div>
-			<div class="btn" text-align="left">
+			<div class="btn" style="padding:0px 12px 6px 0px ;">
 				<button type="button" class="btn btn-warning" onclick="fn_chkDel()">삭제</button>
 			</div>
 		</div>
@@ -276,8 +288,8 @@
 					return false;
 				}
 				else{
-					var sortBtn = '<div class="btn-group-vertical" style="width: 20px;"><button type="button" id="upBtn" class="btn btn-primary btn-xs up" class="sort-btn"><span class="fa fa-sort-up"></span></button>';
-					sortBtn += '<button type="button" id="downBtn" class="btn btn-primary btn-xs down" class="sort-btn"><span class="fa fa-sort-desc"></span></button></div>';
+					var sortBtn = '<div class="btn-group-vertical" style="width: 10px;"><button type="button" style="height:20px;" id="upBtn" class="btn btn-primary btn-xs up" class="sort-btn"><span class="fa fa-sort-up"></span></button>';
+					sortBtn += '<button type="button" id="downBtn" style="height:20px;"  class="btn btn-primary btn-xs down" class="sort-btn"><span class="fa fa-sort-desc"></span></button></div>';
 					$("#usrPopTable").children("tr:eq("+(userWord-1)+")").find("#sortBtn").html(sortBtn);
 					for(a=1;a<=chkIdone.length;a++){
 						var idIndex = getidIndex();

@@ -132,12 +132,12 @@ public class MemberService {
 	    return result;
 	  }
    
-   public Member countMember() {
+   public int countMember() {
       Connection conn = getConnection();
       
-      Member m = new MemberDao().countMember(conn);
+      int enrollMember = new MemberDao().countMember(conn);
       close(conn);
-      return m;
+      return enrollMember;
    }
    
    public int updateUserLevel(int userNo) {
@@ -699,6 +699,14 @@ public class MemberService {
 		
 		close(conn);
 		return titleImg;
+	}
+	
+	public String getReportedUserName(int reportedProductNo) {
+		Connection conn = getConnection();
+		
+		String reportedUser = new MemberDao().getReportedUserName(conn,reportedProductNo);
+		close(conn);
+		return reportedUser;
 	}
 
 }

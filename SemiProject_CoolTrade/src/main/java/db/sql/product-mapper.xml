@@ -12,16 +12,16 @@
 		SELECT 
 		       NVL(COUNT(*),0) tstockgoods
 		  FROM PRODUCT
-		 WHERE UPLOAD_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		 WHERE TO_CHAR(UPLOAD_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
 	</entry>
 	
 	<entry key="countReportedProduct">
-		SELECT NVL(COUNT(*),0) reportedproduct
+		SELECT COUNT(*) reportedproduct
 		  FROM (SELECT DISTINCT
 				       PRODUCT_NO
 				  FROM PRODUCT
 				  JOIN REPORT USING (PRODUCT_NO)
-				 WHERE REPORT_DATE = TO_CHAR(SYSDATE,'YY/MM/DD'))
+		 WHERE TO_CHAR(REPORT_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD'))
 	</entry>
 	
 	<entry key="selectProductCount">
@@ -443,16 +443,16 @@ SELECT
 	
 	<entry key="selectDaySales">
 		SELECT
-		       TO_CHAR(TRADE_DATE,'MM/DD') TRADE_DATE
+		       TO_CHAR(TRADE_DATE,'MM/DD') trade_date
 		     , SUM(PRICE) price
 		  FROM PRODUCT
 		  JOIN TRADE USING(PRODUCT_NO)
 		 WHERE TO_CHAR(TRADE_DATE,'YY') = TO_CHAR(SYSDATE,'YY') 
 		   AND TRADE_DATE > SYSDATE-7
 		 GROUP
-		    BY trade_date
+		    BY TO_CHAR(TRADE_DATE,'MM/DD') 
 		 ORDER
-            BY trade_date
+		    BY trade_date
 	</entry>
 	
 	<entry key="deleteBoard">

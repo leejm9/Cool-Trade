@@ -88,6 +88,13 @@ public class ReportService {
 		close(conn);
 		return result;
 	}
+	public int getReportedProductNo(int rno) {
+		Connection conn = getConnection();
+		
+		int ReportedProductNo = new ReportDao().getReportedProductNo(conn, rno);
+		close(conn);
+		return ReportedProductNo;
+	}
 	
 	
 }

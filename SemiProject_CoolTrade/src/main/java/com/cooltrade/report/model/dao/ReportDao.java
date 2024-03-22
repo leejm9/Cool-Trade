@@ -242,5 +242,31 @@ public class ReportDao {
 		return result;
 	}
 	
+	public int getReportedProductNo(Connection conn ,int rno) {
+		int ReportedProductNo = 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("getReportedProductNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, rno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				ReportedProductNo = rset.getInt("product_no");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return ReportedProductNo;
+	}
 
 }

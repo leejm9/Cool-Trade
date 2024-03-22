@@ -35,14 +35,14 @@ public class ManagerMyPageController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Member m = new MemberService().countMember();                  // 오늘 가입한 회원수
+		int enrollMember = new MemberService().countMember();                  // 오늘 가입한 회원수
 		Product salesRate = new ProductService().countSalesRate();     // 누적 판매량
 		Product reportedProduct = new ProductService().countReportedProduct(); // 오늘 신고된 게시물수
-		Product stockGoods = new ProductService().todayStockGoods();   // 오늘 입고된 상품 수
+		Product stockGoods = new ProductService().todayStockGoods();   // 오늘 등록된 상품수
 		ArrayList<Report> recentReport = new ReportService().selectRecentReport();
 		
 		
-		request.setAttribute("m", m);
+		request.setAttribute("enrollMember", enrollMember);
 		request.setAttribute("salesRate", salesRate);
 		request.setAttribute("reportedProduct", reportedProduct);
 		request.setAttribute("stockGoods", stockGoods);
