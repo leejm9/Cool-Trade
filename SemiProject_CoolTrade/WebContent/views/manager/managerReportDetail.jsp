@@ -5,6 +5,7 @@
 <%
 	Member m = (Member)request.getAttribute("m");
 	Report r = (Report)request.getAttribute("r");
+	String reportedUser = (String)request.getAttribute("reportedUser");
 %>
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@
                 </tr>
                 <tr>
                     <th>신고대상</th>
-                    <td><%= r.getProdNo() %></td>
+                    <td><%= reportedUser %></td>
                 </tr>
                 <tr>
                     <th>신고게시물제목</th>

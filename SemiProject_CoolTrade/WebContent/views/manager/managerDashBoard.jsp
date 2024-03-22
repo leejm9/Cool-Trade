@@ -8,7 +8,7 @@
 
 
 <%
-	Member m = (Member)request.getAttribute("m");
+	int enrollMember = (int)request.getAttribute("enrollMember");
 	Product salesRate = (Product)request.getAttribute("salesRate");
 	Product reportedProduct = (Product)request.getAttribute("reportedProduct");
 	Product stockGoods = (Product)request.getAttribute("stockGoods");
@@ -63,7 +63,7 @@
 								<div
 									class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 									오늘 가입한 회원수</div>
-								<div class="h5 mb-0 font-weight-bold text-gray-800"><%=m.getCount()%></div>
+								<div class="h5 mb-0 font-weight-bold text-gray-800"><%= enrollMember%>명</div>
 							</div>
 							<div class="col-auto">
 								<i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -122,7 +122,7 @@
 							<div class="col mr-2">
 								<div
 									class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-									오늘 입고된 상품수</div>
+									오늘 등록된 상품수</div>
 								<div class="h5 mb-0 font-weight-bold text-gray-800"><%=stockGoods.getTstockgoods()%>건
 								</div>
 							</div>

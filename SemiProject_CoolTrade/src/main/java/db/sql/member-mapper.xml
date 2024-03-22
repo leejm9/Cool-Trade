@@ -177,12 +177,11 @@
 	   WHERE USER_NO = ?
 	</entry>
    
-   
    <entry key="countMember">
       SELECT
             COUNT(*) count
         FROM MEMBER
-       WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+       WHERE TO_CHAR(ENROLL_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
    </entry>
    
    <entry key="updateUserLevel">
@@ -652,13 +651,6 @@
 
 	<entry key="changePwd">
 		UPDATE MEMBER SET USER_PWD = ? WHERE USER_ID = ?
-	</entry>
-
-	<entry key="countMember">
-		SELECT
-		COUNT(*) count
-		FROM MEMBER
-		WHERE ENROLL_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
 	</entry>
 
 	<entry key="updateUserLevel">
@@ -1459,6 +1451,13 @@
 	 	UPDATE MEMBER
 	 	   SET USER_LEVEL = 'B'
 	 	 WHERE USER_NO = ?
+	</entry>
+	
+	<entry key="getReportedUserName">
+		SELECT USER_NAME
+		  FROM PRODUCT P
+		  JOIN MEMBER M ON (P.SELLER_NO = M.USER_NO)
+		 WHERE PRODUCT_NO = ?
 	</entry>
 	
 </properties>

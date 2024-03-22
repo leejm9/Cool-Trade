@@ -105,5 +105,12 @@
 		 WHERE REPORT_NO = ?
 		   AND REPORT_STATUS = 'Y'
 	</entry>
+		
+	<entry key="getReportedProductNo">
+		SELECT
+		       PRODUCT_NO
+		  FROM REPORT
+		 WHERE REPORT_NO = ?
+	</entry>
 	
 </properties>

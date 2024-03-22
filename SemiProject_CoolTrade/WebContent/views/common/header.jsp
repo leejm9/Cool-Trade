@@ -71,7 +71,7 @@ session.getAttribute("headerCo"); } ArrayList<RecentProducts>
             z-index: 999;
             display: none;
             overflow: auto;
-            left: 950px;
+            left: 50%;
             top: 40px;
             padding: 10px;
           }

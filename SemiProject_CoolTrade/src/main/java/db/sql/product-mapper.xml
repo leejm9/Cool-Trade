@@ -12,16 +12,16 @@
 		SELECT 
 		       NVL(COUNT(*),0) tstockgoods
 		  FROM PRODUCT
-		 WHERE UPLOAD_DATE = TO_CHAR(SYSDATE,'YY/MM/DD')
+		 WHERE TO_CHAR(UPLOAD_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD')
 	</entry>
 	
 	<entry key="countReportedProduct">
-		SELECT NVL(COUNT(*),0) reportedproduct
+		SELECT COUNT(*) reportedproduct
 		  FROM (SELECT DISTINCT
 				       PRODUCT_NO
 				  FROM PRODUCT
 				  JOIN REPORT USING (PRODUCT_NO)
-				 WHERE REPORT_DATE = TO_CHAR(SYSDATE,'YY/MM/DD'))
+		 WHERE TO_CHAR(REPORT_DATE,'YY/MM/DD') = TO_CHAR(SYSDATE,'YY/MM/DD'))
 	</entry>
 	
 	<entry key="selectProductCount">
