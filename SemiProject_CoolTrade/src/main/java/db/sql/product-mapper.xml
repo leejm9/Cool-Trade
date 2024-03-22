@@ -214,6 +214,7 @@ SELECT
 		SELECT
 			   PRODUCT_NO
 			 , SELLER_NO 
+			 , USER_ID
 		     , NICKNAME
 		     , CATEGORY_NAME
 		     , PRODUCT_NAME

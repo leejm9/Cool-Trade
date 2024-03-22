@@ -96,7 +96,9 @@ public class DetailProductViewController extends HttpServlet {
 			}
 
 			session.setAttribute("rlist", rlist);
-
+			
+			System.out.println(p);
+			
 			BankAccount bankList = new BankAccount();
 			int uno = p.getSellerNum();
 			if (uno > 0) {
