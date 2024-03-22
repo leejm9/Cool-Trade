@@ -424,6 +424,7 @@ public class ProductDao {
          if(rset.next()) {
             p.setProductNo(rset.getInt("product_no"));
             p.setSellerNum(rset.getInt("seller_no"));
+            p.setSellerNo(rset.getString("user_id"));
             p.setNickName(rset.getString("nickname"));
             p.setCategoryNo(rset.getString("category_name"));
             p.setProductName(rset.getString("product_name"));
