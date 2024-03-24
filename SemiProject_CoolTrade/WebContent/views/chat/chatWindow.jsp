@@ -292,7 +292,7 @@ String user = (String)request.getAttribute("userId"); String seller =
         });
       });
 
-      $(document).on('click', '.ch2 #tradeCancel', function() {
+      $(document).on('click', '.ch1 #tradeCancel', function() {
     	  console.log($("#pno").val());
     	    $.ajax({
     	    	url : "ajaxtrade.cancel",
@@ -311,7 +311,7 @@ String user = (String)request.getAttribute("userId"); String seller =
     	    });
     	});
       
-      $(document).on('click', '.ch2 #tradeComplete', function() {
+      $(document).on('click', '.ch1 #tradeComplete', function() {
     	  console.log($("#pno").val());
     	    $.ajax({
     	    	url : "ajaxtrade.complete",
