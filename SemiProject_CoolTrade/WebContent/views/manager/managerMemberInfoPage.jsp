@@ -125,8 +125,8 @@
 	                                    		
 		                                        <tr>
 		                                            <td><%= m.getUserNo() %></td>
-		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserId() %></a></td>
-		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=2&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=1&uno=<%= m.getUserNo() %>"><%= m.getUserId() %></a></td>
+		                                            <td><a href="<%= contextPath %>/memInfo.detail?cpage=1&uno=<%= m.getUserNo() %>"><%= m.getUserName() %></a></td>
 		                                            <td><%= m.getEnrollDate() %></td>
 		                                            <td><%= m.getOndo() %></td>
 		                                            <td>

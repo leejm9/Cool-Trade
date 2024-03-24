@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -85,10 +86,29 @@
         
 	   <div>
 	       <a onclick="location.href='<%= contextPath %>/report.in?cpage=1'"  class="btn btn-secondary">목록가기</a>
-	       	<input type="button" onclick="Report(<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리">
+	       	<input type="button" onclick="Report(<%= r.getReportNo() %>,<%=r.getProdNo() %>);" class="btn btn-danger" value="신고처리">
 	   </div>
 	   <br><br><br><br><br><br><br><br><br><br>
 	  </div>
+	  
+	  <script>
+	        function Report(reportNo,pno){
+	                $.ajax({
+	                	url:"report.ch",
+	                	data:{reportNo:reportNo,
+	                		  pno:pno},
+	                	success:function(result){
+	                		if(result > 0){
+	                			alert("신고처리되었습니다");
+	                			location.href="<%= contextPath %>/report.in?cpage=1";
+	                		}
+	                	},error:function(result){
+	                		console.log("ajax 통신 실패");
+	                	}
+	                })
+	        }
+	      
+	    </script>
 	  
 	  
 </body>
