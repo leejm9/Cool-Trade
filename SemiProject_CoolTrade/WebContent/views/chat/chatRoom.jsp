@@ -124,7 +124,7 @@ ArrayList<ChatRoom>
 <!--             <tbody> -->
 <%--               <% int count = 0; %> <% boolean chatRoomExists = false; %> <% --%>
 <%--                for(ChatRoom c : list){ %> <% --%>
-//                if(c.getUserId().equals(loginUser.getUserId()) ||
+<%--               if(c.getUserId().equals(loginUser.getUserId()) ||--%> 
 <%--               c.getSellerId().equals(loginUser.getUserId())){ %> <% --%>
 <%--                chatRoomExists = true; %>  --%>
 <!--               <tr> -->
@@ -184,10 +184,9 @@ ArrayList<ChatRoom>
                 		</div>
                 		<% } %>
                 		<% if(count == 0){ %>
-                			<tr>
-				                <td colspan="4">존재하는 채팅방이 없습니다.</td>
-				              </tr>
-                		<% } %>
+				                존재하는 채팅방이 없습니다.
+				                
+                		<% break;} %>
                 	<% } %> 
               
               </div>
