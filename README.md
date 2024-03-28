@@ -23,4 +23,4 @@ semiPJ
 
 &nbsp; - 2024.03.25 (월) : 최종 발표
 
-![VideotoanimatedGIFconverter-Chrome2024-03-2817-28-37-ezgif com-video-to-gif-converter](https://github.com/leejm9/Cool-Trade/assets/151510208/5801c3d3-3989-4089-927f-e62009a7e904)
+
