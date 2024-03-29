@@ -163,15 +163,25 @@ ERD Cloud
 이종민
 <br>
 &nbsp; - 관리자페이지
+<br><br>
 &nbsp; - 모든 회원 조회/등급변경/추방
+<br><br>
 &nbsp; - 블랙리스트 조회/추방/복구
+<br><br>
 &nbsp; - 통계 조회
+<br><br>
 &nbsp; - 인기검색어 선별
+<br><br>
 &nbsp; - 게시글 조회/삭제
+<br><br>
 &nbsp; - 신고하기/모든 신고조회/신고처리
+<br><br>
 &nbsp; - 공지사항 글작성/수정/삭제
+<br><br>
 &nbsp; - 채팅
+<br><br>
 &nbsp; - 알림
+<br><br>
 
 
 
