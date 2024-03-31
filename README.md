@@ -180,21 +180,33 @@ ERD Cloud
 김초롱
 
 &nbsp; - 마이페이지
-
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/1d87300d-7f6e-44ce-8c6e-28e40121eaca">
 
 &nbsp; - 상품 판매 등록
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/e38f6fda-9b19-4d61-9517-f8f7d3fdb09b">
 
 &nbsp; - 등록 상품 수정
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/3a9cd1f8-0cb9-49bc-8fe3-c9dc49990535">
 
 &nbsp; - 등록 상품 삭제
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/3764bff9-609c-417b-b1ea-86db0af73974">
 
 &nbsp; - 판매 내역
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/92e12abf-5ce3-45f6-b641-673f5b821c33">
 
 &nbsp; - 구매 내역
 
+
 &nbsp; - 관심 상품
+
 
 &nbsp; - 리뷰
 
+
 &nbsp; - 거래 요청
+
+
+
+
+
 
