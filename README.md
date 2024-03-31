@@ -180,31 +180,51 @@ ERD Cloud
 김초롱
 
 &nbsp; - 마이페이지
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/1d87300d-7f6e-44ce-8c6e-28e40121eaca">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/77b6c0df-5a84-4431-b20a-b416f0b4069d">
 
 &nbsp; - 상품 판매 등록
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/e38f6fda-9b19-4d61-9517-f8f7d3fdb09b">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/f03cdcc4-6e6d-4801-b21f-6631d56176ad">
 
 &nbsp; - 등록 상품 수정
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/3a9cd1f8-0cb9-49bc-8fe3-c9dc49990535">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/1c618c66-e149-44f9-8562-c323e4bd67b8">
 
 &nbsp; - 등록 상품 삭제
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/3764bff9-609c-417b-b1ea-86db0af73974">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/5c79aa6a-9d49-4322-a41b-89257fa6b333">
 
 &nbsp; - 판매 내역
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/92e12abf-5ce3-45f6-b641-673f5b821c33">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/09fca348-659a-4362-98fe-25ae3f172d71">
 
 &nbsp; - 관심 상품
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/b9211075-8e12-48ac-9b40-c0ff4854f7b8">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/be7f536f-47b3-4f23-b6db-46766baa7519">
 
 &nbsp; - 후기 남기기
+
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510160/c89b0212-7dee-4386-acdc-53fe817a88bf">
 
 &nbsp; - 받은 리뷰
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/b5f6fffb-32af-4888-8033-7c2c6ac4b422">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/223c5026-4b00-40c2-99dd-70fa1c6bbe34">
 
 &nbsp; - 거래 요청
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/c525f28e-0918-4038-b755-dcc568381230">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/33ebf5ba-34ac-4820-a7fb-df398431d923">
+
+
+
+
+
+
+
+
+
+
+
 
 
 
