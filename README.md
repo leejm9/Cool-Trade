@@ -159,6 +159,8 @@ ERD Cloud
 
 &nbsp; - 관리자페이지
 
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/ca582878-b4de-4d7f-88cd-2e28fef1d793">
+
 &nbsp; - 모든 회원 조회/등급변경/추방
 
 &nbsp; - 블랙리스트 조회/추방/복구
