@@ -198,7 +198,7 @@ ERD Cloud
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510160/b9211075-8e12-48ac-9b40-c0ff4854f7b8">
 
 &nbsp; - 후기 남기기
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/cf1f0be8-cd50-43ff-a0b6-a0c8172c6f79">
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510160/648dfa0d-e88f-4e1d-9681-7064bec4bfb7">
 
 &nbsp; - 받은 리뷰
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510160/b5f6fffb-32af-4888-8033-7c2c6ac4b422">
