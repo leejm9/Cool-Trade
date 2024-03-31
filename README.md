@@ -154,7 +154,7 @@ ERD Cloud
 &nbsp; -
 
 <br><br>
-## 프로젝트 구현
+## 📖 프로젝트 구현
 이종민
 
 &nbsp; - 관리자페이지
@@ -181,6 +181,7 @@ ERD Cloud
 
 &nbsp; - 마이페이지
 
+
 &nbsp; - 상품 판매 등록
 
 &nbsp; - 등록 상품 수정
@@ -195,5 +196,5 @@ ERD Cloud
 
 &nbsp; - 리뷰
 
-&nbsp; - 거래 요청청
+&nbsp; - 거래 요청
 
