@@ -217,6 +217,21 @@ ERD Cloud
 
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510160/33ebf5ba-34ac-4820-a7fb-df398431d923">
 
+정동석
+
+&nbsp; - 로그인/로그아웃
+
+&nbsp; - 메인페이지
+
+&nbsp; - 거래 승인/거절
+
+&nbsp; - 카테고리 및 인기/신규 상품
+
+&nbsp; - 상품 검색
+
+&nbsp; - 상품 상세 페이지
+
+&nbsp; - 최근 본 상품
 
 
 
