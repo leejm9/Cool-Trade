@@ -221,6 +221,8 @@ ERD Cloud
 
 &nbsp; - 로그인/로그아웃
 
+<img src="https://github.com/leejm9/Cool-Trade/issues/1#issue-2252353016">
+
 &nbsp; - 메인페이지
 
 &nbsp; - 거래 승인/거절
