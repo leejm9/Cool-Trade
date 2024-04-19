@@ -221,7 +221,7 @@ ERD Cloud
 
 &nbsp; - 로그인/로그아웃
 
-<img src="https://github.com/leejm9/Cool-Trade/issues/1#issue-2252353016">
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/321d9a1e-f2cd-4dda-a189-9e13f296f83d">
 
 &nbsp; - 메인페이지
 
