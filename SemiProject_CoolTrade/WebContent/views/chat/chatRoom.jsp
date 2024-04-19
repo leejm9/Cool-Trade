@@ -175,7 +175,7 @@ ArrayList<ChatRoom>
 			                  	<div><img src="resources/images/user-icon.png" width="50" height="50"></div>
 			                  	<% } else { %>
 			                  	<div>
-			                  		<img src="<%= contextPath %>/<%= c.getBuyerTitleImg() %>">
+			                  		<img width="50" height="50" src="<%= contextPath %>/<%= c.getBuyerTitleImg() %>">
 			                  	</div>
 			                  	<% } %>
 			                  </div>
@@ -183,10 +183,10 @@ ArrayList<ChatRoom>
 			              <% } %>
                 		</div>
                 		<% } %>
-                		<% if(count == 0){ %>
-				                존재하는 채팅방이 없습니다.
+<%--                 		<% if(count == 0){ %> --%>
+<!-- 				                존재하는 채팅방이 없습니다. -->
 				                
-                		<% break;} %>
+<%--                 		<% break;} %> --%>
                 	<% } %> 
               
               </div>
