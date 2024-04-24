@@ -225,16 +225,31 @@ ERD Cloud
 
 &nbsp; - 메인페이지
 
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/6d0595a6-ecdc-4b11-89d9-944ae7735ee5">
+
 &nbsp; - 거래 승인/거절
 
-&nbsp; - 카테고리 및 인기/신규 상품
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/e6465109-3101-4bc0-b5d3-37b126be88db">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/77b52571-64ff-4910-8f30-730a2061ec13">
+
+&nbsp; - 카테고리 및 추천/신규 상품
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/d43b6483-abb0-48d3-b695-695b781ed30a">
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/24c05a62-65dc-4fb6-923f-90d9985f9b60">
 
 &nbsp; - 상품 검색
 
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/e2001797-4ffd-4a88-83bb-eecc06891e54">
+
 &nbsp; - 상품 상세 페이지
+
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/509a2e84-cb0b-4211-b055-d0c65b995e54">
 
 &nbsp; - 최근 본 상품
 
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510159/96366c28-b219-4f43-8bb8-c4cf5f1d421d">
 
 
 
