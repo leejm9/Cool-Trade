@@ -162,6 +162,7 @@ ERD Cloud
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510160/ca582878-b4de-4d7f-88cd-2e28fef1d793">
 
 &nbsp; - 모든 회원 조회/등급변경/추방
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/38c19276-43c3-4cb8-b374-8ecedea281c7">
 
 &nbsp; - 블랙리스트 조회/추방/복구
 
