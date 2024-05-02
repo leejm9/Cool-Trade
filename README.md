@@ -178,10 +178,13 @@ ERD Cloud
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510208/a368e238-2b91-40f9-b722-cde4f85c080f">
 
 &nbsp; - 공지사항 글작성/수정/삭제
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/026fc89e-a4d2-4f19-b425-4b1d856cd8de">
 
 &nbsp; - 채팅
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/028adcc2-ecf8-4186-bdd2-06ed962db816">
 
 &nbsp; - 알림
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/b7f6ea74-15e8-449f-8267-830f80720e9c">
 
 김초롱
 
