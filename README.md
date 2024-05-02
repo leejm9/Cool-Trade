@@ -167,12 +167,15 @@ ERD Cloud
 &nbsp; - 블랙리스트 조회/추방/복구
 
 &nbsp; - 통계 조회
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/bb4a85d3-6ce8-42bc-b7b8-2a03f7e4ba84)">
 
 &nbsp; - 인기검색어 선별
 
 &nbsp; - 게시글 조회/삭제
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510208/1bea5811-7585-4064-b984-ad4f59bb06b7">
+
 &nbsp; - 신고하기/모든 신고조회/신고처리
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/a368e238-2b91-40f9-b722-cde4f85c080f">
 
 &nbsp; - 공지사항 글작성/수정/삭제
 
