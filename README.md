@@ -168,9 +168,10 @@ ERD Cloud
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510208/4ba58271-d050-4f70-ba40-4a0e63956e1b">
 
 &nbsp; - 통계 조회
-<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/bb4a85d3-6ce8-42bc-b7b8-2a03f7e4ba84)">
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/bb4a85d3-6ce8-42bc-b7b8-2a03f7e4ba84">
 
 &nbsp; - 인기검색어 선별
+<img src="https://github.com/leejm9/Cool-Trade/assets/151510208/e526d7b7-45a6-4545-91b6-5d6e77654f6e">
 
 &nbsp; - 게시글 조회/삭제
 <img src="https://github.com/leejm9/Cool-Trade/assets/151510208/1bea5811-7585-4064-b984-ad4f59bb06b7">
